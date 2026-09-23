@@ -116,7 +116,7 @@ funnel_records.append(('2. Deduplikasi', len(curr_df), b1 - len(curr_df)))
 
 # Lapisan 2: Negative Keyword Filtering
 b2 = len(curr_df)
-neg_pattern = r'full[-\s]?time|magang|internship|volunteer|management trainee|kontrak tahunan|supervisor|manajer|manager|head of|lead|direktur'
+neg_pattern = r'full[-\s]?time|magang|internship|volunteer|management trainee|kontrak tahunan'
 curr_df = curr_df[~curr_df['job_title'].astype(str).str.contains(neg_pattern, case=False, na=False)]
 funnel_records.append(('3. Filter Non-Part Time', len(curr_df), b2 - len(curr_df)))
 

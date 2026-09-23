@@ -83,14 +83,14 @@
 - **Visual:** Tabel perbandingan sumber data dan jumlah rekaman.
 - **Poin Kunci di Slide:**
   - **Dataset 1: Lowongan Pekerjaan (`raw_job_postings.csv`)**
-    - Total: **~500 baris data mentah**.
-    - Sumber: 4 Portal Kerja Resmi Indonesia (Kalibrr, KitaLulus, Glints, Loker.id).
-    - Memuat 12 atribut mentah, termasuk gaji, jam kerja, sistem kerja, lokasi, URL live aktif, dan teks kualifikasi skill.
+    - Total: **540 baris data mentah**.
+    - Sumber: LinkedIn, Glints, JobStreet, Kalibrr, KitaLulus.
+    - Memuat 12 atribut mentah, termasuk gaji, jam kerja, sistem kerja, lokasi, dan teks kualifikasi skill.
   - **Dataset 2: Kuesioner Preferensi Mahasiswa (`raw_student_preferences.csv`)**
     - Total: **55 responden mahasiswa UKRIDA**.
     - Memuat ekspektasi upah, ketersediaan jam kerja, domisili, dan daftar keahlian mahasiswa.
 - 🎙️ **Speaker Notes (1 Menit):**
-  > _"Dari hasil scraping dan penyebaran survei, kami berhasil mengumpulkan sekitar 500 data mentah lowongan kerja dari 4 portal kerja resmi terkemuka di Indonesia (Kalibrr, KitaLulus, Glints, dan Loker.id) dengan tautan yang 100% aktif dan dapat diakses, serta 55 sampel respon kuesioner mahasiswa UKRIDA. Seluruh data disaring ketat melalui 6 lapisan agar hanya menyisakan pekerjaan paruh waktu murni yang layak bagi mahasiswa."_
+  > _"Dari hasil scraping dan penyebaran survei, kami berhasil mengumpulkan 540 data mentah lowongan kerja dari 5 portal kerja terkemuka, serta 55 sampel respon kuesioner mahasiswa UKRIDA. Namun, data dari portal kerja memiliki tingkat noise yang sangat tinggi, mulai dari lowongan full-time yang menyamar, penipuan, hingga duplikasi."_
 
 ---
 

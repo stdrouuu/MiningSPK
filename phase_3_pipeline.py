@@ -131,7 +131,7 @@ def run_phase_3_pipeline():
     
     # Lapisan 2: Negative Keyword Filtering
     before_neg = len(curr_df)
-    neg_regex = r'full[-\s]?time|magang|internship|volunteer|management trainee|kontrak tahunan|supervisor|manajer|manager|head of|lead|direktur'
+    neg_regex = r'full[-\s]?time|magang|internship|volunteer|management trainee|kontrak tahunan'
     curr_df = curr_df[~curr_df["job_title"].astype(str).str.contains(neg_regex, case=False, na=False)]
     dropped_neg = before_neg - len(curr_df)
     funnel_log.append(("3. Pasca Filter Kata Kunci Negatif (Non-Part-Time)", len(curr_df), dropped_neg))
@@ -254,10 +254,8 @@ def run_phase_3_pipeline():
     
     # Ambil 1 mahasiswa sampel aktif UKRIDA untuk evaluasi matriks keputusan (misal: Mahasiswa 1)
     sample_student = df_stud_final.iloc[0]
-    sample_name = sample_student.get("student_name", sample_student["student_id"])
-    sample_cat = sample_student.get("student_job_category", sample_student.get("preferred_category", "Admin & Operational"))
-    print(f"Mahasiswa Sampel: {sample_name} ({sample_student['student_id']})")
-    print(f"-> Kategori Minat : {sample_cat}")
+    print(f"Mahasiswa Sampel: {sample_student['student_name']} ({sample_student['student_id']})")
+    print(f"-> Kategori Minat : {sample_student['student_job_category']}")
     print(f"-> Min. Gaji      : Rp {sample_student['min_expected_salary']:,.0f}/jam")
     print(f"-> Jam Kerja Harap: {sample_student['student_expected_work_hour']} jam/minggu")
     print(f"-> Keahlian Mentah: {sample_student['student_skills']}")
@@ -283,7 +281,7 @@ def run_phase_3_pipeline():
     print("\n[LANGKAH 7] Membentuk Matriks Keputusan M x N untuk Kriteria SPK...")
     
     # C1: Kesesuaian Kategori (1.0 jika sama, 0.3 jika beda)
-    c1_scores = np.where(curr_df["job_category"] == sample_cat, 1.0, 0.3)
+    c1_scores = np.where(curr_df["job_category"] == sample_student["student_job_category"], 1.0, 0.3)
     
     # C2: Rasio Penawaran Gaji (work_salaryperhour / min_expected_salary)
     c2_scores = np.round(curr_df["work_salaryperhour"] / sample_student["min_expected_salary"], 4)

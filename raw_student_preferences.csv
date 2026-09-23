@@ -1,56 +1,56 @@
-student_id,student_nim,student_name,student_job_category,preferred_category,min_expected_salary,student_location,student_expected_work_hour,preferred_work_system,student_skills,timestamp
-MHS-101,412024001,David Santoso,Design & Creative,Design & Creative,20000,Tanjung Duren,20,Onsite,"matematika dasar, toefl, bimbingan belajar, sabar, komunikasi",2026-09-20 00:16:23
-MHS-102,412024002,Jessica Tan,Education & Tutoring,Education & Tutoring,35000,Kebon Jeruk,16,Onsite,"canva, figma, ui/ux, photoshop, creative design",2026-09-17 00:16:23
-MHS-103,412024003,Michael Wijaya,Design & Creative,Design & Creative,40000,Jakarta Selatan,12,Remote,"troubleshooting komputer, instalasi windows, networking dasar",2026-09-21 00:16:23
-MHS-104,412024004,Brandon Sutedja,IT & Software,IT & Software,40000,Kebon Jeruk,18,Hybrid,"html, css, javascript, react, web design",2026-09-17 00:16:23
-MHS-105,412024005,Andrew Linardi,Education & Tutoring,Education & Tutoring,20000,Remote,10,Remote,"copywriting, content writing, social media, public speaking",2026-09-15 00:16:23
-MHS-106,412024006,Raffael Lolaroh,Education & Tutoring,Education & Tutoring,40000,Tangerang Selatan,10,Remote,"canva, figma, ui/ux, photoshop, creative design",2026-09-14 00:16:23
-MHS-107,412024007,Aaron Sipahutar,Design & Creative,Design & Creative,40000,Tanjung Duren,18,Remote,"html, css, javascript, react, web design",2026-09-16 00:16:23
-MHS-108,412024008,Stephanie Gunawan,Content & Communication,Content & Communication,40000,Remote,10,Onsite,"microsoft excel, spreadsheet, data entry, pengetikan 10 jari",2026-09-17 00:16:23
-MHS-109,412024009,Kevin Christian,IT & Software,IT & Software,40000,Tangerang Selatan,16,Remote,"copywriting, content writing, social media, public speaking",2026-09-17 00:16:23
-MHS-110,412024010,Michelle Angela,IT & Software,IT & Software,40000,Grogol,10,Onsite,"microsoft excel, spreadsheet, data entry, pengetikan 10 jari",2026-09-19 00:16:23
-MHS-111,412024011,Christian Hadi,Education & Tutoring,Education & Tutoring,20000,Tangerang,15,Remote,"troubleshooting komputer, instalasi windows, networking dasar",2026-09-19 00:16:23
-MHS-112,412024012,Vanessa Lim,Content & Communication,Content & Communication,20000,Tanjung Duren,18,Remote,"troubleshooting komputer, instalasi windows, networking dasar",2026-09-15 00:16:23
-MHS-113,412024013,Bryan Jonathan,Admin & Operational,Admin & Operational,25000,Tangerang,20,Hybrid,,2026-09-18 00:16:23
-MHS-114,412024014,Fiona Lauren,Admin & Operational,Admin & Operational,35000,Jakarta Selatan,20,Remote,"matematika dasar, toefl, bimbingan belajar, sabar, komunikasi",2026-09-15 00:16:23
-MHS-115,412024015,Daniel Pratama,Education & Tutoring,Education & Tutoring,30000,Tangerang,18,Onsite,"matematika dasar, toefl, bimbingan belajar, sabar, komunikasi",2026-09-20 00:16:23
-MHS-116,412024016,Amanda Natalia,Education & Tutoring,Education & Tutoring,40000,Jakarta Pusat,16,Onsite,"canva, figma, ui/ux, photoshop, creative design",2026-09-15 00:16:23
-MHS-117,412024017,Jason Alexander,Design & Creative,Design & Creative,30000,Tangerang,15,Hybrid,"kasir pos, espresso machine, hospitality, pelayanan pelanggan",2026-09-21 00:16:23
-MHS-118,412024018,Clarissa Chen,Admin & Operational,Admin & Operational,25000,Tanjung Duren,16,Onsite,"canva, figma, ui/ux, photoshop, creative design",2026-09-20 00:16:23
-MHS-119,412024019,Samuel Surya,Design & Creative,Design & Creative,30000,Grogol,18,Hybrid,"python, sql, machine learning, data analysis",2026-09-17 00:16:23
-MHS-120,412024020,Audrey Felicia,Admin & Operational,Admin & Operational,25000,Tanjung Duren,16,Remote,"microsoft excel, spreadsheet, data entry, pengetikan 10 jari",2026-09-22 00:16:23
-MHS-121,412024021,Nathan Kusuma,IT & Software,IT & Software,30000,Tangerang,10,Remote,"python, sql, machine learning, data analysis",2026-09-17 00:16:23
-MHS-122,412024022,Patricia Irene,Design & Creative,Design & Creative,40000,Grogol,15,Onsite,"python, sql, machine learning, data analysis",2026-09-16 00:16:23
-MHS-123,412024023,Edward Hartono,Education & Tutoring,Education & Tutoring,25000,Jakarta Selatan,20,Remote,"troubleshooting komputer, instalasi windows, networking dasar",2026-09-20 00:16:23
-MHS-124,412024024,Valerie Sutrisno,Admin & Operational,Admin & Operational,40000,Grogol,18,Onsite,"copywriting, content writing, social media, public speaking",2026-09-23 00:16:23
-MHS-125,412024025,Matthew Chandra,IT & Software,IT & Software,20000,Jakarta Selatan,12,Remote,"html, css, javascript, react, web design",2026-09-17 00:16:23
-MHS-126,412024026,David Santoso,IT & Software,IT & Software,35000,Remote,16,Onsite,"copywriting, content writing, social media, public speaking",2026-09-23 00:16:23
-MHS-127,412024027,Jessica Tan,Admin & Operational,Admin & Operational,40000,Jakarta Pusat,15,Remote,"troubleshooting komputer, instalasi windows, networking dasar",2026-09-18 00:16:23
-MHS-128,412024028,Michael Wijaya,IT & Software,IT & Software,40000,Tangerang,12,Remote,"shopee live host, tiktok creator, video editing, capcut",2026-09-14 00:16:23
-MHS-129,412024029,Brandon Sutedja,Admin & Operational,Admin & Operational,25000,Tanjung Duren,16,Hybrid,,2026-09-15 00:16:23
-MHS-130,412024030,Andrew Linardi,Admin & Operational,Admin & Operational,30000,Remote,15,Onsite,"html, css, javascript, react, web design",2026-09-19 00:16:23
-MHS-131,412024031,Raffael Lolaroh,Design & Creative,Design & Creative,30000,Tangerang,20,Onsite,"shopee live host, tiktok creator, video editing, capcut",2026-09-14 00:16:23
-MHS-132,412024032,Aaron Sipahutar,Education & Tutoring,Education & Tutoring,30000,Jakarta Barat,16,Remote,"shopee live host, tiktok creator, video editing, capcut",2026-09-16 00:16:23
-MHS-133,412024033,Stephanie Gunawan,Admin & Operational,Admin & Operational,20000,Kebon Jeruk,16,Hybrid,"copywriting, content writing, social media, public speaking",2026-09-18 00:16:23
-MHS-134,412024034,Kevin Christian,Education & Tutoring,Education & Tutoring,40000,Jakarta Selatan,18,Hybrid,"python, sql, machine learning, data analysis",2026-09-20 00:16:23
-MHS-135,412024035,Michelle Angela,IT & Software,IT & Software,35000,Tanjung Duren,20,Remote,"kasir pos, espresso machine, hospitality, pelayanan pelanggan",2026-09-15 00:16:23
-MHS-136,412024036,Christian Hadi,Content & Communication,Content & Communication,30000,Jakarta Selatan,15,Hybrid,"copywriting, content writing, social media, public speaking",2026-09-21 00:16:23
-MHS-137,412024037,Vanessa Lim,Content & Communication,Content & Communication,25000,Jakarta Selatan,12,Hybrid,"copywriting, content writing, social media, public speaking",2026-09-20 00:16:23
-MHS-138,412024038,Bryan Jonathan,Content & Communication,Content & Communication,25000,Grogol,18,Remote,"kasir pos, espresso machine, hospitality, pelayanan pelanggan",2026-09-22 00:16:23
-MHS-139,412024039,Fiona Lauren,Admin & Operational,Admin & Operational,35000,Remote,18,Remote,"python, sql, machine learning, data analysis",2026-09-23 00:16:23
-MHS-140,412024040,Daniel Pratama,Education & Tutoring,Education & Tutoring,40000,Jakarta Selatan,15,Hybrid,"shopee live host, tiktok creator, video editing, capcut",2026-09-16 00:16:23
-MHS-141,412024041,Amanda Natalia,Content & Communication,Content & Communication,30000,Grogol,16,Onsite,"copywriting, content writing, social media, public speaking",2026-09-23 00:16:23
-MHS-142,412024042,Jason Alexander,Design & Creative,Design & Creative,35000,Remote,18,Hybrid,"python, sql, machine learning, data analysis",2026-09-18 00:16:23
-MHS-143,412024043,Clarissa Chen,Education & Tutoring,Education & Tutoring,25000,Remote,16,Onsite,"html, css, javascript, react, web design",2026-09-16 00:16:23
-MHS-144,412024044,Samuel Surya,IT & Software,IT & Software,20000,Tangerang,10,Onsite,"copywriting, content writing, social media, public speaking",2026-09-14 00:16:23
-MHS-145,412024045,Audrey Felicia,Admin & Operational,Admin & Operational,30000,Grogol,18,Hybrid,,2026-09-15 00:16:23
-MHS-146,412024046,Nathan Kusuma,IT & Software,IT & Software,30000,Jakarta Pusat,16,Remote,"kasir pos, espresso machine, hospitality, pelayanan pelanggan",2026-09-21 00:16:23
-MHS-147,412024047,Patricia Irene,Education & Tutoring,Education & Tutoring,25000,Jakarta Pusat,16,Hybrid,"kasir pos, espresso machine, hospitality, pelayanan pelanggan",2026-09-17 00:16:23
-MHS-148,412024048,Edward Hartono,IT & Software,IT & Software,25000,Kebon Jeruk,18,Hybrid,"canva, figma, ui/ux, photoshop, creative design",2026-09-22 00:16:23
-MHS-149,412024049,Valerie Sutrisno,IT & Software,IT & Software,40000,Kebon Jeruk,16,Remote,"microsoft excel, spreadsheet, data entry, pengetikan 10 jari",2026-09-21 00:16:23
-MHS-150,412024050,Matthew Chandra,Content & Communication,Content & Communication,20000,Tangerang Selatan,12,Hybrid,"microsoft excel, spreadsheet, data entry, pengetikan 10 jari",2026-09-21 00:16:23
-MHS-151,412024051,David Santoso,Design & Creative,Design & Creative,30000,Jakarta Selatan,16,Onsite,"matematika dasar, toefl, bimbingan belajar, sabar, komunikasi",2026-09-15 00:16:23
-MHS-152,412024052,Jessica Tan,Design & Creative,Design & Creative,35000,Jakarta Barat,10,Remote,"canva, figma, ui/ux, photoshop, creative design",2026-09-20 00:16:23
-MHS-153,412024053,Michael Wijaya,IT & Software,IT & Software,20000,Jakarta Selatan,16,Hybrid,"kasir pos, espresso machine, hospitality, pelayanan pelanggan",2026-09-18 00:16:23
-MHS-154,412024054,Brandon Sutedja,IT & Software,IT & Software,40000,Jakarta Barat,15,Onsite,"kasir pos, espresso machine, hospitality, pelayanan pelanggan",2026-09-17 00:16:23
-MHS-155,412024055,Andrew Linardi,Admin & Operational,Admin & Operational,40000,Grogol,12,Hybrid,"troubleshooting komputer, instalasi windows, networking dasar",2026-09-19 00:16:23
+student_id,student_nim,student_name,student_job_category,min_expected_salary,student_location,student_work_schedule,student_expected_work_hour,student_skills,timestamp
+MHS-001,41202418,David Santoso,Content & Communication,25000.0,Tangerang,Weekend Only,18,"hardware pc, instalasi windows, troubleshooting jaringan, customer service",2026-09-13 15:20:48
+MHS-002,41202586,Andrew Tan,Education & Tutoring,40000.0,Jakarta Barat,Weekend Only,20,"public speaking, presentasi, live streaming host, copywriting, negosiasi",2026-09-19 23:20:48
+MHS-003,41202488,Jason Linardi,Content & Communication,30000.0,Jakarta Barat,Weekend Only,12,"public speaking, presentasi, live streaming host, copywriting, negosiasi",2026-09-10 17:20:48
+MHS-004,41202595,Timothy Hidayat,Admin & Operational,30000.0,Tangerang,Weekend Only,12,"canva, capcut, adobe photoshop, video editing, social media marketing",2026-09-14 19:20:48
+MHS-005,41202554,Clara Pratama,Design & Creative,45000.0,Tanjung Duren,Weekday Malam,18,"python, pandas, web development, html, css, sql dasar, git",2026-09-18 21:20:48
+MHS-006,41202574,Michael Susanto,IT & Software,45000.0,Kebon Jeruk,Weekday Malam,12,"public speaking, presentasi, live streaming host, copywriting, negosiasi",2026-09-14 14:20:48
+MHS-007,41202598,Nicholas Hidayat,Admin & Operational,40000.0,Tanjung Duren,Weekday Malam,18,"copywriting, content writer, seo dasar, riset artikel, bahasa inggris aktif",2026-09-13 23:20:48
+MHS-008,41202524,David Lolaroh,Education & Tutoring,30000.0,Tanjung Duren,Weekday Malam,18,"react, javascript, frontend development, ui/ux design, figma",2026-09-14 15:20:48
+MHS-009,41202499,Clara Pratama,Design & Creative,35000.0,Jakarta Barat,Weekday Malam,16,"canva, capcut, adobe photoshop, video editing, social media marketing",2026-09-14 21:20:48
+MHS-010,41202550,Nathan Kusuma,Admin & Operational,35000.0,Tanjung Duren,Fleksibel Paruh Waktu,15,"copywriting, content writer, seo dasar, riset artikel, bahasa inggris aktif",2026-09-11 20:20:48
+MHS-011,41202440,Evelyn Pratama,Design & Creative,30000.0,Tanjung Duren,Weekend Only,20,"react, javascript, frontend development, ui/ux design, figma",2026-09-20 22:20:48
+MHS-012,41202420,Chelsea Liem,Admin & Operational,25000.0,Tangerang,Weekend Only,18,"react, javascript, frontend development, ui/ux design, figma",2026-09-13 18:20:48
+MHS-013,41202583,Evelyn Pratama,Education & Tutoring,30000.0,Tangerang,Weekday Malam,18,"scratch, python dasar, algoritma pemrograman, matematika, mengajar anak",2026-09-10 14:20:48
+MHS-014,41202416,Stephanie Chandra,Education & Tutoring,,Jakarta Barat,Fleksibel Paruh Waktu,16,,2026-09-09 21:20:48
+MHS-015,41202525,Angelica Purnomo,Education & Tutoring,35000.0,Jakarta Barat,Weekend Only,15,"hardware pc, instalasi windows, troubleshooting jaringan, customer service",2026-09-13 22:20:48
+MHS-016,41202556,Michelle Pratama,Design & Creative,45000.0,Kebon Jeruk,Weekend Only,16,"copywriting, content writer, seo dasar, riset artikel, bahasa inggris aktif",2026-09-13 18:20:48
+MHS-017,41202533,Jessica Chandra,Design & Creative,40000.0,Kebon Jeruk,Weekday Malam,18,"public speaking, presentasi, live streaming host, copywriting, negosiasi",2026-09-15 21:20:48
+MHS-018,41202483,Chelsea Santoso,IT & Software,35000.0,Tanjung Duren,Fleksibel Paruh Waktu,18,"hardware pc, instalasi windows, troubleshooting jaringan, customer service",2026-09-19 21:20:48
+MHS-019,41202470,Grace Sutedja,Design & Creative,40000.0,Jakarta Selatan,Weekend Only,20,"react, javascript, frontend development, ui/ux design, figma",2026-09-10 16:20:48
+MHS-020,41202542,Vanessa Halim,IT & Software,40000.0,Jakarta Barat,Fleksibel Paruh Waktu,15,"python, pandas, web development, html, css, sql dasar, git",2026-09-19 19:20:48
+MHS-021,41202590,Michael Budiman,Content & Communication,35000.0,Kebon Jeruk,Weekday Malam,20,"public speaking, presentasi, live streaming host, copywriting, negosiasi",2026-09-17 23:20:48
+MHS-022,41202525,Nathan Wongso,Design & Creative,45000.0,Tangerang,Fleksibel Paruh Waktu,20,"microsoft excel, word, data entry, pengetikan, komunikasi ramah",2026-09-10 19:20:48
+MHS-023,41202551,Chelsea Purnomo,Education & Tutoring,40000.0,Jakarta Barat,Weekday Malam,20,"public speaking, presentasi, live streaming host, copywriting, negosiasi",2026-09-15 21:20:48
+MHS-024,41202491,Grace Gunawan,Education & Tutoring,45000.0,Tangerang,Weekday Malam,12,"canva, capcut, adobe photoshop, video editing, social media marketing",2026-09-20 18:20:48
+MHS-025,41202450,Samuel Hartanto,Content & Communication,45000.0,Jakarta Selatan,Weekday Malam,18,"react, javascript, frontend development, ui/ux design, figma",2026-09-11 14:20:48
+MHS-026,41202562,Jason Tan,IT & Software,30000.0,Tanjung Duren,Fleksibel Paruh Waktu,16,"canva, capcut, adobe photoshop, video editing, social media marketing",2026-09-19 21:20:48
+MHS-027,41202523,Michael Lolaroh,Education & Tutoring,45000.0,Jakarta Barat,Weekend Only,18,"canva, capcut, adobe photoshop, video editing, social media marketing",2026-09-21 19:20:48
+MHS-028,41202420,Amanda Hidayat,Content & Communication,,Tanjung Duren,Fleksibel Paruh Waktu,16,,2026-09-12 21:20:48
+MHS-029,41202477,Clara Tan,IT & Software,25000.0,Kebon Jeruk,Weekday Malam,18,"copywriting, content writer, seo dasar, riset artikel, bahasa inggris aktif",2026-09-09 15:20:48
+MHS-030,41202580,Nicholas Wijaya,Admin & Operational,30000.0,Tangerang,Fleksibel Paruh Waktu,18,"hardware pc, instalasi windows, troubleshooting jaringan, customer service",2026-09-14 15:20:48
+MHS-031,41202554,Jessica Susanto,Design & Creative,25000.0,Jakarta Selatan,Weekday Malam,16,"hardware pc, instalasi windows, troubleshooting jaringan, customer service",2026-09-18 21:20:48
+MHS-032,41202511,Brandon Purnomo,Design & Creative,35000.0,Kebon Jeruk,Weekday Malam,20,"python, pandas, web development, html, css, sql dasar, git",2026-09-11 16:20:48
+MHS-033,41202548,Brandon Chandra,Content & Communication,45000.0,Tanjung Duren,Weekend Only,20,"react, javascript, frontend development, ui/ux design, figma",2026-09-19 17:20:48
+MHS-034,41202560,Christian Tan,Education & Tutoring,40000.0,Tanjung Duren,Weekday Malam,12,"hardware pc, instalasi windows, troubleshooting jaringan, customer service",2026-09-12 20:20:48
+MHS-035,41202546,Amanda Susanto,Content & Communication,40000.0,Tanjung Duren,Weekend Only,15,"microsoft excel, word, data entry, pengetikan, komunikasi ramah",2026-09-18 22:20:48
+MHS-036,41202589,Nicholas Pratama,Admin & Operational,40000.0,Tanjung Duren,Weekday Malam,12,"microsoft excel, word, data entry, pengetikan, komunikasi ramah",2026-09-22 15:20:48
+MHS-037,41202433,Michael Hartanto,Content & Communication,30000.0,Jakarta Selatan,Fleksibel Paruh Waktu,12,"scratch, python dasar, algoritma pemrograman, matematika, mengajar anak",2026-09-21 21:20:48
+MHS-038,41202473,Daniel Gunawan,Education & Tutoring,35000.0,Jakarta Selatan,Weekday Malam,18,"python, pandas, web development, html, css, sql dasar, git",2026-09-17 22:20:48
+MHS-039,41202417,David Hidayat,IT & Software,45000.0,Jakarta Selatan,Weekend Only,15,"public speaking, presentasi, live streaming host, copywriting, negosiasi",2026-09-09 17:20:48
+MHS-040,41202425,Jennifer Santoso,Education & Tutoring,40000.0,Tanjung Duren,Fleksibel Paruh Waktu,12,"scratch, python dasar, algoritma pemrograman, matematika, mengajar anak",2026-09-15 22:20:48
+MHS-041,41202470,Timothy Hartanto,Content & Communication,30000.0,Jakarta Barat,Fleksibel Paruh Waktu,20,"canva, capcut, adobe photoshop, video editing, social media marketing",2026-09-18 16:20:48
+MHS-042,41202535,Nathan Linardi,Design & Creative,,Tanjung Duren,Fleksibel Paruh Waktu,18,,2026-09-22 21:20:48
+MHS-043,41202584,Michael Hidayat,Design & Creative,25000.0,Jakarta Barat,Fleksibel Paruh Waktu,18,"microsoft excel, word, data entry, pengetikan, komunikasi ramah",2026-09-17 22:20:48
+MHS-044,41202430,Jessica Lolaroh,Admin & Operational,35000.0,Jakarta Barat,Weekend Only,16,"microsoft excel, word, data entry, pengetikan, komunikasi ramah",2026-09-11 15:20:48
+MHS-045,41202426,Jessica Santoso,Content & Communication,45000.0,Kebon Jeruk,Weekday Malam,15,"python, pandas, web development, html, css, sql dasar, git",2026-09-11 17:20:48
+MHS-046,41202527,David Linardi,Education & Tutoring,40000.0,Tangerang,Weekday Malam,20,"copywriting, content writer, seo dasar, riset artikel, bahasa inggris aktif",2026-09-19 14:20:48
+MHS-047,41202479,Nathan Gunawan,Education & Tutoring,35000.0,Tangerang,Fleksibel Paruh Waktu,15,"canva, capcut, adobe photoshop, video editing, social media marketing",2026-09-14 21:20:48
+MHS-048,41202547,Clara Pratama,Admin & Operational,35000.0,Jakarta Selatan,Weekend Only,20,"hardware pc, instalasi windows, troubleshooting jaringan, customer service",2026-09-11 21:20:48
+MHS-049,41202489,Evelyn Setiawan,Admin & Operational,30000.0,Kebon Jeruk,Fleksibel Paruh Waktu,12,"hardware pc, instalasi windows, troubleshooting jaringan, customer service",2026-09-19 15:20:48
+MHS-050,41202580,Kevin Wongso,Content & Communication,35000.0,Jakarta Selatan,Fleksibel Paruh Waktu,16,"canva, capcut, adobe photoshop, video editing, social media marketing",2026-09-21 15:20:48
+MHS-051,41202415,Clara Wijaya,Design & Creative,25000.0,Tanjung Duren,Weekend Only,18,"scratch, python dasar, algoritma pemrograman, matematika, mengajar anak",2026-09-21 23:20:48
+MHS-052,41202594,Jessica Purnomo,Admin & Operational,45000.0,Kebon Jeruk,Weekend Only,16,"scratch, python dasar, algoritma pemrograman, matematika, mengajar anak",2026-09-13 22:20:48
+MHS-053,41202436,Amanda Liem,IT & Software,40000.0,Jakarta Barat,Weekday Malam,20,"hardware pc, instalasi windows, troubleshooting jaringan, customer service",2026-09-09 18:20:48
+MHS-054,41202488,David Purnomo,IT & Software,25000.0,Kebon Jeruk,Weekend Only,15,"canva, capcut, adobe photoshop, video editing, social media marketing",2026-09-21 20:20:48
+MHS-055,41202534,Daniel Purnomo,Design & Creative,45000.0,Tanjung Duren,Fleksibel Paruh Waktu,20,"hardware pc, instalasi windows, troubleshooting jaringan, customer service",2026-09-11 22:20:48

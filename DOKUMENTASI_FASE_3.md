@@ -105,8 +105,8 @@ Sistem memisahkan secara tegas antara modul pengumpulan/penyucian data (_Offline
 | `work_hours`           | Float       | Beban jam kerja per minggu                   | `20.0` (dapat memuat NaN)                       |
 | `work_system`          | Categorical | Sistem kehadiran kerja                       | `Remote`, `Hybrid`, `Onsite` (dapat memuat NaN) |
 | `work_required_skills` | Text        | Deskripsi syarat keahlian dari portal        | `python, django, sql, git`                      |
-| `source_portal`        | String      | Sumber portal kerja asal                     | `Kalibrr`, `KitaLulus`, `Glints`, `Loker.id`   |
-| `url`                  | String      | Tautan menuju postingan asli (100% HTTP 200) | `https://www.kalibrr.com/c/.../jobs/...`       |
+| `source_portal`        | String      | Sumber portal kerja asal                     | `LinkedIn`, `Glints`, `JobStreet`, `KitaLulus`  |
+| `url`                  | String      | Tautan menuju postingan asli                 | `https://www.glints.com/jobs/1001`              |
 | `date_posted`          | Date        | Tanggal publikasi lowongan                   | `2026-03-15`                                    |
 
 ### 3.2 Dataset Bersih Hasil Seleksi & Imputasi (`clean_jobs_dataset.csv`)
