@@ -39,19 +39,19 @@ Sistem memisahkan secara tegas antara modul pengumpulan/penyucian data (_Offline
 
 ```text
 [ SUMBER DATA MENTAH ]
-  ├── 540 Data Lowongan Kerja Hasil Scraping ('raw_job_postings.csv')
+  ├── 535 Data Lowongan Kerja Hasil Scraping Resmi ('raw_job_postings.csv')
   └── 55 Data Kuesioner Preferensi Mahasiswa UKRIDA ('raw_student_preferences.csv')
         │
         ▼
 [ TAHAP 1: SELEKSI & FILTERING DATA 6 LAPISAN ]
-  ├── L1: Deduplikasi Data (ID, URL, & Cross-Platform)             -> Tereduksi 70 baris
-  ├── L2: Negative Keyword Filtering (Eliminasi Full-time/Magang)  -> Tereduksi 70 baris
-  ├── L3: Student Feasibility Filtering (Jam Kerja > 30 jam)       -> Tereduksi 44 baris
-  ├── L4: Salary Anomaly & Anti-Scam (< Rp10rb / > Rp200rb/jam)    -> Tereduksi 1 baris
-  ├── L5: Geographic Filtering (Non-Jabodetabek Onsite)            -> Tereduksi 61 baris
-  └── L6: Completeness Sanity Check (Judul / URL Kosong)           -> Tereduksi 1 baris
+  ├── L1: Deduplikasi Data (ID, URL, & Cross-Platform)             -> Tereduksi 130 baris
+  ├── L2: Negative Keyword Filtering (Pure Part-Time: Buang Freelance/Fulltime/Magang) -> Tereduksi 13 baris
+  ├── L3: Student Feasibility Filtering (Jam Kerja > 30 jam)       -> Tereduksi 1 baris
+  ├── L4: Salary Anomaly & Anti-Scam (< Rp10rb / > Rp200rb/jam)    -> Tereduksi 2 baris
+  ├── L5: Geographic Filtering (Non-Jabodetabek Onsite)            -> Tereduksi 166 baris
+  └── L6: Completeness & Live Link Sanity Check (Bebas 404)        -> Tereduksi 2 baris
         │
-        ▼ Sisa: 293 Lowongan Kerja Valid
+        ▼ Sisa: 221 Lowongan Kerja Valid (100% HTTP 200 Aktif, Jabodetabek / Remote)
 [ TAHAP 2: PENANGANAN MISSING VALUES ]
   ├── Job Postings: Imputasi Median per Kategori untuk 'work_salaryperhour' & 'work_hours'
   ├── Job Postings: Imputasi Modus ('Onsite') untuk 'work_system'
@@ -81,9 +81,9 @@ Sistem memisahkan secara tegas antara modul pengumpulan/penyucian data (_Offline
         │
         ▼
 [ ARTEFAK AKHIR FASE 3 ]
-  ├── 'clean_jobs_dataset.csv' (293 lowongan terverifikasi)
+  ├── 'clean_jobs_dataset.csv' (221 lowongan part-time terverifikasi)
   ├── 'clean_students_dataset.csv' (52 profil preferensi mahasiswa)
-  └── 'decision_matrix_sample.csv' (293 alternatif x 13 atribut fitur)
+  └── 'decision_matrix_sample.csv' (221 alternatif x 13 atribut fitur)
         │
         └──> SIAP DIUMPANKAN KE FASE 4 (MODELING SMARTER)
 ```
@@ -97,26 +97,26 @@ Sistem memisahkan secara tegas antara modul pengumpulan/penyucian data (_Offline
 | Nama Atribut           | Tipe Data   | Deskripsi                                    | Contoh Nilai                                    |
 | ---------------------- | ----------- | -------------------------------------------- | ----------------------------------------------- |
 | `job_id`               | String      | Pengenal unik lowongan dari scraper          | `JOB-1001`                                      |
-| `job_title`            | String      | Nama posisi pekerjaan mentah                 | `Junior Python Developer Part-Time`             |
-| `company_name`         | String      | Nama instansi / perusahaan penyedia lowongan | `PT Solusi Digital Nusantara`                   |
-| `job_category`         | Categorical | Kategori bidang pekerjaan                    | `IT & Software`, `Design & Creative`            |
-| `work_salaryperhour`   | Float       | Penawaran honor per jam (Rupiah) mentah      | `45000.0` (dapat memuat NaN)                    |
+| `job_title`            | String      | Nama posisi pekerjaan mentah                 | `Barista Cafe Part-Time`, `Guru Privat Matematika` |
+| `company_name`         | String      | Nama instansi / perusahaan penyedia lowongan | `PT Mitra Kuliner Nusantara`                    |
+| `job_category`         | Categorical | 10 Kategori bidang pekerjaan portal kerja    | `Education & Tutoring`, `Food & Beverage (F&B)` |
+| `work_salaryperhour`   | Float       | Penawaran honor per jam (Rupiah) mentah      | `35000.0` (dapat memuat NaN)                    |
 | `work_job_location`    | String      | Teks lokasi mentah sebelum standarisasi      | `Jakbar`, `Tanjung Duren`, `Surabaya`           |
-| `work_hours`           | Float       | Beban jam kerja per minggu                   | `20.0` (dapat memuat NaN)                       |
+| `work_hours`           | Float       | Beban jam kerja per minggu                   | `18.0` (dapat memuat NaN)                       |
 | `work_system`          | Categorical | Sistem kehadiran kerja                       | `Remote`, `Hybrid`, `Onsite` (dapat memuat NaN) |
-| `work_required_skills` | Text        | Deskripsi syarat keahlian dari portal        | `python, django, sql, git`                      |
-| `source_portal`        | String      | Sumber portal kerja asal                     | `LinkedIn`, `Glints`, `JobStreet`, `KitaLulus`  |
-| `url`                  | String      | Tautan menuju postingan asli                 | `https://www.glints.com/jobs/1001`              |
-| `date_posted`          | Date        | Tanggal publikasi lowongan                   | `2026-03-15`                                    |
+| `work_required_skills` | Text        | Deskripsi syarat keahlian dari portal        | `espresso, manual brew, ramah, kebersihan bar`  |
+| `source_portal`        | String      | Sumber portal kerja resmi                    | `Glints`, `Loker.id`, `KitaLulus`, `Kalibrr`    |
+| `url`                  | String      | Tautan valid menuju postingan asli (HTTP 200)| `https://glints.com/id/opportunities/jobs/...`  |
+| `date_posted`          | Date        | Tanggal publikasi lowongan                   | `2026-03-20`                                    |
 
 ### 3.2 Dataset Bersih Hasil Seleksi & Imputasi (`clean_jobs_dataset.csv`)
 
 | Nama Atribut            | Tipe Data   | Deskripsi                               | Perubahan / Transformasi                        |
 | ----------------------- | ----------- | --------------------------------------- | ----------------------------------------------- |
 | `job_id`                | String      | Pengenal unik yang lolos deduplikasi    | Bersih dari duplikat                            |
-| `job_title`             | String      | Judul posisi part-time terverifikasi    | Bebas dari keyword `full-time`/`magang`         |
+| `job_title`             | String      | Judul posisi part-time terverifikasi    | Bebas dari `full-time`, `freelance`, `magang`   |
 | `company_name`          | String      | Nama instansi penyedia kerja            | Standarisasi format string                      |
-| `job_category`          | Categorical | Kategori bidang terstandarisasi         | 5 kategori standar                              |
+| `job_category`          | Categorical | Kategori bidang terstandarisasi         | 10 kategori industri resmi                      |
 | `work_salaryperhour`    | Float       | Upah per jam terimputasi & ter-bounding | Imputasi median kategori, dibatasi [10k, 150k]  |
 | `work_job_location`     | String      | Lokasi kerja terstandarisasi            | Diseragamkan ke area Jabodetabek / Remote       |
 | `work_hours`            | Float       | Jam kerja per minggu terimputasi        | Imputasi median kategori, dibatasi $\le 30$ jam |
@@ -124,51 +124,51 @@ Sistem memisahkan secara tegas antara modul pengumpulan/penyucian data (_Offline
 | `work_system_encoded`   | Integer     | Transformasi numerik sistem kerja       | Remote = 1, Hybrid = 2, Onsite = 3              |
 | `work_required_skills`  | Text        | Teks keahlian asli terimputasi          | Imputasi default jika kosong                    |
 | `clean_required_skills` | Text        | Teks keahlian hasil NLP preprocessing   | Huruf kecil, tanpa simbol & stopword            |
-| `source_portal`         | String      | Portal asal pekerjaan                   | Informasi pelacakan provenance data             |
-| `url`                   | String      | Tautan valid ke portal                  | Terverifikasi tidak kosong                      |
+| `source_portal`         | String      | Portal asal pekerjaan                   | Glints, Loker.id, KitaLulus, Kalibrr            |
+| `url`                   | String      | Tautan live terverifikasi (HTTP 200)    | 100% URL aktif & bebas bot/authwall/404         |
 | `date_posted`           | Date        | Tanggal posting lowongan                | Format YYYY-MM-DD                               |
 
 ### 3.3 Matriks Keputusan Sampel (`decision_matrix_sample.csv`)
 
-Matriks berdimensi $293 \times 13$ ini memuat 5 kriteria utama yang dihitung terhadap profil mahasiswa evaluator:
+Matriks berdimensi $221 \times 13$ ini memuat 5 kriteria utama yang dihitung terhadap profil mahasiswa evaluator:
 
 | Kolom Fitur          | Sifat   |   Rentang Nilai   | Formula Matematika                                                                           |
-| -------------------- | ------- | :---------------: | -------------------------------------------------------------------------------------------- | ------------------------------------------------- | ------------- |
+| -------------------- | ------- | :---------------: | -------------------------------------------------------------------------------------------- |
 | `C1_kategori`        | Benefit | $[0{,}3 ; 1{,}0]$ | $1{,}0$ jika kategori sama dengan minat mahasiswa, $0{,}3$ jika berbeda                      |
 | `C2_rasio_gaji`      | Benefit |    $\ge 0{,}0$    | $\frac{\text{work\_salaryperhour}}{\text{min\_expected\_salary}}$                            |
 | `C3_lokasi`          | Benefit | $[0{,}4 ; 1{,}0]$ | $1{,}0$ (Remote / Se-wilayah), $0{,}8$ (Sesama Jakarta), $0{,}4$ (Wilayah Lain)              |
-| `C4_jam_kerja`       | Benefit | $[0{,}0 ; 1{,}0]$ | $\max\left(0{,}0, 1{,}0 - \frac{                                                             | \text{work_hours} - \text{student_expected_hours} | }{20}\right)$ |
+| `C4_jam_kerja`       | Benefit | $[0{,}0 ; 1{,}0]$ | $\max\left(0{,}0, 1{,}0 - \frac{|\text{work\_hours} - \text{student\_expected\_hours}|}{20}\right)$ |
 | `C5_kemiripan_skill` | Benefit | $[0{,}0 ; 1{,}0]$ | $\text{Cosine Similarity}(\vec{V}_{\text{mahasiswa}}, \vec{V}_{\text{lowongan}})$ via TF-IDF |
 
 ---
 
 ## 4. Evaluasi Corong Penyaringan Data (6-Layer Filtering Funnel)
 
-Berdasarkan eksekusi pada 540 data mentah awal, berikut statistik eliminasi data baris per baris:
+Berdasarkan eksekusi pada 535 data mentah awal dari 4 portal resmi, berikut statistik eliminasi data baris per baris:
 
 ```text
 ========================================================================================
 Tahapan Filtering                                  | Sisa Baris | Tereduksi | Persentase
 ----------------------------------------------------------------------------------------
-1. Total Data Mentah Awal                          | 540        | 0         | 100.0%
-2. Pasca Deduplikasi (Exact & Cross-Platform)      | 470        | 70        | 87.0%
-3. Pasca Filter Kata Kunci Negatif (Non-Part-Time) | 400        | 70        | 74.1%
-4. Pasca Filter Kelayakan Beban Mahasiswa (<= 30)  | 356        | 44        | 65.9%
-5. Pasca Filter Anomali Gaji & Anti-Scam           | 355        | 1         | 65.7%
-6. Pasca Filter Geografis (Jabodetabek / Remote)   | 294        | 61        | 54.4%
-7. Pasca Filter Kelengkapan Data Esensial          | 293        | 1         | 54.3%
+1. Total Data Mentah Awal                          | 535        | 0         | 100.0%
+2. Pasca Deduplikasi (Exact & Cross-Platform)      | 405        | 130       | 75.7%
+3. Pasca Filter Kata Kunci Negatif (Pure Part-Time)| 392        | 13        | 73.3%
+4. Pasca Filter Kelayakan Beban Mahasiswa (<= 30)  | 391        | 1         | 73.1%
+5. Pasca Filter Anomali Gaji & Anti-Scam           | 389        | 2         | 72.7%
+6. Pasca Filter Geografis (Jabodetabek / Remote)   | 223        | 166       | 41.7%
+7. Pasca Filter Kelengkapan Data & Validasi Link   | 221        | 2         | 41.3%
 ========================================================================================
-Total Data Bersih Akhir: 293 Lowongan (Tingkat Retensi: 54,3% | Tereliminasi: 45,7%)
+Total Data Bersih Akhir: 221 Lowongan (Tingkat Retensi: 41,3% | Tereliminasi: 58,7%)
 ```
 
 ### Rincian Alasan Eliminasi:
 
-1. **Deduplikasi (70 data):** Menghindari bias pembobotan ganda dari perusahaan yang memposting lowongan identik di LinkedIn dan JobStreet sekaligus.
-2. **Kata Kunci Negatif (70 data):** Portal kerja sering mencampuradukkan keyword _part-time_ dengan lowongan _Full-Time Staff_ atau program _Internship_ berdurasi 6 bulan yang mewajibkan cuti akademik.
-3. **Kelayakan Jam Kerja (44 data):** Lowongan yang menuntut $\gt 30$ jam/minggu (bahkan hingga 40–50 jam/minggu) dieliminasi karena mustahil dijalankan mahasiswa UKRIDA yang memiliki beban SKS perkuliahan reguler.
-4. **Anomali Gaji & Anti-Scam (1 data):** Menghilangkan lowongan berskema komisi murni tanpa gaji dasar (MLM) atau penipuan berbayar berbasis klik iklan.
-5. **Geografis Jabodetabek (61 data):** Menghilangkan lowongan _onsite_ di luar daerah (seperti Surabaya, Bandung, Bali) yang tidak dapat dihadiri secara fisik oleh mahasiswa UKRIDA di Tanjung Duren, Jakarta Barat.
-6. **Kelengkapan Esensial (1 data):** Menghapus data yang kehilangan judul pekerjaan atau tautan lamaran.
+1. **Deduplikasi (130 data):** Menghindari bias pembobotan ganda dari duplikasi ID, URL, maupun perusahaan yang memposting lowongan identik di lintas portal sekaligus.
+2. **Kata Kunci Negatif (13 data):** Mengeliminasi peran non-part-time: lowongan _Full-Time Staff_, _Freelance_ (proyek lepas), _Supervisor_, _Manager_, atau program _Internship / Magang_ yang mewajibkan komitmen penuh.
+3. **Kelayakan Jam Kerja (1 data):** Lowongan yang menuntut $\gt 30$ jam/minggu (bahkan hingga 40–48 jam/minggu) dieliminasi karena mustahil dijalankan mahasiswa UKRIDA yang memiliki beban SKS perkuliahan reguler.
+4. **Anomali Gaji & Anti-Scam (2 data):** Menghilangkan lowongan berskema komisi murni tanpa gaji dasar (MLM) atau penipuan berbayar berbasis klik iklan.
+5. **Geografis Jabodetabek (166 data):** Menghilangkan lowongan _onsite_ di luar daerah (seperti Surabaya, Bandung, Bali, Medan) yang tidak dapat dihadiri secara fisik oleh mahasiswa UKRIDA di Tanjung Duren, Jakarta Barat.
+6. **Kelengkapan Esensial & Validasi Link (2 data):** Memastikan seluruh data memiliki judul pekerjaan dan tautan lamaran aktif HTTP 200 (mengeliminasi postingan kedaluwarsa yang diarahkan ke 404).
 
 ---
 
@@ -213,9 +213,9 @@ $$
 
 **Distribusi Data Bersih Pasca Encoding:**
 
-- Remote (1): 171 lowongan (58,4%)
-- Onsite (3): 78 lowongan (26,6%)
-- Hybrid (2): 44 lowongan (15,0%)
+- Onsite (3): 138 lowongan (62,4%)
+- Hybrid (2): 55 lowongan (24,9%)
+- Remote (1): 28 lowongan (12,7%)
 
 ---
 
@@ -254,7 +254,7 @@ $$\text{Cosine Similarity}(\vec{V}_S, \vec{V}_A) = \frac{\vec{V}_S \cdot \vec{V}
 
 ## 8. Konstruksi Matriks Keputusan $M \times N$
 
-Produk pamungkas dari Fase 3 adalah **Matriks Keputusan $M \times N$** ($293 \text{ baris} \times 13 \text{ kolom}$), di mana setiap baris merepresentasikan alternatif lowongan ($A_i$) dan kolom memuat nilai numerik dari 5 kriteria evaluasi ($C_1 - C_5$):
+Produk pamungkas dari Fase 3 adalah **Matriks Keputusan $M \times N$** ($221 \text{ baris} \times 13 \text{ kolom}$), di mana setiap baris merepresentasikan alternatif lowongan ($A_i$) dan kolom memuat nilai numerik dari 5 kriteria evaluasi ($C_1 - C_5$):
 
 $$
 \mathbf{X} = \begin{bmatrix}
@@ -269,11 +269,11 @@ $$
 
 | Job ID     | Judul Lowongan                     | $C_1$ (Kategori) | $C_2$ (Rasio Gaji) | $C_3$ (Lokasi) | $C_4$ (Jam Kerja) | $C_5$ (Skill Cosine) |
 | ---------- | ---------------------------------- | :--------------: | :----------------: | :------------: | :---------------: | :------------------: |
-| `JOB-1002` | Junior Python Developer Part-Time  |      1.0000      |       1.8000       |     1.0000     |      0.9000       |        0.3819        |
-| `JOB-1014` | Data Entry & Web Scraper Assistant |      1.0000      |       1.4000       |     1.0000     |      0.9000       |        0.2541        |
-| `JOB-1033` | Graphic Designer Social Media      |      0.3000      |       1.2000       |     1.0000     |      1.0000       |        0.0000        |
-| `JOB-1058` | Live Streaming Host TikTok         |      0.3000      |       1.4000       |     0.8000     |      0.9000       |        0.0842        |
-| `JOB-1102` | WordPress & Web Administrator      |      1.0000      |       1.4000       |     1.0000     |      0.8500       |        0.1250        |
+| `JOB-1118` | Part Time English Teacher          |      1.0000      |       1.1429       |     1.0000     |      0.9000       |        0.0611        |
+| `JOB-1155` | Barista Cafe Specialty Coffee      |      0.3000      |       1.0000       |     1.0000     |      0.9000       |        0.1484        |
+| `JOB-1246` | Data Entry & Admin Office Support  |      0.3000      |       0.8571       |     1.0000     |      0.8000       |        0.0000        |
+| `JOB-1085` | Tutor Matematika & IPA Privat      |      1.0000      |       1.2857       |     0.8000     |      1.0000       |        0.0516        |
+| `JOB-1007` | Graphic Designer Part-Time         |      0.3000      |       1.0000       |     1.0000     |      0.9000       |        0.0000        |
 
 ---
 
@@ -281,9 +281,9 @@ $$
 
 Fase 3 (Data Preparation) telah berhasil diselesaikan dengan capaian sebagai berikut:
 
-1. Menghasilkan **293 lowongan kerja part-time bersih** dari 540 data mentah awal melalui penyaringan 6 lapisan ilmiah.
+1. Menghasilkan **221 lowongan kerja part-time murni dan bersih** (bebas dari freelance, full-time, magang, dan peran manajerial) dari 535 data mentah awal melalui penyaringan 6 lapisan ilmiah di 10 kategori industri beragam.
 2. Memvalidasi **52 data preferensi mahasiswa UKRIDA** yang bebas dari _missing values_ dan telah dianonimisasi untuk privasi.
 3. Mengonversi teks keahlian menjadi nilai numerik kontinu melalui **NLP TF-IDF & Cosine Similarity** ($C_5$).
-4. Membentuk **Matriks Keputusan $M \times N$** yang tersimpan pada `decision_matrix_sample.csv`.
+4. Membentuk **Matriks Keputusan $M \times N$** ($221 \times 13$) yang tersimpan pada `decision_matrix_sample.csv`.
 
 Dengan terbentuknya matriks keputusan ini, **tahap Data Preparation secara resmi selesai** dan seluruh data telah terverifikasi secara matematis siap diolah pada **Fase 4 (Modeling)** untuk pembobotan ROC (_Rank Order Centroid_) dan kalkulasi fungsi utilitas linear SMARTER.

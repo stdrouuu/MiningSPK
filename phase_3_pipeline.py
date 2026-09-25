@@ -53,14 +53,18 @@ def clean_text_nlp(text):
     return " ".join(filtered_tokens)
 
 
-def standardize_location(loc_str):
+def standardize_location(loc_str, work_system=""):
     """
-    Standardisasi Format Teks Lokasi Jabodetabek
+    Standardisasi Format Teks Lokasi Jabodetabek & Remote
     """
+    if str(work_system).strip().lower() == "remote":
+        return "Remote"
     if pd.isna(loc_str):
-        return "Unknown"
+        return "Remote"
     
     loc_clean = str(loc_str).strip().lower()
+    if "remote" in loc_clean:
+        return "Remote"
     
     if any(k in loc_clean for k in ["jakbar", "jkt barat", "tanjung duren", "grogol", "kebon jeruk", "jakarta barat"]):
         return "Jakarta Barat"
@@ -82,10 +86,8 @@ def standardize_location(loc_str):
         return "Bekasi"
     elif "bogor" in loc_clean:
         return "Bogor"
-    elif "remote" in loc_clean:
-        return "Remote"
     else:
-        return str(loc_str).title()
+        return "Non-Jabodetabek"
 
 
 def run_phase_3_pipeline():
@@ -129,9 +131,14 @@ def run_phase_3_pipeline():
     dropped_dedup = before_dedup - len(curr_df)
     funnel_log.append(("2. Pasca Deduplikasi (Exact & Cross-Platform)", len(curr_df), dropped_dedup))
     
-    # Lapisan 2: Negative Keyword Filtering
+    # Lapisan 2: Negative Keyword Filtering (Pure Part-Time: Eliminasi Full-Time, Freelance, Magang/Internship, Manajerial)
     before_neg = len(curr_df)
-    neg_regex = r'full[-\s]?time|magang|internship|volunteer|management trainee|kontrak tahunan'
+    neg_regex = (
+        r'\bfull[-\s]?time\b|\bpenuh waktu\b|\bpermanent\b|\btetap\b|\bpurna waktu\b|'
+        r'\bfreelance\b|\blepas\b|\bproyek lepas\b|\bproject[-\s]?based\b|'
+        r'\bsupervisor\b|\bmanager\b|\bmanajer\b|\bdirektur\b|\bdirector\b|\bhead of\b|\blead(?! generating)\b|'
+        r'\bintern\b|\binternship\b|\bmagang\b|\bvolunteer\b|\bmanagement trainee\b|\bkontrak tahunan\b'
+    )
     curr_df = curr_df[~curr_df["job_title"].astype(str).str.contains(neg_regex, case=False, na=False)]
     dropped_neg = before_neg - len(curr_df)
     funnel_log.append(("3. Pasca Filter Kata Kunci Negatif (Non-Part-Time)", len(curr_df), dropped_neg))
@@ -161,19 +168,27 @@ def run_phase_3_pipeline():
         "jakarta", "jakbar", "jaksel", "jakpus", "jaktim", "jakut", "tanjung duren",
         "grogol", "kebon jeruk", "tangerang", "tangsel", "depok", "bekasi", "bogor"
     ]
+    non_jabo_cities = [
+        "bandung", "surabaya", "semarang", "yogyakarta", "jogja", "bali", "denpasar",
+        "medan", "malang", "solo", "surakarta", "kediri", "cirebon", "sukabumi", "sidoarjo"
+    ]
     is_remote = curr_df["work_system"].astype(str).str.lower().str.strip() == "remote"
     loc_lower = curr_df["work_job_location"].astype(str).str.lower()
     is_jabo = loc_lower.apply(lambda x: any(k in x for k in valid_jabo_keywords))
-    curr_df = curr_df[is_remote | is_jabo]
+    is_non_jabo = loc_lower.apply(lambda x: any(k in x for k in non_jabo_cities))
+    curr_df = curr_df[(is_jabo & ~is_non_jabo) | (is_remote & ~is_non_jabo) | (is_remote & is_jabo)]
     dropped_geo = before_geo - len(curr_df)
     funnel_log.append(("6. Pasca Filter Geografis (Jabodetabek / Remote)", len(curr_df), dropped_geo))
     
-    # Lapisan 6: Completeness Sanity Check
+    # Lapisan 6: Completeness & Live Link Sanity Check
     before_comp = len(curr_df)
     curr_df = curr_df[curr_df["job_title"].notna() & (curr_df["job_title"].astype(str).str.strip() != "")]
     curr_df = curr_df[curr_df["url"].notna() & (curr_df["url"].astype(str).str.strip() != "")]
+    # Eliminasi link lowongan yang telah kedaluwarsa / ditutup oleh recruiter (mengarahkan ke /id/404)
+    expired_job_ids = ["JOB-1006", "JOB-1220"]
+    curr_df = curr_df[~curr_df["job_id"].isin(expired_job_ids)]
     dropped_comp = before_comp - len(curr_df)
-    funnel_log.append(("7. Pasca Filter Kelengkapan Data Esensial", len(curr_df), dropped_comp))
+    funnel_log.append(("7. Pasca Filter Kelengkapan Data Esensial & Validasi Link", len(curr_df), dropped_comp))
     
     # Cetak Tabel Corong (Funnel)
     print("\n--- RINGKASAN CORONG FILTERING (DATA FUNNEL SUMMARY) ---")
@@ -223,8 +238,13 @@ def run_phase_3_pipeline():
     print("\n[LANGKAH 4] Standardisasi Format & Batas Logis Outlier...")
     
     # Standardisasi Lokasi
-    curr_df["work_job_location_clean"] = curr_df["work_job_location"].apply(standardize_location)
+    curr_df["work_job_location_clean"] = curr_df.apply(
+        lambda r: standardize_location(r["work_job_location"], r["work_system"]), axis=1
+    )
     df_stud_clean["student_location_clean"] = df_stud_clean["student_location"].apply(standardize_location)
+    
+    # Filter ketat batas akhir: Pastikan tidak ada lokasi "Non-Jabodetabek" yang tersisa
+    curr_df = curr_df[curr_df["work_job_location_clean"] != "Non-Jabodetabek"]
     
     # Capping Jam Kerja (maks 30 jam)
     curr_df["work_hours"] = curr_df["work_hours"].clip(upper=30.0)

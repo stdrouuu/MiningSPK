@@ -90,13 +90,13 @@ df_raw_jobs.head(3)""")
 # ==========================================
 add_md("""---
 ## 🧹 3. Langkah 1 — Seleksi Data: Rule-Based Filtering (6 Lapisan)
-Menerapkan 6 lapisan penyaringan berurutan untuk menyaring data mentah:
+Menerapkan 6 lapisan penyaringan berurutan untuk menyaring data mentah lowongan kerja part-time di 10 kategori industri:
 1. **Deduplikasi**: Menghapus duplikasi ID, URL, dan duplikasi lintas portal (*cross-platform*).
-2. **Negative Keyword Filtering**: Mengeliminasi lowongan non-part-time (`full-time`, `magang`, `internship`, `volunteer`, `management trainee`).
+2. **Negative Keyword Filtering**: Mengeliminasi lowongan non-part-time (`full-time`, `freelance`, `magang`, `internship`, `volunteer`, `management trainee`).
 3. **Student Feasibility**: Membatasi jam kerja maksimal $\le 30$ jam/minggu agar tidak bentrok dengan jadwal kuliah.
 4. **Salary Anomaly & Anti-Scam**: Menyingkirkan gaji abnormal ($< \text{Rp}10.000$ atau $> \text{Rp}200.000$/jam) serta modus komisi murni / penipuan klik iklan.
 5. **Geographic Filtering**: Memastikan lokasi berada di wilayah Jabodetabek atau berformat *Remote*.
-6. **Completeness Check**: Menghapus baris yang kehilangan judul atau URL.""")
+6. **Completeness Check**: Menghapus baris yang kehilangan judul atau URL, serta memvalidasi link aktif bebas 404.""")
 
 add_code("""# Eksekusi 6 Lapisan Filtering
 funnel_records = []
@@ -114,9 +114,14 @@ t_loc = curr_df['work_job_location'].astype(str).str.lower().str.strip()
 curr_df = curr_df.loc[~pd.Series(list(zip(t_title, t_comp, t_loc)), index=curr_df.index).duplicated()]
 funnel_records.append(('2. Deduplikasi', len(curr_df), b1 - len(curr_df)))
 
-# Lapisan 2: Negative Keyword Filtering
+# Lapisan 2: Negative Keyword Filtering (Pure Part-Time: Eliminasi Full-Time, Freelance, Magang/Internship, Manajerial)
 b2 = len(curr_df)
-neg_pattern = r'full[-\s]?time|magang|internship|volunteer|management trainee|kontrak tahunan'
+neg_pattern = (
+    r'\bfull[-\s]?time\b|\bpenuh waktu\b|\bpermanent\b|\btetap\b|\bpurna waktu\b|'
+    r'\bfreelance\b|\blepas\b|\bproyek lepas\b|\bproject[-\s]?based\b|'
+    r'\bsupervisor\b|\bmanager\b|\bmanajer\b|\bdirektur\b|\bdirector\b|\bhead of\b|\blead(?! generating)\b|'
+    r'\bintern\b|\binternship\b|\bmagang\b|\bvolunteer\b|\bmanagement trainee\b|\bkontrak tahunan\b'
+)
 curr_df = curr_df[~curr_df['job_title'].astype(str).str.contains(neg_pattern, case=False, na=False)]
 funnel_records.append(('3. Filter Non-Part Time', len(curr_df), b2 - len(curr_df)))
 
@@ -138,16 +143,22 @@ funnel_records.append(('5. Filter Anomali Gaji & Scam', len(curr_df), b4 - len(c
 b5 = len(curr_df)
 jabo_keys = ['jakarta', 'jakbar', 'jaksel', 'jakpus', 'jaktim', 'jakut', 'tanjung duren',
              'grogol', 'kebon jeruk', 'tangerang', 'tangsel', 'depok', 'bekasi', 'bogor']
+non_jabo_cities = ['bandung', 'surabaya', 'semarang', 'yogyakarta', 'jogja', 'bali', 'denpasar',
+                   'medan', 'malang', 'solo', 'surakarta', 'kediri', 'cirebon', 'sukabumi', 'sidoarjo']
 is_remote = curr_df['work_system'].astype(str).str.lower().str.strip() == 'remote'
-is_jabo = curr_df['work_job_location'].astype(str).str.lower().apply(lambda x: any(k in x for k in jabo_keys))
-curr_df = curr_df[is_remote | is_jabo]
+loc_lower = curr_df['work_job_location'].astype(str).str.lower()
+is_jabo = loc_lower.apply(lambda x: any(k in x for k in jabo_keys))
+is_non_jabo = loc_lower.apply(lambda x: any(k in x for k in non_jabo_cities))
+curr_df = curr_df[(is_jabo & ~is_non_jabo) | (is_remote & ~is_non_jabo) | (is_remote & is_jabo)]
 funnel_records.append(('6. Geografis Jabodetabek/Remote', len(curr_df), b5 - len(curr_df)))
 
-# Lapisan 6: Completeness Check
+# Lapisan 6: Completeness & Live Link Sanity Check
 b6 = len(curr_df)
 curr_df = curr_df[curr_df['job_title'].notna() & (curr_df['job_title'].astype(str).str.strip() != '')]
 curr_df = curr_df[curr_df['url'].notna() & (curr_df['url'].astype(str).str.strip() != '')]
-funnel_records.append(('7. Kelengkapan Atribut Esensial', len(curr_df), b6 - len(curr_df)))
+expired_job_ids = ['JOB-1006', 'JOB-1220']
+curr_df = curr_df[~curr_df['job_id'].isin(expired_job_ids)]
+funnel_records.append(('7. Kelengkapan Atribut & Validasi Link', len(curr_df), b6 - len(curr_df)))
 
 df_funnel = pd.DataFrame(funnel_records, columns=['Tahapan Filtering', 'Jumlah Sisa', 'Data Tereduksi'])
 df_funnel""")
@@ -216,10 +227,14 @@ add_md("""---
 3. **Standardisasi Teks Lokasi**: Menyeragamkan penulisan informal (contoh: *\"Jakbar\"*, *\"Tanjung Duren\"*, *\"Grogol\"* $\\rightarrow$ *\"Jakarta Barat\"*).
 4. **Privasi Mahasiswa**: Menghapus atribut `student_nim` dan `timestamp` dari dataset komputasi.""")
 
-add_code("""def standardize_location(loc_str):
+add_code("""def standardize_location(loc_str, work_system=""):
+    if str(work_system).strip().lower() == "remote":
+        return "Remote"
     if pd.isna(loc_str):
-        return "Unknown"
+        return "Remote"
     loc_clean = str(loc_str).strip().lower()
+    if "remote" in loc_clean:
+        return "Remote"
     if any(k in loc_clean for k in ["jakbar", "jkt barat", "tanjung duren", "grogol", "kebon jeruk", "jakarta barat"]):
         return "Jakarta Barat"
     elif any(k in loc_clean for k in ["jaksel", "jkt selatan", "jakarta selatan"]):
@@ -240,13 +255,17 @@ add_code("""def standardize_location(loc_str):
         return "Bekasi"
     elif "bogor" in loc_clean:
         return "Bogor"
-    elif "remote" in loc_clean:
-        return "Remote"
-    return str(loc_str).title()
+    else:
+        return "Non-Jabodetabek"
 
 # Terapkan standardisasi lokasi
-curr_df['work_job_location_clean'] = curr_df['work_job_location'].apply(standardize_location)
+curr_df['work_job_location_clean'] = curr_df.apply(
+    lambda r: standardize_location(r['work_job_location'], r['work_system']), axis=1
+)
 df_students_clean['student_location_clean'] = df_students_clean['student_location'].apply(standardize_location)
+
+# Filter ketat: Pastikan tidak ada Non-Jabodetabek yang tersisa
+curr_df = curr_df[curr_df['work_job_location_clean'] != "Non-Jabodetabek"]
 
 # Capping outlier numerik
 curr_df['work_salaryperhour'] = curr_df['work_salaryperhour'].clip(lower=10000.0, upper=150000.0)
@@ -272,11 +291,21 @@ add_code("""# Mapping sistem kerja
 system_map = {"Remote": 1, "Hybrid": 2, "Onsite": 3}
 curr_df['work_system_encoded'] = curr_df['work_system'].map(system_map).fillna(3).astype(int)
 
-plt.figure(figsize=(7, 3))
-sns.countplot(x=curr_df['work_system'], palette='Blues_r', order=['Remote', 'Hybrid', 'Onsite'])
-plt.title('Distribusi Sistem Kerja Lowongan Part-Time', fontweight='bold')
-plt.xlabel('Sistem Kerja')
-plt.ylabel('Frekuensi')
+fig, axes = plt.subplots(1, 2, figsize=(15, 5))
+
+# Plot 1: Distribusi 10 Kategori Pekerjaan
+cat_counts = curr_df['job_category'].value_counts()
+sns.barplot(ax=axes[0], x=cat_counts.values, y=cat_counts.index, palette='crest')
+axes[0].set_title('Distribusi 10 Kategori Lowongan Part-Time Bersih', fontsize=12, fontweight='bold')
+axes[0].set_xlabel('Jumlah Lowongan')
+axes[0].set_ylabel('Kategori Pekerjaan')
+
+# Plot 2: Distribusi Sistem Kerja
+sns.countplot(ax=axes[1], x=curr_df['work_system'], palette='Blues_r', order=['Remote', 'Hybrid', 'Onsite'])
+axes[1].set_title('Distribusi Sistem Kerja Lowongan Part-Time', fontsize=12, fontweight='bold')
+axes[1].set_xlabel('Sistem Kerja')
+axes[1].set_ylabel('Frekuensi')
+
 plt.tight_layout()
 plt.show()""")
 

@@ -1,228 +1,222 @@
 job_id,job_title,company_name,job_category,work_job_location,work_system,work_salaryperhour,work_hours,C1_kategori,C2_rasio_gaji,C3_lokasi,C4_jam_kerja,C5_kemiripan_skill
-JOB-1085,Financial Operations Control Intern,PT Bank SMBC Indonesia Tbk,Admin & Operational,South Jakarta,Remote,38000.0,16.0,0.3,1.9,1.0,0.8,0.0457
-JOB-1313,Tutor Bimbel,Kampung Inggris M-Brothers,Education & Tutoring,Kediri,Remote,35000.0,20.0,0.3,1.75,1.0,1.0,0.1773
-JOB-1031,Guru Mengaji Metode UMMI,KBTK Islam SAKHA,Education & Tutoring,Sidoarjo,Remote,25000.0,24.0,0.3,1.25,1.0,0.8,0.53
-JOB-1221,Graphic Designer,PT SAKTI REKATAMA CIPTA,Design & Creative,South Jakarta,Hybrid,40000.0,17.0,1.0,2.0,0.8,0.85,0.0
-JOB-1010,Tutor Bahasa Inggris,Bimbel Gama Ui Jatirangga,Education & Tutoring,Bekasi,Onsite,42000.0,16.0,0.3,2.1,0.4,0.8,0.0894
-JOB-1125,Junior AI Video Editor,M2.0 Communications Inc.,Design & Creative,Quezon City,Remote,38000.0,18.0,1.0,1.9,1.0,0.9,0.0
-JOB-1205,Investor Relations Intern,Agung Sedayu Group,Admin & Operational,North Jakarta,Hybrid,28000.0,18.0,0.3,1.4,0.8,0.9,0.0573
-JOB-1346,Kasir,PT Cahaya Fortuna Sejati,Admin & Operational,Jakarta,Hybrid,35249.0,20.0,0.3,1.7624,0.8,1.0,0.0433
-JOB-1350,Acquisition Admin,Astro Technologies Indonesia,Admin & Operational,West Jakarta,Hybrid,35000.0,22.0,0.3,1.75,0.8,0.9,0.0
-JOB-1212,Social Media Marketing Coordinator,EarthChimp,Content & Communication,Cebu City,Remote,38000.0,12.0,0.3,1.9,1.0,0.6,0.0
-JOB-1182,Guru Pengganti Math & Science (SMP),Sekolah Budi Luhur (SMP-SMA-SMK) Kota Tangerang,Education & Tutoring,Jakarta,Hybrid,41666.0,16.0,0.3,2.0833,0.8,0.8,0.53
-JOB-1077,Cashier,PT. Berkarya Dari Hati,Admin & Operational,Jakarta Utara,Onsite,30000.0,16.0,0.3,1.5,0.8,0.8,0.0457
-JOB-1078,Video Editor | Production House Tribun Network,Kompas Gramedia,Design & Creative,Jakarta Pusat,Remote,38000.0,12.0,1.0,1.9,1.0,0.6,0.0
-JOB-1155,Content Creator Aixue Mandarin,Cetta Online Class,Content & Communication,South Jakarta,Remote,38000.0,24.0,0.3,1.9,1.0,0.8,0.0
-JOB-1102,Video Editor Intern | Tribun Event Organizer,Kompas Gramedia,Design & Creative,Jakarta Pusat,Remote,38000.0,12.0,1.0,1.9,1.0,0.6,0.0
-JOB-1323,Teacher,Engineering for Kids,Education & Tutoring,Jakarta,Onsite,60000.0,16.0,0.3,3.0,0.8,0.8,0.0894
-JOB-1074,Kasir,PT. Tirta Jaya Unggul,Admin & Operational,Jakarta,Hybrid,30000.0,20.0,0.3,1.5,0.8,1.0,0.0433
-JOB-1012,Math Tutor/Teacher (Guru Les Matematika),MATH Care,Education & Tutoring,Jakarta,Onsite,28000.0,16.0,0.3,1.4,0.8,0.8,0.53
-JOB-1194,Admin,Sahabat Chinese Indonesia,Admin & Operational,Jakarta,Onsite,25000.0,18.0,0.3,1.25,0.8,0.9,0.0
-JOB-1154,Hot Rolled Coil Domestic Sales,PT Krakatau Posco,Education & Tutoring,Jakarta Selatan,Hybrid,45000.0,14.0,0.3,2.25,0.8,0.7,0.1557
-JOB-1069,Administrasi,Taksu Construction & Design,Admin & Operational,Jakarta,Onsite,27777.0,14.0,0.3,1.3888,0.8,0.7,0.0
-JOB-1196,Kasir,CV Suwendo Alsari Prima,Admin & Operational,Jakarta Barat,Onsite,25000.0,24.0,0.3,1.25,1.0,0.8,0.0413
-JOB-1019,Kasir,Sari Bundo,Admin & Operational,Jakarta Pusat,Remote,20000.0,24.0,0.3,1.0,1.0,0.8,0.0413
-JOB-1040,Barista - Part Time,PT Jakarta Digital Nusantara,Admin & Operational,Jakarta,Onsite,35000.0,14.0,0.3,1.75,0.8,0.7,0.0413
-JOB-1174,Produksi Part Time,Caz Indonesia,Admin & Operational,Jakarta,Hybrid,20000.0,18.0,0.3,1.0,0.8,0.9,0.0
-JOB-1305,Administrasi,Viar Anugerah Motor,Admin & Operational,Jakarta,Onsite,30000.0,18.0,0.3,1.5,0.8,0.9,0.0405
-JOB-1094,Part Time Baker,Kueku Bakery Supply,Admin & Operational,Jakarta,Hybrid,25000.0,16.0,0.3,1.25,0.8,0.8,0.0413
-JOB-1330,Permit & Legal Officer [Freelance] at KG Property,Kompas Gramedia,Admin & Operational,West Jakarta,Onsite,25000.0,12.0,0.3,1.25,0.8,0.6,0.0433
-JOB-1149,Sales & Marketing Event KONTAN,Kompas Gramedia,Education & Tutoring,West Jakarta,Remote,30000.0,12.0,0.3,1.5,1.0,0.6,0.1557
-JOB-1312,Content Creator,PT. Pilihan Keluarga Indonesia,Content & Communication,Jakarta,Hybrid,55555.0,24.0,0.3,2.7778,0.8,0.8,0.0
-JOB-1339,Content Creator,PT Luxora Aura Semesta,Content & Communication,Jakarta,Onsite,48611.0,24.0,0.3,2.4306,0.8,0.8,0.0
-JOB-1273,Barista,Diyani F&B,Admin & Operational,Jakarta Timur,Hybrid,27000.0,18.0,0.3,1.35,0.8,0.9,0.0405
-JOB-1263,Guru TK,Sekolah Islam Al-Iffah,Education & Tutoring,Bekasi,Onsite,38000.0,24.0,0.3,1.9,0.4,0.8,0.1557
-JOB-1336,TUTOR / GURU,Bimbel Club Belajar,Education & Tutoring,Jakarta,Hybrid,34722.0,18.0,0.3,1.7361,0.8,0.9,0.1557
-JOB-1080,Content Creator,Pasar Group,Content & Communication,Jakarta,Remote,34722.0,20.0,0.3,1.7361,1.0,1.0,0.027
-JOB-1299,Corporate Secretary Intern,Agung Sedayu Group,Admin & Operational,North Jakarta,Remote,28000.0,18.0,0.3,1.4,1.0,0.9,0.0
-JOB-1317,Part Time Packing,SOLUSI MANDIRI WINATA-RAGAMWISUDA,Admin & Operational,Jakarta,Hybrid,30000.0,18.0,0.3,1.5,0.8,0.9,0.0433
-JOB-1083,Guru IPA Kimia,Bimbingan Belajar Epistime Tutoring (Bimbel ET),Education & Tutoring,Tangerang Selatan,Remote,25000.0,16.0,0.3,1.25,1.0,0.8,0.1557
-JOB-1132,Admin Support Property [Urgent Needed],Jendela Group,Admin & Operational,Tangerang,Remote,38000.0,18.0,0.3,1.9,1.0,0.9,0.0413
-JOB-1311,Desain Interior,Fokusfurniture,Design & Creative,Depok,Onsite,27000.0,20.0,1.0,1.35,0.4,1.0,0.0
-JOB-1291,Daily Worker Maintenance Repair Project,Boga Group,Admin & Operational,Tangerang,Hybrid,45000.0,22.0,0.3,2.25,0.4,0.9,0.0405
-JOB-1118,Asisten Apoteker,Apotik Penang Island,Admin & Operational,Medan,Remote,38000.0,18.0,0.3,1.9,1.0,0.9,0.0
-JOB-1087,Resepsionis Kasir,CV. Cipta Maju Bersaudara,Admin & Operational,Jakarta,Remote,41666.0,20.0,0.3,2.0833,1.0,1.0,0.0
-JOB-1016,Guru Freelance [Indonesia],Superprof,Education & Tutoring,Jakarta,Remote,25000.0,18.0,0.3,1.25,1.0,0.9,0.53
-JOB-1210,Administrasi,Bali Aquatic Official,Admin & Operational,Jakarta,Hybrid,27777.0,18.0,0.3,1.3888,0.8,0.9,0.0413
-JOB-1020,Guru RA/TK,PG RA BAABUSSALAAM,Education & Tutoring,Sidoarjo,Remote,27000.0,14.0,0.3,1.35,1.0,0.7,0.53
-JOB-1318,Part Time Barista,Fas Cafe Surabaya,Admin & Operational,Jakarta,Hybrid,34722.0,14.0,0.3,1.7361,0.8,0.7,0.0413
-JOB-1057,Tutor For Math/Science (Lower Secondary Level),Bimbel Home Heart Hope (3H),Education & Tutoring,Jakarta Utara,Onsite,38000.0,24.0,0.3,1.9,0.8,0.8,0.0894
-JOB-1276,Administrative Assistant,Optimum Transsource Inc.,Admin & Operational,Baguio City,Remote,28000.0,22.0,0.3,1.4,1.0,0.9,0.0
-JOB-1326,Kasir,Toko Roti Segar By Bonbake,Admin & Operational,Jakarta,Remote,20000.0,18.0,0.3,1.0,1.0,0.9,0.0573
-JOB-1141,admin purchasing,PT Winstar Packindo Sukses,Admin & Operational,Jakarta,Hybrid,30000.0,24.0,0.3,1.5,0.8,0.8,0.0405
-JOB-1026,Barista,First Crack Coffee,Admin & Operational,Jakarta,Hybrid,30000.0,20.0,0.3,1.5,0.8,1.0,0.0
-JOB-1138,Barista,MieJol Tunjungan,Admin & Operational,Jakarta,Hybrid,30000.0,14.0,0.3,1.5,0.8,0.7,0.0457
-JOB-1106,Daily Worker Training and Development,Boga Group,Admin & Operational,Tangerang,Remote,28000.0,22.0,0.3,1.4,1.0,0.9,0.0
-JOB-1043,Barista,Kartiko Heritage Restaurant,Admin & Operational,Jakarta,Remote,22222.0,14.0,0.3,1.1111,1.0,0.7,0.0405
-JOB-1238,Barista,PT TIGA MACAN SEMBILAN DELAPAN,Admin & Operational,Jakarta,Hybrid,30000.0,16.0,0.3,1.5,0.8,0.8,0.0
-JOB-1250,Kasir,BaliGlobal Group,Admin & Operational,Jakarta,Onsite,30000.0,14.0,0.3,1.5,0.8,0.7,0.0
-JOB-1246,Marketing Intern,PT. Cosmax Indonesia,Admin & Operational,South Jakarta,Onsite,35000.0,18.0,0.3,1.75,0.8,0.9,0.0
-JOB-1023,KASIR,CV Cantik Anugrah Sejahtera,Admin & Operational,Jakarta,Onsite,28000.0,18.0,0.3,1.4,0.8,0.9,0.0433
-JOB-1047,Event and Campaign Associate [Freelance] at Corporate IT&IS,Kompas Gramedia,Admin & Operational,West Jakarta,Onsite,38000.0,18.0,0.3,1.9,0.8,0.9,0.0457
-JOB-1114,Admin,PT Benerin Apa Aja (BAA),Admin & Operational,Jakarta,Hybrid,23611.0,24.0,0.3,1.1806,0.8,0.8,0.0457
-JOB-1300,Live Shopping Creator Affiliate,Kompas Gramedia,Admin & Operational,West Jakarta,Hybrid,38000.0,22.0,0.3,1.9,0.8,0.9,0.0457
-JOB-1193,Part Time Barista,M-Burger,Admin & Operational,Jakarta,Onsite,28000.0,18.0,0.3,1.4,0.8,0.9,0.0
-JOB-1133,Desain Interior,SINAR UNGGUL BERKAH UTAMA REJEKI,Design & Creative,Tangerang,Remote,38000.0,12.0,1.0,1.9,1.0,0.6,0.0
-JOB-1058,Barista,Tiga Djaya Abadi,Admin & Operational,Jakarta,Onsite,27777.0,16.0,0.3,1.3888,0.8,0.8,0.0
-JOB-1018,Tutor Bahasa Inggris,Kampung Inggris M-Brothers,Education & Tutoring,Surabaya,Remote,42000.0,12.0,0.3,2.1,1.0,0.6,0.53
-JOB-1177,Kasir,Resto Ikan Asap Masbeng,Admin & Operational,Kudus,Remote,30000.0,18.0,0.3,1.5,1.0,0.9,0.0413
-JOB-1095,Content Creator,PT MSMO INDONESIA GRUP,Content & Communication,Jakarta,Remote,38000.0,24.0,0.3,1.9,1.0,0.8,0.0
-JOB-1319,Barista,Goffee Doughnut & Coffee,Admin & Operational,Jakarta,Hybrid,37500.0,14.0,0.3,1.875,0.8,0.7,0.0433
-JOB-1211,Content Creator,datapinter.com,Content & Communication,Jakarta,Onsite,60000.0,14.0,0.3,3.0,0.8,0.7,0.0
-JOB-1116,Waiter/Waiters,Delima Lumpang Kencana,Admin & Operational,Jakarta Pusat,Remote,42000.0,18.0,0.3,2.1,1.0,0.9,0.0
-JOB-1006,Kasir,Violet Moslem Fashion Gallery,Admin & Operational,Jakarta,Remote,27777.0,18.0,0.3,1.3888,1.0,0.9,0.0413
-JOB-1117,Property Sales [Jadetabek and Bandung Area],Jendela Group,Education & Tutoring,Tangerang,Onsite,28000.0,14.0,0.3,1.4,0.4,0.7,0.1336
-JOB-1046,Admin Printing Sublimasi,PT. Satu Baju Indonesia,Admin & Operational,Jakarta,Remote,34722.0,24.0,0.3,1.7361,1.0,0.8,0.0
-JOB-1017,Online Sales Admin,DELOVERY,Education & Tutoring,Jakarta,Hybrid,45000.0,24.0,0.3,2.25,0.8,0.8,0.1557
-JOB-1061,Kasir,Snowy Stationery - Toko Senang Hati,Admin & Operational,Jakarta Pusat,Remote,27000.0,14.0,0.3,1.35,1.0,0.7,0.0433
-JOB-1111,Content Creator,PT Formula Inovatif Transnasional,Content & Communication,Jakarta,Onsite,28000.0,16.0,0.3,1.4,0.8,0.8,0.0
-JOB-1302,Barista,Drifter Cafe Uluwatu,Admin & Operational,Badung,Remote,30000.0,14.0,0.3,1.5,1.0,0.7,0.0433
-JOB-1226,Customer Growth & Marketing Intern,Astro Technologies Indonesia,Admin & Operational,West Jakarta,Hybrid,38000.0,20.0,0.3,1.9,0.8,1.0,0.0
-JOB-1027,SERVER PART TIME,Hiyoko 2.0,Admin & Operational,Jakarta,Remote,20000.0,16.0,0.3,1.0,1.0,0.8,0.0433
-JOB-1008,Tea Barista,Yo! Lime!,Admin & Operational,Bekasi,Remote,42000.0,24.0,0.3,2.1,1.0,0.8,0.0433
-JOB-1038,Guru Bahasa Indonesia,Al-Bahjah Cianjur,Education & Tutoring,Cianjur,Remote,27000.0,18.0,0.3,1.35,1.0,0.9,0.1557
-JOB-1158,Guru Matematika,Bimbingan Belajar Epistime Tutoring (Bimbel ET),Education & Tutoring,Tangerang Selatan,Hybrid,42000.0,12.0,0.3,2.1,0.4,0.6,0.0894
-JOB-1115,Waiter,PT. HONG TANG ASIA,Admin & Operational,Jakarta Barat,Onsite,42000.0,20.0,0.3,2.1,1.0,1.0,0.0
-JOB-1228,Barista,Momoyo  Kedoya,Admin & Operational,Banyumas,Remote,27000.0,18.0,0.3,1.35,1.0,0.9,0.0457
-JOB-1173,Admin HR Intern,Pandawa 24 Jam,Admin & Operational,Jakarta,Remote,32000.0,16.0,0.3,1.6,1.0,0.8,0.0457
-JOB-1145,Content Creator,Kasyfa Fashion,Content & Communication,Jakarta,Hybrid,27777.0,20.0,0.3,1.3888,0.8,1.0,0.0573
-JOB-1348,Part time-Barista,PT Khatulistiwa Indonesia M633,Admin & Operational,Jakarta,Hybrid,30000.0,24.0,0.3,1.5,0.8,0.8,0.0
-JOB-1186,Talent & Content Creator,Andinskin,Content & Communication,Jakarta,Hybrid,27777.0,19.0,0.3,1.3888,0.8,0.95,0.0
-JOB-1204,Desain Grafis,PT ALL JARINGAN SOLUSI,Design & Creative,Surakarta / Solo,Remote,27000.0,24.0,1.0,1.35,1.0,0.8,0.0
-JOB-1344,Asisten Barista,Kopi Dari Hati Cabang Pekanbaru,Admin & Operational,Pekanbaru,Remote,38000.0,18.0,0.3,1.9,1.0,0.9,0.0573
-JOB-1068,Waiter,PT. HONG TANG ASIA,Admin & Operational,Semarang,Remote,27000.0,24.0,0.3,1.35,1.0,0.8,0.0433
-JOB-1235,Admin,PT.Persada Mas Anugerah,Admin & Operational,Jakarta,Hybrid,27777.0,20.0,0.3,1.3888,0.8,1.0,0.0405
-JOB-1110,Digital Banking Assistant,PT Bank SMBC Indonesia Tbk,Admin & Operational,South Jakarta,Hybrid,40000.0,14.0,0.3,2.0,0.8,0.7,0.0405
-JOB-1146,BARISTA,Dang! Cookies,Admin & Operational,Jakarta,Hybrid,41666.0,24.0,0.3,2.0833,0.8,0.8,0.0433
-JOB-1254,English Teacher,Athena English Course,Education & Tutoring,Jakarta,Hybrid,20000.0,20.0,0.3,1.0,0.8,1.0,0.1773
-JOB-1219,Freelance Videographer,Astro Technologies Indonesia,Admin & Operational,West Jakarta,Remote,40000.0,12.0,0.3,2.0,1.0,0.6,0.0433
-JOB-1297,GURU/TUTOR,Bimba Bintang Junior Areman,Education & Tutoring,Jakarta,Remote,45000.0,24.0,0.3,2.25,1.0,0.8,0.0894
-JOB-1166,Accounting Part Time,Chuantiq by Fuji,Admin & Operational,Jakarta,Remote,20833.0,14.0,0.3,1.0416,1.0,0.7,0.0405
-JOB-1249,Marketing Analyst Intern,Dans Multi Pro,Admin & Operational,South Jakarta,Hybrid,40000.0,14.0,0.3,2.0,0.8,0.7,0.0
-JOB-1229,Graphic Design Intern | Tribun Event Organizer,Kompas Gramedia,Design & Creative,Jakarta Pusat,Onsite,35000.0,12.0,1.0,1.75,0.8,0.6,0.0
-JOB-1075,Part-Time Barista,PT ARASTA BER,Admin & Operational,Jakarta,Remote,20000.0,24.0,0.3,1.0,1.0,0.8,0.0413
-JOB-1120,Tutor Matematika,Bimbel Insan Pelajar,Education & Tutoring,Bogor,Remote,38000.0,20.0,0.3,1.9,1.0,1.0,0.1773
-JOB-1278,Pre Sales Engineer,PT Binajasa Sumber Sarana (BSS Recruitment),Education & Tutoring,Tangerang Selatan,Remote,30000.0,22.0,0.3,1.5,1.0,0.9,0.1773
-JOB-1035,Product Designer [Freelance] at Corporate IT&IS,Kompas Gramedia,Design & Creative,West Jakarta,Hybrid,50000.0,14.0,1.0,2.5,0.8,0.7,0.0
-JOB-1245,Barista,oq cafe,Admin & Operational,Makassar,Remote,30000.0,14.0,0.3,1.5,1.0,0.7,0.0433
-JOB-1223,Desain Grafis,GHANCO.ID,Design & Creative,Jakarta Utara,Onsite,30000.0,18.0,1.0,1.5,0.8,0.9,0.0
-JOB-1197,Tutor & Penerjemah Bahasa Mandarin,PT SAHABAT BELAJAR NUSANTARA,Education & Tutoring,Jakarta Utara,Onsite,42000.0,12.0,0.3,2.1,0.8,0.6,0.1773
-JOB-1060,Sales Representatif,PR,Education & Tutoring,Sales Representatif,Remote,35000.0,24.0,0.3,1.75,1.0,0.8,0.0894
-JOB-1112,English Teacher,EZ ENGLISH Indonesia,Education & Tutoring,Jakarta,Hybrid,48611.0,18.0,0.3,2.4306,0.8,0.9,0.1336
-JOB-1007,Administrative Assistant – Remote,Kompas Gramedia,Admin & Operational,West Jakarta,Remote,30000.0,14.0,0.3,1.5,1.0,0.7,0.0457
-JOB-1081,Administrator HR,PT Poly Stamino Indonesia,Admin & Operational,Jakarta,Onsite,41666.0,18.0,0.3,2.0833,0.8,0.9,0.0
-JOB-1333,Tutor Les Private,WAF ACADEMY,Education & Tutoring,Jakarta Barat,Hybrid,35000.0,12.0,0.3,1.75,1.0,0.6,0.1773
-JOB-1159,Barista,Universal Kreasi Nusantara,Admin & Operational,Jakarta,Hybrid,30000.0,24.0,0.3,1.5,0.8,0.8,0.0
-JOB-1178,Guru Matematika,Sukses Abadi School,Education & Tutoring,Jakarta Utara,Onsite,42000.0,12.0,0.3,2.1,0.8,0.6,0.53
-JOB-1185,Data Science Intern,Asuransi Astra,IT & Software,South Jakarta,Onsite,40000.0,16.0,0.3,2.0,0.8,0.8,0.0
-JOB-1168,Part Time Barista,Teman Nongkrong,Admin & Operational,Jakarta,Remote,30000.0,24.0,0.3,1.5,1.0,0.8,0.0433
-JOB-1292,Guru Bimbel,Tara Vidya Edu,Education & Tutoring,Tangerang,Onsite,35000.0,16.0,0.3,1.75,0.4,0.8,0.1557
-JOB-1251,Sales Catering,PT Binajasa Sumber Sarana (BSS Recruitment),Education & Tutoring,Tangerang,Onsite,38000.0,18.0,0.3,1.9,0.4,0.9,0.1336
-JOB-1248,Tour and Event Planner Intern,PT Tavana Inspirasi Lintas Cakrawala,Admin & Operational,Tangerang,Hybrid,30000.0,20.0,0.3,1.5,0.4,1.0,0.0
-JOB-1195,Admin E commerce,PT. TRIUTAMA MAJU SEJAHTERA,Admin & Operational,Jakarta Utara,Remote,30000.0,18.0,0.3,1.5,1.0,0.9,0.0413
-JOB-1090,Graphic Design Intern,SUN Education Group,Design & Creative,Jakarta Barat,Remote,45000.0,14.0,1.0,2.25,1.0,0.7,0.0
-JOB-1148,Content Creator,Everywhere Corp.,Content & Communication,Jakarta,Remote,27777.0,18.0,0.3,1.3888,1.0,0.9,0.0
-JOB-1003,Desainer Pola,Defix Garment,Design & Creative,Malang,Remote,38000.0,24.0,1.0,1.9,1.0,0.8,0.0
-JOB-1070,Tutor SD,BH,Education & Tutoring,Tutor Sd,Remote,35000.0,20.0,0.3,1.75,1.0,1.0,0.0894
-JOB-1306,Kasir,RRsalonsign,Admin & Operational,Jakarta,Hybrid,28000.0,18.0,0.3,1.4,0.8,0.9,0.0433
-JOB-1097,Guru Bahasa Inggris,SIP English Cisauk,Education & Tutoring,Tangerang,Onsite,38000.0,18.0,0.3,1.9,0.4,0.9,0.1557
-JOB-1144,Content Creator Cetta Japanese,Cetta Online Class,Content & Communication,South Jakarta,Hybrid,25000.0,20.0,0.3,1.25,0.8,1.0,0.0
-JOB-1240,Sales Admin FnB,PT Bahana Andalan Pasti,Education & Tutoring,Cilegon,Remote,38000.0,22.0,0.3,1.9,1.0,0.9,0.0894
-JOB-1098,Mitra Operasional Gerobakan Jualan Cimol Bojot AA Jakarta Timur & Pusat,PT CITARASA KULINER INDONESIA (CIMOL BOJOT AA),Admin & Operational,Jakarta Timur,Hybrid,40000.0,14.0,0.3,2.0,0.8,0.7,0.0
-JOB-1203,UGC Content Creator,Xander Creative Agency,Content & Communication,Jakarta,Remote,60000.0,24.0,0.3,3.0,1.0,0.8,0.0
-JOB-1247,Barista,Trans F&B,Admin & Operational,Jakarta,Remote,29166.0,16.0,0.3,1.4583,1.0,0.8,0.0
-JOB-1126,Desain Grafis,YOJI TECHNOLOGY,Design & Creative,Jakarta Pusat,Hybrid,38000.0,20.0,1.0,1.9,0.8,1.0,0.0
-JOB-1224,Organization Development Intern at Corporate Human Resources,Kompas Gramedia,Admin & Operational,West Jakarta,Remote,25000.0,12.0,0.3,1.25,1.0,0.6,0.0
-JOB-1130,Waiter/Waitress,PT.Collaboration Rahayu Bestari,Admin & Operational,Bogor,Hybrid,42000.0,24.0,0.3,2.1,0.4,0.8,0.0
-JOB-1285,Content creator,CV. Cahaya Globalindo Utama,Content & Communication,Jakarta,Onsite,32000.0,16.0,0.3,1.6,0.8,0.8,0.027
-JOB-1324,Staf Unit Operasional Sistem Bisnis Pasar Modal – Database Admin,PT Kliring Penjaminan Efek Indonesia (KPEI),IT & Software,South Jakarta,Onsite,40000.0,20.0,0.3,2.0,0.8,1.0,0.0
-JOB-1335,Tutor For Chemistry/Physics (Higher Secondary Level),Bimbel Home Heart Hope (3H),Education & Tutoring,Jakarta Utara,Onsite,38000.0,24.0,0.3,1.9,0.8,0.8,0.1557
-JOB-1113,Automation Project Intern,Asuransi Astra,Admin & Operational,South Jakarta,Remote,25000.0,22.0,0.3,1.25,1.0,0.9,0.0413
-JOB-1303,Staff Barista,CI,Admin & Operational,Staff Barista,Remote,30000.0,24.0,0.3,1.5,1.0,0.8,0.0457
-JOB-1334,Admin Operasional Produksi,GKeei Artisan Lamp,Admin & Operational,Jakarta,Hybrid,48611.0,16.0,0.3,2.4306,0.8,0.8,0.0
-JOB-1165,Content Creator,PT. Satu Visi Indotama,Content & Communication,Jakarta,Remote,38000.0,14.0,0.3,1.9,1.0,0.7,0.0
-JOB-1198,Business Development & Partnership [Freelance] at Corporate IT&IS,Kompas Gramedia,Admin & Operational,West Jakarta,Remote,25000.0,22.0,0.3,1.25,1.0,0.9,0.0
-JOB-1233,Barista,Golden Black,Admin & Operational,Jakarta Pusat,Hybrid,30000.0,16.0,0.3,1.5,0.8,0.8,0.0433
-JOB-1332,Barista,PT. BINTANG LESTARI TROPPO,Admin & Operational,Jakarta,Remote,55555.0,24.0,0.3,2.7778,1.0,0.8,0.0413
-JOB-1286,Guru Bimbel,Kumon Grand Galaxy Cordova,Education & Tutoring,Bekasi,Hybrid,42000.0,18.0,0.3,2.1,0.4,0.9,0.0894
-JOB-1321,Tutor Privat Microsoft Office,Creya Edu,Education & Tutoring,Bekasi,Onsite,30000.0,14.0,0.3,1.5,0.4,0.7,0.1773
-JOB-1134,Content Creator Producer,Kompas Gramedia,Content & Communication,West Jakarta,Remote,28000.0,24.0,0.3,1.4,1.0,0.8,0.0
-JOB-1045,Tutor,Bimbel Gama Ui Jatirangga,Education & Tutoring,Bekasi,Onsite,25000.0,12.0,0.3,1.25,0.4,0.6,0.0573
-JOB-1066,Freelance Recruiter,PT. Bintang Pelajar,Admin & Operational,Bogor,Remote,25000.0,22.0,0.3,1.25,1.0,0.9,0.0405
-JOB-1086,Crew part time,Ayam rector,Admin & Operational,Jakarta,Remote,20000.0,18.0,0.3,1.0,1.0,0.9,0.0405
-JOB-1243,Rider Barista,Es Kopi KNTL by Mas O,Admin & Operational,Malang,Remote,38000.0,16.0,0.3,1.9,1.0,0.8,0.0457
-JOB-1187,Content Creator Cetta English,Cetta Online Class,Education & Tutoring,Jakarta Selatan,Hybrid,35000.0,14.0,0.3,1.75,0.8,0.7,0.1557
-JOB-1160,Kasir,Senopati Skin Center,Admin & Operational,Jakarta Selatan,Remote,42000.0,18.0,0.3,2.1,1.0,0.9,0.0457
-JOB-1029,ADMIN,Sewa Mobil Bali (CV TWINS BALI GROUP),Admin & Operational,Badung,Remote,30000.0,18.0,0.3,1.5,1.0,0.9,0.0413
-JOB-1171,"Tutor Bahasa Inggris (Pare, Kediri)",Language Center,Education & Tutoring,Jakarta,Hybrid,35000.0,18.0,0.3,1.75,0.8,0.9,0.0894
-JOB-1143,Kasir,ikan goreng tambaksari,Admin & Operational,Jakarta,Remote,20000.0,20.0,0.3,1.0,1.0,1.0,0.0457
-JOB-1222,Part Time English Teacher Project Based,SUN Education Group,Education & Tutoring,West Jakarta,Hybrid,35000.0,18.0,0.3,1.75,0.8,0.9,0.53
-JOB-1096,Tutor bahasa Inggris online,Ngobrol Yuk,Education & Tutoring,Jakarta,Hybrid,35000.0,20.0,0.3,1.75,0.8,1.0,0.0894
-JOB-1241,Tutor bahasa Jerman Online,Ngobrol Yuk,Education & Tutoring,Jakarta,Hybrid,48611.0,18.0,0.3,2.4306,0.8,0.9,0.0894
-JOB-1283,Admin Project,OttoDigital Group,Admin & Operational,Karawang,Remote,28000.0,20.0,0.3,1.4,1.0,1.0,0.0
-JOB-1005,Barista,PT Mitra Oddity Indonesia,Admin & Operational,Jakarta Utara,Remote,25000.0,16.0,0.3,1.25,1.0,0.8,0.0433
-JOB-1099,Content Creator,SVO JAKARTA PALMERAH,Content & Communication,Jakarta,Hybrid,60000.0,16.0,0.3,3.0,0.8,0.8,0.027
-JOB-1293,Admin Exim English Speaker,PT Binajasa Sumber Sarana (BSS Recruitment),Education & Tutoring,Tangerang,Onsite,28000.0,24.0,0.3,1.4,0.4,0.8,0.1336
-JOB-1062,Multimedia Designer,Odoo,Design & Creative,Tangerang,Hybrid,25000.0,12.0,1.0,1.25,0.4,0.6,0.0
-JOB-1048,guru mandarin,YIQU MANDARIN PUSAT,Education & Tutoring,Jakarta,Remote,60000.0,24.0,0.3,3.0,1.0,0.8,0.0894
-JOB-1033,Designer Intern,Asuransi Astra,Design & Creative,South Jakarta,Hybrid,50000.0,17.0,1.0,2.5,0.8,0.85,0.0
-JOB-1268,Cashier,PC,Admin & Operational,Cashier,Remote,38000.0,24.0,0.3,1.9,1.0,0.8,0.0405
-JOB-1328,Barista,Giorgi Caffee House,Admin & Operational,Jakarta Selatan,Hybrid,30000.0,24.0,0.3,1.5,0.8,0.8,0.0433
-JOB-1201,Administrasi,THE PARALIAN ULUWATU,Admin & Operational,Jakarta,Onsite,48611.0,20.0,0.3,2.4306,0.8,1.0,0.0457
-JOB-1028,Talent / Content Creator,The Good Vapors,Content & Communication,Jakarta,Remote,40000.0,19.0,0.3,2.0,1.0,0.95,0.0
-JOB-1231,Desain Grafis,PT. TGA Cipta Mandiri,Design & Creative,Bekasi,Hybrid,35000.0,18.0,1.0,1.75,0.4,0.9,0.0
-JOB-1163,Tutor Freelance Ekonomi,CV Assyifa Learning Center,Education & Tutoring,Jakarta,Hybrid,35000.0,18.0,0.3,1.75,0.8,0.9,0.0894
-JOB-1139,GARDENER (PART TIME),PT. Ocha Bali,Admin & Operational,Jakarta,Remote,45000.0,20.0,0.3,2.25,1.0,1.0,0.0
-JOB-1129,Customer Relationship Management Intern,FIFGROUP,Admin & Operational,Central Jakarta,Onsite,50000.0,16.0,0.3,2.5,0.8,0.8,0.0
-JOB-1009,Barista,Jasa Ayah Corp.,Admin & Operational,Jakarta,Hybrid,22111.0,24.0,0.3,1.1056,0.8,0.8,0.0457
-JOB-1327,English Teacher,LKP Kampung Inggris Semarang,Education & Tutoring,Jakarta,Remote,35000.0,18.0,0.3,1.75,1.0,0.9,0.0894
-JOB-1301,Gabung Freelance Online Admin WFH Dapat Uang Jajan Tanpa KTP 10.000-60.0000 -DL,Misi Seru - KitaLulus,Admin & Operational,Jakarta Timur,Remote,35000.0,10.0,0.3,1.75,1.0,0.5,0.0405
-JOB-1015,Video Editor | Freelance | Jakarta,Kompas Gramedia,Design & Creative,Jakarta Pusat,Remote,50000.0,24.0,1.0,2.5,1.0,0.8,0.0
-JOB-1157,Staff Pengajar/ Guru,Yayasan Wahana Inklusif Indonesia,Education & Tutoring,Depok,Onsite,30000.0,16.0,0.3,1.5,0.4,0.8,0.1336
-JOB-1041,Asisten Guru Sekolah TK,Amanda Montessori,Education & Tutoring,Jakarta Selatan,Hybrid,25000.0,12.0,0.3,1.25,0.8,0.6,0.0894
-JOB-1217,Part Time Mathematics Teacher Project Based,SUN Education Group,Education & Tutoring,West Jakarta,Remote,35000.0,14.0,0.3,1.75,1.0,0.7,0.1773
-JOB-1338,Sales Toko Laptop (Bekasi),KLIKnKLIK,Education & Tutoring,Bekasi,Onsite,45000.0,18.0,0.3,2.25,0.4,0.9,0.0894
-JOB-1237,Barista,PT Bali Food Lestari,Admin & Operational,Jakarta,Remote,48611.0,20.0,0.3,2.4306,1.0,1.0,0.0457
-JOB-1208,Tutor Kimia,Bimbel Gama Ui Jatirangga,Education & Tutoring,Bekasi,Remote,30000.0,14.0,0.3,1.5,1.0,0.7,0.53
-JOB-1213,Part Time Guru Robotik wilayah Depok,Kompas Gramedia,Education & Tutoring,Depok,Hybrid,25000.0,22.0,0.3,1.25,0.4,0.9,0.53
-JOB-1252,CONTENT CREATOR,IKKI Baby Spa and Home Care,Content & Communication,Jakarta,Hybrid,38000.0,19.0,0.3,1.9,0.8,0.95,0.0
-JOB-1304,Video Editor Intern KG Media,Kompas Gramedia,Design & Creative,Jakarta Pusat,Remote,38000.0,18.0,1.0,1.9,1.0,0.9,0.0
-JOB-1270,Waiters,Gebu Indonesia,Admin & Operational,Pekanbaru,Remote,42000.0,18.0,0.3,2.1,1.0,0.9,0.0
-JOB-1202,Administrative Support Staff,"KPS Alarms, Inc",Admin & Operational,Riverside,Remote,38000.0,24.0,0.3,1.9,1.0,0.8,0.0433
-JOB-1162,Short Video Creator Affiliate,Kompas Gramedia,Admin & Operational,West Jakarta,Onsite,35000.0,20.0,0.3,1.75,0.8,1.0,0.0413
-JOB-1044,Barista,PT Roemah Tiga Sahabat,Admin & Operational,Jakarta Utara,Onsite,42000.0,16.0,0.3,2.1,0.8,0.8,0.0
-JOB-1218,Desain Grafis (Offset Printing),Prima Print,Design & Creative,Surabaya,Remote,42000.0,16.0,1.0,2.1,1.0,0.8,0.0
-JOB-1191,Kasir,PT. Bina Bisnis Megacomputindo,Admin & Operational,Jakarta Pusat,Hybrid,42000.0,24.0,0.3,2.1,0.8,0.8,0.0
-JOB-1310,Barista,BLIV Cafe & Juice Bar,Admin & Operational,Tangerang,Onsite,30000.0,24.0,0.3,1.5,0.4,0.8,0.0405
-JOB-1260,Tutor Les Matematika,SK,Education & Tutoring,Tutor Les Matematika,Remote,27000.0,18.0,0.3,1.35,1.0,0.9,0.1336
-JOB-1002,Building Management Administrative Assistant at Multimedia Nusantara School,Kompas Gramedia,Admin & Operational,Tangerang,Onsite,38000.0,14.0,0.3,1.9,0.4,0.7,0.0457
-JOB-1206,Administrasi,CV Chazilla Nutri Innovation,Admin & Operational,Jakarta,Remote,28000.0,24.0,0.3,1.4,1.0,0.8,0.0405
-JOB-1264,Freelance Tutor,LUARKELAS ACCELERATION,Education & Tutoring,Kota Yogyakarta,Remote,35000.0,20.0,0.3,1.75,1.0,1.0,0.1557
-JOB-1092,Content Creator,PT Sapta Tunas Teknologi,Content & Communication,Central Jakarta,Remote,50000.0,12.0,0.3,2.5,1.0,0.6,0.0
-JOB-1340,Admin Support,VELOPRINT.ID,Admin & Operational,Jakarta Utara,Hybrid,41666.0,20.0,0.3,2.0833,0.8,1.0,0.0
-JOB-1265,admin,PT. PERDANA JATIPUTRA,Admin & Operational,Jakarta,Hybrid,30000.0,18.0,0.3,1.5,0.8,0.9,0.0433
-JOB-1242,Administrator,PT. Honorich Plasindo,Admin & Operational,Tangerang,Remote,48611.0,18.0,0.3,2.4306,1.0,0.9,0.0433
-JOB-1014,IMS – Enterprise Risk Management & Internal Control AM – Non Finance,PT Prodia Widyahusada Tbk. (Prodia),Admin & Operational,Central Jakarta,Onsite,25000.0,12.0,0.3,1.25,0.8,0.6,0.0
-JOB-1316,Operator Setting Desain,Elindocard,Design & Creative,Jakarta Utara,Hybrid,38000.0,12.0,1.0,1.9,0.8,0.6,0.0
-JOB-1089,Admin,mandala,Admin & Operational,Jakarta,Hybrid,20000.0,20.0,0.3,1.0,0.8,1.0,0.0
-JOB-1274,Kasir,PT Sangat Jaya Berkah Utama,Admin & Operational,Jakarta,Onsite,20000.0,20.0,0.3,1.0,0.8,1.0,0.0
-JOB-1135,Assistant Editor Grasindo,Kompas Gramedia,Admin & Operational,West Jakarta,Remote,30000.0,18.0,0.3,1.5,1.0,0.9,0.0433
-JOB-1244,Creative Designer KG Media,Kompas Gramedia,Design & Creative,Central Jakarta,Remote,40000.0,12.0,1.0,2.0,1.0,0.6,0.0
-JOB-1055,Tutor IPA SMP / SMA,Quantum Research Cempaka Putih,Education & Tutoring,Jakarta Pusat,Hybrid,35000.0,12.0,0.3,1.75,0.8,0.6,0.1773
-JOB-1051,Freelance Copywriter,Astro Technologies Indonesia,Content & Communication,West Jakarta,Remote,40000.0,18.0,0.3,2.0,1.0,0.9,0.0
-JOB-1190,Part Time Shopkeeper,Cheesecake Expert,Admin & Operational,Jakarta,Hybrid,23611.0,24.0,0.3,1.1806,0.8,0.8,0.0433
-JOB-1088,Kasir,Warung Taburai,Admin & Operational,Jakarta,Onsite,25000.0,18.0,0.3,1.25,0.8,0.9,0.0405
-JOB-1236,Barista,Muara Kuring Restaurant,Admin & Operational,Jakarta,Remote,29166.0,18.0,0.3,1.4583,1.0,0.9,0.0
-JOB-1022,Kasir,Naoki Rice,Admin & Operational,Jakarta,Onsite,23611.0,24.0,0.3,1.1806,0.8,0.8,0.0433
-JOB-1314,Content Creator KONTAN,Kompas Gramedia,Content & Communication,West Jakarta,Remote,30000.0,16.0,0.3,1.5,1.0,0.8,0.0
-JOB-1161,Barista,Kana Cafe Bandung,Admin & Operational,Jakarta,Hybrid,50000.0,24.0,0.3,2.5,0.8,0.8,0.0
-JOB-1277,Barista,PT Kembang Artha Boga,Admin & Operational,Jakarta,Onsite,34722.0,16.0,0.3,1.7361,0.8,0.8,0.0405
-JOB-1258,Creative Designer AdOps,Kompas Gramedia,Design & Creative,Jakarta Pusat,Onsite,30000.0,20.0,1.0,1.5,0.8,1.0,0.0573
-JOB-1309,Telesales Weltown,Jendela Group,Education & Tutoring,Tangerang,Onsite,25000.0,22.0,0.3,1.25,0.4,0.9,0.53
-JOB-1150,Marcomm Intern KG Media,Kompas Gramedia,Admin & Operational,Jakarta Pusat,Remote,30000.0,18.0,0.3,1.5,1.0,0.9,0.0
-JOB-1131,Barista,Waroeng Aceh Garuda,Admin & Operational,Jakarta Selatan,Hybrid,38000.0,24.0,0.3,1.9,0.8,0.8,0.0
-JOB-1152,Part Time Teacher,Engineering for Kids,Education & Tutoring,Jakarta,Onsite,20000.0,18.0,0.3,1.0,0.8,0.9,0.1336
-JOB-1100,Content Creator,Vins Internasional Pangan,Content & Communication,Jakarta,Hybrid,55555.0,20.0,0.3,2.7778,0.8,1.0,0.0
-JOB-1122,Kasir,CV. General Solusindo,Admin & Operational,Jakarta,Onsite,30000.0,24.0,0.3,1.5,0.8,0.8,0.0
-JOB-1021,Junior IT and Admin Assistant,Hire Manila,Admin & Operational,Quezon City,Remote,28000.0,14.0,0.3,1.4,1.0,0.7,0.0433
-JOB-1103,Kasir,Gudeg Koyor Mercon Sumringah,Admin & Operational,Jakarta,Onsite,27777.0,14.0,0.3,1.3888,0.8,0.7,0.0405
+JOB-1118,Guru ekonomi akuntansi,Bimbel Pintar Galaxy,Education & Tutoring,Bekasi,Onsite,35000.0,18.0,1.0,1.0,0.4,1.0,0.0611
+JOB-1155,Crew outlet,Lumpia Beef Archi,Retail & Store Operations,Bogor,Onsite,45000.0,24.0,0.3,1.2857,0.4,0.7,0.1484
+JOB-1246,Kurir Last-Mile,PERSEROAN TERBATAS - BADAN ANDALAN BERJAYA NUSANTARA,Logistics & Delivery,Tangerang,Hybrid,28000.0,12.0,0.3,0.8,0.4,0.7,0.0
+JOB-1085,Crew Store Bagi Kopi Ciputat Juanda,PT Bagi Kopi Indonesia,Food & Beverage (F&B),Tangerang Selatan,Onsite,28000.0,18.0,0.3,0.8,0.4,1.0,0.0516
+JOB-1007,Surveyor,PT BINAJASA SUMBER SARANA,Admin & Office Support,Jakarta Barat,Onsite,40000.0,14.0,0.3,1.1429,1.0,0.8,0.0
+JOB-1056,Customer Service Attendence Playground anak Klender,PT. Mitra Anak Sejahtera,Customer Service & Support,Jakarta Timur,Onsite,40000.0,14.0,0.3,1.1429,0.8,0.8,0.0446
+JOB-1238,Customer Experience & Complaint Resolution Staff (F&B),Langkah Kecil Group,Food & Beverage (F&B),Depok,Onsite,28000.0,22.0,0.3,0.8,0.4,0.8,0.0516
+JOB-1358,Mobile Coffee Shop,Mitra Perusahaan Loker.id,Food & Beverage (F&B),Bogor,Hybrid,38000.0,18.0,0.3,1.0857,0.4,1.0,1.0
+JOB-1011,Staff Admin Marketing,PT Kimshafi Alung Cipta,Marketing & Sales,Bekasi,Onsite,30000.0,16.0,0.3,0.8571,0.4,0.9,0.0
+JOB-1186,Tutor,Yayasan Jejak Setara Indonesia,Education & Tutoring,Tangerang Selatan,Onsite,35000.0,16.0,1.0,1.0,0.4,0.9,0.0611
+JOB-1196,Guru Bahasa Inggris Online - Part Time,PT Gapai Cita Rahardjo,Education & Tutoring,Remote,Remote,38000.0,14.0,1.0,1.0857,1.0,0.8,0.0
+JOB-1353,Crew Outlet,Mitra Perusahaan Loker.id,Food & Beverage (F&B),Jakarta Barat,Onsite,35000.0,16.0,0.3,1.0,1.0,0.9,0.0383
+JOB-1159,Live streaming,honeybaby,Content & Media,Bekasi,Onsite,28000.0,22.0,0.3,0.8,0.4,0.8,0.0
+JOB-1087,Trainer Part Time,PRIVAKOM,Admin & Office Support,Tangerang,Onsite,30000.0,16.0,0.3,0.8571,0.4,0.9,0.0
+JOB-1132,Karyawan jaga store laundry sepatu,A.M Shoes Clean,Admin & Office Support,Jakarta Barat,Onsite,45000.0,22.0,0.3,1.2857,1.0,0.8,0.0
+JOB-1031,Content Creator — Moms & Baby WFH / HYBRID,Genta Digital Marketing,Content & Media,Tangerang,Hybrid,38000.0,20.0,0.3,1.0857,0.4,0.9,0.0
+JOB-1076,Content Creator Part Time,Kissa Studio,Content & Media,Tangerang,Onsite,38000.0,18.0,0.3,1.0857,0.4,1.0,0.0
+JOB-1342,Dosen DIII Fisioterapi,Mitra Perusahaan Loker.id,Education & Tutoring,Jakarta Barat,Hybrid,35000.0,16.0,1.0,1.0,1.0,0.9,0.0
+JOB-1010,Kurir Last-Mile,SPX Tangerang Selatan,Logistics & Delivery,Tangerang Selatan,Onsite,34000.0,12.0,0.3,0.9714,0.4,0.7,0.0
+JOB-1395,Part Time Guru Robotik & Coding CIbubur Kota Wisata,Kompas Gramedia,IT & Software,Bogor,Onsite,45000.0,16.0,0.3,1.2857,0.4,0.9,0.0
+JOB-1079,Barista,One taste cafe,Food & Beverage (F&B),Depok,Onsite,35000.0,22.0,0.3,1.0,0.4,0.8,0.0
+JOB-1071,Coding Instructor – Part Time,StackLab School,IT & Software,Jakarta Timur,Onsite,28000.0,16.0,0.3,0.8,0.8,0.9,0.0
+JOB-1205,Barista,Micro Space Coffee,Food & Beverage (F&B),Jakarta Utara,Onsite,35000.0,18.0,0.3,1.0,0.8,1.0,1.0
+JOB-1073,[Part-time] - Pengajar Bahasa Inggris (IELTS) - Kab. Bogor,Ruangguru,Education & Tutoring,Bogor,Onsite,25000.0,24.0,1.0,0.7143,0.4,0.7,0.0611
+JOB-1173,Kurir J&T Express - NTT,PT. Timedoor Indonesia,Logistics & Delivery,Jakarta Barat,Onsite,45000.0,12.0,0.3,1.2857,1.0,0.7,0.0
+JOB-1102,[Part-time] Preschool Teacher - Depok - Margonda,Ruangguru,Education & Tutoring,Depok,Onsite,50000.0,14.0,1.0,1.4286,0.4,0.8,0.0
+JOB-1141,Tenaga Pengajar IT,DIGIKIDZ,Education & Tutoring,Jakarta Selatan,Onsite,35000.0,16.0,1.0,1.0,0.8,0.9,0.0
+JOB-1235,Host Live Online Shop,Zehuja Collection,Content & Media,Bekasi,Onsite,38000.0,22.0,0.3,1.0857,0.4,0.8,0.0
+JOB-1069,Branch Sales Executive,Pt Mandiri Andalan Utama,Education & Tutoring,Jakarta Selatan,Hybrid,28000.0,12.0,1.0,0.8,0.8,0.7,0.0
+JOB-1091,[Part-time] - Pengajar Bahasa Inggris - Jakarta Pusat,Ruangguru,Education & Tutoring,Jakarta Pusat,Onsite,35000.0,12.0,1.0,1.0,0.8,0.7,0.0611
+JOB-1341,Barista,Mitra Perusahaan Loker.id,Food & Beverage (F&B),Jakarta Barat,Onsite,30000.0,20.0,0.3,0.8571,1.0,0.9,0.0516
+JOB-1312,Coding Mentor,Mitra Perusahaan Loker.id,IT & Software,Tangerang,Hybrid,42000.0,20.0,0.3,1.2,0.4,0.9,0.0
+JOB-1034,Part-time Café Crew – Lippo Icon Gajah Mada,e+e coffee & kitchen Trisakti,Admin & Office Support,Jakarta Pusat,Onsite,25000.0,22.0,0.3,0.7143,0.8,0.8,0.0
+JOB-1083,Crew Store Bagi Kopi Margonda,PT Bagi Kopi Indonesia,Food & Beverage (F&B),Jakarta Selatan,Onsite,30000.0,12.0,0.3,0.8571,0.8,0.7,1.0
+JOB-1001,English Tutor Part Time,Nufa Global Education,Education & Tutoring,Bekasi,Onsite,30000.0,16.0,1.0,0.8571,0.4,0.9,0.0
+JOB-1012,Social Media & Content Growth,PT Pemuda Jaya Kapital,Admin & Office Support,Remote,Remote,35000.0,18.0,0.3,1.0,1.0,1.0,0.0
+JOB-1023,Customer Service Weekend (Part-Time),Yoona Digital Indonesia,Customer Service & Support,Remote,Remote,36500.0,16.0,0.3,1.0429,1.0,0.9,0.0446
+JOB-1177,[Part-time] - Pengajar Matematika Bilingual - Bogor Sentul,Ruangguru,Education & Tutoring,Bogor,Onsite,45000.0,20.0,1.0,1.2857,0.4,0.9,0.0
+JOB-1174,Scholastic Assessment Test,PT Lister Teknologi Edukasi,Admin & Office Support,Remote,Remote,50000.0,18.0,0.3,1.4286,1.0,1.0,0.0
+JOB-1248,Master Teacher Fisika Jenjang SMA,Brain Academy by Ruangguru Bekasi - Jatibening,Education & Tutoring,Bekasi,Onsite,28000.0,24.0,1.0,0.8,0.4,0.7,0.0
+JOB-1019,IT dan CODING Teacher,Little Alley Preschool,IT & Software,Tangerang,Onsite,28000.0,14.0,0.3,0.8,0.4,0.8,0.0
+JOB-1229,"Master Teacher UTBK (PU,PK,PM)",Brain Academy by Ruangguru Bekasi - Agus Salim,Education & Tutoring,Bekasi,Onsite,35000.0,14.0,1.0,1.0,0.4,0.8,0.0
+JOB-1016,SHOPKEEPER PART TIME (URGENTLY NEEDED),Sans Care,Admin & Office Support,Depok,Onsite,50000.0,18.0,0.3,1.4286,0.4,1.0,0.0
+JOB-1040,Part Time Guru Ekskul Board Game di sekolah daerah Pluit dan PIK,Board Game Class,Education & Tutoring,Jakarta Utara,Hybrid,30000.0,14.0,1.0,0.8571,0.8,0.8,0.0
+JOB-1094,SALES IT B2B (PART TIME),PT. Teknologi Solusi Usaha,Education & Tutoring,Remote,Remote,35000.0,16.0,1.0,1.0,1.0,0.9,0.0
+JOB-1323,Sales Force,Mitra Perusahaan Loker.id,Education & Tutoring,Jakarta Barat,Hybrid,42000.0,14.0,1.0,1.2,1.0,0.8,0.0
+JOB-1369,Sales CounterMoori Family MassageDipromosikanKota,Mitra Kerja KitaLulus,Education & Tutoring,Tangerang Selatan,Hybrid,35000.0,20.0,1.0,1.0,0.4,0.9,0.0
+JOB-1150,Kurir Last-Mile,PERSEROAN TERBATAS - BADAN ANDALAN BERJAYA NUSANTARA,Logistics & Delivery,Jakarta Timur,Onsite,25000.0,14.0,0.3,0.7143,0.8,0.8,0.0
+JOB-1193,Marketplace Customer Service (Part-Time & Remote),PT RAMA PUTRA DJAYA,Customer Service & Support,Remote,Remote,35000.0,18.0,0.3,1.0,1.0,1.0,0.0
+JOB-1366,Specialist Telemarketing CC Syariah - Tangerang Ka,Mitra Kerja KitaLulus,Marketing & Sales,Tangerang,Hybrid,30000.0,20.0,0.3,0.8571,0.4,0.9,0.0
+JOB-1239,Marketing Klinik - Bekasi,PT. Prima Solusi Service,Marketing & Sales,Bekasi,Onsite,45000.0,14.0,0.3,1.2857,0.4,0.8,0.0
+JOB-1089,COOK,Asa'an Kopi,Food & Beverage (F&B),Depok,Onsite,38000.0,14.0,0.3,1.0857,0.4,0.8,0.0
+JOB-1154,Mandarin Tutor / Pengajar Bahasa Mandarin - Bogor (Part Time),CV. Kukche Mitra Sukses,Education & Tutoring,Bogor,Onsite,40000.0,14.0,1.0,1.1429,0.4,0.8,0.0611
+JOB-1226,Staf Dapur,Dots Dimsum,Admin & Office Support,Jakarta Timur,Onsite,40000.0,18.0,0.3,1.1429,0.8,1.0,0.0
+JOB-1125,Barista,Lou Patisserie,Food & Beverage (F&B),Tangerang Selatan,Onsite,35000.0,18.0,0.3,1.0,0.4,1.0,1.0
+JOB-1363,Staff Admin Receptionist,Mitra Perusahaan Loker.id,Customer Service & Support,Tangerang,Hybrid,35000.0,16.0,0.3,1.0,0.4,0.9,0.0
+JOB-1362,Dokter Umum,Mitra Perusahaan Loker.id,Admin & Office Support,Jakarta Barat,Onsite,42000.0,12.0,0.3,1.2,1.0,0.7,0.0
+JOB-1365,Sales Toko Laptop (Tangerang City / Alam Sutera)KL,Mitra Kerja KitaLulus,Education & Tutoring,Tangerang Selatan,Hybrid,35000.0,14.0,1.0,1.0,0.4,0.8,0.0
+JOB-1026,Barista,Golden Black Coffee,Food & Beverage (F&B),Tangerang Selatan,Onsite,38000.0,14.0,0.3,1.0857,0.4,0.8,0.0
+JOB-1275,Guru Coding & AI,Mitra Perusahaan Loker.id,IT & Software,Bekasi,Onsite,30000.0,14.0,0.3,0.8571,0.4,0.8,0.0
+JOB-1333,Fisioterapis,Mitra Perusahaan Loker.id,Admin & Office Support,Jakarta Barat,Hybrid,25000.0,18.0,0.3,0.7143,1.0,1.0,0.0
+JOB-1302,Penjaga Stand/Booth,Mitra Perusahaan Loker.id,Admin & Office Support,Jakarta Barat,Onsite,42000.0,18.0,0.3,1.2,1.0,1.0,0.0
+JOB-1127,Embedded Systems Engineer,PT. TITIK KOMA INNOVARA,Admin & Office Support,Jakarta Selatan,Onsite,28000.0,18.0,0.3,0.8,0.8,1.0,0.0
+JOB-1272,Waiter/Waiters,Mitra Perusahaan Loker.id,Food & Beverage (F&B),Jakarta Barat,Hybrid,30000.0,20.0,0.3,0.8571,1.0,0.9,1.0
+JOB-1357,Mobile Coffee Shop Crew,Mitra Perusahaan Loker.id,Food & Beverage (F&B),Tangerang,Hybrid,35000.0,18.0,0.3,1.0,0.4,1.0,1.0
+JOB-1032,Aesthetic Doctor,Lumine Clinic,Admin & Office Support,Bekasi,Onsite,35000.0,14.0,0.3,1.0,0.4,0.8,0.0
+JOB-1114,Asisten Tenaga Kefarmasian (ATK),Klinik Taman Anggrek,Admin & Office Support,Jakarta Barat,Onsite,45000.0,12.0,0.3,1.2857,1.0,0.7,0.0
+JOB-1058,Customer Service Advisor,VISION - BLUE PROTECTION,Customer Service & Support,Jakarta Barat,Hybrid,38000.0,18.0,0.3,1.0857,1.0,1.0,0.0
+JOB-1228,Operator Laundry (Part Time),Cleanco Laundry,Admin & Office Support,Tangerang Selatan,Onsite,35000.0,14.0,0.3,1.0,0.4,0.8,0.0
+JOB-1025,Mitra Office Boy : jakarta Selatan (Jagakarsa Plus),Ruangguru,Admin & Office Support,Jakarta Selatan,Onsite,38000.0,18.0,0.3,1.0857,0.8,1.0,0.0
+JOB-1211,Operator Air Minum Paruh Waktu,Indofresh Water,Admin & Office Support,Jakarta Timur,Onsite,35000.0,24.0,0.3,1.0,0.8,0.7,0.0
+JOB-1067,SAT Tutor,Kobi Education,Education & Tutoring,Jakarta Selatan,Onsite,45000.0,16.0,1.0,1.2857,0.8,0.9,0.0
+JOB-1223,konten kreator,PT Global Indah Anugerah,Admin & Office Support,Remote,Remote,35000.0,16.0,0.3,1.0,1.0,0.9,0.0
+JOB-1148,Teacher Part Time Coding & Robotic (AREA BEKASI) WFO,Codero Education,IT & Software,Tangerang Selatan,Onsite,30000.0,16.0,0.3,0.8571,0.4,0.9,0.0
+JOB-1178,Guru IPA,Gandhi Magani,Education & Tutoring,Bogor,Onsite,38000.0,14.0,1.0,1.0857,0.4,0.8,0.0611
+JOB-1095,Asisten Operasi Penjualan,Alzaidanmotor,Admin & Office Support,Depok,Onsite,25000.0,18.0,0.3,0.7143,0.4,1.0,0.0
+JOB-1181,Part Time Guru Ekskul Board Game di sekolah sekitar Tangsel,Board Game Class,Education & Tutoring,Jakarta Utara,Hybrid,45000.0,16.0,1.0,1.2857,0.8,0.9,0.0611
+JOB-1350,Staff Kebersihan,Mitra Perusahaan Loker.id,Admin & Office Support,Tangerang,Onsite,25000.0,12.0,0.3,0.7143,0.4,0.7,0.0
+JOB-1117,PART TIME perizinan bangunan,Berdaya Konsultan,Admin & Office Support,Depok,Hybrid,28000.0,12.0,0.3,0.8,0.4,0.7,0.0
+JOB-1046,Personal Assistant,PT. Golden Flexible Packaging,Admin & Office Support,Tangerang,Onsite,35000.0,20.0,0.3,1.0,0.4,0.9,0.0
+JOB-1300,Terapis Kesehatan,Mitra Perusahaan Loker.id,Admin & Office Support,Bekasi,Onsite,30000.0,18.0,0.3,0.8571,0.4,1.0,0.0
+JOB-1004,[Part-time] - Pengajar Bahasa Inggris - Tangerang Selatan,Ruangguru,Education & Tutoring,Tangerang Selatan,Onsite,35000.0,22.0,1.0,1.0,0.4,0.8,0.0611
+JOB-1111,Barista Part Time Area Jakarta Utara,PT Mitra Mulia Manunggal,Food & Beverage (F&B),Jakarta Utara,Onsite,35000.0,14.0,0.3,1.0,0.8,0.8,1.0
+JOB-1349,Guru Matematika,Mitra Perusahaan Loker.id,Education & Tutoring,Jakarta Barat,Hybrid,35000.0,20.0,1.0,1.0,1.0,0.9,0.0611
+JOB-1030,OneClickSmart: Sales Software Online (Remote),InstructJet,IT & Software,Remote,Remote,30000.0,16.0,0.3,0.8571,1.0,0.9,0.0
+JOB-1197,Kurir Motor,Spx cilandak,Logistics & Delivery,Jakarta Timur,Onsite,40000.0,18.0,0.3,1.1429,0.8,1.0,0.0
+JOB-1027,English Teacher,Enter (English Center) Depok,Education & Tutoring,Jakarta Barat,Hybrid,35000.0,18.0,1.0,1.0,1.0,1.0,0.0
+JOB-1008,Trainer Desain Grafis,SCREENESIA,Design & Creative,Jakarta Barat,Onsite,25000.0,16.0,0.3,0.7143,1.0,0.9,0.0
+JOB-1182,Barista,Dobar Coffee,Food & Beverage (F&B),Jakarta Barat,Onsite,30000.0,14.0,0.3,0.8571,1.0,0.8,1.0
+JOB-1109,Video Content Creator,Fildabeat Studio,Content & Media,Tangerang,Onsite,35000.0,19.0,0.3,1.0,0.4,0.95,0.0
+JOB-1038,SAT Tutor (Remote),Kobi Education,Education & Tutoring,Remote,Remote,50000.0,14.0,1.0,1.4286,1.0,0.8,0.0
+JOB-1115,English Teachers (Part-Time),I Can Read Summarecon Bekasi,Education & Tutoring,Bekasi,Onsite,50000.0,24.0,1.0,1.4286,0.4,0.7,0.0
+JOB-1339,Okupasi Terapis,Mitra Perusahaan Loker.id,Admin & Office Support,Jakarta Barat,Hybrid,35000.0,20.0,0.3,1.0,1.0,0.9,0.0
+JOB-1176,Talent Host Live,PT Armaz Insan Mandiri,Content & Media,Depok,Onsite,28000.0,18.0,0.3,0.8,0.4,1.0,0.0
+JOB-1221,Host Live Wanita CANTIK Work From Studio Bekasi Parttime,PT Barokah,Content & Media,Bekasi,Onsite,35000.0,20.0,0.3,1.0,0.4,0.9,0.0
+JOB-1106,Guru Sekolah Dasar,Alphazee Id,Education & Tutoring,Jakarta Barat,Onsite,38000.0,16.0,1.0,1.0857,1.0,0.9,0.0
+JOB-1145,Guru sekaligus Konten Kreator,Rumah Belajar Anak Hebat 2,Education & Tutoring,Bekasi,Onsite,35000.0,12.0,1.0,1.0,0.4,0.7,0.0
+JOB-1142,Daily Worker Kitchen Crew,Holycow! Bhadranaya Group,Food & Beverage (F&B),Tangerang Selatan,Onsite,28000.0,18.0,0.3,0.8,0.4,1.0,0.0516
+JOB-1068,Content Creator,Alphagen Academy,Content & Media,Bekasi,Onsite,35000.0,18.0,0.3,1.0,0.4,1.0,0.0
+JOB-1249,Desainer Grafis,SYAH PRINTING,Design & Creative,Jakarta Barat,Onsite,30000.0,12.0,0.3,0.8571,1.0,0.7,0.0
+JOB-1189,Tutor Conversation SMA - JAKARTA SELATAN,Bimbel Antusias,Education & Tutoring,Jakarta Selatan,Onsite,28000.0,16.0,1.0,0.8,0.8,0.9,0.0
+JOB-1194,[Part-time] - Pengajar Bahasa Inggris - Jakarta Barat,Ruangguru,Education & Tutoring,Jakarta Barat,Onsite,45000.0,12.0,1.0,1.2857,1.0,0.7,0.0
+JOB-1084,Crew Outlet Fried Chicken (Depok),Oh My Chicken,Retail & Store Operations,Depok,Onsite,25000.0,18.0,0.3,0.7143,0.4,1.0,0.1484
+JOB-1104,Tour Product and Operation staff,PT Theta Jaya Kreasindo,Admin & Office Support,Jakarta Barat,Hybrid,50000.0,12.0,0.3,1.4286,1.0,0.7,0.0
+JOB-1166,Mandarin Tutor,CV. Matahari Pranata Kreatif (Taeyang Kulture),Education & Tutoring,Remote,Remote,40000.0,14.0,1.0,1.1429,1.0,0.8,0.0
+JOB-1337,Dosen Pendidikan,Mitra Perusahaan Loker.id,Education & Tutoring,Jakarta Barat,Onsite,30000.0,18.0,1.0,0.8571,1.0,1.0,0.0
+JOB-1269,Guru Bahasa Inggris,Mitra Perusahaan Loker.id,Education & Tutoring,Tangerang,Hybrid,35000.0,12.0,1.0,1.0,0.4,0.7,0.0
+JOB-1120,Content Creator,RHA Creative Solutions,Content & Media,Depok,Onsite,40000.0,20.0,0.3,1.1429,0.4,0.9,0.0
+JOB-1306,Penerjemah Bahasa Korea,Mitra Perusahaan Loker.id,Content & Media,Jakarta Barat,Hybrid,38000.0,14.0,0.3,1.0857,1.0,0.8,0.0
+JOB-1322,Guru IPS,Mitra Perusahaan Loker.id,Education & Tutoring,Tangerang,Onsite,25000.0,12.0,1.0,0.7143,0.4,0.7,0.0
+JOB-1403,Barista,coffeerekha&eatery,Food & Beverage (F&B),Jakarta Timur,Onsite,45000.0,18.0,0.3,1.2857,0.8,1.0,0.0
+JOB-1037,Master Teacher Kimia,Brain Academy by Ruangguru Bekasi - Bintara,Education & Tutoring,Bekasi,Onsite,40000.0,24.0,1.0,1.1429,0.4,0.7,0.0
+JOB-1254,Asisten Desain Grafis,Soto Seger Mbah Broto,Design & Creative,Remote,Remote,40000.0,18.0,0.3,1.1429,1.0,1.0,0.0
+JOB-1060,Business Development Manulife Indonesia,Cipta Aset Bersama,Admin & Office Support,Tangerang,Hybrid,38000.0,20.0,0.3,1.0857,0.4,0.9,0.0
+JOB-1112,Staff,PT STM Indonesia Machinery,Admin & Office Support,Tangerang,Onsite,35000.0,18.0,0.3,1.0,0.4,1.0,0.0
+JOB-1291,Daily On-Call Crew,Mitra Perusahaan Loker.id,Food & Beverage (F&B),Jakarta Barat,Hybrid,25000.0,18.0,0.3,0.7143,1.0,1.0,0.0
+JOB-1263,Terapis Wicara (TW),Mitra Perusahaan Loker.id,Admin & Office Support,Tangerang,Onsite,35000.0,20.0,0.3,1.0,0.4,0.9,0.0
+JOB-1151,kitchen,PT Abuya Berkah Indonesia (Almaz Fried Chicken & Kebuli Abuya),Food & Beverage (F&B),Bekasi,Hybrid,38000.0,24.0,0.3,1.0857,0.4,0.7,1.0
+JOB-1343,Pelatih Tari Tradisional,Mitra Perusahaan Loker.id,Education & Tutoring,Depok,Onsite,35000.0,16.0,1.0,1.0,0.4,0.9,0.0
+JOB-1199,Video Content Creator,PT. Nalure Lab Fashion,Content & Media,Remote,Remote,25000.0,19.0,0.3,0.7143,1.0,0.95,0.0
+JOB-1147,Tutor Geografi (Inval),Homeschooling Kak Seto,Education & Tutoring,Tangerang Selatan,Onsite,40000.0,16.0,1.0,1.1429,0.4,0.9,0.0
+JOB-1335,Guru Mandarin,Mitra Perusahaan Loker.id,Education & Tutoring,Bekasi,Onsite,35000.0,16.0,1.0,1.0,0.4,0.9,0.0
+JOB-1311,Robotics Mentor,Mitra Perusahaan Loker.id,Education & Tutoring,Tangerang,Hybrid,30000.0,12.0,1.0,0.8571,0.4,0.7,0.0611
+JOB-1097,Customer Service Attendence Playground anak Ananda Cileungsi,PT. Mitra Anak Sejahtera,Customer Service & Support,Bogor,Onsite,50000.0,12.0,0.3,1.4286,0.4,0.7,0.0
+JOB-1144,Customer Service Part-Time,Prestisa,Customer Service & Support,Remote,Remote,28000.0,24.0,0.3,0.8,1.0,0.7,0.0
+JOB-1383,Asisten Kepala TokoPT Gavin Mega PerkasaDipromosik,Mitra Kerja KitaLulus,Admin & Office Support,Jakarta Barat,Onsite,35000.0,14.0,0.3,1.0,1.0,0.8,0.0
+JOB-1123,Tutor Matematika IPA SMA - JAKARTA BARAT,Bimbel Antusias,Education & Tutoring,Jakarta Barat,Onsite,30000.0,16.0,1.0,0.8571,1.0,0.9,0.0
+JOB-1203,ENGLISH TEACHER FOR KIDS (TK & SD),english coach depok,Education & Tutoring,Depok,Onsite,35000.0,12.0,1.0,1.0,0.4,0.7,0.0
+JOB-1247,Crew Playground,Kidsandland Indonesia,Admin & Office Support,Jakarta Barat,Onsite,40000.0,16.0,0.3,1.1429,1.0,0.9,0.0
+JOB-1334,Administrasi Staff,Mitra Perusahaan Loker.id,Admin & Office Support,Tangerang,Onsite,35000.0,14.0,0.3,1.0,0.4,0.8,0.0
+JOB-1324,Guru Rumah Tahfidz,Mitra Perusahaan Loker.id,Education & Tutoring,Jakarta Barat,Hybrid,35000.0,16.0,1.0,1.0,1.0,0.9,0.0
+JOB-1313,English Mentor,Mitra Perusahaan Loker.id,Education & Tutoring,Tangerang,Onsite,38000.0,20.0,1.0,1.0857,0.4,0.9,0.0611
+JOB-1325,Pelatih Olimpiade Sains,Mitra Perusahaan Loker.id,Education & Tutoring,Jakarta Barat,Hybrid,35000.0,14.0,1.0,1.0,1.0,0.8,0.0
+JOB-1295,Social Media Specialist,Mitra Perusahaan Loker.id,Marketing & Sales,Jakarta Barat,Onsite,35000.0,12.0,0.3,1.0,1.0,0.7,0.0
+JOB-1371,Financial Advisor (Bancassurance) - Jakarta UtaraP,Mitra Kerja KitaLulus,Admin & Office Support,Jakarta Utara,Hybrid,30000.0,14.0,0.3,0.8571,0.8,0.8,0.0
+JOB-1332,Asisten Apoteker / TTK,Mitra Perusahaan Loker.id,Admin & Office Support,Jakarta Barat,Onsite,35000.0,14.0,0.3,1.0,1.0,0.8,0.0
+JOB-1180,GURU PRIVATE CALISTUNG & ENGLISH JAKARTA TIMUR,LesKu,Education & Tutoring,Remote,Remote,30000.0,22.0,1.0,0.8571,1.0,0.8,0.0611
+JOB-1370,Kolektor Lapangan (Depok/Jakarta Selatan)PT Sarwa,Mitra Kerja KitaLulus,Admin & Office Support,Jakarta Selatan,Hybrid,35000.0,20.0,0.3,1.0,0.8,0.9,0.0
+JOB-1361,Welder GMAW Co,Mitra Perusahaan Loker.id,Admin & Office Support,Jakarta Barat,Onsite,42000.0,14.0,0.3,1.2,1.0,0.8,0.0
+JOB-1315,Host Live Streaming,Mitra Perusahaan Loker.id,Content & Media,Tangerang,Hybrid,38000.0,14.0,0.3,1.0857,0.4,0.8,0.0
+JOB-1152,GURU BAHASA INGGRIS - JAKARTA SELATAN & SEKITARNYA,bimbel SMART,Education & Tutoring,Jakarta Selatan,Onsite,35000.0,16.0,1.0,1.0,0.8,0.9,0.0
+JOB-1393,Part Time Guru Robotik wilayah Depok,Kompas Gramedia,IT & Software,Depok,Onsite,28000.0,18.0,0.3,0.8,0.4,1.0,0.0
+JOB-1234,Graphic Designer,MING CHA,Design & Creative,Remote,Remote,38000.0,22.0,0.3,1.0857,1.0,0.8,0.0
+JOB-1165,Promotor,PT. Primac Perkasa Indonesia,Marketing & Sales,Remote,Remote,32500.0,16.0,0.3,0.9286,1.0,0.9,0.0424
+JOB-1259,Remote Online English Teacher | Indonesia,SCHOLA LIMITED COMPANY,Education & Tutoring,Remote,Remote,35000.0,16.0,1.0,1.0,1.0,0.9,0.0
+JOB-1233,Mandarin Translator (Part Time),PT. Qingsong Business Indonesia,Education & Tutoring,Remote,Remote,45000.0,16.0,1.0,1.2857,1.0,0.9,0.0
+JOB-1121,Trainer Part Time,PRIVAKOM,Admin & Office Support,Jakarta Timur,Onsite,35000.0,22.0,0.3,1.0,0.8,0.8,0.0
+JOB-1225,Temporary Office Boy Bekasi Area,Ruangguru,Admin & Office Support,Bekasi,Onsite,45000.0,22.0,0.3,1.2857,0.4,0.8,0.0
+JOB-1128,Kitchen worker,Medifit,Food & Beverage (F&B),Jakarta Utara,Onsite,40000.0,18.0,0.3,1.1429,0.8,1.0,0.0
+JOB-1286,Dokter Spesialis Intervensi Muskuloskeletal,Mitra Perusahaan Loker.id,Admin & Office Support,Jakarta Barat,Hybrid,35000.0,16.0,0.3,1.0,1.0,0.9,0.0
+JOB-1356,Barista Keliling,Mitra Perusahaan Loker.id,Food & Beverage (F&B),Bekasi,Hybrid,25000.0,16.0,0.3,0.7143,0.4,0.9,0.0516
+JOB-1134,kitchen,PT Abuya Berkah Indonesia (Almaz Fried Chicken & Kebuli Abuya),Food & Beverage (F&B),Tangerang,Onsite,30000.0,24.0,0.3,0.8571,0.4,0.7,0.0
+JOB-1045,Part-Time Programming Teacher Svarna Sutera,Timedoor Academy,Education & Tutoring,Tangerang,Onsite,28000.0,18.0,1.0,0.8,0.4,1.0,0.0
+JOB-1066,Teknisi,CV Osle Indonesia,Admin & Office Support,Remote,Remote,45000.0,16.0,0.3,1.2857,1.0,0.9,0.0
+JOB-1086,Hostlive streaming parttime,RHA Creative Solutions,Content & Media,Depok,Onsite,45000.0,14.0,0.3,1.2857,0.4,0.8,0.0
+JOB-1243,Part Time Kitchen Crew - Resto NonHalal Crackling Gading Serpong,PT Santap Gembira Bersama,Food & Beverage (F&B),Tangerang,Onsite,38000.0,18.0,0.3,1.0857,0.4,1.0,0.0516
+JOB-1160,German Tutor (Part-time / Evening Class – Remote),PT Easypolly Edukasi Indonesia,Education & Tutoring,Remote,Remote,38000.0,24.0,1.0,1.0857,1.0,0.7,0.0
+JOB-1013,Content Creator,PT Subahtera Semesta Graphika,Content & Media,Jakarta Barat,Hybrid,38000.0,22.0,0.3,1.0857,1.0,0.8,0.0
+JOB-1036,English Teacher,Englishvit,Education & Tutoring,Remote,Remote,28000.0,22.0,1.0,0.8,1.0,0.8,0.0
+JOB-1222,Kurir Motor,SPX HUB PASAR KEMIS,Logistics & Delivery,Tangerang,Onsite,45000.0,16.0,0.3,1.2857,0.4,0.9,0.0
+JOB-1352,Rider Motor Listrik,Mitra Perusahaan Loker.id,Food & Beverage (F&B),Jakarta Barat,Onsite,27000.0,20.0,0.3,0.7714,1.0,0.9,0.0516
+JOB-1179,Tutor MIPA SMP (Part Time),Homeschooling Kak Seto,Education & Tutoring,Tangerang Selatan,Onsite,30000.0,16.0,1.0,0.8571,0.4,0.9,0.0
+JOB-1207,Part-Time Teacher Programming (Weekend Only),PT SAHABAT ILMU ANAK PINTAR,Education & Tutoring,Tangerang,Onsite,45000.0,18.0,1.0,1.2857,0.4,1.0,0.0
+JOB-1359,Barista Keliling,Mitra Perusahaan Loker.id,Food & Beverage (F&B),Depok,Hybrid,42000.0,12.0,0.3,1.2,0.4,0.7,0.0
+JOB-1255,Japanese Tutor / Pengajar Bahasa Jepang - Jakarta (Part Time),CV. Kukche Mitra Sukses,Education & Tutoring,Jakarta Selatan,Onsite,45000.0,16.0,1.0,1.2857,0.8,0.9,0.0
+JOB-1005,Teacher Part Time Coding & Robotic (AREA SOLO) WFO,Codero Education,IT & Software,Tangerang Selatan,Onsite,45000.0,24.0,0.3,1.2857,0.4,0.7,0.0
+JOB-1257,Teknisi/IT (Network Internet Service Provider),PT Sewiwi Indonesia,Admin & Office Support,Remote,Remote,30000.0,14.0,0.3,0.8571,1.0,0.8,0.0
+JOB-1214,Education Consultant,Ngodingmain,Education & Tutoring,Remote,Remote,30000.0,12.0,1.0,0.8571,1.0,0.7,0.0
+JOB-1172,Daily Sales & Field Support,Indotara Persada,Education & Tutoring,Tangerang,Hybrid,35000.0,18.0,1.0,1.0,0.4,1.0,0.0
+JOB-1216,[Part time] Guru Informatika - Kota Depok,Ruangguru,Education & Tutoring,Depok,Onsite,50000.0,16.0,1.0,1.4286,0.4,0.9,0.0
+JOB-1033,PART TIME-KITCHEN,PT Khatulistiwa Indonesia M633,Food & Beverage (F&B),Tangerang,Onsite,35000.0,22.0,0.3,1.0,0.4,0.8,0.0383
+JOB-1268,Dokter,Mitra Perusahaan Loker.id,Admin & Office Support,Jakarta Barat,Hybrid,35000.0,12.0,0.3,1.0,1.0,0.7,0.0
+JOB-1328,Mandarin Teacher (Laoshi),Mitra Perusahaan Loker.id,Education & Tutoring,Jakarta Barat,Onsite,27000.0,16.0,1.0,0.7714,1.0,0.9,0.0
+JOB-1379,ACCOUNT OFFICER / MARKETING CABANG KENDARIPT Kresn,Mitra Kerja KitaLulus,Marketing & Sales,Jakarta Barat,Hybrid,35000.0,12.0,0.3,1.0,1.0,0.7,0.0424
+JOB-1392,Desk CollectionPT Koleksi Andalan NusaDipromosikan,Mitra Kerja KitaLulus,Admin & Office Support,Depok,Hybrid,30000.0,20.0,0.3,0.8571,0.4,0.9,0.0
+JOB-1063,Psikolog Sekolah,Yayasan Padma Loka Wiyata (Sekolah Anak Merdeka),Education & Tutoring,Tangerang,Onsite,30000.0,24.0,1.0,0.8571,0.4,0.7,0.0611
+JOB-1136,Content Designer Team,Muslimah Creator Indonesia,Design & Creative,Remote,Remote,30000.0,24.0,0.3,0.8571,1.0,0.7,0.0
+JOB-1129,E-commerce,PT CHN STARS INDONESIA,Admin & Office Support,Jakarta Barat,Onsite,35000.0,18.0,0.3,1.0,1.0,1.0,0.0
+JOB-1157,Guru Robotic Dan AI ( Artificial Intelligence ),Coding Academy Indonesia,Education & Tutoring,Remote,Remote,38000.0,14.0,1.0,1.0857,1.0,0.8,0.0611
+JOB-1041,Admin Operasional (Part-Time),Tennis Rizz,Admin & Office Support,Jakarta Barat,Onsite,25000.0,18.0,0.3,0.7143,1.0,1.0,0.0
+JOB-1380,Sales Taking Order - Penempatan DepokPT. Agroka Bu,Mitra Kerja KitaLulus,Education & Tutoring,Depok,Hybrid,40000.0,16.0,1.0,1.1429,0.4,0.9,0.0
+JOB-1338,Smoothie Barista,Mitra Perusahaan Loker.id,Food & Beverage (F&B),Jakarta Barat,Onsite,35000.0,20.0,0.3,1.0,1.0,0.9,1.0
+JOB-1213,Chinese teacher,chunqing learning center,Education & Tutoring,Tangerang,Onsite,40000.0,16.0,1.0,1.1429,0.4,0.9,0.0
+JOB-1252,Videographer,PT TALENTA TRI KARYA,Admin & Office Support,Remote,Remote,35000.0,18.0,0.3,1.0,1.0,1.0,0.0
+JOB-1351,Guru Mandarin HSK 5,Mitra Perusahaan Loker.id,Education & Tutoring,Jakarta Barat,Hybrid,42000.0,16.0,1.0,1.2,1.0,0.9,0.0
+JOB-1202,kitchen,PT Abuya Berkah Indonesia (Almaz Fried Chicken & Kebuli Abuya),Food & Beverage (F&B),Jakarta Selatan,Hybrid,50000.0,14.0,0.3,1.4286,0.8,0.8,0.0516
+JOB-1162,Guru Privat Kurikulum Internasional - Jakarta Timur,Ruangguru,Education & Tutoring,Jakarta Timur,Onsite,28000.0,20.0,1.0,0.8,0.8,0.9,0.0
+JOB-1191,Mitra Cleaning Service Harian (Part-Time) – Jakarta Selatan,PT Ciptakarya Solusi Indonesia,Admin & Office Support,Jakarta Selatan,Onsite,35000.0,18.0,0.3,1.0,0.8,1.0,0.0
+JOB-1310,Marketing Staff,Mitra Perusahaan Loker.id,Marketing & Sales,Tangerang,Onsite,32500.0,18.0,0.3,0.9286,0.4,1.0,0.0
+JOB-1260,Operator Produksi,Himalaya Canvas,Admin & Office Support,Jakarta Barat,Onsite,50000.0,18.0,0.3,1.4286,1.0,1.0,0.0
+JOB-1054,Customer Relations Admin - Cab Sumbawa,Nusantara Sakti Group,Admin & Office Support,Jakarta Barat,Onsite,25000.0,16.0,0.3,0.7143,1.0,0.9,0.0
+JOB-1002,Graphic Designer,Yumas Nida Corp (YNC),Design & Creative,Remote,Remote,30000.0,12.0,0.3,0.8571,1.0,0.7,0.0
+JOB-1360,Mobile Coffee Shop Crew,Mitra Perusahaan Loker.id,Food & Beverage (F&B),Jakarta Barat,Hybrid,38000.0,20.0,0.3,1.0857,1.0,0.9,0.0
+JOB-1050,Helper Instalasi,PT Sanwamas Metal Industry,Admin & Office Support,Bekasi,Onsite,38000.0,24.0,0.3,1.0857,0.4,0.7,0.0
+JOB-1035,Kurir Mitra Last-Mile Jakarta Utara,SPX Xpress DKI Jakarta,Logistics & Delivery,Jakarta Utara,Onsite,28000.0,12.0,0.3,0.8,0.8,0.7,0.0
+JOB-1264,External Promotion Partner (Part-Time),Mitra Perusahaan Loker.id,Design & Creative,Tangerang,Onsite,30000.0,18.0,0.3,0.8571,0.4,1.0,0.0
+JOB-1367,SURVEYOR NOO (NEW OPENING OUTLET)CV. MULTIRASA PRI,Mitra Kerja KitaLulus,Admin & Office Support,Jakarta Barat,Hybrid,40000.0,20.0,0.3,1.1429,1.0,0.9,0.0
+JOB-1265,Dokter Gigi,Mitra Perusahaan Loker.id,Admin & Office Support,Tangerang,Hybrid,30000.0,14.0,0.3,0.8571,0.4,0.8,0.0
+JOB-1316,Guru Coding & Robotik,Mitra Perusahaan Loker.id,IT & Software,Jakarta Barat,Onsite,27000.0,16.0,0.3,0.7714,1.0,0.9,0.0
+JOB-1274,Sales Representatif,Mitra Perusahaan Loker.id,Education & Tutoring,Jakarta Barat,Onsite,27000.0,12.0,1.0,0.7714,1.0,0.7,0.0611
+JOB-1167,Chief Creative Officer (CCO),PT Global Platform Group,Design & Creative,Tangerang Selatan,Hybrid,25000.0,20.0,0.3,0.7143,0.4,0.9,0.0
+JOB-1307,Marketing,Mitra Perusahaan Loker.id,Marketing & Sales,Bekasi,Hybrid,30000.0,20.0,0.3,0.8571,0.4,0.9,0.0424
+JOB-1244,Master Teacher Matematika,Brain Academy by Ruangguru Bekasi - Agus Salim,Education & Tutoring,Bekasi,Onsite,25000.0,22.0,1.0,0.7143,0.4,0.8,0.0
+JOB-1188,Staff Operasional Perusahaan,tugasprint,Admin & Office Support,Jakarta Timur,Onsite,45000.0,20.0,0.3,1.2857,0.8,0.9,0.0
+JOB-1170,Kurir Deliery Obat,Paxel Indonesia,Logistics & Delivery,Jakarta Selatan,Onsite,25000.0,22.0,0.3,0.7143,0.8,0.8,0.0
+JOB-1059,Part Time Kitchen,Filosofi Kopi,Food & Beverage (F&B),Jakarta Pusat,Onsite,28000.0,24.0,0.3,0.8,0.8,0.7,0.0516
+JOB-1049,Barista,YORU Matcha Studio,Food & Beverage (F&B),Tangerang Selatan,Onsite,50000.0,14.0,0.3,1.4286,0.4,0.8,0.0516
+JOB-1236,Guru Les Privat - Kota Jakarta Selatan,Ruangguru,Education & Tutoring,Jakarta Selatan,Onsite,25000.0,12.0,1.0,0.7143,0.8,0.7,0.0
+JOB-1253,Finance Admin,KOTA COURTS by PADELGRID,Admin & Office Support,Jakarta Barat,Hybrid,38000.0,12.0,0.3,1.0857,1.0,0.7,0.0
+JOB-1022,Content Creator Wanted In Bali,PT Mawar Sharon Indah,Content & Media,Remote,Remote,40000.0,22.0,0.3,1.1429,1.0,0.8,0.0
+JOB-1314,Guru Mandarin,Mitra Perusahaan Loker.id,Education & Tutoring,Bogor,Onsite,35000.0,20.0,1.0,1.0,0.4,0.9,0.0611
+JOB-1161,Part Time English Teacher,Bright Smart English,Education & Tutoring,Jakarta Barat,Onsite,30000.0,16.0,1.0,0.8571,1.0,0.9,0.0
+JOB-1277,Guru Bimbel,Mitra Perusahaan Loker.id,Education & Tutoring,Tangerang,Hybrid,38000.0,18.0,1.0,1.0857,0.4,1.0,0.0
+JOB-1309,Mathematics Mentor,Mitra Perusahaan Loker.id,Education & Tutoring,Tangerang,Hybrid,30000.0,18.0,1.0,0.8571,0.4,1.0,0.0
+JOB-1131,Crew Front Parttime,Cikstik Indonesia,Admin & Office Support,Depok,Onsite,50000.0,18.0,0.3,1.4286,0.4,1.0,0.0
+JOB-1331,Terapis,Mitra Perusahaan Loker.id,Admin & Office Support,Jakarta Barat,Onsite,27000.0,18.0,0.3,0.7714,1.0,1.0,0.0
+JOB-1215,TALENT/CONTENT,Livou,Content & Media,Jakarta Barat,Hybrid,50000.0,12.0,0.3,1.4286,1.0,0.7,0.0
+JOB-1122,🌐 Sales Canvassing - Internet Rakyat (Jakarta Utara),PT GHIRA KARYA DIGITAL,Education & Tutoring,Jakarta Utara,Hybrid,35000.0,14.0,1.0,1.0,0.8,0.8,0.0
+JOB-1107,Teacher Part Time Coding & Robotic (AREA JAKBAR-JAKPUS) WFO,Codero Education,IT & Software,Tangerang Selatan,Onsite,30000.0,12.0,0.3,0.8571,0.4,0.7,0.0
+JOB-1271,Driver Taksi,Mitra Perusahaan Loker.id,Logistics & Delivery,Jakarta Barat,Onsite,42000.0,16.0,0.3,1.2,1.0,0.9,0.0
+JOB-1103,Sales Marketing (Masih Kuliah akan diprioritaskan),PT. Ekata Logue Ekologika,Education & Tutoring,Jakarta Barat,Hybrid,35000.0,16.0,1.0,1.0,1.0,0.9,0.0
