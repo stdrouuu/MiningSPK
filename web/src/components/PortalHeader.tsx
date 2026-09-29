@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
   Briefcase,
   Search,
@@ -8,6 +9,7 @@ import {
   Bookmark,
   SlidersHorizontal,
   TableProperties,
+  Home,
 } from 'lucide-react'
 import { Button } from './ui/Button'
 import { Badge } from './ui/Badge'
@@ -64,6 +66,14 @@ export function PortalHeader({
 
           {/* Navigation Links */}
           <nav className="hidden md:flex items-center gap-1 text-sm font-medium">
+            <Link
+              to="/"
+              className="px-3 py-1.5 rounded-md text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition-colors flex items-center gap-1.5"
+            >
+              <Home className="h-3.5 w-3.5" />
+              Beranda
+            </Link>
+
             <button
               onClick={() => onChangeView('jobs')}
               className={`px-3 py-1.5 rounded-md transition-colors cursor-pointer ${

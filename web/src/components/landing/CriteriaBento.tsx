@@ -1,4 +1,4 @@
-import { MapPin, Coins, Clock, Shapes } from 'lucide-react'
+import { MapPin, Coins, Clock, Shapes, Sparkles } from 'lucide-react'
 import { Reveal } from './Reveal'
 
 // Bento with exactly 5 cells for 5 SPK criteria.
@@ -20,10 +20,10 @@ export function CriteriaBento() {
 
       <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-6">
         <Reveal className="md:col-span-4">
-          <div className="h-full overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+          <div className="relative h-full overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
             <img
-              src="https://picsum.photos/seed/upmatch-tutor-session/900/520"
-              alt="Sesi les privat mahasiswa dengan siswa"
+              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&h=520&q=80"
+              alt="Mahasiswa belajar kelompok dengan laptop"
               width={900}
               height={520}
               loading="lazy"
@@ -42,7 +42,7 @@ export function CriteriaBento() {
         </Reveal>
 
         <Reveal delay={80} className="md:col-span-2">
-          <div className="h-full rounded-xl border border-emerald-200 bg-emerald-50 p-5 dark:border-emerald-800/50 dark:bg-emerald-950/30">
+          <div className="h-full rounded-xl border border-emerald-200 bg-emerald-50/70 p-5 dark:border-emerald-800/50 dark:bg-emerald-950/30">
             <div className="flex items-center gap-2">
               <Coins className="h-4 w-4 text-emerald-700 dark:text-emerald-300" strokeWidth={1.5} />
               <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">Upah per jam</h3>
@@ -80,20 +80,21 @@ export function CriteriaBento() {
         </Reveal>
 
         <Reveal delay={120} className="md:col-span-2">
-          <div className="h-full overflow-hidden rounded-xl border border-zinc-200 bg-zinc-950 dark:border-zinc-700">
+          <div className="relative h-full overflow-hidden rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
             <img
-              src="https://picsum.photos/seed/upmatch-skill-match/600/300"
-              alt="Mahasiswa menyiapkan minuman di bar kopi"
+              src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=600&h=300&q=80"
+              alt="Barista menuang latte art ke cangkir kopi"
               width={600}
               height={300}
               loading="lazy"
-              className="h-28 w-full object-cover opacity-90"
+              className="h-28 w-full object-cover"
             />
             <div className="p-5">
               <div className="flex items-center gap-2">
-                <h3 className="text-sm font-semibold text-zinc-50">Kecocokan keahlian</h3>
+                <Sparkles className="h-4 w-4 text-emerald-600 dark:text-emerald-400" strokeWidth={1.5} />
+                <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">Kecocokan keahlian</h3>
               </div>
-              <p className="mt-2 text-sm leading-relaxed text-zinc-400">
+              <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
                 Dihitung dari irisan kata kunci skill dengan deskripsi lowongan.
               </p>
             </div>

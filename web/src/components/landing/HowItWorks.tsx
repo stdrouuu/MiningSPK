@@ -30,15 +30,21 @@ export function HowItWorks() {
               <p className="mt-3 max-w-[52ch] text-base leading-relaxed text-zinc-600 dark:text-zinc-400">
                 Tidak perlu paham SMARTER. Kamu cukup kenal jadwalmu, sistem mengurus skornya.
               </p>
-              <div className="mt-6 overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800">
+              <div className="relative mt-6 overflow-hidden rounded-xl border border-zinc-200 bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900">
                 <img
-                  src="https://picsum.photos/seed/upmatch-student-desk/720/560"
+                  src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=720&h=560&q=80"
                   alt="Meja belajar mahasiswa dengan laptop dan catatan"
                   width={720}
                   height={560}
                   loading="lazy"
                   className="w-full object-cover"
                 />
+                <div className="border-t border-zinc-200/60 bg-zinc-50/90 px-4 py-2.5 text-xs text-zinc-600 dark:border-zinc-800/80 dark:bg-zinc-900/90 dark:text-zinc-400">
+                  <div className="flex items-center justify-between">
+                    <span>Sistem SMARTER + Rank Order Centroid</span>
+                    <span className="font-mono font-medium text-emerald-700 dark:text-emerald-400">100% transparan</span>
+                  </div>
+                </div>
               </div>
             </div>
           </Reveal>
