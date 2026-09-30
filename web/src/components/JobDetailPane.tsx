@@ -1,13 +1,14 @@
 import {
-  ExternalLink,
-  MapPin,
-  Building2,
-  Calendar,
-  CheckCircle2,
-  XCircle,
-  Bookmark,
-  ShieldCheck,
-} from 'lucide-react'
+  RiExternalLinkLine,
+  RiMapPinLine,
+  RiBuilding2Line,
+  RiCalendarLine,
+  RiCheckboxCircleLine,
+  RiCloseCircleLine,
+  RiBookmarkLine,
+  RiBookmarkFill,
+  RiShieldCheckLine,
+} from 'react-icons/ri'
 import { Button } from './ui/Button'
 import { Badge } from './ui/Badge'
 import { CompanyLogo } from './CompanyLogo'
@@ -35,11 +36,11 @@ function CriterionRow({
   return (
     <div className="p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex items-start gap-2">
       {ok === null ? (
-        <CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0 text-zinc-500" aria-hidden="true" />
+        <RiCheckboxCircleLine className="h-4 w-4 mt-0.5 shrink-0 text-zinc-500" aria-hidden="true" />
       ) : ok ? (
-        <CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
+        <RiCheckboxCircleLine className="h-4 w-4 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
       ) : (
-        <XCircle className="h-4 w-4 mt-0.5 shrink-0 text-zinc-400 dark:text-zinc-500" aria-hidden="true" />
+        <RiCloseCircleLine className="h-4 w-4 mt-0.5 shrink-0 text-zinc-400 dark:text-zinc-500" aria-hidden="true" />
       )}
       <div className="min-w-0">
         <span className="font-semibold text-zinc-900 dark:text-zinc-100 block text-xs">
@@ -63,7 +64,7 @@ export function JobDetailPane({
   if (!job) {
     return (
       <div className="min-h-[320px] flex flex-col items-center justify-center p-8 text-center rounded-xl border border-dashed border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950">
-        <Building2 className="h-10 w-10 text-zinc-300 dark:text-zinc-700 mb-3" aria-hidden="true" />
+        <RiBuilding2Line className="h-10 w-10 text-zinc-300 dark:text-zinc-700 mb-3" aria-hidden="true" />
         <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-200 mb-1">
           Pilih lowongan untuk melihat detail
         </h3>
@@ -129,12 +130,12 @@ export function JobDetailPane({
 
               <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-zinc-600 dark:text-zinc-400">
                 <span className="font-semibold text-zinc-900 dark:text-zinc-100 inline-flex items-center gap-1">
-                  <Building2 className="h-4 w-4 text-zinc-500" aria-hidden="true" />
+                  <RiBuilding2Line className="h-4 w-4 text-zinc-500" aria-hidden="true" />
                   {job.company_name}
                 </span>
                 <span aria-hidden="true">•</span>
                 <span className="inline-flex items-center gap-1 text-[13px]">
-                  <MapPin className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
+                  <RiMapPinLine className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
                   {job.work_job_location} ({job.work_system})
                 </span>
               </div>
@@ -151,17 +152,20 @@ export function JobDetailPane({
               aria-pressed={isSaved}
               className="h-9 w-9"
             >
-              <Bookmark
-                className={`h-4 w-4 ${isSaved ? 'text-amber-600 dark:text-amber-400' : ''}`}
-                fill={isSaved ? 'currentColor' : 'none'}
-                aria-hidden="true"
-              />
+              {isSaved ? (
+                <RiBookmarkFill
+                  className="h-4 w-4 text-amber-600 dark:text-amber-400"
+                  aria-hidden="true"
+                />
+              ) : (
+                <RiBookmarkLine className="h-4 w-4" aria-hidden="true" />
+              )}
             </Button>
 
             {job.url && (
               <a href={job.url} target="_blank" rel="noopener noreferrer">
                 <Button variant="default" size="sm" className="gap-1.5 text-xs whitespace-nowrap">
-                  Lamar <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+                  Lamar <RiExternalLinkLine className="h-3.5 w-3.5" aria-hidden="true" />
                 </Button>
               </a>
             )}
@@ -297,7 +301,7 @@ export function JobDetailPane({
       <div className="p-5 sm:p-6 space-y-4">
         <div className="p-3.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/40 text-xs text-zinc-600 dark:text-zinc-400 space-y-1">
           <p className="flex items-center gap-1.5 font-semibold text-zinc-900 dark:text-zinc-100">
-            <ShieldCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
+            <RiShieldCheckLine className="h-4 w-4 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
             Terverifikasi 6-lapis CRISP-DM
           </p>
           <p className="leading-relaxed">
@@ -307,14 +311,14 @@ export function JobDetailPane({
 
         <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
           <span className="text-xs text-zinc-500 inline-flex items-center gap-1">
-            <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
+            <RiCalendarLine className="h-3.5 w-3.5" aria-hidden="true" />
             Posting: {job.date_posted || '2026'}
           </span>
 
           {job.url && (
             <a href={job.url} target="_blank" rel="noopener noreferrer">
               <Button variant="default" size="sm" className="gap-1.5 text-xs">
-                Buka portal {job.source_portal || 'resmi'} <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+                Buka portal {job.source_portal || 'resmi'} <RiExternalLinkLine className="h-3.5 w-3.5" aria-hidden="true" />
               </Button>
             </a>
           )}

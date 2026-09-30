@@ -1,5 +1,5 @@
 import React from 'react'
-import { MapPin, Coins, Clock, Building2, Check, Bookmark } from 'lucide-react'
+import { RiMapPinLine, RiCoinsLine, RiTimeLine, RiBuilding2Line, RiCheckLine, RiBookmarkLine, RiBookmarkFill } from 'react-icons/ri'
 import { Badge } from './ui/Badge'
 import { CompanyLogo } from './CompanyLogo'
 import type { RankedJobResult } from '../types/data'
@@ -72,7 +72,7 @@ export function JobCardItem({
             </h3>
 
             <p className="text-xs text-zinc-500 dark:text-zinc-400 truncate flex items-center gap-1 mt-0.5">
-              <Building2 className="h-3 w-3 shrink-0" aria-hidden="true" />
+              <RiBuilding2Line className="h-3 w-3 shrink-0" aria-hidden="true" />
               <span className="truncate">{job.company_name}</span>
             </p>
           </div>
@@ -99,28 +99,32 @@ export function JobCardItem({
                 : 'text-zinc-500 hover:text-zinc-800 hover:bg-zinc-100 dark:text-zinc-400 dark:hover:text-zinc-200 dark:hover:bg-zinc-800'
             }`}
           >
-            <Bookmark className="h-4 w-4" fill={isSaved ? 'currentColor' : 'none'} aria-hidden="true" />
+            {isSaved ? (
+              <RiBookmarkFill className="h-4 w-4" aria-hidden="true" />
+            ) : (
+              <RiBookmarkLine className="h-4 w-4" aria-hidden="true" />
+            )}
           </button>
         </div>
       </div>
 
       <dl className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-zinc-600 dark:text-zinc-400 mt-3 pt-3 border-t border-zinc-100 dark:border-zinc-800/80">
         <span className="font-mono font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-1">
-          <Coins className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
+          <RiCoinsLine className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
           {formatRupiah(job.work_salaryperhour)}/jam
         </span>
 
         <span aria-hidden="true">•</span>
 
         <span className="flex items-center gap-1">
-          <Clock className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
+          <RiTimeLine className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
           {job.work_hours} jam/mgg
         </span>
 
         <span aria-hidden="true">•</span>
 
         <span className="flex items-center gap-1 min-w-0">
-          <MapPin className="h-3.5 w-3.5 text-zinc-500 shrink-0" aria-hidden="true" />
+          <RiMapPinLine className="h-3.5 w-3.5 text-zinc-500 shrink-0" aria-hidden="true" />
           <span className="truncate">{job.work_job_location} ({job.work_system})</span>
         </span>
       </dl>
@@ -129,17 +133,17 @@ export function JobCardItem({
         <ul className="flex flex-wrap gap-1.5 mt-2.5" aria-label="Alasan kecocokan">
           {isSalaryGood && (
             <li className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
-              <Check className="h-2.5 w-2.5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" /> Upah sesuai
+              <RiCheckLine className="h-2.5 w-2.5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" /> Upah sesuai
             </li>
           )}
           {isLocationGood && (
             <li className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
-              <Check className="h-2.5 w-2.5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" /> Lokasi cocok
+              <RiCheckLine className="h-2.5 w-2.5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" /> Lokasi cocok
             </li>
           )}
           {isCategoryMatch && (
             <li className="inline-flex items-center gap-1 text-[10px] font-medium px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300">
-              <Check className="h-2.5 w-2.5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" /> Minat kategori
+              <RiCheckLine className="h-2.5 w-2.5 text-emerald-600 dark:text-emerald-400" aria-hidden="true" /> Minat kategori
             </li>
           )}
         </ul>

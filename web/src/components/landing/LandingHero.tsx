@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react'
+import { RiArrowRightLine } from 'react-icons/ri'
 import { Button } from '../ui/Button'
 import { Reveal } from './Reveal'
 
@@ -24,7 +24,7 @@ export function LandingHero({ onEnterPortal, onShowMethod }: LandingHeroProps) {
             <div className="mt-6 flex flex-wrap items-center gap-3">
               <Button variant="default" size="md" onClick={onEnterPortal} className="gap-2 whitespace-nowrap">
                 Lihat lowongan
-                <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
+                <RiArrowRightLine className="h-4 w-4" />
               </Button>
               <Button variant="outline" size="md" onClick={onShowMethod} className="whitespace-nowrap">
                 Cara kerja

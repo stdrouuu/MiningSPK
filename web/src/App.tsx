@@ -1,11 +1,11 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Routes, Route, Navigate, useNavigate, useLocation, useSearchParams } from 'react-router-dom'
 import {
-  Search,
-  SlidersHorizontal,
-  AlertCircle,
-  Building2,
-} from 'lucide-react'
+  RiSearchLine,
+  RiEqualizerLine,
+  RiErrorWarningLine,
+  RiBuilding2Line,
+} from 'react-icons/ri'
 import { PortalHeader } from './components/PortalHeader'
 import { PortalHero } from './components/PortalHero'
 import { LandingPage } from './components/landing/LandingPage'
@@ -427,7 +427,7 @@ function PortalRoute({
           </div>
         ) : state.error ? (
           <div className="p-6 rounded-xl border border-red-200 dark:border-red-900 bg-red-50 dark:bg-red-950/20 text-center space-y-3 max-w-md mx-auto my-20">
-            <AlertCircle className="h-8 w-8 text-red-500 mx-auto" />
+            <RiErrorWarningLine className="h-8 w-8 text-red-500 mx-auto" />
             <h3 className="text-sm font-semibold text-red-800 dark:text-red-200">{state.error}</h3>
             <Button variant="outline" size="sm" onClick={() => window.location.reload()} className="text-xs">
               Coba muat ulang
@@ -447,7 +447,7 @@ function PortalRoute({
               {/* Left: Search input */}
               <div className="flex-1 max-w-md relative">
                 <label htmlFor="portal-search" className="sr-only">Cari lowongan, perusahaan, atau keahlian</label>
-                <Search className="absolute left-3 top-2.5 h-4 w-4 text-zinc-400 pointer-events-none" />
+                <RiSearchLine className="absolute left-3 top-2.5 h-4 w-4 text-zinc-400 pointer-events-none" />
                 <input
                   id="portal-search"
                   type="search"
@@ -511,7 +511,7 @@ function PortalRoute({
                   onClick={onOpenPreferences}
                   className="text-xs gap-1.5 h-9"
                 >
-                  <SlidersHorizontal className="h-3.5 w-3.5" />
+                  <RiEqualizerLine className="h-3.5 w-3.5" />
                   Prioritas SPK
                 </Button>
               </div>
@@ -546,7 +546,7 @@ function PortalRoute({
               <div className="lg:col-span-5 order-2 lg:order-1 space-y-3" role="listbox" aria-label="Daftar lowongan terurut SPK" aria-activedescendant={state.selectedJob ? `job-${state.selectedJob.job_id}` : undefined}>
                 {state.displayJobs.length === 0 ? (
                   <div className="p-8 text-center rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
-                    <Building2 className="h-8 w-8 mx-auto text-zinc-400 mb-2" />
+                    <RiBuilding2Line className="h-8 w-8 mx-auto text-zinc-400 mb-2" />
                     <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
                       Tidak ada lowongan yang cocok
                     </p>
@@ -619,7 +619,7 @@ function MatrixRoute({
           </div>
         ) : state.error ? (
           <div className="p-6 rounded-xl border border-red-200 dark:border-red-900 bg-red-50 dark:bg-red-950/20 text-center space-y-3 max-w-md mx-auto my-20">
-            <AlertCircle className="h-8 w-8 text-red-500 mx-auto" />
+            <RiErrorWarningLine className="h-8 w-8 text-red-500 mx-auto" />
             <h3 className="text-sm font-semibold text-red-800 dark:text-red-200">{state.error}</h3>
             <Button variant="outline" size="sm" onClick={() => window.location.reload()} className="text-xs">
               Coba muat ulang

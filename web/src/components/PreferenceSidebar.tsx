@@ -1,17 +1,17 @@
 import { useMemo, useRef, useState } from 'react'
 import {
-  RotateCcw,
-  MapPin,
-  Coins,
-  Clock,
-  Briefcase,
-  Wrench,
-  ArrowUpDown,
-  User,
-  GripVertical,
-  ChevronUp,
-  ChevronDown,
-} from 'lucide-react'
+  RiRefreshLine,
+  RiMapPinLine,
+  RiCoinsLine,
+  RiTimeLine,
+  RiBriefcaseLine,
+  RiToolsLine,
+  RiArrowUpDownLine,
+  RiUserLine,
+  RiDraggable,
+  RiArrowUpSLine,
+  RiArrowDownSLine,
+} from 'react-icons/ri'
 import { Button } from './ui/Button'
 import { Dialog } from './ui/Dialog'
 import type { StudentPreferences } from '../types/portal'
@@ -159,7 +159,7 @@ export function PreferenceSidebar({
         <div className="p-3.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 flex items-center gap-1.5">
-              <User className="h-3.5 w-3.5 text-zinc-500" />
+              <RiUserLine className="h-3.5 w-3.5 text-zinc-500" />
               Gunakan Profil Responden UKRIDA (52 Mahasiswa):
             </span>
             <Button
@@ -168,7 +168,7 @@ export function PreferenceSidebar({
               onClick={() => onUpdatePreferences(DEFAULT_STUDENT_PREFERENCES)}
               className="text-[11px] h-7 px-2 text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 gap-1"
             >
-              <RotateCcw className="h-3 w-3" /> Reset
+              <RiRefreshLine className="h-3 w-3" /> Reset
             </Button>
           </div>
 
@@ -207,7 +207,7 @@ export function PreferenceSidebar({
           {/* Lokasi Domisili (C3) */}
           <div>
             <label htmlFor="pref-location" className="text-xs font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1 mb-1">
-              <MapPin className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
+              <RiMapPinLine className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
               Domisili
             </label>
             <select
@@ -228,7 +228,7 @@ export function PreferenceSidebar({
           <div>
             <div className="flex justify-between items-center gap-2 mb-1">
               <label htmlFor="pref-salary" className="text-xs font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1">
-                <Coins className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
+                <RiCoinsLine className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
                 Target upah / jam
               </label>
               <span className="font-mono font-bold text-xs text-zinc-900 dark:text-zinc-100 whitespace-nowrap" aria-live="polite">
@@ -265,7 +265,7 @@ export function PreferenceSidebar({
           <div>
             <div className="flex justify-between items-center gap-2 mb-1">
               <label htmlFor="pref-hours" className="text-xs font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1">
-                <Clock className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
+                <RiTimeLine className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
                 Batas jam / minggu
               </label>
               <span className="font-mono font-bold text-xs text-zinc-900 dark:text-zinc-100 whitespace-nowrap" aria-live="polite">
@@ -299,7 +299,7 @@ export function PreferenceSidebar({
           {/* Kategori Bidang Minat (C1) */}
           <div>
             <label htmlFor="pref-category" className="text-xs font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1 mb-1">
-              <Briefcase className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
+              <RiBriefcaseLine className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
               Bidang minat
             </label>
             <select
@@ -338,7 +338,7 @@ export function PreferenceSidebar({
         {/* Keahlian Mahasiswa (C5) */}
         <div>
           <label htmlFor="pref-skills" className="text-xs font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1 mb-1">
-            <Wrench className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
+            <RiToolsLine className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
             Keahlian Anda (pisahkan koma)
           </label>
           <textarea
@@ -359,7 +359,7 @@ export function PreferenceSidebar({
         <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800 space-y-2" role="group" aria-labelledby="roc-legend">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <p id="roc-legend" className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-1.5">
-              <ArrowUpDown className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
+              <RiArrowUpDownLine className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
               Urutan prioritas kriteria (ROC)
             </p>
             <span className="text-[11px] text-zinc-500">
@@ -421,7 +421,7 @@ export function PreferenceSidebar({
                     title="Seret untuk memindahkan"
                     className="flex h-8 w-6 shrink-0 items-center justify-center rounded-md text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-200/70 dark:hover:bg-zinc-800 cursor-grab active:cursor-grabbing touch-none"
                   >
-                    <GripVertical className="h-4 w-4" />
+                    <RiDraggable className="h-4 w-4" />
                   </span>
 
                   {/* Nomor prioritas */}
@@ -457,7 +457,7 @@ export function PreferenceSidebar({
                         onClick={() => moveRank(item.key, -1)}
                         className="p-0.5 text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
                       >
-                        <ChevronUp className="h-3.5 w-3.5" />
+                        <RiArrowUpSLine className="h-3.5 w-3.5" />
                       </button>
                       <button
                         type="button"
@@ -466,7 +466,7 @@ export function PreferenceSidebar({
                         onClick={() => moveRank(item.key, 1)}
                         className="p-0.5 text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
                       >
-                        <ChevronDown className="h-3.5 w-3.5" />
+                        <RiArrowDownSLine className="h-3.5 w-3.5" />
                       </button>
                     </span>
                   </div>

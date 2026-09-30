@@ -1,4 +1,4 @@
-import { Bookmark, Building2, Trash2, ExternalLink } from 'lucide-react'
+import { RiBookmarkLine, RiBuilding2Line, RiDeleteBinLine, RiExternalLinkLine } from 'react-icons/ri'
 import { Dialog } from './ui/Dialog'
 import { Button } from './ui/Button'
 import { Badge } from './ui/Badge'
@@ -30,7 +30,7 @@ export function SavedJobsModal({
       <div className="space-y-4">
         {savedJobs.length === 0 ? (
           <div className="py-12 text-center text-zinc-500 space-y-2">
-            <Bookmark className="h-8 w-8 mx-auto text-zinc-400" />
+            <RiBookmarkLine className="h-8 w-8 mx-auto text-zinc-400" />
             <p className="text-sm font-medium">Belum ada lowongan yang disimpan</p>
             <p className="text-xs">
               Klik ikon bookmark pada kartu lowongan untuk menyimpannya di sini.
@@ -61,7 +61,7 @@ export function SavedJobsModal({
 
                   <div className="flex items-center gap-3 text-xs text-zinc-500 mt-1">
                     <span className="flex items-center gap-1">
-                      <Building2 className="h-3 w-3" />
+                      <RiBuilding2Line className="h-3 w-3" />
                       {job.company_name}
                     </span>
                     <span>•</span>
@@ -77,7 +77,7 @@ export function SavedJobsModal({
                   {job.url && (
                     <a href={job.url} target="_blank" rel="noopener noreferrer">
                       <Button variant="ghost" size="sm" className="h-8 w-8 p-0" title="Buka URL">
-                        <ExternalLink className="h-4 w-4 text-zinc-500" />
+                        <RiExternalLinkLine className="h-4 w-4 text-zinc-500" />
                       </Button>
                     </a>
                   )}
@@ -89,7 +89,7 @@ export function SavedJobsModal({
                     className="h-8 w-8 p-0 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30"
                     title="Hapus dari simpanan"
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <RiDeleteBinLine className="h-4 w-4" />
                   </Button>
                 </div>
               </div>

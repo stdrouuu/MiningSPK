@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react'
+import { RiArrowRightLine } from 'react-icons/ri'
 import { Button } from '../ui/Button'
 import { Reveal } from './Reveal'
 
@@ -27,7 +27,7 @@ export function LandingCTA({ onEnterPortal }: LandingCTAProps) {
               className="gap-2 whitespace-nowrap bg-zinc-50 text-zinc-900 hover:bg-white"
             >
               Lihat lowongan
-              <ArrowRight className="h-4 w-4" strokeWidth={1.5} />
+              <RiArrowRightLine className="h-4 w-4" />
             </Button>
           </div>
         </div>

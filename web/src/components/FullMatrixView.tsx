@@ -1,9 +1,9 @@
 import { useState, useMemo } from 'react'
 import {
-  Download,
-  Search,
-  SlidersHorizontal,
-} from 'lucide-react'
+  RiDownloadLine,
+  RiSearchLine,
+  RiEqualizerLine,
+} from 'react-icons/ri'
 import { Button } from './ui/Button'
 import { Input } from './ui/Input'
 import { Badge } from './ui/Badge'
@@ -138,7 +138,7 @@ export function FullMatrixView({
               onClick={onOpenPreferences}
               className="text-xs gap-1.5"
             >
-              <SlidersHorizontal className="h-3.5 w-3.5" /> Atur Prioritas ROC
+              <RiEqualizerLine className="h-3.5 w-3.5" /> Atur Prioritas ROC
             </Button>
 
             <Button
@@ -147,7 +147,7 @@ export function FullMatrixView({
               onClick={handleExportCsv}
               className="text-xs gap-1.5"
             >
-              <Download className="h-3.5 w-3.5" /> Unduh CSV Lengkap
+              <RiDownloadLine className="h-3.5 w-3.5" /> Unduh CSV Lengkap
             </Button>
           </div>
         </div>
@@ -200,7 +200,7 @@ export function FullMatrixView({
               aria-label="Cari dalam matriks"
               value={search}
               onChange={(e) => handleSearch(e.target.value)}
-              icon={<Search className="h-3.5 w-3.5" />}
+              icon={<RiSearchLine className="h-3.5 w-3.5" />}
             />
           </div>
         </div>

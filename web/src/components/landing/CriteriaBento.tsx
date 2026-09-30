@@ -1,4 +1,4 @@
-import { MapPin, Coins, Clock, Shapes, Sparkles } from 'lucide-react'
+import { RiMapPinLine, RiCoinsLine, RiTimeLine, RiShapesLine, RiSparklingLine } from 'react-icons/ri'
 import { Reveal } from './Reveal'
 
 // Bento with exactly 5 cells for 5 SPK criteria.
@@ -31,7 +31,7 @@ export function CriteriaBento() {
             />
             <div className="p-5">
               <div className="flex items-center gap-2">
-                <Shapes className="h-4 w-4 text-emerald-600 dark:text-emerald-400" strokeWidth={1.5} />
+                <RiShapesLine className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                 <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">Kategori yang sesuai minat</h3>
               </div>
               <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
@@ -44,7 +44,7 @@ export function CriteriaBento() {
         <Reveal delay={80} className="md:col-span-2">
           <div className="h-full rounded-xl border border-emerald-200 bg-emerald-50/70 p-5 dark:border-emerald-800/50 dark:bg-emerald-950/30">
             <div className="flex items-center gap-2">
-              <Coins className="h-4 w-4 text-emerald-700 dark:text-emerald-300" strokeWidth={1.5} />
+              <RiCoinsLine className="h-4 w-4 text-emerald-700 dark:text-emerald-300" />
               <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">Upah per jam</h3>
             </div>
             <p className="mt-2 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300">
@@ -58,7 +58,7 @@ export function CriteriaBento() {
         <Reveal className="md:col-span-2">
           <div className="h-full rounded-xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
             <div className="flex items-center gap-2">
-              <MapPin className="h-4 w-4 text-emerald-600 dark:text-emerald-400" strokeWidth={1.5} />
+              <RiMapPinLine className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
               <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">Lokasi dan moda</h3>
             </div>
             <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
@@ -70,7 +70,7 @@ export function CriteriaBento() {
         <Reveal delay={80} className="md:col-span-2">
           <div className="h-full rounded-xl border border-zinc-200 bg-white p-5 dark:border-zinc-800 dark:bg-zinc-900">
             <div className="flex items-center gap-2">
-              <Clock className="h-4 w-4 text-emerald-600 dark:text-emerald-400" strokeWidth={1.5} />
+              <RiTimeLine className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
               <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">Beban jam mingguan</h3>
             </div>
             <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
@@ -91,7 +91,7 @@ export function CriteriaBento() {
             />
             <div className="p-5">
               <div className="flex items-center gap-2">
-                <Sparkles className="h-4 w-4 text-emerald-600 dark:text-emerald-400" strokeWidth={1.5} />
+                <RiSparklingLine className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                 <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">Kecocokan keahlian</h3>
               </div>
               <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">

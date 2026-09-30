@@ -1,5 +1,5 @@
 import React from 'react'
-import { X } from 'lucide-react'
+import { RiCloseLine } from 'react-icons/ri'
 import { cn } from '../../lib/utils'
 
 interface DialogProps {
@@ -59,7 +59,7 @@ export function Dialog({ open, onClose, title, children, className }: DialogProp
             aria-label="Tutup dialog"
             className="rounded-md p-1.5 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 transition-colors cursor-pointer dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-100"
           >
-            <X className="h-5 w-5" />
+            <RiCloseLine className="h-5 w-5" />
           </button>
         </div>
         <div className="pt-4">{children}</div>

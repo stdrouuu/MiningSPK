@@ -1,4 +1,4 @@
-import { Briefcase, Sun, Moon } from 'lucide-react'
+import { RiBriefcaseLine, RiSunLine, RiMoonLine } from 'react-icons/ri'
 import { Button } from '../ui/Button'
 
 interface LandingNavProps {
@@ -17,7 +17,7 @@ export function LandingNav({ onEnterPortal, onShowMethod, savedCount, theme, onT
       <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-2.5">
           <div className="flex h-8 w-8 items-center justify-center rounded-md bg-zinc-900 text-zinc-50 dark:bg-zinc-50 dark:text-zinc-900">
-            <Briefcase className="h-4 w-4" strokeWidth={1.5} />
+            <RiBriefcaseLine className="h-4 w-4" />
           </div>
           <span className="text-base font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
             upmatch
@@ -51,9 +51,9 @@ export function LandingNav({ onEnterPortal, onShowMethod, savedCount, theme, onT
             title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
           >
             {theme === 'dark' ? (
-              <Sun className="h-4 w-4 text-amber-400" strokeWidth={1.5} />
+              <RiSunLine className="h-4 w-4 text-amber-400" />
             ) : (
-              <Moon className="h-4 w-4 text-zinc-700" strokeWidth={1.5} />
+              <RiMoonLine className="h-4 w-4 text-zinc-700" />
             )}
           </Button>
           <Button variant="default" size="sm" onClick={onEnterPortal} className="whitespace-nowrap">

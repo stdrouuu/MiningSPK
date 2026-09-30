@@ -1,4 +1,4 @@
-import { SlidersHorizontal } from 'lucide-react'
+import { RiEqualizerLine } from 'react-icons/ri'
 import { Button } from './ui/Button'
 import { Badge } from './ui/Badge'
 import type { StudentPreferences } from '../types/portal'
@@ -54,10 +54,10 @@ export function PortalHero({
             variant="default"
             size="sm"
             onClick={onOpenPreferences}
-            className="text-xs gap-2 font-semibold bg-white text-blue-700 hover:bg-white/90 border-0 shadow-md"
+            className="text-xs gap-2 font-semibold bg-white text-black hover:bg-white/90 border-0 shadow-md"
             aria-label="Sesuaikan preferensi dan prioritas SPK"
           >
-            <SlidersHorizontal className="h-3.5 w-3.5" aria-hidden="true" />
+            <RiEqualizerLine className="h-3.5 w-3.5" aria-hidden="true" />
             Sesuaikan preferensi & prioritas
           </Button>
         </div>

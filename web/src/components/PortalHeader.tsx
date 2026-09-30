@@ -1,17 +1,17 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { Link } from 'react-router-dom'
 import {
-  Briefcase,
-  Sun,
-  Moon,
-  Bookmark,
-  SlidersHorizontal,
-  TableProperties,
-  Home,
-  LayoutGrid,
-  Menu,
-  X,
-} from 'lucide-react'
+  RiBriefcaseLine,
+  RiSunLine,
+  RiMoonLine,
+  RiBookmarkLine,
+  RiEqualizerLine,
+  RiTableLine,
+  RiHomeLine,
+  RiLayoutGridLine,
+  RiMenuLine,
+  RiCloseLine,
+} from 'react-icons/ri'
 import { Button } from './ui/Button'
 import { Badge } from './ui/Badge'
 import type { StudentPreferences } from '../types/portal'
@@ -81,7 +81,7 @@ export function PortalHeader({
             aria-label="Upmatch — ke daftar lowongan"
           >
             <span className="h-8 w-8 rounded-md bg-zinc-900 dark:bg-zinc-100 text-zinc-50 dark:text-zinc-900 flex items-center justify-center">
-              <Briefcase className="h-4 w-4" strokeWidth={1.5} />
+              <RiBriefcaseLine className="h-4 w-4" />
             </span>
             <span className="flex items-baseline gap-1.5">
               <span className="text-base font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
@@ -98,7 +98,7 @@ export function PortalHeader({
               to="/"
               className="emil-press px-3 py-1.5 rounded-md text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 hover:bg-zinc-50 dark:hover:bg-zinc-900 flex items-center gap-1.5"
             >
-              <Home className="h-3.5 w-3.5" strokeWidth={1.5} />
+              <RiHomeLine className="h-3.5 w-3.5" />
               Beranda
             </Link>
 
@@ -108,14 +108,14 @@ export function PortalHeader({
               className={navLink(activeView === 'jobs')}
             >
               <span className="inline-flex items-center gap-1.5">
-                <LayoutGrid className="h-3.5 w-3.5" strokeWidth={1.5} />
+                <RiLayoutGridLine className="h-3.5 w-3.5" />
                 Lowongan
               </span>
             </button>
 
             <button onClick={onOpenPreferences} className={navLink(false)}>
               <span className="inline-flex items-center gap-1.5">
-                <SlidersHorizontal className="h-3.5 w-3.5" strokeWidth={1.5} />
+                <RiEqualizerLine className="h-3.5 w-3.5" />
                 Preferensi & SPK
               </span>
             </button>
@@ -126,7 +126,7 @@ export function PortalHeader({
               className={navLink(activeView === 'matrix')}
             >
               <span className="inline-flex items-center gap-1.5">
-                <TableProperties className="h-3.5 w-3.5" strokeWidth={1.5} />
+                <RiTableLine className="h-3.5 w-3.5" />
                 Perhitungan SPK
               </span>
             </button>
@@ -143,7 +143,7 @@ export function PortalHeader({
             title="Lowongan tersimpan"
             aria-label={`Buka lowongan tersimpan, ${savedJobsCount} tersimpan`}
           >
-            <Bookmark className="h-4 w-4 text-zinc-600 dark:text-zinc-400" strokeWidth={1.5} />
+            <RiBookmarkLine className="h-4 w-4 text-zinc-600 dark:text-zinc-400" />
             <span className="hidden sm:inline">Tersimpan</span>
             {savedJobsCount > 0 && (
               <Badge variant="secondary" className="h-4 px-1 text-[10px] ml-0.5">
@@ -162,9 +162,9 @@ export function PortalHeader({
             aria-pressed={theme === 'dark'}
           >
             {theme === 'dark' ? (
-              <Sun className="h-4 w-4 text-amber-400" strokeWidth={1.5} />
+              <RiSunLine className="h-4 w-4 text-amber-400" />
             ) : (
-              <Moon className="h-4 w-4 text-zinc-700" strokeWidth={1.5} />
+              <RiMoonLine className="h-4 w-4 text-zinc-700" />
             )}
           </Button>
 
@@ -252,7 +252,7 @@ export function PortalHeader({
             aria-expanded={showMobileNav}
             aria-label={showMobileNav ? 'Tutup navigasi' : 'Buka navigasi'}
           >
-            {showMobileNav ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            {showMobileNav ? <RiCloseLine className="h-4 w-4" /> : <RiMenuLine className="h-4 w-4" />}
           </Button>
         </div>
       </div>
@@ -268,7 +268,7 @@ export function PortalHeader({
             className="flex items-center gap-2 px-3 py-2 rounded-md text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
             onClick={() => setShowMobileNav(false)}
           >
-            <Home className="h-4 w-4" /> Beranda
+            <RiHomeLine className="h-4 w-4" /> Beranda
           </Link>
           <button
             onClick={() => {
@@ -277,7 +277,7 @@ export function PortalHeader({
             }}
             className="w-full flex items-center gap-2 px-3 py-2 rounded-md text-left text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
           >
-            <LayoutGrid className="h-4 w-4" /> Lowongan
+            <RiLayoutGridLine className="h-4 w-4" /> Lowongan
           </button>
           <button
             onClick={() => {
@@ -286,7 +286,7 @@ export function PortalHeader({
             }}
             className="w-full flex items-center gap-2 px-3 py-2 rounded-md text-left text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
           >
-            <SlidersHorizontal className="h-4 w-4" /> Preferensi & SPK
+            <RiEqualizerLine className="h-4 w-4" /> Preferensi & SPK
           </button>
           <button
             onClick={() => {
@@ -295,7 +295,7 @@ export function PortalHeader({
             }}
             className="w-full flex items-center gap-2 px-3 py-2 rounded-md text-left text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
           >
-            <TableProperties className="h-4 w-4" /> Perhitungan SPK
+            <RiTableLine className="h-4 w-4" /> Perhitungan SPK
           </button>
         </nav>
       )}
