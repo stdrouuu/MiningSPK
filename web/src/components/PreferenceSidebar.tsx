@@ -1,3 +1,4 @@
+import { useMemo, useRef, useState } from 'react'
 import {
   RotateCcw,
   MapPin,
@@ -7,6 +8,9 @@ import {
   Wrench,
   ArrowUpDown,
   User,
+  GripVertical,
+  ChevronUp,
+  ChevronDown,
 } from 'lucide-react'
 import { Button } from './ui/Button'
 import { Dialog } from './ui/Dialog'
@@ -55,26 +59,40 @@ export function PreferenceSidebar({
     })
   }
 
-  // Handle prioritas kriteria
-  const handleRankChange = (
+  // Drag-to-reorder untuk prioritas kriteria (urutan atas = Prioritas 1)
+  const dragFromRef = useRef<number | null>(null)
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null)
+  const [isDragging, setIsDragging] = useState(false)
+
+  const handleReorder = (fromIndex: number, toIndex: number) => {
+    if (fromIndex === toIndex || fromIndex < 0 || toIndex < 0) return
+    const orderedKeys = [...priorityLabels]
+      .sort(
+        (a, b) => preferences.priorityRank[a.key] - preferences.priorityRank[b.key]
+      )
+      .map((item) => item.key)
+    const [moved] = orderedKeys.splice(fromIndex, 1)
+    orderedKeys.splice(toIndex, 0, moved)
+    const nextRanks = { ...preferences.priorityRank }
+    orderedKeys.forEach((key, idx) => {
+      nextRanks[key] = idx + 1
+    })
+    handleChange('priorityRank', nextRanks)
+  }
+
+  const moveRank = (
     criterionKey: keyof StudentPreferences['priorityRank'],
-    newRank: number
+    direction: -1 | 1
   ) => {
-    const currentRanks = { ...preferences.priorityRank }
-    const oldRank = currentRanks[criterionKey]
-    if (oldRank === newRank) return
-
-    // Cari kriteria yang saat ini memiliki newRank lalu tukar
-    const otherKey = (
-      Object.keys(currentRanks) as Array<keyof StudentPreferences['priorityRank']>
-    ).find((k) => currentRanks[k] === newRank)
-
-    if (otherKey) {
-      currentRanks[otherKey] = oldRank
-    }
-    currentRanks[criterionKey] = newRank
-
-    handleChange('priorityRank', currentRanks)
+    const orderedKeys = [...priorityLabels]
+      .sort(
+        (a, b) => preferences.priorityRank[a.key] - preferences.priorityRank[b.key]
+      )
+      .map((item) => item.key)
+    const fromIndex = orderedKeys.indexOf(criterionKey)
+    const toIndex = fromIndex + direction
+    if (toIndex < 0 || toIndex >= orderedKeys.length) return
+    handleReorder(fromIndex, toIndex)
   }
 
   // Muat data dari profil mahasiswa UKRIDA (52 responden)
@@ -116,6 +134,16 @@ export function PreferenceSidebar({
     5: '4.0%',
   }
 
+  // Urutan tampil = urutan prioritas (index 0 = Prioritas 1)
+  const orderedPriorities = useMemo(
+    () =>
+      [...priorityLabels].sort(
+        (a, b) => preferences.priorityRank[a.key] - preferences.priorityRank[b.key]
+      ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [preferences.priorityRank]
+  )
+
   return (
     <Dialog
       open={open}
@@ -124,6 +152,9 @@ export function PreferenceSidebar({
       className="max-w-2xl"
     >
       <div className="space-y-6 text-sm text-zinc-900 dark:text-zinc-100">
+        <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+          Profil mahasiswa
+        </h3>
         {/* Preset Selector */}
         <div className="p-3.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 space-y-2">
           <div className="flex items-center justify-between">
@@ -142,8 +173,9 @@ export function PreferenceSidebar({
           </div>
 
           <select
+            id="pref-preset"
             onChange={(e) => handleLoadPreset(e.target.value)}
-            className="w-full h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-zinc-900 dark:focus:ring-zinc-100"
+            className="w-full h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100"
           >
             <option value="custom">-- Input Kustom Mahasiswa Baru --</option>
             {studentPresets.map((s) => (
@@ -158,28 +190,31 @@ export function PreferenceSidebar({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Nama Mahasiswa */}
           <div>
-            <label className="text-xs font-medium text-zinc-600 dark:text-zinc-400 block mb-1">
-              Nama Mahasiswa
+            <label htmlFor="pref-name" className="text-xs font-medium text-zinc-600 dark:text-zinc-400 block mb-1">
+              Nama mahasiswa
             </label>
             <input
+              id="pref-name"
               type="text"
               value={preferences.name}
               onChange={(e) => handleChange('name', e.target.value)}
-              className="w-full h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-zinc-900 dark:focus:ring-zinc-100"
+              className="w-full h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100"
               placeholder="Contoh: Brandon Jeremiah"
+              autoComplete="name"
             />
           </div>
 
           {/* Lokasi Domisili (C3) */}
           <div>
-            <label className="text-xs font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1 mb-1">
-              <MapPin className="h-3.5 w-3.5 text-zinc-500" />
-              Lokasi Domisili Mahasiswa
+            <label htmlFor="pref-location" className="text-xs font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1 mb-1">
+              <MapPin className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
+              Domisili
             </label>
             <select
+              id="pref-location"
               value={preferences.location}
               onChange={(e) => handleChange('location', e.target.value)}
-              className="w-full h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-zinc-900 dark:focus:ring-zinc-100 cursor-pointer"
+              className="w-full h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 cursor-pointer"
             >
               {LOCATIONS.map((loc) => (
                 <option key={loc} value={loc}>
@@ -191,58 +226,87 @@ export function PreferenceSidebar({
 
           {/* Ekspektasi Upah Minimal / Jam (C2) */}
           <div>
-            <div className="flex justify-between items-center mb-1">
-              <label className="text-xs font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1">
-                <Coins className="h-3.5 w-3.5 text-zinc-500" />
-                Target Upah Minimal
+            <div className="flex justify-between items-center gap-2 mb-1">
+              <label htmlFor="pref-salary" className="text-xs font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1">
+                <Coins className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
+                Target upah / jam
               </label>
-              <span className="font-mono font-bold text-xs text-zinc-900 dark:text-zinc-100">
-                Rp {preferences.minSalary.toLocaleString('id-ID')} / jam
+              <span className="font-mono font-bold text-xs text-zinc-900 dark:text-zinc-100 whitespace-nowrap" aria-live="polite">
+                Rp {preferences.minSalary.toLocaleString('id-ID')}
               </span>
             </div>
-            <input
-              type="range"
-              min="15000"
-              max="60000"
-              step="1000"
-              value={preferences.minSalary}
-              onChange={(e) => handleChange('minSalary', parseInt(e.target.value))}
-              className="w-full accent-zinc-900 dark:accent-zinc-100 cursor-pointer"
-            />
+            <div className="flex items-center gap-2">
+              <input
+                id="pref-salary"
+                type="range"
+                min="15000"
+                max="60000"
+                step="1000"
+                value={preferences.minSalary}
+                onChange={(e) => handleChange('minSalary', parseInt(e.target.value))}
+                className="flex-1 accent-zinc-900 dark:accent-zinc-100 cursor-pointer"
+                aria-describedby="pref-salary-hint"
+              />
+              <input
+                type="number"
+                min={15000}
+                max={60000}
+                step={1000}
+                value={preferences.minSalary}
+                onChange={(e) => handleChange('minSalary', Math.min(60000, Math.max(15000, Number(e.target.value) || 15000)))}
+                aria-label="Target upah per jam dalam rupiah"
+                className="w-24 h-8 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-2 text-xs font-mono text-zinc-900 dark:text-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100"
+              />
+            </div>
+            <span id="pref-salary-hint" className="sr-only">Rentang 15 ribu sampai 60 ribu rupiah per jam</span>
           </div>
 
           {/* Beban Jam Kerja Maksimal (C4) */}
           <div>
-            <div className="flex justify-between items-center mb-1">
-              <label className="text-xs font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1">
-                <Clock className="h-3.5 w-3.5 text-zinc-500" />
-                Target Jam per Minggu
+            <div className="flex justify-between items-center gap-2 mb-1">
+              <label htmlFor="pref-hours" className="text-xs font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1">
+                <Clock className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
+                Batas jam / minggu
               </label>
-              <span className="font-mono font-bold text-xs text-zinc-900 dark:text-zinc-100">
-                {preferences.maxHours} jam / minggu
+              <span className="font-mono font-bold text-xs text-zinc-900 dark:text-zinc-100 whitespace-nowrap" aria-live="polite">
+                {preferences.maxHours} jam
               </span>
             </div>
-            <input
-              type="range"
-              min="8"
-              max="30"
-              step="1"
-              value={preferences.maxHours}
-              onChange={(e) => handleChange('maxHours', parseInt(e.target.value))}
-              className="w-full accent-zinc-900 dark:accent-zinc-100 cursor-pointer"
-            />
+            <div className="flex items-center gap-2">
+              <input
+                id="pref-hours"
+                type="range"
+                min="8"
+                max="30"
+                step="1"
+                value={preferences.maxHours}
+                onChange={(e) => handleChange('maxHours', parseInt(e.target.value))}
+                className="flex-1 accent-zinc-900 dark:accent-zinc-100 cursor-pointer"
+              />
+              <input
+                type="number"
+                min={8}
+                max={30}
+                step={1}
+                value={preferences.maxHours}
+                onChange={(e) => handleChange('maxHours', Math.min(30, Math.max(8, Number(e.target.value) || 8)))}
+                aria-label="Batas jam kerja per minggu"
+                className="w-16 h-8 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-2 text-xs font-mono text-zinc-900 dark:text-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100"
+              />
+            </div>
           </div>
 
           {/* Kategori Bidang Minat (C1) */}
           <div>
-            <label className="text-xs font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1 mb-1">
-              <Briefcase className="h-3.5 w-3.5 text-zinc-500" />
-              Bidang Industri Minat
+            <label htmlFor="pref-category" className="text-xs font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1 mb-1">
+              <Briefcase className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
+              Bidang minat
             </label>
             <select
+              id="pref-category"
               value={preferences.preferredCategory}
               onChange={(e) => handleChange('preferredCategory', e.target.value)}
-              className="w-full h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-zinc-900 dark:focus:ring-zinc-100 cursor-pointer"
+              className="w-full h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 cursor-pointer"
             >
               {categories.map((c) => (
                 <option key={c} value={c}>
@@ -254,16 +318,17 @@ export function PreferenceSidebar({
 
           {/* Sistem Kehadiran Kerja */}
           <div>
-            <label className="text-xs font-medium text-zinc-600 dark:text-zinc-400 block mb-1">
-              Sistem Kehadiran
+            <label htmlFor="pref-system" className="text-xs font-medium text-zinc-600 dark:text-zinc-400 block mb-1">
+              Moda kerja
             </label>
             <select
+              id="pref-system"
               value={preferences.workSystem}
               onChange={(e) => handleChange('workSystem', e.target.value as any)}
-              className="w-full h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-zinc-900 dark:focus:ring-zinc-100 cursor-pointer"
+              className="w-full h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 cursor-pointer"
             >
-              <option value="ALL">Semua Sistem (Remote, Hybrid, Onsite)</option>
-              <option value="Remote">Remote Only (WFH)</option>
+              <option value="ALL">Semua moda (Remote, Hybrid, Onsite)</option>
+              <option value="Remote">Remote saja</option>
               <option value="Hybrid">Hybrid</option>
               <option value="Onsite">Onsite</option>
             </select>
@@ -272,72 +337,147 @@ export function PreferenceSidebar({
 
         {/* Keahlian Mahasiswa (C5) */}
         <div>
-          <label className="text-xs font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1 mb-1">
-            <Wrench className="h-3.5 w-3.5 text-zinc-500" />
-            Keahlian & Kemampuan yang Anda Miliki (Skills)
+          <label htmlFor="pref-skills" className="text-xs font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1 mb-1">
+            <Wrench className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
+            Keahlian Anda (pisahkan koma)
           </label>
           <textarea
+            id="pref-skills"
             rows={2}
             value={preferences.skills}
             onChange={(e) => handleChange('skills', e.target.value)}
-            className="w-full rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-2.5 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-900 dark:focus:ring-zinc-100"
-            placeholder="Contoh: python, canva, excel, komunikasi ramah, barista, english"
+            className="w-full rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-2.5 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100"
+            placeholder="Contoh: python, canva, excel, komunikasi, barista, english"
+            aria-describedby="pref-skills-hint"
           />
-          <span className="text-[10px] text-zinc-500 block mt-1">
-            Keahlian ini akan dihitung derajat kecocokannya dengan teks syarat lowongan via Cosine Similarity (TF-IDF).
+          <span id="pref-skills-hint" className="text-[11px] text-zinc-500 block mt-1">
+            Dihitung otomatis dengan cosine similarity TF-IDF terhadap deskripsi lowongan.
           </span>
         </div>
 
-        {/* Prioritas Kriteria SPK (ROC Weights) */}
-        <div className="pt-2 border-t border-zinc-200 dark:border-zinc-800 space-y-2">
-          <div className="flex items-center justify-between">
-            <h4 className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-1.5">
-              <ArrowUpDown className="h-3.5 w-3.5 text-zinc-500" />
-              Urutan Prioritas Kepentingan Kriteria (Metode ROC)
-            </h4>
-            <span className="text-[11px] text-zinc-500">1 = Paling Penting, 5 = Terendah</span>
+        {/* Prioritas Kriteria SPK (ROC Weights) — drag-to-reorder */}
+        <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800 space-y-2" role="group" aria-labelledby="roc-legend">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <p id="roc-legend" className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-1.5">
+              <ArrowUpDown className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
+              Urutan prioritas kriteria (ROC)
+            </p>
+            <span className="text-[11px] text-zinc-500">
+              Atas = paling penting • bobot otomatis
+            </span>
           </div>
 
           <div className="space-y-1.5">
-            {priorityLabels.map((item) => {
-              const currentRank = preferences.priorityRank[item.key]
+            {orderedPriorities.map((item, index) => {
+              const currentRank = index + 1
               const weightPct = rocWeightsMap[currentRank] || '0%'
+              const isDropTarget = dragOverIndex === index && isDragging
 
               return (
                 <div
                   key={item.key}
-                  className="flex items-center justify-between p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/40 text-xs"
+                  draggable
+                  onDragStart={(e) => {
+                    dragFromRef.current = index
+                    setIsDragging(true)
+                    e.dataTransfer.effectAllowed = 'move'
+                    try {
+                      e.dataTransfer.setData('text/plain', String(index))
+                    } catch {
+                      /* abaikan */
+                    }
+                  }}
+                  onDragOver={(e) => {
+                    e.preventDefault()
+                    e.dataTransfer.dropEffect = 'move'
+                    if (dragOverIndex !== index) setDragOverIndex(index)
+                  }}
+                  onDragLeave={() => {
+                    if (dragOverIndex === index) setDragOverIndex(null)
+                  }}
+                  onDrop={(e) => {
+                    e.preventDefault()
+                    const from =
+                      dragFromRef.current ??
+                      Number(e.dataTransfer.getData('text/plain'))
+                    if (!Number.isNaN(from)) handleReorder(from, index)
+                    dragFromRef.current = null
+                    setDragOverIndex(null)
+                    setIsDragging(false)
+                  }}
+                  onDragEnd={() => {
+                    dragFromRef.current = null
+                    setDragOverIndex(null)
+                    setIsDragging(false)
+                  }}
+                  className={`emil-press flex items-center gap-2 p-2.5 rounded-lg border text-xs select-none ${
+                    isDropTarget
+                      ? 'border-dashed border-zinc-500 bg-zinc-100 dark:bg-zinc-800/70 -translate-y-px shadow-sm'
+                      : 'border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/40'
+                  }`}
                 >
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono font-bold text-zinc-500 text-[11px] w-6">
+                  {/* Drag handle */}
+                  <span
+                    title="Seret untuk memindahkan"
+                    className="flex h-8 w-6 shrink-0 items-center justify-center rounded-md text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-200/70 dark:hover:bg-zinc-800 cursor-grab active:cursor-grabbing touch-none"
+                  >
+                    <GripVertical className="h-4 w-4" />
+                  </span>
+
+                  {/* Nomor prioritas */}
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-zinc-900 text-[11px] font-bold text-white dark:bg-zinc-100 dark:text-zinc-900 font-mono">
+                    {currentRank}
+                  </span>
+
+                  <div className="flex min-w-0 flex-1 items-center gap-2">
+                    <span className="font-mono font-bold text-zinc-500 text-[11px] w-6 shrink-0">
                       {item.code}
                     </span>
-                    <span className="font-medium text-zinc-900 dark:text-zinc-100">
+                    <span className="truncate font-medium text-zinc-900 dark:text-zinc-100">
                       {item.title}
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-3">
-                    <span className="font-mono text-[11px] text-zinc-500">
-                      Bobot ROC: <strong className="text-zinc-800 dark:text-zinc-200">{weightPct}</strong>
+                  <div className="flex shrink-0 items-center gap-2">
+                    <span className="hidden sm:inline font-mono text-[11px] text-zinc-500">
+                      Bobot ROC:{' '}
+                      <strong className="text-zinc-800 dark:text-zinc-200">
+                        {weightPct}
+                      </strong>
                     </span>
-
-                    <select
-                      value={currentRank}
-                      onChange={(e) => handleRankChange(item.key, parseInt(e.target.value))}
-                      className="h-7 rounded border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-2 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none cursor-pointer"
-                    >
-                      <option value={1}>Prioritas 1 (45.7%)</option>
-                      <option value={2}>Prioritas 2 (25.7%)</option>
-                      <option value={3}>Prioritas 3 (15.7%)</option>
-                      <option value={4}>Prioritas 4 (9.0%)</option>
-                      <option value={5}>Prioritas 5 (4.0%)</option>
-                    </select>
+                    <span className="rounded border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-2 py-1 text-[11px] font-medium text-zinc-900 dark:text-zinc-100 whitespace-nowrap">
+                      Prioritas {currentRank} ({weightPct})
+                    </span>
+                    {/* Fallback tombol untuk mobile / keyboard */}
+                    <span className="flex flex-col -space-y-0.5">
+                      <button
+                        type="button"
+                        aria-label={`Naikkan ${item.code}`}
+                        disabled={index === 0}
+                        onClick={() => moveRank(item.key, -1)}
+                        className="p-0.5 text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+                      >
+                        <ChevronUp className="h-3.5 w-3.5" />
+                      </button>
+                      <button
+                        type="button"
+                        aria-label={`Turunkan ${item.code}`}
+                        disabled={index === orderedPriorities.length - 1}
+                        onClick={() => moveRank(item.key, 1)}
+                        className="p-0.5 text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+                      >
+                        <ChevronDown className="h-3.5 w-3.5" />
+                      </button>
+                    </span>
                   </div>
                 </div>
               )
             })}
           </div>
+          <p className="text-[10px] text-zinc-500">
+            Posisi paling atas = Prioritas 1 (bobot 45.7%). Bobot ROC terhitung otomatis
+            dari urutan.
+          </p>
         </div>
 
         {/* Action Button */}

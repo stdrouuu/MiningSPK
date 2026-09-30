@@ -55,7 +55,7 @@ export function HowItWorks() {
             {STEPS.map((s, i) => (
               <Reveal key={s.verb} delay={i * 60}>
                 <div className="flex gap-5 border-b border-zinc-200 py-7 first:border-t dark:border-zinc-800">
-                  <span className="font-mono text-3xl font-bold text-zinc-300 dark:text-zinc-700">
+                  <span aria-hidden="true" className="font-mono text-3xl font-bold text-zinc-400 dark:text-zinc-600">
                     {i + 1}
                   </span>
                   <div>

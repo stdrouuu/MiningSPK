@@ -25,6 +25,8 @@ export function FullMatrixView({
   onSelectJobForDetail,
 }: FullMatrixViewProps) {
   const [search, setSearch] = useState('')
+  const [page, setPage] = useState(0)
+  const PAGE_SIZE = 25
   const [matrixDisplayMode, setMatrixDisplayMode] = useState<'ranking' | 'utility' | 'raw'>(
     'ranking'
   )
@@ -40,6 +42,20 @@ export function FullMatrixView({
         j.job_category?.toLowerCase().includes(q)
     )
   }, [rankedJobs, search])
+
+  const pageCount = Math.max(1, Math.ceil(filteredJobs.length / PAGE_SIZE))
+  const safePage = Math.min(page, pageCount - 1)
+  const pagedJobs = filteredJobs.slice(safePage * PAGE_SIZE, safePage * PAGE_SIZE + PAGE_SIZE)
+
+  const handleSearch = (v: string) => {
+    setSearch(v)
+    setPage(0)
+  }
+
+  const handleMode = (m: 'ranking' | 'utility' | 'raw') => {
+    setMatrixDisplayMode(m)
+    setPage(0)
+  }
 
   // Export CSV
   const handleExportCsv = () => {
@@ -89,7 +105,7 @@ export function FullMatrixView({
       r.u5,
     ])
 
-    const csvContent = [headers.join(','), ...rows.map((e) => e.join(','))].join('\n')
+    const csvContent = '\uFEFF' + [headers.join(','), ...rows.map((e) => e.join(','))].join('\n')
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
@@ -138,45 +154,52 @@ export function FullMatrixView({
 
         {/* View Switcher & Search */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-3 border-t border-zinc-100 dark:border-zinc-800">
-          <div className="inline-flex rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 p-1 text-xs">
+          <div role="tablist" aria-label="Mode tampilan matriks" className="inline-flex rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 p-1 text-xs">
             <button
-              onClick={() => setMatrixDisplayMode('ranking')}
-              className={`px-3 py-1 rounded-md transition-colors cursor-pointer ${
+              role="tab"
+              aria-selected={matrixDisplayMode === 'ranking'}
+              onClick={() => handleMode('ranking')}
+              className={`px-3 py-1 rounded-md emil-press cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 ${
                 matrixDisplayMode === 'ranking'
                   ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 font-semibold shadow-xs'
                   : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100'
               }`}
             >
-              Peringkat & Skor U(Ai)
+              Peringkat & Skor
             </button>
             <button
-              onClick={() => setMatrixDisplayMode('utility')}
-              className={`px-3 py-1 rounded-md transition-colors cursor-pointer ${
+              role="tab"
+              aria-selected={matrixDisplayMode === 'utility'}
+              onClick={() => handleMode('utility')}
+              className={`px-3 py-1 rounded-md emil-press cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 ${
                 matrixDisplayMode === 'utility'
                   ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 font-semibold shadow-xs'
                   : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100'
               }`}
             >
-              Normalisasi Utilitas (uj)
+              Utilitas (uⱼ)
             </button>
             <button
-              onClick={() => setMatrixDisplayMode('raw')}
-              className={`px-3 py-1 rounded-md transition-colors cursor-pointer ${
+              role="tab"
+              aria-selected={matrixDisplayMode === 'raw'}
+              onClick={() => handleMode('raw')}
+              className={`px-3 py-1 rounded-md emil-press cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 ${
                 matrixDisplayMode === 'raw'
                   ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 font-semibold shadow-xs'
                   : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100'
               }`}
             >
-              Matriks Keputusan Awal (Xij)
+              Matriks awal (Xᵢⱼ)
             </button>
           </div>
 
           <div className="max-w-xs w-full">
             <Input
-              type="text"
-              placeholder="Cari dalam matriks..."
+              type="search"
+              placeholder="Cari dalam matriks…"
+              aria-label="Cari dalam matriks"
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => handleSearch(e.target.value)}
               icon={<Search className="h-3.5 w-3.5" />}
             />
           </div>
@@ -184,10 +207,10 @@ export function FullMatrixView({
       </div>
 
       {/* Table Container */}
-      <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 overflow-x-auto shadow-xs">
-        <table className="w-full text-left text-xs border-collapse">
-          <thead>
-            <tr className="border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/70 text-zinc-600 dark:text-zinc-400 uppercase font-semibold text-[11px] tracking-wider">
+      <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 overflow-auto max-h-[70vh] shadow-xs">
+        <table className="w-full text-left text-xs border-collapse min-w-[880px]">
+          <thead className="sticky top-0 z-10">
+            <tr className="border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 uppercase font-semibold text-[11px] tracking-wider">
               <th className="py-3 px-4 w-14 text-center">Rank</th>
               <th className="py-3 px-4 w-28">ID Loker</th>
               <th className="py-3 px-4 min-w-[200px]">Posisi & Perusahaan</th>
@@ -232,10 +255,10 @@ export function FullMatrixView({
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800 text-zinc-900 dark:text-zinc-100">
-            {filteredJobs.slice(0, 100).map((job) => (
+            {pagedJobs.map((job) => (
               <tr
                 key={job.job_id}
-                className={`hover:bg-zinc-50 dark:hover:bg-zinc-900/60 transition-colors cursor-pointer ${
+                className={`hover:bg-zinc-50 dark:hover:bg-zinc-900/60 transition-[background-color] duration-150 ease-out cursor-pointer ${
                   job.rank === 1
                     ? 'bg-amber-50/50 dark:bg-amber-950/10'
                     : job.rank <= 3
@@ -246,7 +269,7 @@ export function FullMatrixView({
               >
                 <td className="py-3 px-4 text-center font-bold">
                   {job.rank === 1 ? (
-                    <Badge variant="warning" className="px-1.5 py-0">
+                    <Badge variant="success" className="px-1.5 py-0">
                       #1
                     </Badge>
                   ) : (
@@ -370,9 +393,17 @@ export function FullMatrixView({
         </table>
       </div>
 
-      <div className="text-xs text-zinc-500 flex items-center justify-between">
-        <span>Menampilkan 100 baris dari {rankedJobs.length} total alternatif terverifikasi.</span>
-        <span>Formula: U(Ai) = Σ (w_j × u_j(X_ij))</span>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-zinc-500">
+        <span aria-live="polite">Menampilkan {pagedJobs.length} dari {filteredJobs.length} baris • halaman {safePage + 1}/{pageCount} • U(Ai) = Σ (wⱼ × uⱼ)</span>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" className="h-7 text-xs" disabled={safePage === 0} onClick={() => setPage((p) => Math.max(0, p - 1))}>
+            Sebelumnya
+          </Button>
+          <span className="font-mono">{safePage + 1} / {pageCount}</span>
+          <Button variant="outline" size="sm" className="h-7 text-xs" disabled={safePage >= pageCount - 1} onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}>
+            Berikutnya
+          </Button>
+        </div>
       </div>
     </div>
   )

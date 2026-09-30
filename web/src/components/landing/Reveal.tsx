@@ -42,7 +42,7 @@ export function Reveal({ children, delay = 0, className = '' }: RevealProps) {
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0)' : 'translateY(20px)',
-        transition: `opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)`,
+        transition: `opacity var(--dur-reveal) var(--ease-expo), transform var(--dur-reveal) var(--ease-expo)`,
         transitionDelay: `${delay}ms`,
         willChange: visible ? 'auto' : 'transform',
       }}

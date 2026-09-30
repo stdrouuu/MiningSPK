@@ -5,6 +5,18 @@
 @theme {
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  /* Emil Kowalski motion tokens — strong curves, sub-300ms UI */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --dur-press: 160ms;
+  --dur-tooltip: 150ms;
+  --dur-dropdown: 200ms;
+  --dur-modal: 240ms;
+  --dur-reveal: 560ms;
 }
 
 @layer base {
@@ -35,11 +47,151 @@
   background: rgba(150, 150, 150, 0.4);
 }
 
+/* ── Emil Kowalski motion system ─────────────────────────────
+   GPU-only (transform + opacity), interruptible transitions,
+   origin-aware popovers, asymmetric press/release. */
+
+@keyframes emil-modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(8px);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes emil-backdrop-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes emil-popover-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes emil-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes emil-detail-swap {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+    filter: blur(2px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes emil-nav-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer components {
+  /* Pressable: instant feedback, snappy release */
+  .emil-press {
+    transition:
+      transform var(--dur-press) var(--ease-out),
+      background-color 150ms ease,
+      border-color 150ms ease,
+      color 150ms ease;
+    will-change: transform;
+  }
+  .emil-press:active {
+    transform: scale(0.97);
+    transition-duration: 100ms;
+  }
+
+  /* Modal: centered origin (exempt from trigger-origin rule) */
+  .emil-modal {
+    transform-origin: center;
+    animation: emil-modal-in var(--dur-modal) var(--ease-out) both;
+  }
+  .emil-backdrop {
+    animation: emil-backdrop-in 200ms var(--ease-out) both;
+  }
+
+  /* Popover anchored to trigger — set --transform-origin inline */
+  .emil-popover {
+    transform-origin: var(--transform-origin, top right);
+    animation: emil-popover-in var(--dur-dropdown) var(--ease-out) both;
+  }
+
+  /* Job feed stagger — set --enter-delay inline (30–80ms steps) */
+  .emil-card-enter {
+    animation: emil-card-enter 280ms var(--ease-out) both;
+    animation-delay: var(--enter-delay, 0ms);
+  }
+
+  /* Detail pane swap on job change */
+  .emil-detail-swap {
+    animation: emil-detail-swap 220ms var(--ease-out) both;
+  }
+
+  /* Mobile nav + dropdown panels */
+  .emil-nav-in {
+    transform-origin: top center;
+    animation: emil-nav-in 180ms var(--ease-out) both;
+  }
+
+  /* Progress / meter fills — width-only transition, GPU-friendly */
+  .emil-meter {
+    transition: width 220ms var(--ease-out);
+  }
+}
+
+/* Hover motion only on precise pointers — kills tap false-positives */
+@media (hover: hover) and (pointer: fine) {
+  .emil-hover-lift:hover {
+    transform: translateY(-1px);
+  }
+  .emil-hover-lift {
+    transition:
+      transform 180ms var(--ease-out),
+      border-color 150ms ease,
+      background-color 150ms ease;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+  .emil-modal,
+  .emil-popover,
+  .emil-card-enter,
+  .emil-detail-swap {
+    filter: none !important;
   }
 }

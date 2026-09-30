@@ -27,13 +27,13 @@ export function LandingNav({ onEnterPortal, onShowMethod, savedCount, theme, onT
         <nav className="hidden items-center gap-1 text-sm font-medium md:flex" aria-label="Navigasi utama">
           <button
             onClick={onEnterPortal}
-            className="cursor-pointer rounded-md px-3 py-1.5 text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
+            className="emil-press cursor-pointer rounded-md px-3 py-1.5 text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
           >
             Lowongan
           </button>
           <button
             onClick={onShowMethod}
-            className="cursor-pointer rounded-md px-3 py-1.5 text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
+            className="emil-press cursor-pointer rounded-md px-3 py-1.5 text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
           >
             Cara kerja
           </button>

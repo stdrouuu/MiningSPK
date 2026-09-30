@@ -3,7 +3,6 @@ import { Routes, Route, Navigate, useNavigate, useLocation, useSearchParams } fr
 import {
   Search,
   SlidersHorizontal,
-  Loader2,
   AlertCircle,
   Building2,
 } from 'lucide-react'
@@ -394,20 +393,45 @@ function PortalRoute({
         onOpenPreferences={onOpenPreferences}
         savedJobsCount={state.savedJobIds.length}
         onOpenSavedJobs={onOpenSavedJobs}
-        searchQuery={state.searchQuery}
-        onSearchChange={state.setSearchQuery}
       />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
         {state.loading ? (
-          <div className="flex flex-col items-center justify-center py-32 space-y-3">
-            <Loader2 className="h-8 w-8 text-zinc-900 dark:text-zinc-100 animate-spin" />
-            <p className="text-sm text-zinc-500">Memuat portal lowongan dan modul SPK...</p>
+          <div className="space-y-6" role="status" aria-label="Memuat lowongan">
+            <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 p-6 sm:p-8 animate-pulse">
+              <div className="h-5 w-2/3 rounded-md bg-zinc-200 dark:bg-zinc-800" />
+              <div className="mt-3 h-4 w-1/2 rounded-md bg-zinc-200 dark:bg-zinc-800" />
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+              <div className="lg:col-span-5 space-y-3">
+                {[0, 1, 2, 3].map((i) => (
+                  <div key={i} className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 animate-pulse">
+                    <div className="h-4 w-3/4 rounded bg-zinc-200 dark:bg-zinc-800" />
+                    <div className="mt-2 h-3 w-1/2 rounded bg-zinc-200 dark:bg-zinc-800" />
+                    <div className="mt-3 h-3 w-full rounded bg-zinc-100 dark:bg-zinc-900" />
+                  </div>
+                ))}
+              </div>
+              <div className="lg:col-span-7">
+                <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 p-6 animate-pulse">
+                  <div className="h-6 w-1/2 rounded bg-zinc-200 dark:bg-zinc-800" />
+                  <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    {[0, 1, 2, 3].map((i) => (
+                      <div key={i} className="h-16 rounded-lg bg-zinc-100 dark:bg-zinc-900" />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span className="sr-only">Memuat portal lowongan dan modul SPK…</span>
           </div>
         ) : state.error ? (
-          <div className="p-6 rounded-xl border border-red-200 dark:border-red-900 bg-red-50 dark:bg-red-950/20 text-center space-y-2 max-w-md mx-auto my-20">
+          <div className="p-6 rounded-xl border border-red-200 dark:border-red-900 bg-red-50 dark:bg-red-950/20 text-center space-y-3 max-w-md mx-auto my-20">
             <AlertCircle className="h-8 w-8 text-red-500 mx-auto" />
             <h3 className="text-sm font-semibold text-red-800 dark:text-red-200">{state.error}</h3>
+            <Button variant="outline" size="sm" onClick={() => window.location.reload()} className="text-xs">
+              Coba muat ulang
+            </Button>
           </div>
         ) : (
           <div className="space-y-6">
@@ -422,23 +446,27 @@ function PortalRoute({
             <div className="p-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
               {/* Left: Search input */}
               <div className="flex-1 max-w-md relative">
+                <label htmlFor="portal-search" className="sr-only">Cari lowongan, perusahaan, atau keahlian</label>
                 <Search className="absolute left-3 top-2.5 h-4 w-4 text-zinc-400 pointer-events-none" />
                 <input
-                  type="text"
-                  placeholder="Cari posisi kerja, perusahaan, atau keahlian..."
+                  id="portal-search"
+                  type="search"
+                  placeholder="Cari posisi, perusahaan, atau keahlian…"
                   value={state.searchQuery}
                   onChange={(e) => state.setSearchQuery(e.target.value)}
-                  className="w-full h-9 pl-9 pr-3 rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-900 dark:focus:ring-zinc-100"
+                  className="w-full h-9 pl-9 pr-3 rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100"
                 />
               </div>
 
               {/* Right: Dropdown Filters & Preference button */}
               <div className="flex flex-wrap items-center gap-2 text-xs">
                 {/* Kategori Filter */}
+                <label htmlFor="filter-category" className="sr-only">Filter kategori</label>
                 <select
+                  id="filter-category"
                   value={state.filterCategory}
                   onChange={(e) => state.setFilterCategory(e.target.value)}
-                  className="h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-zinc-900 dark:focus:ring-zinc-100 cursor-pointer"
+                  className="h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 cursor-pointer"
                 >
                   <option value="ALL">Semua Kategori</option>
                   {state.categories.map((c) => (
@@ -449,10 +477,12 @@ function PortalRoute({
                 </select>
 
                 {/* Sistem Kerja Filter */}
+                <label htmlFor="filter-mode" className="sr-only">Filter moda kerja</label>
                 <select
+                  id="filter-mode"
                   value={state.filterWorkSystem}
                   onChange={(e) => state.setFilterWorkSystem(e.target.value)}
-                  className="h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-zinc-900 dark:focus:ring-zinc-100 cursor-pointer"
+                  className="h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 cursor-pointer"
                 >
                   <option value="ALL">Semua Moda</option>
                   <option value="Remote">Remote Only</option>
@@ -461,12 +491,14 @@ function PortalRoute({
                 </select>
 
                 {/* Urutkan */}
+                <label htmlFor="sort-by" className="sr-only">Urutkan lowongan</label>
                 <select
+                  id="sort-by"
                   value={state.sortBy}
                   onChange={(e) => state.setSortBy(e.target.value as any)}
-                  className="h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-zinc-900 dark:focus:ring-zinc-100 cursor-pointer font-medium"
+                  className="h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 cursor-pointer font-medium"
                 >
-                  <option value="match">Urutkan: Kecocokan SPK (Match %)</option>
+                  <option value="match">Urutkan: Kecocokan SPK</option>
                   <option value="salary-high">Upah Tertinggi</option>
                   <option value="salary-low">Upah Terendah</option>
                   <option value="hours-low">Jam Tersedikit</option>
@@ -486,34 +518,49 @@ function PortalRoute({
             </div>
 
             {/* Status bar */}
-            <div className="flex items-center justify-between text-xs text-zinc-500 px-1">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:justify-between text-xs text-zinc-600 dark:text-zinc-400 px-1" role="status" aria-live="polite">
               <span>
                 Menampilkan <strong className="text-zinc-900 dark:text-zinc-100">{state.displayJobs.length}</strong>{' '}
-                lowongan yang dihitung kesesuaiannya terhadap preferensi{' '}
+                dari <strong className="text-zinc-900 dark:text-zinc-100">{state.jobs.length}</strong> lowongan untuk{' '}
                 <strong className="text-zinc-900 dark:text-zinc-100">{state.studentPrefs.name}</strong>
               </span>
-              <span>
-                Lokasi: <span className="text-zinc-700 dark:text-zinc-300 font-medium">{state.studentPrefs.location}</span> • Target: <span className="text-zinc-700 dark:text-zinc-300 font-medium">Rp {state.studentPrefs.minSalary.toLocaleString('id-ID')}/jam</span>
+              <span className="text-zinc-500">
+                {state.studentPrefs.location} • Rp {state.studentPrefs.minSalary.toLocaleString('id-ID')}/jam • maks {state.studentPrefs.maxHours} jam/mgg
               </span>
             </div>
 
-            {/* Split Master-Detail Layout (Like Shadcn Mail) */}
+            {/* Split Master-Detail Layout */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-              {/* Left Column: Job Cards Feed (5 cols on lg) */}
-              <div className="lg:col-span-5 space-y-3 max-h-[calc(100vh-220px)] overflow-y-auto pr-1">
+              {/* Right Column: detail first on mobile so selection is visible */}
+              <div className="lg:col-span-7 order-1 lg:order-2 lg:sticky lg:top-20">
+                <JobDetailPane
+                  job={state.selectedJob}
+                  studentPrefs={state.studentPrefs}
+                  isSaved={!!state.selectedJob && state.savedJobIds.includes(state.selectedJob.job_id)}
+                  onToggleSave={() => state.selectedJob && onToggleSave(state.selectedJob.job_id)}
+                  onOpenPreferences={onOpenPreferences}
+                />
+              </div>
+
+              {/* Left Column: Job Cards Feed */}
+              <div className="lg:col-span-5 order-2 lg:order-1 space-y-3" role="listbox" aria-label="Daftar lowongan terurut SPK" aria-activedescendant={state.selectedJob ? `job-${state.selectedJob.job_id}` : undefined}>
                 {state.displayJobs.length === 0 ? (
-                  <div className="p-8 text-center rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-500">
+                  <div className="p-8 text-center rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
                     <Building2 className="h-8 w-8 mx-auto text-zinc-400 mb-2" />
                     <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
                       Tidak ada lowongan yang cocok
                     </p>
-                    <p className="text-xs mt-1">Coba sesuaikan kata kunci pencarian atau filter kategori.</p>
+                    <p className="text-xs mt-1 text-zinc-500">Coba hapus kata kunci, pilih “Semua Kategori”, atau turunkan target upah di Preferensi.</p>
+                    <Button variant="outline" size="sm" className="mt-4 text-xs" onClick={() => { state.setSearchQuery(''); state.setFilterCategory('ALL'); state.setFilterWorkSystem('ALL') }}>
+                      Atur ulang filter
+                    </Button>
                   </div>
                 ) : (
-                  state.displayJobs.map((job) => (
+                  state.displayJobs.map((job, i) => (
                     <JobCardItem
                       key={job.job_id}
                       job={job}
+                      index={i}
                       isSelected={state.selectedJob?.job_id === job.job_id}
                       onSelect={() => handleSelectJob(job.job_id)}
                       studentPrefs={state.studentPrefs}
@@ -525,17 +572,6 @@ function PortalRoute({
                     />
                   ))
                 )}
-              </div>
-
-              {/* Right Column: Sticky Job Detail Pane (7 cols on lg) */}
-              <div className="lg:col-span-7 sticky top-20 max-h-[calc(100vh-100px)]">
-                <JobDetailPane
-                  job={state.selectedJob}
-                  studentPrefs={state.studentPrefs}
-                  isSaved={!!state.selectedJob && state.savedJobIds.includes(state.selectedJob.job_id)}
-                  onToggleSave={() => state.selectedJob && onToggleSave(state.selectedJob.job_id)}
-                  onOpenPreferences={onOpenPreferences}
-                />
               </div>
             </div>
           </div>
@@ -572,20 +608,22 @@ function MatrixRoute({
         onOpenPreferences={onOpenPreferences}
         savedJobsCount={state.savedJobIds.length}
         onOpenSavedJobs={onOpenSavedJobs}
-        searchQuery={state.searchQuery}
-        onSearchChange={state.setSearchQuery}
       />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
         {state.loading ? (
-          <div className="flex flex-col items-center justify-center py-32 space-y-3">
-            <Loader2 className="h-8 w-8 text-zinc-900 dark:text-zinc-100 animate-spin" />
-            <p className="text-sm text-zinc-500">Memuat modul SPK...</p>
+          <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 p-4 animate-pulse" role="status" aria-label="Memuat modul SPK">
+            <div className="h-5 w-1/3 rounded bg-zinc-200 dark:bg-zinc-800" />
+            <div className="mt-3 h-10 rounded-lg bg-zinc-100 dark:bg-zinc-900" />
+            <span className="sr-only">Memuat modul SPK…</span>
           </div>
         ) : state.error ? (
-          <div className="p-6 rounded-xl border border-red-200 dark:border-red-900 bg-red-50 dark:bg-red-950/20 text-center space-y-2 max-w-md mx-auto my-20">
+          <div className="p-6 rounded-xl border border-red-200 dark:border-red-900 bg-red-50 dark:bg-red-950/20 text-center space-y-3 max-w-md mx-auto my-20">
             <AlertCircle className="h-8 w-8 text-red-500 mx-auto" />
             <h3 className="text-sm font-semibold text-red-800 dark:text-red-200">{state.error}</h3>
+            <Button variant="outline" size="sm" onClick={() => window.location.reload()} className="text-xs">
+              Coba muat ulang
+            </Button>
           </div>
         ) : (
           <FullMatrixView
