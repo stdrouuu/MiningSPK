@@ -4,6 +4,7 @@ import {
   Building2,
   Calendar,
   CheckCircle2,
+  XCircle,
   Bookmark,
   ShieldCheck,
 } from 'lucide-react'
@@ -22,6 +23,36 @@ interface JobDetailPaneProps {
   onOpenPreferences: () => void
 }
 
+function CriterionRow({
+  ok,
+  title,
+  body,
+}: {
+  ok: boolean | null
+  title: string
+  body: string
+}) {
+  return (
+    <div className="p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex items-start gap-2">
+      {ok === null ? (
+        <CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0 text-zinc-500" aria-hidden="true" />
+      ) : ok ? (
+        <CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
+      ) : (
+        <XCircle className="h-4 w-4 mt-0.5 shrink-0 text-zinc-400 dark:text-zinc-500" aria-hidden="true" />
+      )}
+      <div className="min-w-0">
+        <span className="font-semibold text-zinc-900 dark:text-zinc-100 block text-xs">
+          {title}
+        </span>
+        <p className="text-[11px] leading-relaxed text-zinc-600 dark:text-zinc-400 mt-0.5">
+          {body}
+        </p>
+      </div>
+    </div>
+  )
+}
+
 export function JobDetailPane({
   job,
   studentPrefs,
@@ -31,290 +62,264 @@ export function JobDetailPane({
 }: JobDetailPaneProps) {
   if (!job) {
     return (
-      <div className="h-full min-h-[400px] flex flex-col items-center justify-center p-8 text-center rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 text-zinc-500">
-        <Building2 className="h-10 w-10 text-zinc-300 dark:text-zinc-700 mb-3" />
+      <div className="min-h-[320px] flex flex-col items-center justify-center p-8 text-center rounded-xl border border-dashed border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950">
+        <Building2 className="h-10 w-10 text-zinc-300 dark:text-zinc-700 mb-3" aria-hidden="true" />
         <h3 className="text-sm font-semibold text-zinc-800 dark:text-zinc-200 mb-1">
           Pilih lowongan untuk melihat detail
         </h3>
-        <p className="text-xs max-w-xs">
-          Klik salah satu lowongan di sebelah kiri untuk melihat rincian pekerjaan dan analisis kecocokan SPK SMARTER.
+        <p className="text-xs text-zinc-500 max-w-xs leading-relaxed">
+          Klik salah satu lowongan di daftar untuk melihat rincian pekerjaan dan analisis kecocokan SPK.
         </p>
       </div>
     )
   }
 
-  const matchPct = Math.min(99, Math.max(35, Math.round(job.finalScore * 100)))
+  const matchPct = Math.round(Math.min(100, Math.max(0, job.finalScore * 100)))
 
-  // Evaluasi kriteria individual
   const isCategoryMatch =
     job.job_category.trim().toLowerCase() === studentPrefs.preferredCategory.trim().toLowerCase()
-  const salaryRatio = (job.work_salaryperhour / studentPrefs.minSalary).toFixed(2)
+  const salaryRatio = job.work_salaryperhour / Math.max(1, studentPrefs.minSalary)
+  const isSalaryGood = salaryRatio >= 1
   const isLocationMatch =
     job.work_system?.toLowerCase() === 'remote' ||
     (job.work_job_location || '').toLowerCase().includes(studentPrefs.location.toLowerCase())
+  const isHoursGood = job.work_hours <= studentPrefs.maxHours
+
+  const skillCosine = parseFloat(String(job.C5_kemiripan_skill)) || 0
+  const skillPct = Math.round(Math.min(1, Math.max(0, skillCosine)) * 100)
+
+  const skills = (job.work_required_skills || '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean)
+    .slice(0, 12)
+
+  const barColor =
+    job.rank === 1
+      ? 'bg-emerald-600 dark:bg-emerald-500'
+      : matchPct >= 50
+        ? 'bg-amber-500 dark:bg-amber-400'
+        : 'bg-zinc-400 dark:bg-zinc-500'
 
   return (
-    <div className="h-full rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 overflow-y-auto">
+    <section
+      key={job.job_id}
+      aria-label={`Detail ${job.job_title}`}
+      className="emil-detail-swap rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 overflow-hidden"
+    >
       {/* Detail Header */}
-      <div className="p-6 border-b border-zinc-200 dark:border-zinc-800 space-y-4">
+      <div className="p-5 sm:p-6 border-b border-zinc-200 dark:border-zinc-800 space-y-4">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-start gap-3 min-w-0">
             <CompanyLogo companyName={job.company_name} logoUrl={job.company_logo} />
-            <div className="space-y-1 min-w-0">
-            <div className="flex items-center gap-2 flex-wrap">
-              <Badge variant="outline" className="font-mono text-[11px]">
-                {job.job_id}
-              </Badge>
-              <Badge variant={job.rank === 1 ? 'warning' : 'secondary'} className="text-[11px]">
-                Rekomendasi #{job.rank}
-              </Badge>
-              <Badge variant="outline">{job.job_category}</Badge>
-            </div>
+            <div className="space-y-1.5 min-w-0">
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <Badge variant="outline" className="font-mono text-[11px]">
+                  {job.job_id}
+                </Badge>
+                <Badge variant={job.rank === 1 ? 'success' : job.rank <= 3 ? 'warning' : 'secondary'} className="text-[11px]">
+                  Rekomendasi #{job.rank}
+                </Badge>
+                <Badge variant="outline">{job.job_category}</Badge>
+              </div>
 
-            <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight">
-              {job.job_title}
-            </h2>
+              <h2 className="text-lg sm:text-xl font-bold text-zinc-900 dark:text-zinc-50 tracking-tight text-balance leading-tight">
+                {job.job_title}
+              </h2>
 
-            <div className="flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400">
-              <span className="font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-1">
-                <Building2 className="h-4 w-4 text-zinc-500" />
-                {job.company_name}
-              </span>
-              <span>•</span>
-              <span className="flex items-center gap-1">
-                <MapPin className="h-3.5 w-3.5 text-zinc-500" />
-                {job.work_job_location} ({job.work_system})
-              </span>
-            </div>
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-zinc-600 dark:text-zinc-400">
+                <span className="font-semibold text-zinc-900 dark:text-zinc-100 inline-flex items-center gap-1">
+                  <Building2 className="h-4 w-4 text-zinc-500" aria-hidden="true" />
+                  {job.company_name}
+                </span>
+                <span aria-hidden="true">•</span>
+                <span className="inline-flex items-center gap-1 text-[13px]">
+                  <MapPin className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
+                  {job.work_job_location} ({job.work_system})
+                </span>
+              </div>
             </div>
           </div>
 
-          {/* Action Buttons */}
           <div className="flex items-center gap-2 shrink-0">
             <Button
               variant="outline"
               size="icon"
               onClick={onToggleSave}
-              title={isSaved ? 'Hapus Simpan' : 'Simpan Loker'}
-              className="h-9 w-9 text-zinc-700 dark:text-zinc-300"
+              title={isSaved ? 'Hapus simpanan' : 'Simpan lowongan'}
+              aria-label={isSaved ? 'Hapus dari simpanan' : 'Simpan lowongan'}
+              aria-pressed={isSaved}
+              className="h-9 w-9"
             >
-              <Bookmark className="h-4 w-4" fill={isSaved ? 'currentColor' : 'none'} />
+              <Bookmark
+                className={`h-4 w-4 ${isSaved ? 'text-amber-600 dark:text-amber-400' : ''}`}
+                fill={isSaved ? 'currentColor' : 'none'}
+                aria-hidden="true"
+              />
             </Button>
 
             {job.url && (
               <a href={job.url} target="_blank" rel="noopener noreferrer">
-                <Button variant="default" size="sm" className="gap-1.5 text-xs">
-                  Lamar Pekerjaan <ExternalLink className="h-3.5 w-3.5" />
+                <Button variant="default" size="sm" className="gap-1.5 text-xs whitespace-nowrap">
+                  Lamar <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
                 </Button>
               </a>
             )}
           </div>
         </div>
 
-        {/* Quick Specs Cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-          <div className="p-3 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50">
-            <span className="text-[11px] text-zinc-500 block mb-0.5">Tawaran Upah / Jam</span>
-            <span className="font-mono font-bold text-sm text-zinc-900 dark:text-zinc-50">
-              {formatRupiah(job.work_salaryperhour)}
-            </span>
-          </div>
-
-          <div className="p-3 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50">
-            <span className="text-[11px] text-zinc-500 block mb-0.5">Beban Jam Kerja</span>
-            <span className="font-mono font-semibold text-sm text-zinc-900 dark:text-zinc-50">
-              {job.work_hours} jam / minggu
-            </span>
-          </div>
-
-          <div className="p-3 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50">
-            <span className="text-[11px] text-zinc-500 block mb-0.5">Sistem Kehadiran</span>
-            <span className="font-medium text-sm text-zinc-900 dark:text-zinc-50">
-              {job.work_system}
-            </span>
-          </div>
-
-          <div className="p-3 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50">
-            <span className="text-[11px] text-zinc-500 block mb-0.5">Portal Sumber</span>
-            <span className="font-medium text-sm text-zinc-900 dark:text-zinc-50">
-              {job.source_portal || 'Resmi'}
-            </span>
-          </div>
-        </div>
+        <dl className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1">
+          {[
+            { label: 'Upah / jam', value: formatRupiah(job.work_salaryperhour), mono: true },
+            { label: 'Beban kerja', value: `${job.work_hours} jam/mgg`, mono: true },
+            { label: 'Sistem', value: job.work_system, mono: false },
+            { label: 'Sumber', value: job.source_portal || 'Resmi', mono: false },
+          ].map((s) => (
+            <div
+              key={s.label}
+              className="p-3 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 min-w-0"
+            >
+              <dt className="text-[11px] text-zinc-500 truncate">{s.label}</dt>
+              <dd
+                className={`text-sm text-zinc-900 dark:text-zinc-50 truncate ${
+                  s.mono ? 'font-mono font-semibold' : 'font-medium'
+                }`}
+                title={String(s.value)}
+              >
+                {s.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
       </div>
 
-      {/* SPK Match Breakdown Box */}
-      <div className="p-6 border-b border-zinc-200 dark:border-zinc-800 space-y-4 bg-zinc-50/50 dark:bg-zinc-900/30">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
-              Analisis Kesesuaian SPK (SMARTER & ROC)
-            </h3>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <span className="text-xs text-zinc-500">Skor Total U(Ai):</span>
-            <span className="font-mono font-bold text-sm text-zinc-900 dark:text-zinc-50">
-              {job.finalScore.toFixed(4)} ({matchPct}% Match)
-            </span>
-          </div>
+      {/* SPK Match Breakdown */}
+      <div className="p-5 sm:p-6 border-b border-zinc-200 dark:border-zinc-800 space-y-4 bg-zinc-50/60 dark:bg-zinc-900/30">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+            Analisis kesesuaian SPK
+          </h3>
+          <p className="text-xs text-zinc-600 dark:text-zinc-400">
+            Skor U(Ai){' '}
+            <strong className="font-mono text-zinc-900 dark:text-zinc-50">
+              {job.finalScore.toFixed(4)} ({matchPct}%)
+            </strong>
+          </p>
         </div>
 
-        {/* Progress Bar Match */}
-        <div className="w-full bg-zinc-200 dark:bg-zinc-800 rounded-full h-2 overflow-hidden">
-          <div
-            className="bg-zinc-900 dark:bg-zinc-100 h-full rounded-full transition-all duration-500"
-            style={{ width: `${matchPct}%` }}
+        <div
+          role="progressbar"
+          aria-label={`Kecocokan ${matchPct} persen`}
+          aria-valuenow={matchPct}
+          aria-valuemin={0}
+          aria-valuemax={100}
+          className="w-full bg-zinc-200 dark:bg-zinc-800 rounded-full h-2 overflow-hidden"
+        >
+          <div className={`${barColor} emil-meter h-full rounded-full`} style={{ width: `${matchPct}%` }} />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+          <CriterionRow
+            ok={isCategoryMatch}
+            title="C1 — Kategori pekerjaan"
+            body={
+              isCategoryMatch
+                ? `Sesuai minat Anda (${job.job_category}).`
+                : `Berbeda dari minat Anda (${studentPrefs.preferredCategory}).`
+            }
           />
-        </div>
-
-        {/* 5 Criteria Evaluated */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-xs">
-          {/* C1 */}
-          <div className="p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex items-start gap-2">
-            <CheckCircle2
-              className={`h-4 w-4 mt-0.5 shrink-0 ${
-                isCategoryMatch
-                  ? 'text-emerald-600 dark:text-emerald-400'
-                  : 'text-zinc-400'
-              }`}
+          <CriterionRow
+            ok={isSalaryGood}
+            title={`C2 — Upah (${salaryRatio.toFixed(2)}× target)`}
+            body={`Tawaran ${formatRupiah(job.work_salaryperhour)} vs target ${formatRupiah(studentPrefs.minSalary)}.`}
+          />
+          <CriterionRow
+            ok={isLocationMatch}
+            title="C3 — Lokasi & moda"
+            body={
+              job.work_system?.toLowerCase() === 'remote'
+                ? 'Remote (fleksibilitas maksimal untuk jadwal kuliah).'
+                : isLocationMatch
+                  ? `Di wilayah domisili Anda (${job.work_job_location}).`
+                  : `Di ${job.work_job_location}, di luar domisili ${studentPrefs.location}.`
+            }
+          />
+          <CriterionRow
+            ok={isHoursGood}
+            title={`C4 — Beban jam (${job.work_hours} jam)`}
+            body={
+              isHoursGood
+                ? `Dalam batas Anda (${studentPrefs.maxHours} jam/minggu). Aman untuk kuliah.`
+                : `Melebihi batas Anda (${studentPrefs.maxHours} jam/minggu). Perlu pertimbangan.`
+            }
+          />
+          <div className="sm:col-span-2">
+            <CriterionRow
+              ok={skillCosine >= 0.3 ? true : skillCosine > 0 ? false : null}
+              title={`C5 — Kecocokan keahlian (${skillPct}%)`}
+              body="Irisan kata kunci skill Anda dengan deskripsi lowongan (TF-IDF cosine)."
             />
-            <div>
-              <span className="font-semibold text-zinc-900 dark:text-zinc-100 block">
-                C1: Kategori Pekerjaan
-              </span>
-              <p className="text-[11px] text-zinc-500">
-                {isCategoryMatch
-                  ? `Sesuai minat Anda (${job.job_category})`
-                  : `Bidang berbeda dari minat Anda (${studentPrefs.preferredCategory})`}
-              </p>
-            </div>
-          </div>
-
-          {/* C2 */}
-          <div className="p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex items-start gap-2">
-            <CheckCircle2
-              className={`h-4 w-4 mt-0.5 shrink-0 ${
-                job.work_salaryperhour >= studentPrefs.minSalary
-                  ? 'text-emerald-600 dark:text-emerald-400'
-                  : 'text-zinc-400'
-              }`}
-            />
-            <div>
-              <span className="font-semibold text-zinc-900 dark:text-zinc-100 block">
-                C2: Rasio Upah ({salaryRatio}x target)
-              </span>
-              <p className="text-[11px] text-zinc-500">
-                Tawaran {formatRupiah(job.work_salaryperhour)} vs target Anda{' '}
-                {formatRupiah(studentPrefs.minSalary)}
-              </p>
-            </div>
-          </div>
-
-          {/* C3 */}
-          <div className="p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex items-start gap-2">
-            <CheckCircle2
-              className={`h-4 w-4 mt-0.5 shrink-0 ${
-                isLocationMatch
-                  ? 'text-emerald-600 dark:text-emerald-400'
-                  : 'text-zinc-400'
-              }`}
-            />
-            <div>
-              <span className="font-semibold text-zinc-900 dark:text-zinc-100 block">
-                C3: Lokasi & Moda Kerja
-              </span>
-              <p className="text-[11px] text-zinc-500">
-                {job.work_system?.toLowerCase() === 'remote'
-                  ? 'Pekerjaan Remote WFH (Fleksibilitas maksimal)'
-                  : isLocationMatch
-                  ? `Berada di wilayah domisili Anda (${job.work_job_location})`
-                  : `Lokasi di ${job.work_job_location} (Di luar domisili Anda)`}
-              </p>
-            </div>
-          </div>
-
-          {/* C4 */}
-          <div className="p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex items-start gap-2">
-            <CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0 text-emerald-600 dark:text-emerald-400" />
-            <div>
-              <span className="font-semibold text-zinc-900 dark:text-zinc-100 block">
-                C4: Beban Jam Kerja ({job.work_hours} jam)
-              </span>
-              <p className="text-[11px] text-zinc-500">
-                Target waktu Anda: {studentPrefs.maxHours} jam/minggu (Beban wajar mahasiswa)
-              </p>
-            </div>
-          </div>
-
-          {/* C5 */}
-          <div className="sm:col-span-2 p-2.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex items-start gap-2">
-            <CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0 text-zinc-700 dark:text-zinc-300" />
-            <div>
-              <span className="font-semibold text-zinc-900 dark:text-zinc-100 block">
-                C5: Derajat Kesesuaian Keahlian (Cosine Similarity: {job.C5_kemiripan_skill})
-              </span>
-              <p className="text-[11px] text-zinc-500">
-                Dihitung dari irisan kata kunci keahlian mahasiswa dengan deskripsi lowongan via NLP TF-IDF.
-              </p>
-            </div>
           </div>
         </div>
 
-        <div className="flex items-center justify-between text-[11px] text-zinc-500 pt-1">
-          <span>Formula: U(Ai) = Σ (w_j × u_j(X_ij)) pembobotan ROC</span>
+        <div className="flex flex-wrap items-center justify-between gap-2 text-[11px] text-zinc-500 pt-1">
+          <span className="font-mono">U(Ai) = Σ (wⱼ × uⱼ) · bobot ROC</span>
           <button
             onClick={onOpenPreferences}
-            className="text-zinc-900 dark:text-zinc-100 font-semibold underline hover:no-underline cursor-pointer"
+            className="text-zinc-900 dark:text-zinc-100 font-semibold underline underline-offset-2 hover:no-underline cursor-pointer rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100"
           >
-            Ubah Prioritas Bobot
+            Ubah bobot prioritas
           </button>
         </div>
       </div>
 
-      {/* Skills Required Section */}
-      <div className="p-6 border-b border-zinc-200 dark:border-zinc-800 space-y-3">
-        <h4 className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
-          Keahlian & Persyaratan (Skills)
+      {/* Skills */}
+      <div className="p-5 sm:p-6 border-b border-zinc-200 dark:border-zinc-800 space-y-3">
+        <h4 className="text-xs font-semibold text-zinc-700 dark:text-zinc-300">
+          Keahlian yang diminta
         </h4>
-
-        <div className="flex flex-wrap gap-1.5">
-          {(job.work_required_skills || '').split(',').map((skill: string, idx: number) => (
-            <Badge key={idx} variant="secondary" className="text-xs py-1 px-2.5">
-              {skill.trim()}
-            </Badge>
-          ))}
-        </div>
+        {skills.length > 0 ? (
+          <ul className="flex flex-wrap gap-1.5">
+            {skills.map((skill, idx) => (
+              <li key={`${skill}-${idx}`}>
+                <Badge variant="secondary" className="text-xs py-1 px-2.5 font-normal">
+                  {skill}
+                </Badge>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-xs text-zinc-500">Tidak ada daftar keahlian terstruktur untuk lowongan ini.</p>
+        )}
       </div>
 
-      {/* Company Verification Note */}
-      <div className="p-6 space-y-4">
+      {/* Trust + footer */}
+      <div className="p-5 sm:p-6 space-y-4">
         <div className="p-3.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/40 text-xs text-zinc-600 dark:text-zinc-400 space-y-1">
-          <div className="flex items-center gap-1.5 font-semibold text-zinc-900 dark:text-zinc-100">
-            <ShieldCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-            Lowongan Lolos Seleksi 6-Lapisan CRISP-DM
-          </div>
+          <p className="flex items-center gap-1.5 font-semibold text-zinc-900 dark:text-zinc-100">
+            <ShieldCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400" aria-hidden="true" />
+            Terverifikasi 6-lapis CRISP-DM
+          </p>
           <p className="leading-relaxed">
-            Pekerjaan ini telah diverifikasi bebas dari kata kunci magang/freelance bersyarat, memiliki rentang gaji wajar, beban jam kerja di bawah 30 jam, dan tautan pendaftaran aktif (HTTP 200).
+            Bebas kata kunci magang/freelance bersyarat, gaji wajar, di bawah 30 jam/minggu, dan tautan aktif.
           </p>
         </div>
 
-        {/* Footer Actions */}
-        <div className="flex items-center justify-between pt-2">
-          <span className="text-xs text-zinc-500 flex items-center gap-1">
-            <Calendar className="h-3.5 w-3.5" />
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
+          <span className="text-xs text-zinc-500 inline-flex items-center gap-1">
+            <Calendar className="h-3.5 w-3.5" aria-hidden="true" />
             Posting: {job.date_posted || '2026'}
           </span>
 
           {job.url && (
             <a href={job.url} target="_blank" rel="noopener noreferrer">
               <Button variant="default" size="sm" className="gap-1.5 text-xs">
-                Kunjungi Portal {job.source_portal || 'Resmi'} <ExternalLink className="h-3.5 w-3.5" />
+                Buka portal {job.source_portal || 'resmi'} <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
               </Button>
             </a>
           )}
         </div>
       </div>
-    </div>
+    </section>
   )
 }
