@@ -4,6 +4,10 @@ Notebook ini didesain 100% kompatibel untuk Google Colab maupun VS Code / Jupyte
 """
 
 import json
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+NOTEBOOK_OUT = PROJECT_ROOT / "notebooks" / "phase_3_data_preparation.ipynb"
 
 cells = []
 
@@ -55,6 +59,7 @@ Sel ini menyiapkan dependensi yang dibutuhkan. Jika dijalankan di **Google Colab
 add_code("""# Setup pustaka dan dependensi
 import os
 import re
+from pathlib import Path
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -66,7 +71,28 @@ from sklearn.metrics.pairwise import cosine_similarity
 sns.set_theme(style="whitegrid")
 plt.rcParams['figure.figsize'] = (10, 5)
 
-print("✅ Seluruh library berhasil diimpor dengan sukses!")""")
+# Resolusi path data: dukung struktur baru (data/raw, data/processed)
+# maupun file datar sejajar notebook (Google Colab)
+ROOT = Path.cwd()
+if not (ROOT / 'data' / 'raw' / 'raw_job_postings.csv').exists() and not (ROOT / 'raw_job_postings.csv').exists():
+    if (ROOT.parent / 'data' / 'raw' / 'raw_job_postings.csv').exists():
+        ROOT = ROOT.parent
+
+def datapath(*options):
+    for opt in options:
+        p = ROOT / opt
+        if p.exists():
+            return str(p)
+    return str(ROOT / options[0])
+
+RAW_JOBS = datapath('data/raw/raw_job_postings.csv', 'raw_job_postings.csv')
+RAW_STUDENTS = datapath('data/raw/raw_student_preferences.csv', 'raw_student_preferences.csv')
+CLEAN_JOBS = datapath('data/processed/clean_jobs_dataset.csv', 'clean_jobs_dataset.csv')
+CLEAN_STUDENTS = datapath('data/processed/clean_students_dataset.csv', 'clean_students_dataset.csv')
+DECISION_MATRIX = datapath('data/processed/decision_matrix_sample.csv', 'decision_matrix_sample.csv')
+
+print("✅ Seluruh library berhasil diimpor dengan sukses!")
+print(f"📂 ROOT data: {ROOT}")""")
 
 # ==========================================
 # 3. DATA INGESTION
@@ -76,8 +102,8 @@ add_md("""---
 Membaca dataset mentah hasil scraping job portal (`raw_job_postings.csv`) dan respon kuesioner mahasiswa UKRIDA (`raw_student_preferences.csv`).""")
 
 add_code("""# Membaca data mentah
-df_raw_jobs = pd.read_csv('raw_job_postings.csv')
-df_raw_students = pd.read_csv('raw_student_preferences.csv')
+df_raw_jobs = pd.read_csv(RAW_JOBS)
+df_raw_students = pd.read_csv(RAW_STUDENTS)
 
 print(f"📊 Dimensi Awal Data Lowongan Mentah : {df_raw_jobs.shape[0]} baris, {df_raw_jobs.shape[1]} kolom")
 print(f"📊 Dimensi Awal Data Kuesioner Mahasiswa: {df_raw_students.shape[0]} baris, {df_raw_students.shape[1]} kolom")
@@ -438,9 +464,12 @@ clean_jobs_export = curr_df[[
     'work_required_skills', 'clean_required_skills', 'source_portal', 'url', 'date_posted'
 ]].rename(columns={'work_job_location_clean': 'work_job_location'})
 
-clean_jobs_export.to_csv('clean_jobs_dataset.csv', index=False)
-df_students_final.to_csv('clean_students_dataset.csv', index=False)
-decision_matrix.to_csv('decision_matrix_sample.csv', index=False)
+for _p in (CLEAN_JOBS, CLEAN_STUDENTS, DECISION_MATRIX):
+    Path(_p).parent.mkdir(parents=True, exist_ok=True)
+
+clean_jobs_export.to_csv(CLEAN_JOBS, index=False)
+df_students_final.to_csv(CLEAN_STUDENTS, index=False)
+decision_matrix.to_csv(DECISION_MATRIX, index=False)
 
 print("🎉 Seluruh artefak dataset Fase 3 berhasil diekspor:")
 print(f"1. clean_jobs_dataset.csv     : {len(clean_jobs_export)} baris data lowongan siap pakai")
@@ -474,7 +503,8 @@ nb = {
     "nbformat_minor": 4
 }
 
-with open("phase_3_data_preparation.ipynb", "w", encoding="utf-8") as f:
+NOTEBOOK_OUT.parent.mkdir(parents=True, exist_ok=True)
+with open(NOTEBOOK_OUT, "w", encoding="utf-8") as f:
     json.dump(nb, f, indent=2, ensure_ascii=False)
 
-print("[OK] File phase_3_data_preparation.ipynb berhasil dibuat!")
+print(f"[OK] File {NOTEBOOK_OUT} berhasil dibuat!")

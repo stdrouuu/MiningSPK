@@ -156,3 +156,37 @@ Hasil kalkulasi spreadsheet (bobot default C2 > C4 > C3 > C1 > C5):
 - Kotak VLOOKUP (sel kuning `M4`): ketik rank 1–10 untuk menampilkan judul dan nilai pemenangnya tanpa mencari manual di tabel.
 
 **Batas interpretasi:** hasil ini berlaku untuk profil MHS-101 saja. Mahasiswa lain (minat, gaji, lokasi, jam, skill berbeda) menghasilkan matriks X dan ranking berbeda.
+
+## 8. Struktur Folder & Cara Jalan
+
+```
+phase-3/
+├── src/                 # Pipeline Fase 3 (satu file = satu tugas CRISP-DM)
+│   ├── config.py            # Konstanta & path terpusat
+│   ├── filtering.py         # 6 lapisan filtering (§2.3 laporan)
+│   ├── imputation.py        # Missing values (§3.1)
+│   ├── standardization.py   # Outlier & standardisasi (§3.2)
+│   ├── encoding.py          # Encoding sistem kerja (§4.1)
+│   ├── nlp.py + skill_similarity.py  # TF-IDF & cosine C5 (§4.2)
+│   ├── locations.py         # Standardisasi lokasi
+│   ├── decision_matrix.py   # Matriks C1–C5 (§5)
+│   └── pipeline.py          # Orkestrasi run_phase_3_pipeline()
+├── scripts/             # Utilitas sekali-jalan
+│   ├── generate_raw_data.py   # Scraping → data/raw/
+│   ├── build_notebook.py      # Generate notebooks/*.ipynb
+│   ├── enrich_company_logos.py# Tambah kolom company_logo
+│   └── sync_web_data.py       # Salin data/processed/ → web/public/data/
+├── data/
+│   ├── raw/             # raw_job_postings.csv, raw_student_preferences.csv
+│   └── processed/       # clean_*.csv, decision_matrix_sample.csv (output resmi)
+├── notebooks/           # phase_3_data_preparation.ipynb (Colab-ready)
+├── docs/                # Laporan, panduan PPT, spreadsheet SMARTER
+├── web/                 # Frontend portal (React + Vite)
+└── requirements.txt
+```
+
+```bash
+pip install -r requirements.txt
+python -m src.pipeline            # jalankan Fase 3 → data/processed/ (+ auto-sinkron web)
+python scripts/build_notebook.py  # regenerate notebook bila src/ berubah
+```

@@ -1,0 +1,9 @@
+# Dependensi Python Fase 3 (Data Preparation)
+# Instal: pip install -r requirements.txt
+numpy
+pandas
+scikit-learn
+matplotlib
+seaborn
+requests
+beautifulsoup4

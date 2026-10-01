@@ -37,6 +37,13 @@ import numpy as np
 import pandas as pd
 from bs4 import BeautifulSoup
 from datetime import datetime, timedelta
+from pathlib import Path
+
+# Root proyek (folder yang memuat data/, src/, scripts/) — berlaku
+# baik dijalankan dari root maupun dari dalam scripts/.
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+RAW_JOBS_PATH = PROJECT_ROOT / "data" / "raw" / "raw_job_postings.csv"
+RAW_STUDENTS_PATH = PROJECT_ROOT / "data" / "raw" / "raw_student_preferences.csv"
 
 random.seed(42)
 np.random.seed(42)
@@ -537,8 +544,9 @@ def build_student_dataset():
         })
         
     df_stud = pd.DataFrame(student_rows)
-    df_stud.to_csv("raw_student_preferences.csv", index=False)
-    print(f"[OK] Berhasil membuat raw_student_preferences.csv dengan {len(df_stud)} baris data.")
+    RAW_STUDENTS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    df_stud.to_csv(RAW_STUDENTS_PATH, index=False)
+    print(f"[OK] Berhasil membuat {RAW_STUDENTS_PATH} dengan {len(df_stud)} baris data.")
 
 def main():
     print("=" * 80)
@@ -721,10 +729,11 @@ def main():
         
     df_final_raw = pd.DataFrame(raw_rows)
     df_final_raw = df_final_raw.sample(frac=1.0, random_state=42).reset_index(drop=True)
-    df_final_raw.to_csv("raw_job_postings.csv", index=False)
-    
+    RAW_JOBS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    df_final_raw.to_csv(RAW_JOBS_PATH, index=False)
+
     print("\n" + "=" * 80)
-    print(f"[OK] Berhasil membuat raw_job_postings.csv dengan {len(df_final_raw)} baris data.")
+    print(f"[OK] Berhasil membuat {RAW_JOBS_PATH} dengan {len(df_final_raw)} baris data.")
     print("Distribusi Sumber Portal:")
     print(df_final_raw["source_portal"].value_counts())
     print("\nDistribusi 10 Kategori:")
