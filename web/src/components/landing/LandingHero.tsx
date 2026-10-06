@@ -1,7 +1,18 @@
+import { diceBearUrl } from '../../lib/avatar'
+
 interface LandingHeroProps {
   totalJobs: number
   onEnterPortal: () => void
 }
+
+// Lima avatar DiceBear berbeda untuk strip sosial "Untuk Mahasiswa Aktif".
+const HERO_AVATARS = [
+  { style: 'adventurer', seed: 'MHS-101', bg: 'b6e3f4', label: 'David Santoso' },
+  { style: 'lorelei', seed: 'MHS-102', bg: 'ffd5dc', label: 'Jessica Tan' },
+  { style: 'micah', seed: 'MHS-103', bg: 'c0aede', label: 'Michael Wijaya' },
+  { style: 'personas', seed: 'MHS-104', bg: 'ffdfbf', label: 'Brandon Sutedja' },
+  { style: 'notionists', seed: 'MHS-105', bg: 'c7f2c7', label: 'Andrew Linardi' },
+]
 
 export function LandingHero({ totalJobs, onEnterPortal }: LandingHeroProps) {
   return (
@@ -31,11 +42,16 @@ export function LandingHero({ totalJobs, onEnterPortal }: LandingHeroProps) {
 
         <div className="pt-6 flex flex-wrap items-center justify-center gap-3 text-xs text-slate-500 font-light">
           <div className="flex -space-x-2 overflow-hidden">
-            <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-blue-100 text-[#0C52EE] border-2 border-white text-[10px] font-medium">DS</span>
-            <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-pink-100 text-[#ED1E79] border-2 border-white text-[10px] font-medium">NF</span>
-            <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 border-2 border-white text-[10px] font-medium">RF</span>
-            <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-amber-100 text-amber-700 border-2 border-white text-[10px] font-medium">BJ</span>
-            <span className="inline-flex items-center justify-center w-7 h-7 rounded-full bg-purple-100 text-purple-700 border-2 border-white text-[10px] font-medium">JT</span>
+            {HERO_AVATARS.map((a) => (
+              <img
+                key={a.seed}
+                src={diceBearUrl(a.style, a.seed, a.bg)}
+                alt={a.label}
+                title={a.label}
+                loading="lazy"
+                className="w-7 h-7 rounded-full bg-slate-100 border-2 border-white object-cover"
+              />
+            ))}
           </div>
           <span className="text-slate-700 font-medium">Untuk Mahasiswa Aktif</span>
           <span className="text-slate-300">{"\u2022"}</span>

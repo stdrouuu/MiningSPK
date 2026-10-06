@@ -8,6 +8,10 @@ export interface StudentPreferences {
   workSystem: 'ALL' | 'Remote' | 'Hybrid' | 'Onsite'
   preferredCategory: string
   skills: string
+  /** Gaya avatar DiceBear (https://github.com/dicebear/dicebear). Kosong = otomatis per NIM. */
+  avatarStyle: string
+  /** Seed avatar DiceBear — default diisi NIM mahasiswa. */
+  avatarSeed: string
   // Prioritas 1 sampai 5 untuk kriteria SPK
   priorityRank: {
     C1_kategori: number
@@ -28,6 +32,8 @@ export const DEFAULT_STUDENT_PREFERENCES: StudentPreferences = {
   workSystem: 'ALL',
   preferredCategory: 'Education & Tutoring',
   skills: 'hospitality, espresso machine, manual brew, kebersihan bar, pelayanan ramah, komunikasi',
+  avatarStyle: '',
+  avatarSeed: '412024001',
   priorityRank: {
     C1_kategori: 1, // Kategori prioritas 1
     C2_gaji: 2,     // Gaji prioritas 2

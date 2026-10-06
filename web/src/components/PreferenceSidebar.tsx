@@ -14,6 +14,7 @@ import {
 } from 'react-icons/ri'
 import { Button } from './ui/Button'
 import { Dialog } from './ui/Dialog'
+import { StudentPresetDropdown } from './StudentPresetDropdown'
 import type { StudentPreferences } from '../types/portal'
 import type { StudentProfile } from '../types/data'
 import { DEFAULT_STUDENT_PREFERENCES } from '../types/portal'
@@ -96,11 +97,7 @@ export function PreferenceSidebar({
   }
 
   // Muat data dari profil contoh mahasiswa
-  const handleLoadPreset = (studentId: string) => {
-    if (studentId === 'custom') return
-    const s = studentPresets.find((item) => item.student_id === studentId)
-    if (!s) return
-
+  const handleLoadPreset = (s: StudentProfile) => {
     onUpdatePreferences({
       ...preferences,
       name: s.student_name,
@@ -111,6 +108,10 @@ export function PreferenceSidebar({
       location: s.student_location_clean || s.student_location || 'Jakarta Barat',
       preferredCategory: s.preferred_category || categories[0],
       skills: s.clean_student_skills || s.student_skills || '',
+      avatarSeed: s.student_id,
+      // biarkan avatarStyle apa adanya bila user sudah custom? tidak —
+      // reset ke otomatis agar tiap mahasiswa beda, user bisa ganti lagi via picker
+      avatarStyle: '',
     })
   }
 
@@ -155,7 +156,7 @@ export function PreferenceSidebar({
         <h3 className="text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">
           Profil mahasiswa
         </h3>
-        {/* Preset Selector */}
+        {/* Preset Selector — custom designed dropdown + avatar DiceBear */}
         <div className="p-3.5 rounded-xl border border-blue-200 bg-blue-50/70 space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
@@ -172,18 +173,11 @@ export function PreferenceSidebar({
             </Button>
           </div>
 
-          <select
-            id="pref-preset"
-            onChange={(e) => handleLoadPreset(e.target.value)}
-            className="w-full h-9 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100"
-          >
-            <option value="custom">-- Input Kustom Mahasiswa Baru --</option>
-            {studentPresets.map((s) => (
-              <option key={s.student_id} value={s.student_id}>
-                {s.student_name} ({s.student_id}) — Minat: {s.preferred_category} • {s.student_location_clean}
-              </option>
-            ))}
-          </select>
+          <StudentPresetDropdown
+            students={studentPresets}
+            selectedId={studentPresets.some((s) => s.student_id === preferences.nim) ? preferences.nim : undefined}
+            onSelect={handleLoadPreset}
+          />
         </div>
 
         {/* Form Inputs Grid */}

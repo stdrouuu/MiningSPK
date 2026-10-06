@@ -1,3 +1,5 @@
+import { navButtonClass, navIndicatorClass } from '../../lib/navStyle'
+
 interface LandingNavProps {
   active: 'landing' | 'portal' | 'matrix'
   savedCount: number
@@ -6,18 +8,21 @@ interface LandingNavProps {
 }
 
 export function LandingNav({ active, savedCount, onNavigate, onOpenSavedJobs }: LandingNavProps) {
-  const link = (view: 'landing' | 'portal' | 'matrix', label: string) => (
-    <button
-      onClick={() => onNavigate(view)}
-      className={
-        active === view
-          ? 'text-[#0C52EE] font-medium transition-colors'
-          : 'hover:text-slate-900 transition-colors'
-      }
-    >
-      {label}
-    </button>
-  )
+  const navIndicator = navIndicatorClass()
+
+  const link = (view: 'landing' | 'portal' | 'matrix', label: string) => {
+    const isActive = active === view
+    return (
+      <button
+        onClick={() => onNavigate(view)}
+        aria-current={isActive ? 'page' : undefined}
+        className={navButtonClass(isActive)}
+      >
+        {label}
+        {isActive && navIndicator && <span className={navIndicator} aria-hidden="true" />}
+      </button>
+    )
+  }
 
   return (
     <header className="w-full bg-white border-b border-slate-200 sticky top-0 z-40 transition-colors">
@@ -27,7 +32,7 @@ export function LandingNav({ active, savedCount, onNavigate, onOpenSavedJobs }: 
             <span className="text-xl font-medium tracking-tight text-slate-900">upmatch</span>
           </button>
 
-          <nav className="hidden md:flex items-center gap-7 text-sm font-normal text-slate-600">
+          <nav className="hidden md:flex items-center gap-2 text-sm font-normal">
             {link('landing', 'Beranda')}
             {link('portal', 'Lowongan')}
             {link('matrix', 'Perhitungan')}

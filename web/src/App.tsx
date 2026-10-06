@@ -105,6 +105,8 @@ export function App() {
             location: s.student_location_clean || s.student_location || 'Jakarta Barat',
             preferredCategory: s.preferred_category || 'Education & Tutoring',
             skills: s.clean_student_skills || s.student_skills || '',
+            avatarSeed: s.student_id,
+            avatarStyle: '',
           }))
         }
       } catch (err: any) {

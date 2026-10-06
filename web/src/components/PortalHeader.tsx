@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { RiMenuLine, RiCloseLine } from 'react-icons/ri'
 import type { StudentPreferences } from '../types/portal'
 import { ROUTES } from '../lib/routes'
+import { avatarForPrefs } from '../lib/avatar'
+import { navButtonClass, navIndicatorClass } from '../lib/navStyle'
 
 interface PortalHeaderProps {
   activeView: 'jobs' | 'matrix'
@@ -45,7 +47,19 @@ export function PortalHeader({
     }
   }, [showProfileMenu])
 
-  const initial = (studentPrefs.name || '?').charAt(0).toUpperCase()
+  const headerAvatar = avatarForPrefs(studentPrefs)
+  const navIndicator = navIndicatorClass()
+
+  const renderNavButton = (label: string, active: boolean, onClick: () => void) => (
+    <button
+      onClick={onClick}
+      aria-current={active ? 'page' : undefined}
+      className={navButtonClass(active)}
+    >
+      {label}
+      {active && navIndicator && <span className={navIndicator} aria-hidden="true" />}
+    </button>
+  )
 
   return (
     <header className="w-full bg-white border-b border-slate-200 sticky top-0 z-40">
@@ -54,40 +68,19 @@ export function PortalHeader({
           <button onClick={() => navigate(ROUTES.LANDING)} className="flex items-center group focus:outline-none text-left">
             <div className="flex items-baseline gap-1.5">
               <span className="text-xl font-medium tracking-tight text-slate-900">upmatch</span>
-              <span className="text-slate-300 font-light">—</span>
-              <span className="text-xs font-medium uppercase tracking-wider text-slate-500">portal kerja</span>
+              {activeView !== 'jobs' && (
+                <>
+                  <span className="text-slate-300 font-light">—</span>
+                  <span className="text-xs font-medium uppercase tracking-wider text-slate-500">portal kerja</span>
+                </>
+              )}
             </div>
           </button>
 
           <nav className="hidden md:flex items-center gap-2 text-xs sm:text-sm font-normal">
-            <button
-              onClick={() => navigate(ROUTES.LANDING)}
-              className="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors"
-            >
-              Beranda
-            </button>
-            <button
-              onClick={() => navigate(ROUTES.PORTAL)}
-              aria-current={activeView === 'jobs' ? 'page' : undefined}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
-                activeView === 'jobs'
-                  ? 'bg-blue-50 text-[#0C52EE] font-medium border border-transparent'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-            >
-              Lowongan
-            </button>
-            <button
-              onClick={() => navigate(ROUTES.MATRIX)}
-              aria-current={activeView === 'matrix' ? 'page' : undefined}
-              className={`px-3 py-1.5 rounded-lg transition-colors ${
-                activeView === 'matrix'
-                  ? 'bg-blue-50 text-[#0C52EE] font-medium border border-transparent'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-              }`}
-            >
-              Perhitungan
-            </button>
+            {renderNavButton('Beranda', false, () => navigate(ROUTES.LANDING))}
+            {renderNavButton('Lowongan', activeView === 'jobs', () => navigate(ROUTES.PORTAL))}
+            {renderNavButton('Perhitungan', activeView === 'matrix', () => navigate(ROUTES.MATRIX))}
           </nav>
         </div>
 
@@ -110,9 +103,11 @@ export function PortalHeader({
               aria-expanded={showProfileMenu}
               className="flex items-center gap-2.5 pl-1.5 pr-3 py-1 rounded-xl border border-slate-200 bg-white hover:border-slate-300 transition-colors text-left"
             >
-              <div className="w-7 h-7 rounded-lg bg-[#0C52EE] text-white font-medium text-xs flex items-center justify-center">
-                {initial}
-              </div>
+              <img
+                src={headerAvatar}
+                alt={studentPrefs.name}
+                className="w-7 h-7 rounded-full bg-slate-100 object-cover shrink-0"
+              />
               <div className="hidden sm:block text-xs leading-tight">
                 <div className="font-medium text-slate-900 truncate max-w-[120px]">{studentPrefs.name}</div>
                 <div className="text-[10px] text-slate-400 font-light">{studentPrefs.major}</div>
@@ -125,9 +120,11 @@ export function PortalHeader({
             {showProfileMenu && (
               <div role="menu" aria-label="Profil mahasiswa" className="absolute right-0 mt-2 w-72 bg-white border border-slate-200 rounded-xl shadow-lg z-50 p-4">
                 <div className="flex items-start gap-3 pb-3 border-b border-slate-100">
-                  <div className="w-10 h-10 rounded-lg bg-[#0C52EE] text-white font-bold text-sm flex items-center justify-center">
-                    {initial}
-                  </div>
+                  <img
+                    src={headerAvatar}
+                    alt={studentPrefs.name}
+                    className="w-10 h-10 rounded-full bg-slate-100 border border-slate-200 object-cover shrink-0"
+                  />
                   <div className="flex-1 min-w-0">
                     <div className="font-medium text-sm text-slate-900 truncate">{studentPrefs.name}</div>
                     <div className="text-xs text-slate-500 font-light">{studentPrefs.major}</div>

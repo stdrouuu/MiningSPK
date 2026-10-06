@@ -1,4 +1,5 @@
 import type { StudentPreferences } from '../types/portal'
+import { avatarForPrefs } from '../lib/avatar'
 
 interface PortalHeroProps {
   studentPrefs: StudentPreferences
@@ -11,7 +12,19 @@ export function PortalHero({ studentPrefs, onOpenPreferences, totalJobs }: Porta
     <section className="relative w-full rounded-2xl bg-[#0C52EE] overflow-hidden min-h-[160px] p-6 sm:p-8 lg:p-10 shadow-sm text-white flex items-center justify-between">
       <div className="relative z-10 max-w-2xl lg:max-w-3xl space-y-2">
         <h1 className="text-2xl sm:text-3xl lg:text-[34px] font-medium tracking-tight leading-snug">
-          Halo {studentPrefs.name.split(' ')[0]}, ini part–time paling cocok untukmu
+          Halo{' '}
+          <span className="inline-flex items-center gap-2 align-middle whitespace-nowrap">
+            {studentPrefs.name.split(' ')[0]}
+            <img
+              src={avatarForPrefs(studentPrefs)}
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              draggable={false}
+              className="w-[0.95em] h-[0.95em] rounded-full object-cover shrink-0 select-none"
+            />
+          </span>
+          , ini part–time paling cocok untukmu
         </h1>
         <p className="text-xs sm:text-sm text-blue-100 font-light leading-relaxed max-w-xl">
           {totalJobs} lowongan part-time terverifikasi di Jabodetabek, diurutkan real-time dari upah, jarak, jam kuliah, dan skill kamu.
