@@ -1,11 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Routes, Route, Navigate, useNavigate, useLocation, useSearchParams } from 'react-router-dom'
-import {
-  RiSearchLine,
-  RiEqualizerLine,
-  RiErrorWarningLine,
-  RiBuilding2Line,
-} from 'react-icons/ri'
+import { RiErrorWarningLine } from 'react-icons/ri'
 import { PortalHeader } from './components/PortalHeader'
 import { PortalHero } from './components/PortalHero'
 import { LandingPage } from './components/landing/LandingPage'
@@ -19,7 +14,6 @@ import type { CleanJob, StudentProfile } from './types/data'
 import type { StudentPreferences } from './types/portal'
 import { DEFAULT_STUDENT_PREFERENCES } from './types/portal'
 import { fetchCsvData, computeSPKForCustomStudent } from './lib/spk'
-import { getInitialTheme, applyTheme } from './lib/theme'
 import { ROUTES } from './lib/routes'
 
 function ScrollToTop() {
@@ -30,19 +24,19 @@ function ScrollToTop() {
   return null
 }
 
-function PortalFooter({ onOpenPreferences }: { onOpenPreferences: () => void }) {
+export function PortalFooter({ onOpenPreferences }: { onOpenPreferences: () => void }) {
   return (
-    <footer className="border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 mt-16 py-6 text-xs text-zinc-500">
+    <footer className="border-t border-slate-200 bg-white mt-16 py-6 text-xs text-slate-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <p>© 2026 upmatch • Sistem Rekomendasi Part-Time Mahasiswa UKRIDA (SMARTER & ROC)</p>
-        <div className="flex items-center gap-4 text-zinc-600 dark:text-zinc-400">
+        <p>© 2026 upmatch • Sistem Rekomendasi Part-Time Mahasiswa (SMARTER &amp; ROC)</p>
+        <div className="flex items-center gap-4 text-slate-600">
           <span>221 Lowongan Terverifikasi</span>
           <span>•</span>
-          <span>52 Mahasiswa Teruji</span>
+          <span>Untuk Mahasiswa</span>
           <span>•</span>
           <button
             onClick={onOpenPreferences}
-            className="hover:text-zinc-900 dark:hover:text-zinc-100 underline cursor-pointer"
+            className="hover:text-slate-900 underline cursor-pointer"
           >
             Atur Kriteria SPK
           </button>
@@ -53,9 +47,6 @@ function PortalFooter({ onOpenPreferences }: { onOpenPreferences: () => void }) 
 }
 
 export function App() {
-  // Theme state (Light / Dark mode murni)
-  const [theme, setTheme] = useState<'light' | 'dark'>('light')
-
   // Dataset states
   const [jobs, setJobs] = useState<CleanJob[]>([])
   const [students, setStudents] = useState<StudentProfile[]>([])
@@ -84,18 +75,10 @@ export function App() {
   const [isPreferenceOpen, setIsPreferenceOpen] = useState(false)
   const [isSavedJobsOpen, setIsSavedJobsOpen] = useState(false)
 
-  // Inisialisasi theme
+  // Sinkronkan URL lama / tidak dikenal & pastikan selalu mode terang (prototipe light-only)
   useEffect(() => {
-    const initialTheme = getInitialTheme()
-    setTheme(initialTheme)
-    applyTheme(initialTheme)
+    document.documentElement.classList.remove('dark')
   }, [])
-
-  const handleToggleTheme = () => {
-    const nextTheme = theme === 'dark' ? 'light' : 'dark'
-    setTheme(nextTheme)
-    applyTheme(nextTheme)
-  }
 
   // Load dataset CSV
   useEffect(() => {
@@ -199,7 +182,6 @@ export function App() {
   }, [rankedJobs, savedJobIds])
 
   const shared = {
-    theme,
     jobs,
     students,
     loading,
@@ -225,7 +207,7 @@ export function App() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 flex flex-col font-sans transition-colors">
+    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 flex flex-col font-sans">
       <ScrollToTop />
       <Routes>
         <Route
@@ -233,8 +215,11 @@ export function App() {
           element={
             <LandingRoute
               savedCount={savedJobIds.length}
-              theme={theme}
-              onToggleTheme={handleToggleTheme}
+              rankedJobs={rankedJobs}
+              onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
+              setSearchQuery={setSearchQuery}
+              setFilterCategory={setFilterCategory}
+              setSelectedJobId={setSelectedJobId}
             />
           }
         />
@@ -243,7 +228,6 @@ export function App() {
           element={
             <PortalRoute
               state={shared}
-              onToggleTheme={handleToggleTheme}
               onOpenPreferences={() => setIsPreferenceOpen(true)}
               onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
               onToggleSave={handleToggleSave}
@@ -255,7 +239,6 @@ export function App() {
           element={
             <MatrixRoute
               state={shared}
-              onToggleTheme={handleToggleTheme}
               onOpenPreferences={() => setIsPreferenceOpen(true)}
               onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
             />
@@ -294,35 +277,43 @@ export function App() {
 // ─── Route: / (Landing page marketing) ───────────────────────────────────────
 function LandingRoute({
   savedCount,
-  theme,
-  onToggleTheme,
+  rankedJobs,
+  onOpenSavedJobs,
+  setSearchQuery,
+  setFilterCategory,
+  setSelectedJobId,
 }: {
   savedCount: number
-  theme: 'light' | 'dark'
-  onToggleTheme: () => void
+  rankedJobs: SharedState['rankedJobs']
+  onOpenSavedJobs: () => void
+  setSearchQuery: (q: string) => void
+  setFilterCategory: (c: string) => void
+  setSelectedJobId: (id: string | null) => void
 }) {
   const navigate = useNavigate()
 
-  const handleEnterPortal = () => navigate(ROUTES.PORTAL)
-  const handleShowMethod = () => {
-    document.querySelector('[aria-label="Cara kerja"]')?.scrollIntoView({ behavior: 'smooth' })
-  }
-
   return (
-    <div className="min-h-screen bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50 flex flex-col font-sans transition-colors">
-      <LandingPage
-        savedCount={savedCount}
-        onEnterPortal={handleEnterPortal}
-        onShowMethod={handleShowMethod}
-        theme={theme}
-        onToggleTheme={onToggleTheme}
-      />
-    </div>
+    <LandingPage
+      savedCount={savedCount}
+      jobs={rankedJobs}
+      onOpenSavedJobs={onOpenSavedJobs}
+      onQuickSearch={(q) => {
+        setSearchQuery(q)
+        navigate(ROUTES.PORTAL)
+      }}
+      onSelectCategory={(cat) => {
+        setFilterCategory(cat)
+        navigate(ROUTES.PORTAL)
+      }}
+      onOpenJob={(job) => {
+        setSelectedJobId(job.job_id)
+        navigate(`${ROUTES.PORTAL}?job=${encodeURIComponent(job.job_id)}`)
+      }}
+    />
   )
 }
 
 type SharedState = {
-  theme: 'light' | 'dark'
   jobs: CleanJob[]
   students: StudentProfile[]
   loading: boolean
@@ -350,18 +341,15 @@ type SharedState = {
 // ─── Route: /portal (Job Portal feed) ────────────────────────────────────────
 function PortalRoute({
   state,
-  onToggleTheme,
   onOpenPreferences,
   onOpenSavedJobs,
   onToggleSave,
 }: {
   state: SharedState
-  onToggleTheme: () => void
   onOpenPreferences: () => void
   onOpenSavedJobs: () => void
   onToggleSave: (jobId: string) => void
 }) {
-  const navigate = useNavigate()
   const [searchParams, setSearchParams] = useSearchParams()
 
   // Deep-link: /portal?job=JOB_ID -> pilih job tersebut saat halaman dibuka / dibagikan
@@ -385,10 +373,7 @@ function PortalRoute({
   return (
     <>
       <PortalHeader
-        theme={state.theme}
-        onToggleTheme={onToggleTheme}
         activeView="jobs"
-        onChangeView={(view) => navigate(view === 'matrix' ? ROUTES.MATRIX : ROUTES.PORTAL)}
         studentPrefs={state.studentPrefs}
         onOpenPreferences={onOpenPreferences}
         savedJobsCount={state.savedJobIds.length}
@@ -398,26 +383,26 @@ function PortalRoute({
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
         {state.loading ? (
           <div className="space-y-6" role="status" aria-label="Memuat lowongan">
-            <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/50 p-6 sm:p-8 animate-pulse">
-              <div className="h-5 w-2/3 rounded-md bg-zinc-200 dark:bg-zinc-800" />
-              <div className="mt-3 h-4 w-1/2 rounded-md bg-zinc-200 dark:bg-zinc-800" />
+            <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-6 sm:p-8 animate-pulse">
+              <div className="h-5 w-2/3 rounded-md bg-slate-200 dark:bg-slate-800" />
+              <div className="mt-3 h-4 w-1/2 rounded-md bg-slate-200 dark:bg-slate-800" />
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
               <div className="lg:col-span-5 space-y-3">
                 {[0, 1, 2, 3].map((i) => (
-                  <div key={i} className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 animate-pulse">
-                    <div className="h-4 w-3/4 rounded bg-zinc-200 dark:bg-zinc-800" />
-                    <div className="mt-2 h-3 w-1/2 rounded bg-zinc-200 dark:bg-zinc-800" />
-                    <div className="mt-3 h-3 w-full rounded bg-zinc-100 dark:bg-zinc-900" />
+                  <div key={i} className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 animate-pulse">
+                    <div className="h-4 w-3/4 rounded bg-slate-200 dark:bg-slate-800" />
+                    <div className="mt-2 h-3 w-1/2 rounded bg-slate-200 dark:bg-slate-800" />
+                    <div className="mt-3 h-3 w-full rounded bg-slate-100 dark:bg-slate-900" />
                   </div>
                 ))}
               </div>
               <div className="lg:col-span-7">
-                <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 p-6 animate-pulse">
-                  <div className="h-6 w-1/2 rounded bg-zinc-200 dark:bg-zinc-800" />
+                <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-6 animate-pulse">
+                  <div className="h-6 w-1/2 rounded bg-slate-200 dark:bg-slate-800" />
                   <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
                     {[0, 1, 2, 3].map((i) => (
-                      <div key={i} className="h-16 rounded-lg bg-zinc-100 dark:bg-zinc-900" />
+                      <div key={i} className="h-16 rounded-lg bg-slate-100 dark:bg-slate-900" />
                     ))}
                   </div>
                 </div>
@@ -428,7 +413,7 @@ function PortalRoute({
         ) : state.error ? (
           <div className="p-6 rounded-xl border border-red-200 dark:border-red-900 bg-red-50 dark:bg-red-950/20 text-center space-y-3 max-w-md mx-auto my-20">
             <RiErrorWarningLine className="h-8 w-8 text-red-500 mx-auto" />
-            <h3 className="text-sm font-semibold text-red-800 dark:text-red-200">{state.error}</h3>
+            <h3 className="text-sm font-medium text-red-800 dark:text-red-200">{state.error}</h3>
             <Button variant="outline" size="sm" onClick={() => window.location.reload()} className="text-xs">
               Coba muat ulang
             </Button>
@@ -443,117 +428,93 @@ function PortalRoute({
             />
 
             {/* Filter Bar & Controls */}
-            <div className="p-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
-              {/* Left: Search input */}
-              <div className="flex-1 max-w-md relative">
-                <label htmlFor="portal-search" className="sr-only">Cari lowongan, perusahaan, atau keahlian</label>
-                <RiSearchLine className="absolute left-3 top-2.5 h-4 w-4 text-zinc-400 pointer-events-none" />
-                <input
-                  id="portal-search"
-                  type="search"
-                  placeholder="Cari posisi, perusahaan, atau keahlian…"
-                  value={state.searchQuery}
-                  onChange={(e) => state.setSearchQuery(e.target.value)}
-                  className="w-full h-9 pl-9 pr-3 rounded-md border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100"
-                />
+            <section className="bg-white border border-slate-200 rounded-xl p-3 sm:p-4 shadow-2xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 items-center">
+                <div className="lg:col-span-5 relative">
+                  <label htmlFor="portal-search" className="sr-only">Cari lowongan, perusahaan, atau keahlian</label>
+                  <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                  </span>
+                  <input
+                    id="portal-search"
+                    type="text"
+                    placeholder="Cari posisi, perusahaan, atau keahlian…"
+                    value={state.searchQuery}
+                    onChange={(e) => state.setSearchQuery(e.target.value)}
+                    className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-light text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-[#0C52EE]"
+                  />
+                </div>
+
+                <div className="lg:col-span-3">
+                  <label htmlFor="filter-category" className="sr-only">Filter kategori</label>
+                  <select
+                    id="filter-category"
+                    value={state.filterCategory}
+                    onChange={(e) => state.setFilterCategory(e.target.value)}
+                    className="w-full py-2 px-3 bg-slate-50 border border-slate-200 rounded-lg text-xs font-light text-slate-700 focus:bg-white focus:outline-none focus:border-[#0C52EE]"
+                  >
+                    <option value="ALL">Semua Kategori</option>
+                    {state.categories.map((c) => (
+                      <option key={c} value={c}>{c}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="lg:col-span-2">
+                  <label htmlFor="filter-mode" className="sr-only">Filter moda kerja</label>
+                  <select
+                    id="filter-mode"
+                    value={state.filterWorkSystem}
+                    onChange={(e) => state.setFilterWorkSystem(e.target.value)}
+                    className="w-full py-2 px-3 bg-slate-50 border border-slate-200 rounded-lg text-xs font-light text-slate-700 focus:bg-white focus:outline-none focus:border-[#0C52EE]"
+                  >
+                    <option value="ALL">Semua Moda</option>
+                    <option value="Remote">Remote Only</option>
+                    <option value="Hybrid">Hybrid</option>
+                    <option value="Onsite">Onsite</option>
+                  </select>
+                </div>
+
+                <div className="lg:col-span-2">
+                  <label htmlFor="sort-by" className="sr-only">Urutkan lowongan</label>
+                  <select
+                    id="sort-by"
+                    value={state.sortBy}
+                    onChange={(e) => state.setSortBy(e.target.value as any)}
+                    className="w-full py-2 px-3 bg-slate-50 border border-slate-200 rounded-lg text-xs font-light text-slate-700 focus:bg-white focus:outline-none focus:border-[#0C52EE]"
+                  >
+                    <option value="match">Urutkan: Kecocokan SPK</option>
+                    <option value="salary-high">Upah Tertinggi</option>
+                    <option value="salary-low">Upah Terendah</option>
+                    <option value="hours-low">Jam Tersedikit</option>
+                  </select>
+                </div>
               </div>
-
-              {/* Right: Dropdown Filters & Preference button */}
-              <div className="flex flex-wrap items-center gap-2 text-xs">
-                {/* Kategori Filter */}
-                <label htmlFor="filter-category" className="sr-only">Filter kategori</label>
-                <select
-                  id="filter-category"
-                  value={state.filterCategory}
-                  onChange={(e) => state.setFilterCategory(e.target.value)}
-                  className="h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 cursor-pointer"
-                >
-                  <option value="ALL">Semua Kategori</option>
-                  {state.categories.map((c) => (
-                    <option key={c} value={c}>
-                      {c}
-                    </option>
-                  ))}
-                </select>
-
-                {/* Sistem Kerja Filter */}
-                <label htmlFor="filter-mode" className="sr-only">Filter moda kerja</label>
-                <select
-                  id="filter-mode"
-                  value={state.filterWorkSystem}
-                  onChange={(e) => state.setFilterWorkSystem(e.target.value)}
-                  className="h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 cursor-pointer"
-                >
-                  <option value="ALL">Semua Moda</option>
-                  <option value="Remote">Remote Only</option>
-                  <option value="Hybrid">Hybrid</option>
-                  <option value="Onsite">Onsite</option>
-                </select>
-
-                {/* Urutkan */}
-                <label htmlFor="sort-by" className="sr-only">Urutkan lowongan</label>
-                <select
-                  id="sort-by"
-                  value={state.sortBy}
-                  onChange={(e) => state.setSortBy(e.target.value as any)}
-                  className="h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 cursor-pointer font-medium"
-                >
-                  <option value="match">Urutkan: Kecocokan SPK</option>
-                  <option value="salary-high">Upah Tertinggi</option>
-                  <option value="salary-low">Upah Terendah</option>
-                  <option value="hours-low">Jam Tersedikit</option>
-                </select>
-
-                {/* Tombol Atur Preferensi */}
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={onOpenPreferences}
-                  className="text-xs gap-1.5 h-9"
-                >
-                  <RiEqualizerLine className="h-3.5 w-3.5" />
-                  Prioritas SPK
-                </Button>
-              </div>
-            </div>
+            </section>
 
             {/* Status bar */}
-            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:justify-between text-xs text-zinc-600 dark:text-zinc-400 px-1" role="status" aria-live="polite">
-              <span>
-                Menampilkan <strong className="text-zinc-900 dark:text-zinc-100">{state.displayJobs.length}</strong>{' '}
-                dari <strong className="text-zinc-900 dark:text-zinc-100">{state.jobs.length}</strong> lowongan untuk{' '}
-                <strong className="text-zinc-900 dark:text-zinc-100">{state.studentPrefs.name}</strong>
-              </span>
-              <span className="text-zinc-500">
-                {state.studentPrefs.location} • Rp {state.studentPrefs.minSalary.toLocaleString('id-ID')}/jam • maks {state.studentPrefs.maxHours} jam/mgg
-              </span>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:justify-between text-xs text-slate-500 gap-1 font-light px-1" role="status" aria-live="polite">
+              <div>
+                Menampilkan <span className="font-medium text-slate-900">{state.displayJobs.length}</span> dari{' '}
+                <span className="font-medium text-slate-900">{state.jobs.length}</span> lowongan untuk{' '}
+                <span className="font-medium text-slate-900">{state.studentPrefs.name}</span>
+              </div>
+              <div className="text-[11px] text-slate-400">
+                {state.studentPrefs.location} {"\u2022"} Rp {state.studentPrefs.minSalary.toLocaleString('id-ID')}/jam {"\u2022"} maks {state.studentPrefs.maxHours} jam/mgg
+              </div>
             </div>
 
             {/* Split Master-Detail Layout */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-              {/* Right Column: detail first on mobile so selection is visible */}
-              <div className="lg:col-span-7 order-1 lg:order-2 lg:sticky lg:top-20">
-                <JobDetailPane
-                  job={state.selectedJob}
-                  studentPrefs={state.studentPrefs}
-                  isSaved={!!state.selectedJob && state.savedJobIds.includes(state.selectedJob.job_id)}
-                  onToggleSave={() => state.selectedJob && onToggleSave(state.selectedJob.job_id)}
-                  onOpenPreferences={onOpenPreferences}
-                />
-              </div>
-
               {/* Left Column: Job Cards Feed */}
-              <div className="lg:col-span-5 order-2 lg:order-1 space-y-3" role="listbox" aria-label="Daftar lowongan terurut SPK" aria-activedescendant={state.selectedJob ? `job-${state.selectedJob.job_id}` : undefined}>
+              <div className="lg:col-span-5 space-y-3" role="listbox" aria-label="Daftar lowongan terurut SPK" aria-activedescendant={state.selectedJob ? `job-${state.selectedJob.job_id}` : undefined}>
                 {state.displayJobs.length === 0 ? (
-                  <div className="p-8 text-center rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
-                    <RiBuilding2Line className="h-8 w-8 mx-auto text-zinc-400 mb-2" />
-                    <p className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
-                      Tidak ada lowongan yang cocok
-                    </p>
-                    <p className="text-xs mt-1 text-zinc-500">Coba hapus kata kunci, pilih “Semua Kategori”, atau turunkan target upah di Preferensi.</p>
-                    <Button variant="outline" size="sm" className="mt-4 text-xs" onClick={() => { state.setSearchQuery(''); state.setFilterCategory('ALL'); state.setFilterWorkSystem('ALL') }}>
+                  <div className="p-8 text-center bg-white border border-slate-200 rounded-xl space-y-2">
+                    <p className="font-medium text-slate-800 text-sm">Tidak ada lowongan yang cocok</p>
+                    <p className="text-xs text-slate-400 font-light">Coba hapus kata kunci, pilih "Semua Kategori", atau turunkan target upah di Preferensi.</p>
+                    <button onClick={() => { state.setSearchQuery(''); state.setFilterCategory('ALL'); state.setFilterWorkSystem('ALL') }} className="text-xs font-medium text-[#0C52EE] hover:underline pt-2">
                       Atur ulang filter
-                    </Button>
+                    </button>
                   </div>
                 ) : (
                   state.displayJobs.map((job, i) => (
@@ -573,6 +534,17 @@ function PortalRoute({
                   ))
                 )}
               </div>
+
+              {/* Right Column: detail panel (sticky handled inside component) */}
+              <div className="lg:col-span-7">
+                <JobDetailPane
+                  job={state.selectedJob}
+                  studentPrefs={state.studentPrefs}
+                  isSaved={!!state.selectedJob && state.savedJobIds.includes(state.selectedJob.job_id)}
+                  onToggleSave={() => state.selectedJob && onToggleSave(state.selectedJob.job_id)}
+                  onOpenPreferences={onOpenPreferences}
+                />
+              </div>
             </div>
           </div>
         )}
@@ -586,12 +558,10 @@ function PortalRoute({
 // ─── Route: /perhitungan-spk (Matriks SPK SMARTER) ────────────────────────────
 function MatrixRoute({
   state,
-  onToggleTheme,
   onOpenPreferences,
   onOpenSavedJobs,
 }: {
   state: SharedState
-  onToggleTheme: () => void
   onOpenPreferences: () => void
   onOpenSavedJobs: () => void
 }) {
@@ -600,10 +570,7 @@ function MatrixRoute({
   return (
     <>
       <PortalHeader
-        theme={state.theme}
-        onToggleTheme={onToggleTheme}
         activeView="matrix"
-        onChangeView={(view) => navigate(view === 'matrix' ? ROUTES.MATRIX : ROUTES.PORTAL)}
         studentPrefs={state.studentPrefs}
         onOpenPreferences={onOpenPreferences}
         savedJobsCount={state.savedJobIds.length}
@@ -612,15 +579,15 @@ function MatrixRoute({
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
         {state.loading ? (
-          <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 p-4 animate-pulse" role="status" aria-label="Memuat modul SPK">
-            <div className="h-5 w-1/3 rounded bg-zinc-200 dark:bg-zinc-800" />
-            <div className="mt-3 h-10 rounded-lg bg-zinc-100 dark:bg-zinc-900" />
+          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-4 animate-pulse" role="status" aria-label="Memuat modul SPK">
+            <div className="h-5 w-1/3 rounded bg-slate-200 dark:bg-slate-800" />
+            <div className="mt-3 h-10 rounded-lg bg-slate-100 dark:bg-slate-900" />
             <span className="sr-only">Memuat modul SPK…</span>
           </div>
         ) : state.error ? (
           <div className="p-6 rounded-xl border border-red-200 dark:border-red-900 bg-red-50 dark:bg-red-950/20 text-center space-y-3 max-w-md mx-auto my-20">
             <RiErrorWarningLine className="h-8 w-8 text-red-500 mx-auto" />
-            <h3 className="text-sm font-semibold text-red-800 dark:text-red-200">{state.error}</h3>
+            <h3 className="text-sm font-medium text-red-800 dark:text-red-200">{state.error}</h3>
             <Button variant="outline" size="sm" onClick={() => window.location.reload()} className="text-xs">
               Coba muat ulang
             </Button>

@@ -2,6 +2,7 @@ import { RiBookmarkLine, RiBuilding2Line, RiDeleteBinLine, RiExternalLinkLine } 
 import { Dialog } from './ui/Dialog'
 import { Button } from './ui/Button'
 import { Badge } from './ui/Badge'
+import { CompanyLogo } from './CompanyLogo'
 import type { RankedJobResult } from '../types/data'
 import { formatRupiah } from '../lib/utils'
 
@@ -29,15 +30,15 @@ export function SavedJobsModal({
     >
       <div className="space-y-4">
         {savedJobs.length === 0 ? (
-          <div className="py-12 text-center text-zinc-500 space-y-2">
-            <RiBookmarkLine className="h-8 w-8 mx-auto text-zinc-400" />
+          <div className="py-12 text-center text-slate-500 space-y-2">
+            <RiBookmarkLine className="h-8 w-8 mx-auto text-slate-400" />
             <p className="text-sm font-medium">Belum ada lowongan yang disimpan</p>
             <p className="text-xs">
               Klik ikon bookmark pada kartu lowongan untuk menyimpannya di sini.
             </p>
           </div>
         ) : (
-          <div className="divide-y divide-zinc-200 dark:divide-zinc-800 max-h-[60vh] overflow-y-auto">
+          <div className="divide-y divide-slate-200 dark:divide-slate-800 max-h-[60vh] overflow-y-auto">
             {savedJobs.map((job) => (
               <div
                 key={job.job_id}
@@ -50,8 +51,11 @@ export function SavedJobsModal({
                     onClose()
                   }}
                 >
-                  <div className="flex items-center gap-2">
-                    <h4 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 group-hover:underline truncate">
+                  <div className="flex items-center gap-2.5">
+                    <CompanyLogo companyName={job.company_name} logoUrl={job.company_logo} size="sm" />
+                    <div className="min-w-0">
+                      <div className="flex items-center gap-2">
+                    <h4 className="text-sm font-medium text-slate-900 dark:text-slate-100 group-hover:underline truncate">
                       {job.job_title}
                     </h4>
                     <Badge variant="outline" className="text-[10px]">
@@ -59,17 +63,19 @@ export function SavedJobsModal({
                     </Badge>
                   </div>
 
-                  <div className="flex items-center gap-3 text-xs text-zinc-500 mt-1">
+                  <div className="flex items-center gap-3 text-xs text-slate-500 mt-1">
                     <span className="flex items-center gap-1">
                       <RiBuilding2Line className="h-3 w-3" />
                       {job.company_name}
                     </span>
                     <span>•</span>
-                    <span className="font-mono text-zinc-900 dark:text-zinc-100 font-medium">
+                    <span className="font-mono text-slate-900 dark:text-slate-100 font-medium">
                       {formatRupiah(job.work_salaryperhour)}
                     </span>
                     <span>•</span>
                     <span>{job.work_job_location}</span>
+                  </div>
+                    </div>
                   </div>
                 </div>
 
@@ -77,7 +83,7 @@ export function SavedJobsModal({
                   {job.url && (
                     <a href={job.url} target="_blank" rel="noopener noreferrer">
                       <Button variant="ghost" size="sm" className="h-8 w-8 p-0" title="Buka URL">
-                        <RiExternalLinkLine className="h-4 w-4 text-zinc-500" />
+                        <RiExternalLinkLine className="h-4 w-4 text-slate-500" />
                       </Button>
                     </a>
                   )}
@@ -97,7 +103,7 @@ export function SavedJobsModal({
           </div>
         )}
 
-        <div className="pt-3 border-t border-zinc-200 dark:border-zinc-800 flex justify-end">
+        <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex justify-end">
           <Button variant="outline" size="sm" onClick={onClose} className="text-xs">
             Tutup
           </Button>

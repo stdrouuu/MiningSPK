@@ -36,7 +36,7 @@ export function Dialog({ open, onClose, title, children, className }: DialogProp
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
-        className="emil-backdrop fixed inset-0 bg-zinc-950/60 backdrop-blur-sm dark:bg-black/75"
+        className="emil-backdrop fixed inset-0 bg-slate-950/60 backdrop-blur-sm dark:bg-black/75"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -48,16 +48,16 @@ export function Dialog({ open, onClose, title, children, className }: DialogProp
         aria-label={typeof title === 'string' ? title : undefined}
         tabIndex={-1}
         className={cn(
-          'emil-modal relative z-50 w-full max-w-2xl rounded-xl border border-zinc-200 bg-white p-6 shadow-lg max-h-[90vh] overflow-y-auto outline-none dark:border-zinc-800 dark:bg-zinc-950 dark:shadow-2xl',
+          'emil-modal relative z-50 w-full max-w-2xl rounded-xl border border-slate-200 bg-white p-6 shadow-lg max-h-[90vh] overflow-y-auto outline-none dark:border-slate-800 dark:bg-slate-950 dark:shadow-2xl',
           className
         )}
       >
-        <div className="flex items-center justify-between gap-4 pb-4 border-b border-zinc-200 dark:border-zinc-800">
-          <h2 className="text-base font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">{title}</h2>
+        <div className="flex items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
+          <h2 className="text-base font-medium tracking-tight text-slate-900 dark:text-slate-50">{title}</h2>
           <button
             onClick={onClose}
             aria-label="Tutup dialog"
-            className="rounded-md p-1.5 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 transition-colors cursor-pointer dark:text-zinc-400 dark:hover:text-zinc-100 dark:hover:bg-zinc-800 dark:focus-visible:ring-zinc-100"
+            className="rounded-md p-1.5 text-slate-500 hover:text-slate-900 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 transition-colors cursor-pointer dark:text-slate-400 dark:hover:text-slate-100 dark:hover:bg-slate-800 dark:focus-visible:ring-slate-100"
           >
             <RiCloseLine className="h-5 w-5" />
           </button>

@@ -1,34 +1,48 @@
+import { useNavigate } from 'react-router-dom'
 import { LandingNav } from './LandingNav'
 import { LandingHero } from './LandingHero'
-import { LogoWall } from './LogoWall'
-import { CriteriaBento } from './CriteriaBento'
-import { HowItWorks } from './HowItWorks'
-import { Testimonials } from './Testimonials'
-import { LandingCTA } from './LandingCTA'
+import { CategoryGrid, FeaturedJobs, StatsPartners, BlueBanner, LandingFooter } from './LandingSections'
+import type { RankedJobResult } from '../../types/data'
+import { ROUTES } from '../../lib/routes'
 
 interface LandingPageProps {
   savedCount: number
-  onEnterPortal: () => void
-  onShowMethod: () => void
-  theme: 'light' | 'dark'
-  onToggleTheme: () => void
+  jobs: RankedJobResult[]
+  onOpenSavedJobs: () => void
+  onQuickSearch: (q: string) => void
+  onSelectCategory: (cat: string) => void
+  onOpenJob: (job: RankedJobResult) => void
 }
 
-// Page composition uses 5 layout families: split hero, logo strip,
-// asymmetric bento, sticky split steps, 2-col quotes, centered CTA.
-// Theme locked to app theme via dark: variant, no section inversion.
-export function LandingPage({ savedCount, onEnterPortal, onShowMethod, theme, onToggleTheme }: LandingPageProps) {
+export function LandingPage({
+  savedCount,
+  jobs,
+  onOpenSavedJobs,
+  onQuickSearch,
+  onSelectCategory,
+  onOpenJob,
+}: LandingPageProps) {
+  const navigate = useNavigate()
+
+  const onNavigate = (view: 'landing' | 'portal' | 'matrix') => {
+    navigate(view === 'landing' ? ROUTES.LANDING : view === 'portal' ? ROUTES.PORTAL : ROUTES.MATRIX)
+  }
+
   return (
-    <div className="min-h-[100dvh] bg-white font-sans text-zinc-900 dark:bg-zinc-950 dark:text-zinc-50">
-      <LandingNav onEnterPortal={onEnterPortal} onShowMethod={onShowMethod} savedCount={savedCount} theme={theme} onToggleTheme={onToggleTheme} />
+    <div className="min-h-[100dvh] bg-[#F8FAFC] font-sans text-slate-900">
+      <LandingNav active="landing" savedCount={savedCount} onNavigate={onNavigate} onOpenSavedJobs={onOpenSavedJobs} />
       <main>
-        <LandingHero onEnterPortal={onEnterPortal} onShowMethod={onShowMethod} />
-        <LogoWall />
-        <CriteriaBento />
-        <HowItWorks />
-        <Testimonials />
-        <LandingCTA onEnterPortal={onEnterPortal} />
+        <LandingHero totalJobs={jobs.length} onEnterPortal={() => navigate(ROUTES.PORTAL)} />
+        <CategoryGrid
+          jobs={jobs}
+          onSelectCategory={onSelectCategory}
+          onExploreAll={() => navigate(ROUTES.PORTAL)}
+        />
+        <FeaturedJobs jobs={jobs} onOpenJob={onOpenJob} onBrowseAll={() => navigate(ROUTES.PORTAL)} />
+        <StatsPartners jobs={jobs} />
+        <BlueBanner onQuickSearch={onQuickSearch} />
       </main>
+      <LandingFooter totalJobs={jobs.length} onNavigate={onNavigate} />
     </div>
   )
 }

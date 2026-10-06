@@ -1,26 +1,11 @@
-import { useEffect, useRef, useState, type CSSProperties } from 'react'
-import { Link } from 'react-router-dom'
-import {
-  RiBriefcaseLine,
-  RiSunLine,
-  RiMoonLine,
-  RiBookmarkLine,
-  RiEqualizerLine,
-  RiTableLine,
-  RiHomeLine,
-  RiLayoutGridLine,
-  RiMenuLine,
-  RiCloseLine,
-} from 'react-icons/ri'
-import { Button } from './ui/Button'
-import { Badge } from './ui/Badge'
+import { useEffect, useRef, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { RiMenuLine, RiCloseLine } from 'react-icons/ri'
 import type { StudentPreferences } from '../types/portal'
+import { ROUTES } from '../lib/routes'
 
 interface PortalHeaderProps {
-  theme: 'light' | 'dark'
-  onToggleTheme: () => void
   activeView: 'jobs' | 'matrix'
-  onChangeView: (view: 'jobs' | 'matrix') => void
   studentPrefs: StudentPreferences
   onOpenPreferences: () => void
   savedJobsCount: number
@@ -28,10 +13,7 @@ interface PortalHeaderProps {
 }
 
 export function PortalHeader({
-  theme,
-  onToggleTheme,
   activeView,
-  onChangeView,
   studentPrefs,
   onOpenPreferences,
   savedJobsCount,
@@ -40,8 +22,8 @@ export function PortalHeader({
   const [showProfileMenu, setShowProfileMenu] = useState(false)
   const [showMobileNav, setShowMobileNav] = useState(false)
   const profileRef = useRef<HTMLDivElement>(null)
+  const navigate = useNavigate()
 
-  // Close profile menu on outside click / Escape
   useEffect(() => {
     if (!showProfileMenu) return
     const onPointer = (e: PointerEvent) => {
@@ -63,240 +45,140 @@ export function PortalHeader({
     }
   }, [showProfileMenu])
 
-  const navLink = (isActive: boolean) =>
-    `emil-press px-3 py-1.5 rounded-md cursor-pointer ${
-      isActive
-        ? 'bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-50 font-semibold'
-        : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 hover:bg-zinc-50 dark:hover:bg-zinc-900'
-    }`
+  const initial = (studentPrefs.name || '?').charAt(0).toUpperCase()
 
   return (
-    <header className="sticky top-0 z-40 border-b border-zinc-200 dark:border-zinc-800 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
-        {/* Left: Brand + desktop nav */}
-        <div className="flex items-center gap-6 min-w-0">
-          <button
-            onClick={() => onChangeView('jobs')}
-            className="flex items-center gap-2.5 cursor-pointer rounded-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 shrink-0"
-            aria-label="Upmatch — ke daftar lowongan"
-          >
-            <span className="h-8 w-8 rounded-md bg-zinc-900 dark:bg-zinc-100 text-zinc-50 dark:text-zinc-900 flex items-center justify-center">
-              <RiBriefcaseLine className="h-4 w-4" />
-            </span>
-            <span className="flex items-baseline gap-1.5">
-              <span className="text-base font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
-                upmatch
-              </span>
-              <span className="text-[11px] font-medium text-zinc-500 hidden sm:inline">
-                portal kerja
-              </span>
-            </span>
+    <header className="w-full bg-white border-b border-slate-200 sticky top-0 z-40">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div className="flex items-center gap-8">
+          <button onClick={() => navigate(ROUTES.LANDING)} className="flex items-center group focus:outline-none text-left">
+            <div className="flex items-baseline gap-1.5">
+              <span className="text-xl font-medium tracking-tight text-slate-900">upmatch</span>
+              <span className="text-slate-300 font-light">—</span>
+              <span className="text-xs font-medium uppercase tracking-wider text-slate-500">portal kerja</span>
+            </div>
           </button>
 
-          <nav className="hidden md:flex items-center gap-1 text-sm font-medium" aria-label="Navigasi portal">
-            <Link
-              to="/"
-              className="emil-press px-3 py-1.5 rounded-md text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-50 hover:bg-zinc-50 dark:hover:bg-zinc-900 flex items-center gap-1.5"
+          <nav className="hidden md:flex items-center gap-2 text-xs sm:text-sm font-normal">
+            <button
+              onClick={() => navigate(ROUTES.LANDING)}
+              className="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors"
             >
-              <RiHomeLine className="h-3.5 w-3.5" />
               Beranda
-            </Link>
-
+            </button>
             <button
-              onClick={() => onChangeView('jobs')}
+              onClick={() => navigate(ROUTES.PORTAL)}
               aria-current={activeView === 'jobs' ? 'page' : undefined}
-              className={navLink(activeView === 'jobs')}
+              className={`px-3 py-1.5 rounded-lg transition-colors ${
+                activeView === 'jobs'
+                  ? 'bg-blue-50 text-[#0C52EE] font-medium border border-transparent'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+              }`}
             >
-              <span className="inline-flex items-center gap-1.5">
-                <RiLayoutGridLine className="h-3.5 w-3.5" />
-                Lowongan
-              </span>
+              Lowongan
             </button>
-
-            <button onClick={onOpenPreferences} className={navLink(false)}>
-              <span className="inline-flex items-center gap-1.5">
-                <RiEqualizerLine className="h-3.5 w-3.5" />
-                Preferensi & SPK
-              </span>
-            </button>
-
             <button
-              onClick={() => onChangeView('matrix')}
+              onClick={() => navigate(ROUTES.MATRIX)}
               aria-current={activeView === 'matrix' ? 'page' : undefined}
-              className={navLink(activeView === 'matrix')}
+              className={`px-3 py-1.5 rounded-lg transition-colors ${
+                activeView === 'matrix'
+                  ? 'bg-blue-50 text-[#0C52EE] font-medium border border-transparent'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+              }`}
             >
-              <span className="inline-flex items-center gap-1.5">
-                <RiTableLine className="h-3.5 w-3.5" />
-                Perhitungan SPK
-              </span>
+              Perhitungan
             </button>
           </nav>
         </div>
 
-        {/* Right: actions */}
-        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-          <Button
-            variant="ghost"
-            size="sm"
+        <div className="flex items-center gap-3">
+          <button
             onClick={onOpenSavedJobs}
-            className="relative text-xs gap-1.5 h-8 px-2.5"
-            title="Lowongan tersimpan"
-            aria-label={`Buka lowongan tersimpan, ${savedJobsCount} tersimpan`}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:border-slate-400 hover:bg-slate-50 text-xs font-medium text-slate-700 transition-colors"
           >
-            <RiBookmarkLine className="h-4 w-4 text-zinc-600 dark:text-zinc-400" />
+            <svg className="w-4 h-4 text-[#ED1E79]" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
+            </svg>
             <span className="hidden sm:inline">Tersimpan</span>
-            {savedJobsCount > 0 && (
-              <Badge variant="secondary" className="h-4 px-1 text-[10px] ml-0.5">
-                {savedJobsCount}
-              </Badge>
-            )}
-          </Button>
+            <span className="bg-[#ED1E79] text-white text-[11px] font-bold px-1.5 py-0.2 rounded-full">{savedJobsCount}</span>
+          </button>
 
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={onToggleTheme}
-            className="h-8 w-8 text-zinc-600 dark:text-zinc-400"
-            title={theme === 'dark' ? 'Ganti ke mode terang' : 'Ganti ke mode gelap'}
-            aria-label={theme === 'dark' ? 'Ganti ke mode terang' : 'Ganti ke mode gelap'}
-            aria-pressed={theme === 'dark'}
-          >
-            {theme === 'dark' ? (
-              <RiSunLine className="h-4 w-4 text-amber-400" />
-            ) : (
-              <RiMoonLine className="h-4 w-4 text-zinc-700" />
-            )}
-          </Button>
-
-          <div className="h-5 w-px bg-zinc-200 dark:bg-zinc-800 mx-1 hidden sm:block" aria-hidden="true" />
-
-          {/* Student profile */}
           <div className="relative" ref={profileRef}>
             <button
               onClick={() => setShowProfileMenu((v) => !v)}
               aria-haspopup="menu"
               aria-expanded={showProfileMenu}
-              className="emil-press flex items-center gap-2 pl-1 pr-1.5 py-1 rounded-md hover:bg-zinc-100 dark:hover:bg-zinc-800 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100"
+              className="flex items-center gap-2.5 pl-1.5 pr-3 py-1 rounded-xl border border-slate-200 bg-white hover:border-slate-300 transition-colors text-left"
             >
-              <span
-                className="h-7 w-7 rounded-full bg-zinc-900 dark:bg-zinc-100 text-zinc-50 dark:text-zinc-900 font-bold text-xs flex items-center justify-center"
-                aria-hidden="true"
-              >
-                {(studentPrefs.name || '?').charAt(0).toUpperCase()}
-              </span>
-              <span className="text-left hidden sm:block">
-                <span className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 leading-tight block max-w-[120px] truncate">
-                  {studentPrefs.name}
-                </span>
-                <span className="text-[10px] text-zinc-500 block">{studentPrefs.major}</span>
-              </span>
+              <div className="w-7 h-7 rounded-lg bg-[#0C52EE] text-white font-medium text-xs flex items-center justify-center">
+                {initial}
+              </div>
+              <div className="hidden sm:block text-xs leading-tight">
+                <div className="font-medium text-slate-900 truncate max-w-[120px]">{studentPrefs.name}</div>
+                <div className="text-[10px] text-slate-400 font-light">{studentPrefs.major}</div>
+              </div>
+              <svg className="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+              </svg>
             </button>
 
             {showProfileMenu && (
-              <div
-                role="menu"
-                aria-label="Profil mahasiswa"
-                style={{ '--transform-origin': 'top right' } as CSSProperties}
-                className="emil-popover absolute right-0 mt-2 w-64 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-3 shadow-lg z-50"
-              >
-                <div className="pb-2 border-b border-zinc-100 dark:border-zinc-800">
-                  <p className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 truncate">
-                    {studentPrefs.name}
-                  </p>
-                  <p className="text-[11px] text-zinc-500 font-mono">NIM: {studentPrefs.nim}</p>
-                  <p className="text-[11px] text-zinc-500">{studentPrefs.major}</p>
+              <div role="menu" aria-label="Profil mahasiswa" className="absolute right-0 mt-2 w-72 bg-white border border-slate-200 rounded-xl shadow-lg z-50 p-4">
+                <div className="flex items-start gap-3 pb-3 border-b border-slate-100">
+                  <div className="w-10 h-10 rounded-lg bg-[#0C52EE] text-white font-bold text-sm flex items-center justify-center">
+                    {initial}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-medium text-sm text-slate-900 truncate">{studentPrefs.name}</div>
+                    <div className="text-xs text-slate-500 font-light">{studentPrefs.major}</div>
+                    <div className="text-[11px] text-[#0C52EE] font-medium">NIM: {studentPrefs.nim}</div>
+                  </div>
                 </div>
-                <dl className="pt-2 space-y-1 text-xs text-zinc-600 dark:text-zinc-400">
-                  <div className="flex justify-between gap-2 py-0.5">
-                    <dt>Target gaji</dt>
-                    <dd className="font-semibold text-zinc-900 dark:text-zinc-100 font-mono">
-                      Rp {studentPrefs.minSalary.toLocaleString('id-ID')}/jam
-                    </dd>
+
+                <div className="py-3 space-y-2 text-xs text-slate-600 font-light">
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Target gaji:</span>
+                    <span className="font-medium text-slate-900">Rp {studentPrefs.minSalary.toLocaleString('id-ID')}/jam</span>
                   </div>
-                  <div className="flex justify-between gap-2 py-0.5">
-                    <dt>Lokasi</dt>
-                    <dd className="font-semibold text-zinc-900 dark:text-zinc-100 text-right">
-                      {studentPrefs.location}
-                    </dd>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Lokasi:</span>
+                    <span className="font-medium text-slate-900">{studentPrefs.location}</span>
                   </div>
-                  <div className="flex justify-between gap-2 py-0.5">
-                    <dt>Maks. jam</dt>
-                    <dd className="font-semibold text-zinc-900 dark:text-zinc-100">
-                      {studentPrefs.maxHours} jam/mgg
-                    </dd>
+                  <div className="flex justify-between">
+                    <span className="text-slate-400">Maks. jam:</span>
+                    <span className="font-medium text-slate-900">{studentPrefs.maxHours} jam/mgg</span>
                   </div>
-                </dl>
-                <div className="pt-3 mt-2 border-t border-zinc-100 dark:border-zinc-800">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    className="w-full text-xs"
-                    onClick={() => {
-                      setShowProfileMenu(false)
-                      onOpenPreferences()
-                    }}
-                  >
-                    Ubah preferensi saya
-                  </Button>
                 </div>
+
+                <button
+                  onClick={() => {
+                    setShowProfileMenu(false)
+                    onOpenPreferences()
+                  }}
+                  className="w-full mt-1 bg-[#0C52EE] hover:bg-[#0942c4] text-white text-xs font-medium py-2 px-3 rounded-lg transition-colors text-center"
+                >
+                  Ubah preferensi saya
+                </button>
               </div>
             )}
           </div>
 
-          {/* Mobile nav toggle */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-8 w-8 md:hidden"
+          <button
+            className="h-8 w-8 md:hidden p-1 text-slate-600"
             onClick={() => setShowMobileNav((v) => !v)}
             aria-expanded={showMobileNav}
             aria-label={showMobileNav ? 'Tutup navigasi' : 'Buka navigasi'}
           >
             {showMobileNav ? <RiCloseLine className="h-4 w-4" /> : <RiMenuLine className="h-4 w-4" />}
-          </Button>
+          </button>
         </div>
       </div>
 
-      {/* Mobile nav panel */}
       {showMobileNav && (
-        <nav
-          className="emil-nav-in md:hidden border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-4 py-3 space-y-1 text-sm"
-          aria-label="Navigasi seluler"
-        >
-          <Link
-            to="/"
-            className="flex items-center gap-2 px-3 py-2 rounded-md text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
-            onClick={() => setShowMobileNav(false)}
-          >
-            <RiHomeLine className="h-4 w-4" /> Beranda
-          </Link>
-          <button
-            onClick={() => {
-              onChangeView('jobs')
-              setShowMobileNav(false)
-            }}
-            className="w-full flex items-center gap-2 px-3 py-2 rounded-md text-left text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
-          >
-            <RiLayoutGridLine className="h-4 w-4" /> Lowongan
-          </button>
-          <button
-            onClick={() => {
-              onOpenPreferences()
-              setShowMobileNav(false)
-            }}
-            className="w-full flex items-center gap-2 px-3 py-2 rounded-md text-left text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
-          >
-            <RiEqualizerLine className="h-4 w-4" /> Preferensi & SPK
-          </button>
-          <button
-            onClick={() => {
-              onChangeView('matrix')
-              setShowMobileNav(false)
-            }}
-            className="w-full flex items-center gap-2 px-3 py-2 rounded-md text-left text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
-          >
-            <RiTableLine className="h-4 w-4" /> Perhitungan SPK
-          </button>
+        <nav className="md:hidden border-t border-slate-200 bg-white px-4 py-3 space-y-1 text-sm" aria-label="Navigasi seluler">
+          <Link to={ROUTES.LANDING} className="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100" onClick={() => setShowMobileNav(false)}>Beranda</Link>
+          <button onClick={() => { navigate(ROUTES.PORTAL); setShowMobileNav(false) }} className="w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Lowongan</button>
+          <button onClick={() => { navigate(ROUTES.MATRIX); setShowMobileNav(false) }} className="w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perhitungan</button>
         </nav>
       )}
     </header>

@@ -95,7 +95,7 @@ export function PreferenceSidebar({
     handleReorder(fromIndex, toIndex)
   }
 
-  // Muat data dari profil mahasiswa UKRIDA (52 responden)
+  // Muat data dari profil contoh mahasiswa
   const handleLoadPreset = (studentId: string) => {
     if (studentId === 'custom') return
     const s = studentPresets.find((item) => item.student_id === studentId)
@@ -105,7 +105,7 @@ export function PreferenceSidebar({
       ...preferences,
       name: s.student_name,
       nim: s.student_id,
-      major: 'Informatika UKRIDA',
+      major: 'Informatika',
       minSalary: s.min_expected_salary || 35000,
       maxHours: s.student_expected_work_hour || 18,
       location: s.student_location_clean || s.student_location || 'Jakarta Barat',
@@ -151,22 +151,22 @@ export function PreferenceSidebar({
       title="Atur Preferensi Mahasiswa & Prioritas SPK"
       className="max-w-2xl"
     >
-      <div className="space-y-6 text-sm text-zinc-900 dark:text-zinc-100">
-        <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+      <div className="space-y-6 text-sm text-slate-900 dark:text-slate-100">
+        <h3 className="text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">
           Profil mahasiswa
         </h3>
         {/* Preset Selector */}
-        <div className="p-3.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/60 space-y-2">
+        <div className="p-3.5 rounded-xl border border-blue-200 bg-blue-50/70 space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 flex items-center gap-1.5">
-              <RiUserLine className="h-3.5 w-3.5 text-zinc-500" />
-              Gunakan Profil Responden UKRIDA (52 Mahasiswa):
+            <span className="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+              <RiUserLine className="h-3.5 w-3.5 text-slate-500" />
+              Gunakan Profil Contoh Mahasiswa:
             </span>
             <Button
               variant="ghost"
               size="sm"
               onClick={() => onUpdatePreferences(DEFAULT_STUDENT_PREFERENCES)}
-              className="text-[11px] h-7 px-2 text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-100 gap-1"
+              className="text-[11px] h-7 px-2 text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 gap-1"
             >
               <RiRefreshLine className="h-3 w-3" /> Reset
             </Button>
@@ -175,7 +175,7 @@ export function PreferenceSidebar({
           <select
             id="pref-preset"
             onChange={(e) => handleLoadPreset(e.target.value)}
-            className="w-full h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100"
+            className="w-full h-9 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100"
           >
             <option value="custom">-- Input Kustom Mahasiswa Baru --</option>
             {studentPresets.map((s) => (
@@ -190,7 +190,7 @@ export function PreferenceSidebar({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Nama Mahasiswa */}
           <div>
-            <label htmlFor="pref-name" className="text-xs font-medium text-zinc-600 dark:text-zinc-400 block mb-1">
+            <label htmlFor="pref-name" className="text-xs font-medium text-slate-600 dark:text-slate-400 block mb-1">
               Nama mahasiswa
             </label>
             <input
@@ -198,7 +198,7 @@ export function PreferenceSidebar({
               type="text"
               value={preferences.name}
               onChange={(e) => handleChange('name', e.target.value)}
-              className="w-full h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100"
+              className="w-full h-9 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100"
               placeholder="Contoh: Brandon Jeremiah"
               autoComplete="name"
             />
@@ -206,15 +206,15 @@ export function PreferenceSidebar({
 
           {/* Lokasi Domisili (C3) */}
           <div>
-            <label htmlFor="pref-location" className="text-xs font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1 mb-1">
-              <RiMapPinLine className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
+            <label htmlFor="pref-location" className="text-xs font-medium text-slate-600 dark:text-slate-400 flex items-center gap-1 mb-1">
+              <RiMapPinLine className="h-3.5 w-3.5 text-slate-500" aria-hidden="true" />
               Domisili
             </label>
             <select
               id="pref-location"
               value={preferences.location}
               onChange={(e) => handleChange('location', e.target.value)}
-              className="w-full h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 cursor-pointer"
+              className="w-full h-9 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100 cursor-pointer"
             >
               {LOCATIONS.map((loc) => (
                 <option key={loc} value={loc}>
@@ -227,11 +227,11 @@ export function PreferenceSidebar({
           {/* Ekspektasi Upah Minimal / Jam (C2) */}
           <div>
             <div className="flex justify-between items-center gap-2 mb-1">
-              <label htmlFor="pref-salary" className="text-xs font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1">
-                <RiCoinsLine className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
+              <label htmlFor="pref-salary" className="text-xs font-medium text-slate-600 dark:text-slate-400 flex items-center gap-1">
+                <RiCoinsLine className="h-3.5 w-3.5 text-slate-500" aria-hidden="true" />
                 Target upah / jam
               </label>
-              <span className="font-mono font-bold text-xs text-zinc-900 dark:text-zinc-100 whitespace-nowrap" aria-live="polite">
+              <span className="font-mono font-bold text-xs text-slate-900 dark:text-slate-100 whitespace-nowrap" aria-live="polite">
                 Rp {preferences.minSalary.toLocaleString('id-ID')}
               </span>
             </div>
@@ -244,7 +244,7 @@ export function PreferenceSidebar({
                 step="1000"
                 value={preferences.minSalary}
                 onChange={(e) => handleChange('minSalary', parseInt(e.target.value))}
-                className="flex-1 accent-zinc-900 dark:accent-zinc-100 cursor-pointer"
+                className="flex-1 accent-[#0C52EE] cursor-pointer"
                 aria-describedby="pref-salary-hint"
               />
               <input
@@ -255,7 +255,7 @@ export function PreferenceSidebar({
                 value={preferences.minSalary}
                 onChange={(e) => handleChange('minSalary', Math.min(60000, Math.max(15000, Number(e.target.value) || 15000)))}
                 aria-label="Target upah per jam dalam rupiah"
-                className="w-24 h-8 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-2 text-xs font-mono text-zinc-900 dark:text-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100"
+                className="w-24 h-8 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-2 text-xs font-mono text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100"
               />
             </div>
             <span id="pref-salary-hint" className="sr-only">Rentang 15 ribu sampai 60 ribu rupiah per jam</span>
@@ -264,11 +264,11 @@ export function PreferenceSidebar({
           {/* Beban Jam Kerja Maksimal (C4) */}
           <div>
             <div className="flex justify-between items-center gap-2 mb-1">
-              <label htmlFor="pref-hours" className="text-xs font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1">
-                <RiTimeLine className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
+              <label htmlFor="pref-hours" className="text-xs font-medium text-slate-600 dark:text-slate-400 flex items-center gap-1">
+                <RiTimeLine className="h-3.5 w-3.5 text-slate-500" aria-hidden="true" />
                 Batas jam / minggu
               </label>
-              <span className="font-mono font-bold text-xs text-zinc-900 dark:text-zinc-100 whitespace-nowrap" aria-live="polite">
+              <span className="font-mono font-bold text-xs text-slate-900 dark:text-slate-100 whitespace-nowrap" aria-live="polite">
                 {preferences.maxHours} jam
               </span>
             </div>
@@ -281,7 +281,7 @@ export function PreferenceSidebar({
                 step="1"
                 value={preferences.maxHours}
                 onChange={(e) => handleChange('maxHours', parseInt(e.target.value))}
-                className="flex-1 accent-zinc-900 dark:accent-zinc-100 cursor-pointer"
+                className="flex-1 accent-[#0C52EE] cursor-pointer"
               />
               <input
                 type="number"
@@ -291,22 +291,22 @@ export function PreferenceSidebar({
                 value={preferences.maxHours}
                 onChange={(e) => handleChange('maxHours', Math.min(30, Math.max(8, Number(e.target.value) || 8)))}
                 aria-label="Batas jam kerja per minggu"
-                className="w-16 h-8 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-2 text-xs font-mono text-zinc-900 dark:text-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100"
+                className="w-16 h-8 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-2 text-xs font-mono text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100"
               />
             </div>
           </div>
 
           {/* Kategori Bidang Minat (C1) */}
           <div>
-            <label htmlFor="pref-category" className="text-xs font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1 mb-1">
-              <RiBriefcaseLine className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
+            <label htmlFor="pref-category" className="text-xs font-medium text-slate-600 dark:text-slate-400 flex items-center gap-1 mb-1">
+              <RiBriefcaseLine className="h-3.5 w-3.5 text-slate-500" aria-hidden="true" />
               Bidang minat
             </label>
             <select
               id="pref-category"
               value={preferences.preferredCategory}
               onChange={(e) => handleChange('preferredCategory', e.target.value)}
-              className="w-full h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 cursor-pointer"
+              className="w-full h-9 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100 cursor-pointer"
             >
               {categories.map((c) => (
                 <option key={c} value={c}>
@@ -318,14 +318,14 @@ export function PreferenceSidebar({
 
           {/* Sistem Kehadiran Kerja */}
           <div>
-            <label htmlFor="pref-system" className="text-xs font-medium text-zinc-600 dark:text-zinc-400 block mb-1">
+            <label htmlFor="pref-system" className="text-xs font-medium text-slate-600 dark:text-slate-400 block mb-1">
               Moda kerja
             </label>
             <select
               id="pref-system"
               value={preferences.workSystem}
               onChange={(e) => handleChange('workSystem', e.target.value as any)}
-              className="w-full h-9 rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-3 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 cursor-pointer"
+              className="w-full h-9 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100 cursor-pointer"
             >
               <option value="ALL">Semua moda (Remote, Hybrid, Onsite)</option>
               <option value="Remote">Remote saja</option>
@@ -337,8 +337,8 @@ export function PreferenceSidebar({
 
         {/* Keahlian Mahasiswa (C5) */}
         <div>
-          <label htmlFor="pref-skills" className="text-xs font-medium text-zinc-600 dark:text-zinc-400 flex items-center gap-1 mb-1">
-            <RiToolsLine className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
+          <label htmlFor="pref-skills" className="text-xs font-medium text-slate-600 dark:text-slate-400 flex items-center gap-1 mb-1">
+            <RiToolsLine className="h-3.5 w-3.5 text-slate-500" aria-hidden="true" />
             Keahlian Anda (pisahkan koma)
           </label>
           <textarea
@@ -346,23 +346,23 @@ export function PreferenceSidebar({
             rows={2}
             value={preferences.skills}
             onChange={(e) => handleChange('skills', e.target.value)}
-            className="w-full rounded-md border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 p-2.5 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100"
+            className="w-full rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 p-2.5 text-xs text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100"
             placeholder="Contoh: python, canva, excel, komunikasi, barista, english"
             aria-describedby="pref-skills-hint"
           />
-          <span id="pref-skills-hint" className="text-[11px] text-zinc-500 block mt-1">
+          <span id="pref-skills-hint" className="text-[11px] text-slate-500 block mt-1">
             Dihitung otomatis dengan cosine similarity TF-IDF terhadap deskripsi lowongan.
           </span>
         </div>
 
         {/* Prioritas Kriteria SPK (ROC Weights) — drag-to-reorder */}
-        <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800 space-y-2" role="group" aria-labelledby="roc-legend">
+        <div className="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-2" role="group" aria-labelledby="roc-legend">
           <div className="flex flex-wrap items-center justify-between gap-2">
-            <p id="roc-legend" className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-1.5">
-              <RiArrowUpDownLine className="h-3.5 w-3.5 text-zinc-500" aria-hidden="true" />
+            <p id="roc-legend" className="text-xs font-medium text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
+              <RiArrowUpDownLine className="h-3.5 w-3.5 text-slate-500" aria-hidden="true" />
               Urutan prioritas kriteria (ROC)
             </p>
-            <span className="text-[11px] text-zinc-500">
+            <span className="text-[11px] text-slate-500">
               Atas = paling penting • bobot otomatis
             </span>
           </div>
@@ -412,41 +412,35 @@ export function PreferenceSidebar({
                   }}
                   className={`emil-press flex items-center gap-2 p-2.5 rounded-lg border text-xs select-none ${
                     isDropTarget
-                      ? 'border-dashed border-zinc-500 bg-zinc-100 dark:bg-zinc-800/70 -translate-y-px shadow-sm'
-                      : 'border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/40'
+                      ? 'border-dashed border-slate-500 bg-slate-100 dark:bg-slate-800/70 -translate-y-px shadow-sm'
+                      : 'border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40'
                   }`}
                 >
                   {/* Drag handle */}
                   <span
                     title="Seret untuk memindahkan"
-                    className="flex h-8 w-6 shrink-0 items-center justify-center rounded-md text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 hover:bg-zinc-200/70 dark:hover:bg-zinc-800 cursor-grab active:cursor-grabbing touch-none"
+                    className="flex h-8 w-6 shrink-0 items-center justify-center rounded-md text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-200/70 dark:hover:bg-slate-800 cursor-grab active:cursor-grabbing touch-none"
                   >
                     <RiDraggable className="h-4 w-4" />
                   </span>
 
                   {/* Nomor prioritas */}
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-zinc-900 text-[11px] font-bold text-white dark:bg-zinc-100 dark:text-zinc-900 font-mono">
+                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-[#0C52EE] text-white font-medium text-xs font-mono">
                     {currentRank}
                   </span>
 
                   <div className="flex min-w-0 flex-1 items-center gap-2">
-                    <span className="font-mono font-bold text-zinc-500 text-[11px] w-6 shrink-0">
+                    <span className="font-mono font-bold text-slate-500 text-[11px] w-6 shrink-0">
                       {item.code}
                     </span>
-                    <span className="truncate font-medium text-zinc-900 dark:text-zinc-100">
+                    <span className="truncate font-medium text-slate-900 dark:text-slate-100">
                       {item.title}
                     </span>
                   </div>
 
                   <div className="flex shrink-0 items-center gap-2">
-                    <span className="hidden sm:inline font-mono text-[11px] text-zinc-500">
-                      Bobot ROC:{' '}
-                      <strong className="text-zinc-800 dark:text-zinc-200">
-                        {weightPct}
-                      </strong>
-                    </span>
-                    <span className="rounded border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 px-2 py-1 text-[11px] font-medium text-zinc-900 dark:text-zinc-100 whitespace-nowrap">
-                      Prioritas {currentRank} ({weightPct})
+                    <span className="font-medium text-white bg-[#0C52EE] px-2.5 py-1 rounded-md text-xs shadow-2xs">
+                      {weightPct}
                     </span>
                     {/* Fallback tombol untuk mobile / keyboard */}
                     <span className="flex flex-col -space-y-0.5">
@@ -455,7 +449,7 @@ export function PreferenceSidebar({
                         aria-label={`Naikkan ${item.code}`}
                         disabled={index === 0}
                         onClick={() => moveRank(item.key, -1)}
-                        className="p-0.5 text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+                        className="p-0.5 text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
                       >
                         <RiArrowUpSLine className="h-3.5 w-3.5" />
                       </button>
@@ -464,7 +458,7 @@ export function PreferenceSidebar({
                         aria-label={`Turunkan ${item.code}`}
                         disabled={index === orderedPriorities.length - 1}
                         onClick={() => moveRank(item.key, 1)}
-                        className="p-0.5 text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+                        className="p-0.5 text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
                       >
                         <RiArrowDownSLine className="h-3.5 w-3.5" />
                       </button>
@@ -474,14 +468,14 @@ export function PreferenceSidebar({
               )
             })}
           </div>
-          <p className="text-[10px] text-zinc-500">
+          <p className="text-[10px] text-slate-500">
             Posisi paling atas = Prioritas 1 (bobot 45.7%). Bobot ROC terhitung otomatis
             dari urutan.
           </p>
         </div>
 
         {/* Action Button */}
-        <div className="pt-3 border-t border-zinc-200 dark:border-zinc-800 flex justify-end gap-2">
+        <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex justify-end gap-2">
           <Button variant="outline" size="sm" onClick={onClose} className="text-xs">
             Batal
           </Button>

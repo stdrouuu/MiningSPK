@@ -1,64 +1,58 @@
-import { RiBriefcaseLine, RiSunLine, RiMoonLine } from 'react-icons/ri'
-import { Button } from '../ui/Button'
-
 interface LandingNavProps {
-  onEnterPortal: () => void
-  onShowMethod: () => void
+  active: 'landing' | 'portal' | 'matrix'
   savedCount: number
-  theme: 'light' | 'dark'
-  onToggleTheme: () => void
+  onNavigate: (view: 'landing' | 'portal' | 'matrix') => void
+  onOpenSavedJobs: () => void
 }
 
-// Shape rule for landing: buttons 6px (rounded-md), cards 12px (rounded-xl), pills full.
-// Color lock: zinc neutrals plus single emerald accent.
-export function LandingNav({ onEnterPortal, onShowMethod, savedCount, theme, onToggleTheme }: LandingNavProps) {
+export function LandingNav({ active, savedCount, onNavigate, onOpenSavedJobs }: LandingNavProps) {
+  const link = (view: 'landing' | 'portal' | 'matrix', label: string) => (
+    <button
+      onClick={() => onNavigate(view)}
+      className={
+        active === view
+          ? 'text-[#0C52EE] font-medium transition-colors'
+          : 'hover:text-slate-900 transition-colors'
+      }
+    >
+      {label}
+    </button>
+  )
+
   return (
-    <header className="sticky top-0 z-40 border-b border-zinc-200 bg-white/95 backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/95">
-      <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-zinc-900 text-zinc-50 dark:bg-zinc-50 dark:text-zinc-900">
-            <RiBriefcaseLine className="h-4 w-4" />
-          </div>
-          <span className="text-base font-bold tracking-tight text-zinc-900 dark:text-zinc-50">
-            upmatch
-          </span>
+    <header className="w-full bg-white border-b border-slate-200 sticky top-0 z-40 transition-colors">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <div className="flex items-center gap-8">
+          <button onClick={() => onNavigate('landing')} className="flex items-center text-left group focus:outline-none">
+            <span className="text-xl font-medium tracking-tight text-slate-900">upmatch</span>
+          </button>
+
+          <nav className="hidden md:flex items-center gap-7 text-sm font-normal text-slate-600">
+            {link('landing', 'Beranda')}
+            {link('portal', 'Lowongan')}
+            {link('matrix', 'Perhitungan')}
+          </nav>
         </div>
 
-        <nav className="hidden items-center gap-1 text-sm font-medium md:flex" aria-label="Navigasi utama">
+        <div className="flex items-center gap-3">
           <button
-            onClick={onEnterPortal}
-            className="emil-press cursor-pointer rounded-md px-3 py-1.5 text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
+            onClick={onOpenSavedJobs}
+            className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:border-slate-400 hover:bg-slate-50 text-xs font-medium text-slate-700 transition-colors"
+            title="Klik untuk melihat lowongan tersimpan"
           >
-            Lowongan
+            <svg className="w-4 h-4 text-[#ED1E79]" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
+            </svg>
+            <span className="hidden sm:inline">Tersimpan</span>
+            <span className="px-1.5 py-0.2 rounded-full bg-[#ED1E79] text-white text-[10px] font-bold">{savedCount}</span>
           </button>
-          <button
-            onClick={onShowMethod}
-            className="emil-press cursor-pointer rounded-md px-3 py-1.5 text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-50"
-          >
-            Cara kerja
-          </button>
-          <span className="px-3 py-1.5 text-xs text-zinc-500">
-            {savedCount > 0 ? `${savedCount} tersimpan` : '221 terverifikasi'}
-          </span>
-        </nav>
 
-        <div className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={onToggleTheme}
-            className="h-8 w-8 text-zinc-600 dark:text-zinc-400"
-            title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          <button
+            onClick={() => onNavigate('portal')}
+            className="px-4 py-2 bg-[#0C52EE] hover:bg-[#0942c4] text-white text-xs sm:text-sm font-medium rounded-lg transition-colors shadow-sm focus:outline-none"
           >
-            {theme === 'dark' ? (
-              <RiSunLine className="h-4 w-4 text-amber-400" />
-            ) : (
-              <RiMoonLine className="h-4 w-4 text-zinc-700" />
-            )}
-          </Button>
-          <Button variant="default" size="sm" onClick={onEnterPortal} className="whitespace-nowrap">
             Lihat lowongan
-          </Button>
+          </button>
         </div>
       </div>
     </header>

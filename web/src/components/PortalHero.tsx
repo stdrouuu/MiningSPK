@@ -1,6 +1,3 @@
-import { RiEqualizerLine } from 'react-icons/ri'
-import { Button } from './ui/Button'
-import { Badge } from './ui/Badge'
 import type { StudentPreferences } from '../types/portal'
 
 interface PortalHeroProps {
@@ -9,59 +6,41 @@ interface PortalHeroProps {
   totalJobs: number
 }
 
-export function PortalHero({
-  studentPrefs,
-  onOpenPreferences,
-  totalJobs,
-}: PortalHeroProps) {
+export function PortalHero({ studentPrefs, onOpenPreferences, totalJobs }: PortalHeroProps) {
   return (
-    <div className="relative overflow-hidden rounded-xl border-0 p-6 sm:p-8 transition-colors bg-[#EA580C] dark:bg-[#EA580C]">
-      {/* decorative soft glows (flat, no gradient) */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-20 -left-16 h-64 w-64 rounded-full bg-white/20 blur-3xl" />
-        <div className="absolute -bottom-24 left-1/3 h-64 w-64 rounded-full bg-emerald-900/10 blur-3xl" />
-      </div>
+    <section className="relative w-full rounded-2xl bg-[#0C52EE] overflow-hidden min-h-[160px] p-6 sm:p-8 lg:p-10 shadow-sm text-white flex items-center justify-between">
+      <div className="relative z-10 max-w-2xl lg:max-w-3xl space-y-2">
+        <h1 className="text-2xl sm:text-3xl lg:text-[34px] font-medium tracking-tight leading-snug">
+          Halo {studentPrefs.name.split(' ')[0]}, ini part–time paling cocok untukmu
+        </h1>
+        <p className="text-xs sm:text-sm text-blue-100 font-light leading-relaxed max-w-xl">
+          {totalJobs} lowongan part-time terverifikasi di Jabodetabek, diurutkan real-time dari upah, jarak, jam kuliah, dan skill kamu.
+        </p>
 
-      <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div className="max-w-2xl space-y-2">
-          <p className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/20 text-white text-xs font-semibold backdrop-blur-sm">
-            Sistem pendukung keputusan • SMARTER & ROC
-          </p>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white text-balance">
-            Halo {studentPrefs.name.split(' ')[0]}, ini part-time paling cocok untukmu
-          </h1>
-          <p className="text-sm text-white/85 leading-relaxed max-w-[65ch]">
-            <strong className="text-white">{totalJobs} lowongan part-time</strong> terverifikasi
-            di Jabodetabek, diurutkan real-time dari upah, jarak, jam kuliah, dan skill kamu.
-          </p>
-        </div>
-
-        {/* Current Preference Badges & Action */}
-        <div className="flex flex-col sm:items-end gap-3 shrink-0">
-          <div className="flex flex-wrap gap-1.5 justify-start sm:justify-end text-xs">
-            <Badge variant="outline" className="bg-white/15 border-white/25 text-white backdrop-blur-sm">
-              Lokasi: {studentPrefs.location}
-            </Badge>
-            <Badge variant="outline" className="bg-white/15 border-white/25 text-white backdrop-blur-sm">
-              Target: Rp {studentPrefs.minSalary.toLocaleString('id-ID')}/jam
-            </Badge>
-            <Badge variant="outline" className="bg-white/15 border-white/25 text-white backdrop-blur-sm">
-              Max: {studentPrefs.maxHours} jam/mgg
-            </Badge>
-          </div>
-
-          <Button
-            variant="default"
-            size="sm"
-            onClick={onOpenPreferences}
-            className="text-xs gap-2 font-semibold bg-white text-black hover:bg-white/90 border-0 shadow-md"
-            aria-label="Sesuaikan preferensi dan prioritas SPK"
-          >
-            <RiEqualizerLine className="h-3.5 w-3.5" aria-hidden="true" />
-            Sesuaikan preferensi & prioritas
-          </Button>
+        <div className="pt-2 flex flex-wrap items-center gap-2 text-xs">
+          <span className="px-3 py-1.5 rounded-lg bg-[#072e8a] border border-blue-400/25 font-normal text-white shadow-2xs">
+            Lokasi: {studentPrefs.location}
+          </span>
+          <span className="px-3 py-1.5 rounded-lg bg-[#072e8a] border border-blue-400/25 font-normal text-white shadow-2xs">
+            Target: Rp {studentPrefs.minSalary.toLocaleString('id-ID')}/jam
+          </span>
+          <span className="px-3 py-1.5 rounded-lg bg-[#072e8a] border border-blue-400/25 font-normal text-white shadow-2xs">
+            Max: {studentPrefs.maxHours} jam/mgg
+          </span>
+          <button onClick={onOpenPreferences} className="ml-2 font-medium underline hover:text-slate-200 transition-colors cursor-pointer">
+            Sesuaikan preferensi &amp; prioritas
+          </button>
         </div>
       </div>
-    </div>
+
+      <div className="hidden md:block absolute right-0 top-0 bottom-0 w-80 lg:w-[380px] pointer-events-none overflow-hidden" aria-hidden="true">
+        <svg className="absolute right-0 top-0 h-full w-full" viewBox="0 0 380 180" preserveAspectRatio="none" fill="none">
+          <polygon points="130,0 185,0 95,180 40,180" fill="#072e8a" />
+          <polygon points="185,0 235,0 145,180 95,180" fill="#0942c4" />
+          <polygon points="295,0 380,0 290,180 205,180" fill="#FFFFFF" />
+          <polygon points="225,40 285,40 245,150 185,150" fill="#ED1E79" fillOpacity="0.9" />
+        </svg>
+      </div>
+    </section>
   )
 }

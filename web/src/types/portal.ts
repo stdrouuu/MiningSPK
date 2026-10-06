@@ -21,7 +21,7 @@ export interface StudentPreferences {
 export const DEFAULT_STUDENT_PREFERENCES: StudentPreferences = {
   name: 'David Santoso',
   nim: '412024001',
-  major: 'Informatika UKRIDA',
+  major: 'Informatika',
   minSalary: 35000,
   maxHours: 18,
   location: 'Jakarta Barat',

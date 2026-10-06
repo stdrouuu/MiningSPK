@@ -1,12 +1,7 @@
 import { useState, useMemo } from 'react'
-import {
-  RiDownloadLine,
-  RiSearchLine,
-  RiEqualizerLine,
-} from 'react-icons/ri'
+import { RiDownloadLine, RiEqualizerLine } from 'react-icons/ri'
 import { Button } from './ui/Button'
-import { Input } from './ui/Input'
-import { Badge } from './ui/Badge'
+import { CompanyLogo } from './CompanyLogo'
 import type { RankedJobResult } from '../types/data'
 import type { StudentPreferences } from '../types/portal'
 import { formatRupiah } from '../lib/utils'
@@ -26,7 +21,7 @@ export function FullMatrixView({
 }: FullMatrixViewProps) {
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(0)
-  const PAGE_SIZE = 25
+  const PAGE_SIZE = 10
   const [matrixDisplayMode, setMatrixDisplayMode] = useState<'ranking' | 'utility' | 'raw'>(
     'ranking'
   )
@@ -110,7 +105,7 @@ export function FullMatrixView({
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
     link.setAttribute('href', url)
-    link.setAttribute('download', `SPK_SMARTER_Calculation_${studentPrefs.nim || 'UKRIDA'}.csv`)
+    link.setAttribute('download', `SPK_SMARTER_Calculation_${studentPrefs.nim || 'Mahasiswa'}.csv`)
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
@@ -118,99 +113,60 @@ export function FullMatrixView({
 
   return (
     <div className="space-y-6">
-      {/* Top Controls Bar */}
-      <div className="p-4 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 space-y-4">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <h2 className="text-lg font-bold text-zinc-900 dark:text-zinc-50 tracking-tight">
-              Matriks Keputusan & Komputasi SMARTER
-            </h2>
-            <p className="text-xs text-zinc-500 mt-0.5">
-              Representasi lengkap perhitungan matematis multi-kriteria untuk profil mahasiswa{' '}
-              <strong className="text-zinc-800 dark:text-zinc-200">{studentPrefs.name}</strong> ({studentPrefs.nim}).
-            </p>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+        <div>
+          <div className="text-[11px] font-medium uppercase tracking-wider text-[#0C52EE]">
+            TRANSPARANSI KEPUTUSAN MULTI-KRITERIA
           </div>
-
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={onOpenPreferences}
-              className="text-xs gap-1.5"
-            >
-              <RiEqualizerLine className="h-3.5 w-3.5" /> Atur Prioritas ROC
-            </Button>
-
-            <Button
-              variant="default"
-              size="sm"
-              onClick={handleExportCsv}
-              className="text-xs gap-1.5"
-            >
-              <RiDownloadLine className="h-3.5 w-3.5" /> Unduh CSV Lengkap
-            </Button>
-          </div>
+          <h1 className="text-xl sm:text-2xl font-medium text-slate-900 mt-0.5">
+            Matriks Keputusan &amp; Komputasi SMARTER
+          </h1>
+          <p className="text-xs text-slate-500 font-light mt-1">
+            Representasi lengkap perhitungan matematis multi-kriteria untuk profil mahasiswa{' '}
+            <span className="font-medium text-slate-800">{studentPrefs.name} ({studentPrefs.nim})</span>.
+          </p>
         </div>
 
-        {/* View Switcher & Search */}
-        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-3 border-t border-zinc-100 dark:border-zinc-800">
-          <div role="tablist" aria-label="Mode tampilan matriks" className="inline-flex rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 p-1 text-xs">
-            <button
-              role="tab"
-              aria-selected={matrixDisplayMode === 'ranking'}
-              onClick={() => handleMode('ranking')}
-              className={`px-3 py-1 rounded-md emil-press cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 ${
-                matrixDisplayMode === 'ranking'
-                  ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 font-semibold shadow-xs'
-                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100'
-              }`}
-            >
-              Peringkat & Skor
-            </button>
-            <button
-              role="tab"
-              aria-selected={matrixDisplayMode === 'utility'}
-              onClick={() => handleMode('utility')}
-              className={`px-3 py-1 rounded-md emil-press cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 ${
-                matrixDisplayMode === 'utility'
-                  ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 font-semibold shadow-xs'
-                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100'
-              }`}
-            >
-              Utilitas (uⱼ)
-            </button>
-            <button
-              role="tab"
-              aria-selected={matrixDisplayMode === 'raw'}
-              onClick={() => handleMode('raw')}
-              className={`px-3 py-1 rounded-md emil-press cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900 dark:focus-visible:ring-zinc-100 ${
-                matrixDisplayMode === 'raw'
-                  ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 font-semibold shadow-xs'
-                  : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100'
-              }`}
-            >
-              Matriks awal (Xᵢⱼ)
-            </button>
-          </div>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" onClick={onOpenPreferences} className="text-xs gap-1.5">
+            <RiEqualizerLine className="h-3.5 w-3.5" /> Atur Prioritas ROC
+          </Button>
+          <Button variant="default" size="sm" onClick={handleExportCsv} className="text-xs gap-1.5 bg-[#0C52EE] hover:bg-[#0942c4]">
+            <RiDownloadLine className="h-3.5 w-3.5" /> Unduh CSV Lengkap
+          </Button>
+        </div>
+      </div>
 
-          <div className="max-w-xs w-full">
-            <Input
-              type="search"
-              placeholder="Cari dalam matriks…"
-              aria-label="Cari dalam matriks"
-              value={search}
-              onChange={(e) => handleSearch(e.target.value)}
-              icon={<RiSearchLine className="h-3.5 w-3.5" />}
-            />
-          </div>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div role="tablist" aria-label="Mode tampilan matriks" className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-lg text-xs">
+          <button role="tab" aria-selected={matrixDisplayMode === 'ranking'} onClick={() => handleMode('ranking')} className={`px-3 py-1.5 rounded-md transition-all ${matrixDisplayMode === 'ranking' ? 'font-medium bg-white text-[#0C52EE] shadow-2xs' : 'font-normal text-slate-600 hover:text-slate-900'}`}>
+            Mode 1: Peringkat &amp; Skor
+          </button>
+          <button role="tab" aria-selected={matrixDisplayMode === 'utility'} onClick={() => handleMode('utility')} className={`px-3 py-1.5 rounded-md transition-all ${matrixDisplayMode === 'utility' ? 'font-medium bg-white text-[#0C52EE] shadow-2xs' : 'font-normal text-slate-600 hover:text-slate-900'}`}>
+            Mode 2: Utilitas (uⱼ)
+          </button>
+          <button role="tab" aria-selected={matrixDisplayMode === 'raw'} onClick={() => handleMode('raw')} className={`px-3 py-1.5 rounded-md transition-all ${matrixDisplayMode === 'raw' ? 'font-medium bg-white text-[#0C52EE] shadow-2xs' : 'font-normal text-slate-600 hover:text-slate-900'}`}>
+            Mode 3: Matriks awal (Xᵢⱼ)
+          </button>
+        </div>
+
+        <div className="w-full sm:w-64">
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => handleSearch(e.target.value)}
+            placeholder="Cari dalam matriks…"
+            aria-label="Cari dalam matriks"
+            className="w-full px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0C52EE]"
+          />
         </div>
       </div>
 
       {/* Table Container */}
-      <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 overflow-auto max-h-[70vh] shadow-xs">
-        <table className="w-full text-left text-xs border-collapse min-w-[880px]">
-          <thead className="sticky top-0 z-10">
-            <tr className="border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 uppercase font-semibold text-[11px] tracking-wider">
+      <div className="border border-slate-200 rounded-xl bg-white overflow-x-auto shadow-2xs">
+        <table className="w-full text-left text-xs">
+          <thead className="bg-slate-50 border-b border-slate-200 text-[11px] font-medium text-slate-600 uppercase tracking-wider">
+            <tr>
               <th className="py-3 px-4 w-14 text-center">Rank</th>
               <th className="py-3 px-4 w-28">ID Loker</th>
               <th className="py-3 px-4 min-w-[200px]">Posisi & Perusahaan</th>
@@ -235,7 +191,7 @@ export function FullMatrixView({
                   <th className="py-3 px-4 font-mono text-center">u3 (Lokasi)</th>
                   <th className="py-3 px-4 font-mono text-center">u4 (Jam)</th>
                   <th className="py-3 px-4 font-mono text-center">u5 (Skill)</th>
-                  <th className="py-3 px-4 font-mono font-bold text-zinc-900 dark:text-zinc-100">
+                  <th className="py-3 px-4 font-mono font-medium text-slate-900">
                     Total U(Ai)
                   </th>
                 </>
@@ -254,78 +210,71 @@ export function FullMatrixView({
               <th className="py-3 px-4 text-center">Aksi</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800 text-zinc-900 dark:text-zinc-100">
+          <tbody className="divide-y divide-slate-100 text-slate-700">
             {pagedJobs.map((job) => (
               <tr
                 key={job.job_id}
-                className={`hover:bg-zinc-50 dark:hover:bg-zinc-900/60 transition-[background-color] duration-150 ease-out cursor-pointer ${
-                  job.rank === 1
-                    ? 'bg-amber-50/50 dark:bg-amber-950/10'
-                    : job.rank <= 3
-                    ? 'bg-zinc-50/40 dark:bg-zinc-900/30'
-                    : ''
-                }`}
+                className="hover:bg-slate-50 transition-colors cursor-pointer"
                 onClick={() => onSelectJobForDetail(job)}
               >
-                <td className="py-3 px-4 text-center font-bold">
-                  {job.rank === 1 ? (
-                    <Badge variant="success" className="px-1.5 py-0">
-                      #1
-                    </Badge>
-                  ) : (
-                    <span className="font-mono text-zinc-500">#{job.rank}</span>
-                  )}
+                <td className="py-3 px-4 text-center font-medium text-[#0C52EE]">
+                  #{job.rank}
                 </td>
 
-                <td className="py-3 px-4 font-mono font-medium text-zinc-700 dark:text-zinc-300">
+                <td className="py-3 px-4 font-medium">
                   {job.job_id}
                 </td>
 
                 <td className="py-3 px-4">
-                  <div className="font-semibold text-zinc-900 dark:text-zinc-100 truncate max-w-xs">
-                    {job.job_title}
-                  </div>
-                  <div className="text-[11px] text-zinc-500 truncate max-w-xs">
-                    {job.company_name} • {job.work_job_location}
+                  <div className="flex items-center gap-2.5">
+                    <CompanyLogo companyName={job.company_name} logoUrl={job.company_logo} size="sm" />
+                    <div className="min-w-0">
+                      <div className="font-medium text-slate-900 truncate max-w-xs">
+                        {job.job_title}
+                      </div>
+                      <div className="text-[11px] text-slate-500 truncate max-w-xs">
+                        {job.company_name} • {job.work_job_location}
+                      </div>
+                    </div>
                   </div>
                 </td>
 
-                <td className="py-3 px-4 font-mono font-semibold text-zinc-900 dark:text-zinc-100 whitespace-nowrap">
+                <td className="py-3 px-4">
                   {formatRupiah(job.work_salaryperhour)}
                 </td>
 
-                <td className="py-3 px-4 font-mono text-zinc-600 dark:text-zinc-400 whitespace-nowrap">
-                  {job.work_hours}j
+                <td className="py-3 px-4">
+                  {job.work_hours} jam
                 </td>
 
                 {matrixDisplayMode === 'ranking' && (
                   <>
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-2">
-                        <span className="font-mono font-bold text-zinc-900 dark:text-zinc-100">
+                        <span className="font-mono font-medium text-slate-900">
                           {job.finalScore.toFixed(4)}
                         </span>
-                        <div className="w-16 bg-zinc-200 dark:bg-zinc-800 rounded-full h-1.5 overflow-hidden">
+                        <div className="w-16 bg-slate-200 rounded-full h-1.5 overflow-hidden">
                           <div
-                            className="bg-zinc-900 dark:bg-zinc-100 h-full rounded-full"
+                            className="bg-[#0C52EE] h-full rounded-full"
                             style={{ width: `${Math.min(100, job.finalScore * 100)}%` }}
                           />
                         </div>
                       </div>
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-zinc-600 dark:text-zinc-400">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600">
                       {job.C1_kategori}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-zinc-600 dark:text-zinc-400">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600">
                       {job.C2_rasio_gaji}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-zinc-600 dark:text-zinc-400">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600">
                       {job.C3_lokasi}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-zinc-600 dark:text-zinc-400">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600">
                       {job.C4_jam_kerja}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center font-semibold text-zinc-900 dark:text-zinc-100">
+                    <td className="py-3 px-4 font-mono text-center font-medium text-slate-900">
                       {job.C5_kemiripan_skill}
                     </td>
                   </>
@@ -333,22 +282,22 @@ export function FullMatrixView({
 
                 {matrixDisplayMode === 'utility' && (
                   <>
-                    <td className="py-3 px-4 font-mono text-center text-zinc-600 dark:text-zinc-400">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600">
                       {job.u1}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-zinc-600 dark:text-zinc-400">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600">
                       {job.u2}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-zinc-600 dark:text-zinc-400">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600">
                       {job.u3}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-zinc-600 dark:text-zinc-400">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600">
                       {job.u4}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-zinc-600 dark:text-zinc-400">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600">
                       {job.u5}
                     </td>
-                    <td className="py-3 px-4 font-mono font-bold text-zinc-900 dark:text-zinc-100">
+                    <td className="py-3 px-4 font-mono font-medium text-slate-900">
                       {job.finalScore}
                     </td>
                   </>
@@ -356,36 +305,34 @@ export function FullMatrixView({
 
                 {matrixDisplayMode === 'raw' && (
                   <>
-                    <td className="py-3 px-4 font-mono text-center text-zinc-600 dark:text-zinc-400">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600">
                       {job.C1_kategori}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-zinc-600 dark:text-zinc-400">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600">
                       {job.C2_rasio_gaji}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-zinc-600 dark:text-zinc-400">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600">
                       {job.C3_lokasi}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-zinc-600 dark:text-zinc-400">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600">
                       {job.C4_jam_kerja}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-zinc-600 dark:text-zinc-400">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600">
                       {job.C5_kemiripan_skill}
                     </td>
                   </>
                 )}
 
-                <td className="py-3 px-4 text-center">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="h-7 px-2 text-xs"
+                <td className="py-3 px-4 text-right">
+                  <button
+                    className="px-2.5 py-1 bg-[#0C52EE] hover:bg-[#0942c4] text-white rounded text-[10px] font-medium transition-colors"
                     onClick={(e) => {
                       e.stopPropagation()
                       onSelectJobForDetail(job)
                     }}
                   >
                     Detail
-                  </Button>
+                  </button>
                 </td>
               </tr>
             ))}
@@ -393,7 +340,7 @@ export function FullMatrixView({
         </table>
       </div>
 
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-zinc-500">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-500">
         <span aria-live="polite">Menampilkan {pagedJobs.length} dari {filteredJobs.length} baris • halaman {safePage + 1}/{pageCount} • U(Ai) = Σ (wⱼ × uⱼ)</span>
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" className="h-7 text-xs" disabled={safePage === 0} onClick={() => setPage((p) => Math.max(0, p - 1))}>
