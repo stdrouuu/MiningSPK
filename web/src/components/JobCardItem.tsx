@@ -48,7 +48,7 @@ export function JobCardItem({
       onClick={onSelect}
       onKeyDown={onKeyDown}
       style={{ '--enter-delay': `${Math.min(index, 8) * 40}ms` } as React.CSSProperties}
-      className={`p-4 rounded-xl bg-white border ${isSelected ? 'border-[#0C52EE] ring-1 ring-[#0C52EE]' : 'border-slate-200 hover:border-slate-300'} transition-all cursor-pointer shadow-2xs`}
+      className={`p-4 rounded-xl bg-white border ${isSelected ? 'border-slate-400 ring-1 ring-slate-400 shadow-sm' : 'border-slate-200 hover:border-slate-300 shadow-2xs'} transition-all cursor-pointer`}
     >
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3 min-w-0">

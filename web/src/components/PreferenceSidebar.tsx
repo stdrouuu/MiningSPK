@@ -15,6 +15,7 @@ import {
 import { Button } from './ui/Button'
 import { Dialog } from './ui/Dialog'
 import { StudentPresetDropdown } from './StudentPresetDropdown'
+import { randomAvatarStyle } from '../lib/avatar'
 import type { StudentPreferences } from '../types/portal'
 import type { StudentProfile } from '../types/data'
 import { DEFAULT_STUDENT_PREFERENCES } from '../types/portal'
@@ -145,6 +146,28 @@ export function PreferenceSidebar({
     [preferences.priorityRank]
   )
 
+  const handleAddNewProfile = () => {
+    const newNim = `MHS-${Math.floor(100 + Math.random() * 900)}`
+    onUpdatePreferences({
+      ...preferences,
+      name: '',
+      nim: newNim,
+      major: 'Mahasiswa',
+      minSalary: 25000,
+      maxHours: 15,
+      location: 'Jakarta Barat',
+      preferredCategory: categories[0] || 'Education & Tutoring',
+      skills: '',
+      avatarSeed: newNim,
+      // profil manual tidak punya identitas nyata -> acak style avatar sekali di awal
+      avatarStyle: randomAvatarStyle(),
+    })
+    setTimeout(() => {
+      const el = document.getElementById('pref-name')
+      if (el) (el as HTMLInputElement).focus()
+    }, 50)
+  }
+
   return (
     <Dialog
       open={open}
@@ -177,6 +200,7 @@ export function PreferenceSidebar({
             students={studentPresets}
             selectedId={studentPresets.some((s) => s.student_id === preferences.nim) ? preferences.nim : undefined}
             onSelect={handleLoadPreset}
+            onAddNewProfile={handleAddNewProfile}
           />
         </div>
 

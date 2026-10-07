@@ -65,18 +65,17 @@ export function JobDetailPane({
         <div className="flex items-start gap-3 min-w-0">
           <CompanyLogo companyName={job.company_name} logoUrl={job.company_logo} />
           <div className="min-w-0">
-          <div className="flex items-center gap-2 mb-1.5 flex-wrap">
-            <span className="px-2.5 py-0.5 rounded-md bg-blue-50 border border-blue-200 text-[#0C52EE] text-[11px] font-medium">
-              Rekomendasi #{job.rank}
-            </span>
-            <span className="px-2 py-0.5 rounded-md bg-pink-50 border border-pink-200 text-[#ED1E79] text-[11px] font-medium">{job.job_category}</span>
-            <span className="text-xs text-slate-400 font-light">{job.job_id}</span>
-          </div>
           <h2 className="text-lg sm:text-xl font-medium text-slate-900 leading-snug">{job.job_title}</h2>
           <p className="text-xs text-slate-500 font-light mt-0.5">
             {job.company_name} {"\u2022"} {job.work_job_location} {"\u2022"}{' '}
             <span className="px-1.5 py-0.2 rounded border border-slate-200 bg-slate-50 text-slate-600 text-[10px] font-normal">{job.work_system}</span>
           </p>
+          <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+            <span className="px-2.5 py-0.5 rounded-md bg-[#0C52EE] text-white text-[11px] font-medium">
+              Rekomendasi #{job.rank}
+            </span>
+            <span className="px-2 py-0.5 rounded-md bg-pink-50 border border-pink-200 text-[#ED1E79] text-[11px] font-medium">{job.job_category}</span>
+          </div>
           </div>
         </div>
 
@@ -124,6 +123,19 @@ export function JobDetailPane({
         </div>
       </div>
 
+      <div className="space-y-2">
+        <h4 className="text-xs font-medium text-slate-900">Keahlian yang diminta</h4>
+        <div className="flex flex-wrap gap-1.5">
+          {skills.length > 0 ? (
+            skills.map((s, i) => (
+              <span key={`${s}-${i}`} className="px-2.5 py-1 rounded-md bg-slate-50 border border-slate-200 text-slate-600 text-xs font-light">{s}</span>
+            ))
+          ) : (
+            <span className="text-xs text-slate-400 font-light">Tidak ada daftar keahlian terstruktur.</span>
+          )}
+        </div>
+      </div>
+
       <div className="p-4 rounded-xl bg-blue-50/50 border border-blue-200 space-y-3">
         <div className="flex items-center justify-between">
           <h4 className="text-xs font-medium text-[#0C52EE]">Analisis kesesuaian SPK</h4>
@@ -159,19 +171,6 @@ export function JobDetailPane({
           <button onClick={onOpenPreferences} className="text-[#0C52EE] font-medium hover:underline">
             Ubah bobot prioritas
           </button>
-        </div>
-      </div>
-
-      <div className="space-y-2">
-        <h4 className="text-xs font-medium text-slate-900">Keahlian yang diminta</h4>
-        <div className="flex flex-wrap gap-1.5">
-          {skills.length > 0 ? (
-            skills.map((s, i) => (
-              <span key={`${s}-${i}`} className="px-2.5 py-1 rounded-md bg-slate-50 border border-slate-200 text-slate-600 text-xs font-light">{s}</span>
-            ))
-          ) : (
-            <span className="text-xs text-slate-400 font-light">Tidak ada daftar keahlian terstruktur.</span>
-          )}
         </div>
       </div>
 

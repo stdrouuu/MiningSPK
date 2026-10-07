@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { RiSearchLine, RiCheckLine, RiArrowDownSLine } from 'react-icons/ri'
+import { RiSearchLine, RiCheckLine, RiArrowDownSLine, RiUserAddLine } from 'react-icons/ri'
 import type { StudentProfile } from '../types/data'
 import { avatarForStudent } from '../lib/avatar'
 import { cn } from '../lib/utils'
@@ -8,10 +8,16 @@ interface StudentPresetDropdownProps {
   students: StudentProfile[]
   selectedId?: string
   onSelect: (student: StudentProfile) => void
+  onAddNewProfile?: () => void
 }
 
 /** Dropdown custom profil contoh mahasiswa — avatar DiceBear di kiri nama. */
-export function StudentPresetDropdown({ students, selectedId, onSelect }: StudentPresetDropdownProps) {
+export function StudentPresetDropdown({
+  students,
+  selectedId,
+  onSelect,
+  onAddNewProfile,
+}: StudentPresetDropdownProps) {
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
   const rootRef = useRef<HTMLDivElement>(null)
@@ -110,6 +116,32 @@ export function StudentPresetDropdown({ students, selectedId, onSelect }: Studen
           </div>
 
           <ul role="listbox" aria-label="Daftar profil contoh mahasiswa" className="max-h-64 overflow-y-auto p-1.5 space-y-0.5">
+            {onAddNewProfile && (
+              <li className="pb-1 mb-1 border-b border-slate-100">
+                <button
+                  type="button"
+                  onClick={() => {
+                    onAddNewProfile()
+                    setOpen(false)
+                    setQuery('')
+                  }}
+                  className="w-full flex items-center gap-3 p-2 rounded-lg text-left bg-blue-50/60 hover:bg-blue-100/70 border border-blue-200/80 transition-colors cursor-pointer group"
+                >
+                  <span className="w-9 h-9 rounded-full bg-blue-100 border border-blue-300 flex items-center justify-center text-[#0C52EE] group-hover:scale-105 transition-transform shrink-0">
+                    <RiUserAddLine className="w-4 h-4" />
+                  </span>
+                  <span className="flex-1 min-w-0">
+                    <span className="block text-xs font-semibold text-[#0C52EE]">
+                      + Tambahkan Profil Mahasiswa Baru
+                    </span>
+                    <span className="block text-[11px] text-blue-600/80 font-light truncate">
+                      Buat profil baru & sesuaikan preferensi sendiri
+                    </span>
+                  </span>
+                </button>
+              </li>
+            )}
+
             {filtered.length === 0 ? (
               <li className="px-3 py-6 text-center text-xs text-slate-400 font-light">
                 Tidak ada mahasiswa yang cocok dengan “{query}”.

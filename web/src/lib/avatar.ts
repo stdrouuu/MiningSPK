@@ -70,6 +70,14 @@ export function avatarForStudent(studentId: string, studentName: string): string
   return diceBearUrl(style, studentId || studentName, background)
 }
 
+/**
+ * Style avatar acak. Dipakai sekali saat profil dibuat manual agar hasilnya
+ * terkunci di state (tidak berganti-ganti tiap render).
+ */
+export function randomAvatarStyle(): AvatarStyle {
+  return AVATAR_STYLES[Math.floor(Math.random() * AVATAR_STYLES.length)]
+}
+
 /** Avatar untuk preferensi aktif — hormati pilihan custom, fallback deterministik. */
 export function avatarForPrefs(prefs: {
   nim?: string

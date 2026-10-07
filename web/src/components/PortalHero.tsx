@@ -13,7 +13,12 @@ export function PortalHero({ studentPrefs, onOpenPreferences, totalJobs }: Porta
       <div className="relative z-10 max-w-2xl lg:max-w-3xl space-y-2">
         <h1 className="text-2xl sm:text-3xl lg:text-[34px] font-medium tracking-tight leading-snug">
           Halo{' '}
-          <span className="inline-flex items-center gap-2 align-middle whitespace-nowrap">
+          {/* Avatar duduk flush di baseline (vertical-align: baseline memakai bottom margin edge
+              untuk elemen inline), jadi sisi bawahnya rata dengan huruf "Halo" & ", ini
+              part-time". Ukurannya 0.72em ≈ cap-height, jadi sisi atasnya juga rata dengan
+              tops huruf kapital. Pakai em (bukan px) supaya ikut menyesuaikan font-size
+              di semua breakpoint. */}
+          <span className="whitespace-nowrap">
             {studentPrefs.name.split(' ')[0]}
             <img
               src={avatarForPrefs(studentPrefs)}
@@ -21,7 +26,8 @@ export function PortalHero({ studentPrefs, onOpenPreferences, totalJobs }: Porta
               aria-hidden="true"
               loading="lazy"
               draggable={false}
-              className="w-[0.95em] h-[0.95em] rounded-full object-cover shrink-0 select-none"
+              style={{ height: '0.72em', width: '0.72em', verticalAlign: 'baseline' }}
+              className="ml-2 inline-block rounded-full object-cover shrink-0 select-none"
             />
           </span>
           , ini part–time paling cocok untukmu

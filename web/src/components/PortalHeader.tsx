@@ -87,13 +87,16 @@ export function PortalHeader({
         <div className="flex items-center gap-3">
           <button
             onClick={onOpenSavedJobs}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:border-slate-400 hover:bg-slate-50 text-xs font-medium text-slate-700 transition-colors"
+            className="relative p-2 rounded-lg border border-slate-200 bg-white hover:border-slate-400 hover:bg-slate-50 text-slate-700 transition-colors flex items-center justify-center"
+            title={`Lowongan tersimpan (${savedJobsCount})`}
+            aria-label={`Lowongan tersimpan (${savedJobsCount})`}
           >
             <svg className="w-4 h-4 text-[#ED1E79]" fill="currentColor" viewBox="0 0 20 20">
               <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
             </svg>
-            <span className="hidden sm:inline">Tersimpan</span>
-            <span className="bg-[#ED1E79] text-white text-[11px] font-bold px-1.5 py-0.2 rounded-full">{savedJobsCount}</span>
+            <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 bg-[#ED1E79] text-white text-[10px] font-bold rounded-full flex items-center justify-center leading-none shadow-2xs">
+              {savedJobsCount}
+            </span>
           </button>
 
           <div className="relative" ref={profileRef}>

@@ -13,22 +13,35 @@ interface DialogProps {
 export function Dialog({ open, onClose, title, children, className }: DialogProps) {
   const contentRef = React.useRef<HTMLDivElement>(null)
 
+  // onClose sering dibuat inline di parent, jadi identitasnya berubah tiap render.
+  // Simpan di ref agar efek di bawah tidak depend pada identitas fungsi.
+  const onCloseRef = React.useRef(onClose)
+  React.useEffect(() => {
+    onCloseRef.current = onClose
+  })
+
   React.useEffect(() => {
     if (!open) return
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
+      if (e.key === 'Escape') onCloseRef.current()
     }
     document.addEventListener('keydown', onKey)
     const prevOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-    // Move focus into dialog for keyboard users
-    const t = window.setTimeout(() => contentRef.current?.focus(), 30)
+    // Move focus into dialog for keyboard users — hanya sekali saat terbuka,
+    // dan jangan merebut fokus dari kontrol yang sedang diketik user.
+    const t = window.setTimeout(() => {
+      const el = contentRef.current
+      if (!el) return
+      if (el.contains(document.activeElement)) return
+      el.focus()
+    }, 30)
     return () => {
       document.removeEventListener('keydown', onKey)
       document.body.style.overflow = prevOverflow
       window.clearTimeout(t)
     }
-  }, [open, onClose])
+  }, [open])
 
   if (!open) return null
 
