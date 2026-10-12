@@ -1,54 +1,51 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { LuLayoutGrid } from 'react-icons/lu'
 import { CompanyLogo } from '../CompanyLogo'
 import type { RankedJobResult } from '../../types/data'
+import officesupport from '../../assets/officesupport.jpg'
+import hostlive from '../../assets/hostlive.webp'
+import cs from '../../assets/cs.jpeg'
+import graphicdesign from '../../assets/graphicdesigm.webp'
+import gurules from '../../assets/gurules.webp'
+import barista from '../../assets/barista.jpg'
+import lescoding from '../../assets/lescoding.jpg'
+import kurir from '../../assets/kurir.webp'
+import sales from '../../assets/sales.jpg'
+import glintsLogo from '../../assets/portals/glints.png'
+import kitalulusLogo from '../../assets/portals/kitalulus.png'
+import lokeridLogo from '../../assets/portals/lokerid.png'
+import kalibrrLogo from '../../assets/portals/kalibrr.png'
 
-const CATEGORY_ICONS: Array<{ match: string; label: string; icon: React.ReactNode }> = [
-  {
-    match: 'Retail',
-    label: 'Retail & Sales',
-    icon: <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />,
-  },
-  {
-    match: 'Design',
-    label: 'Design & Creative',
-    icon: <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />,
-  },
-  {
-    match: 'Education',
-    label: 'Education & Tutoring',
-    icon: <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />,
-  },
-  {
-    match: 'Food',
-    label: 'Food & Beverage',
-    icon: <path strokeLinecap="round" strokeLinejoin="round" d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3" />,
-  },
-  {
-    match: 'Technology',
-    label: 'Technology Support',
-    icon: <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />,
-  },
-  {
-    match: 'Hospitality',
-    label: 'Hospitality',
-    icon: <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />,
-  },
-  {
-    match: 'Administrative',
-    label: 'Administrative',
-    icon: <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />,
-  },
-  {
-    match: 'Marketing',
-    label: 'Marketing',
-    icon: <path strokeLinecap="round" strokeLinejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z" />,
-  },
-  {
-    match: 'Customer',
-    label: 'Customer Service',
-    icon: <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />,
-  },
+// 4 portal resmi yang benar-benar dipakai sebagai sumber scraping lowongan.
+// Logo diambil langsung dari domain masing-masing (bukan rekonstruksi).
+const SOURCE_PORTALS: Array<{ name: string; logo: string }> = [
+  { name: 'Glints', logo: glintsLogo },
+  { name: 'Loker.id', logo: lokeridLogo },
+  { name: 'KitaLulus', logo: kitalulusLogo },
+  { name: 'Kalibrr', logo: kalibrrLogo },
 ]
+
+// Card 380x240 (landscape ~1.58), foto asli campur portrait/square.
+// Tiap foto punya titik fokus + zoom sendiri supaya area aktivitasnya
+// (tangan, alat kerja, benda kerjaan) yang kelihatan, bukan cuma wajah.
+const CATEGORY_CARDS: Array<{
+  match: string
+  label: string
+  image: string
+  focus: string
+  zoom: number
+}> = [
+  { match: 'Admin', label: 'Admin & Office Support', image: officesupport, focus: '50% 46%', zoom: 1.06 },
+  { match: 'Content', label: 'Content & Media', image: hostlive, focus: '50% 42%', zoom: 1.06 },
+  { match: 'Customer', label: 'Customer Service & Support', image: cs, focus: '58% 58%', zoom: 1.1 },
+  { match: 'Design', label: 'Design & Creative', image: graphicdesign, focus: '50% 50%', zoom: 1.1 },
+  { match: 'Education', label: 'Education & Tutoring', image: gurules, focus: '50% 48%', zoom: 1.08 },
+  { match: 'Food', label: 'Food & Beverage (F&B)', image: barista, focus: '44% 62%', zoom: 1.28 },
+  { match: 'IT & Software', label: 'IT & Software', image: lescoding, focus: '50% 55%', zoom: 1.08 },
+  { match: 'Logistics', label: 'Logistics & Delivery', image: kurir, focus: '50% 55%', zoom: 1.06 },
+  { match: 'Marketing', label: 'Marketing & Sales', image: sales, focus: '50% 55%', zoom: 1.06 },
+]
+
 
 export function CategoryGrid({
   jobs,
@@ -59,6 +56,74 @@ export function CategoryGrid({
   onSelectCategory: (cat: string) => void
   onExploreAll: () => void
 }) {
+  const trackRef = useRef<HTMLDivElement>(null)
+  const [pages, setPages] = useState(1)
+  const [active, setActive] = useState(0)
+
+  const cardStep = () => {
+    const el = trackRef.current
+    const card = el?.firstElementChild as HTMLElement | null
+    if (!el || !card) return 0
+    const gap = parseFloat(getComputedStyle(el).columnGap) || 0
+    return card.offsetWidth + gap
+  }
+
+  const cardCount = () => trackRef.current?.querySelectorAll('[data-card]').length ?? 0
+
+  // Dots = jumlah posisi snap yang valid, bukan jumlah card.
+  // Hitung dari jumlah card agar不受 padding track & spacer kanan.
+  const visibleCount = () => {
+    const el = trackRef.current
+    const step = cardStep()
+    if (!el || step === 0) return 1
+    const padLeft = parseFloat(getComputedStyle(el).scrollPaddingLeft) || 0
+    return Math.max(1, Math.floor((el.clientWidth - padLeft) / step))
+  }
+
+  const lastPage = () => Math.max(0, cardCount() - visibleCount())
+
+  const syncActive = () => {
+    const el = trackRef.current
+    const step = cardStep()
+    if (!el || step === 0) return
+    const last = lastPage()
+    const max = Math.max(0, el.scrollWidth - el.clientWidth)
+    const left = el.scrollLeft
+    // Di ujung kanan selalu anggap halaman terakhir, walau bukan kelipatan step.
+    const index = left >= max - 2 ? last : Math.round(left / step)
+    setActive(Math.min(last, Math.max(0, index)))
+  }
+
+  const measure = () => {
+    setPages(lastPage() + 1)
+    syncActive()
+  }
+
+  const goTo = (i: number) => {
+    const el = trackRef.current
+    const step = cardStep()
+    if (!el || step === 0) return
+    const last = lastPage()
+    const clamped = Math.min(last, Math.max(0, i))
+    setActive(clamped)
+    // Halaman terakhir harus menyentor total ke kanan, bukan kelipatan step.
+    // Kalau tidak, kartu biru cuma kelihatan setipis garis di tepi.
+    const left = clamped === last ? Math.max(0, el.scrollWidth - el.clientWidth) : clamped * step
+    el.scrollTo({ left, behavior: 'smooth' })
+  }
+
+  const scroll = (dir: 1 | -1) => goTo(active + dir)
+
+  useEffect(() => {
+    measure()
+    const ro = new ResizeObserver(measure)
+    if (trackRef.current) ro.observe(trackRef.current)
+    window.addEventListener('resize', measure)
+    return () => {
+      ro.disconnect()
+      window.removeEventListener('resize', measure)
+    }
+  }, [])
   return (
     <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <div className="space-y-6">
@@ -70,50 +135,69 @@ export function CategoryGrid({
         </div>
 
         <div className="relative">
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
-            {CATEGORY_ICONS.map((c) => {
-              const count = jobs.filter((j) => (j.job_category || '').toLowerCase().includes(c.match.toLowerCase())).length
+          <div
+            ref={trackRef}
+            onScroll={syncActive}
+            className="flex gap-3 sm:gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth snap-pl-4 snap-pr-14 sm:snap-pl-10 sm:snap-pr-10 pb-2 px-4 sm:px-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {CATEGORY_CARDS.map((c) => {
               return (
                 <button
                   key={c.match}
-                  onClick={() => onSelectCategory(jobs.find((j) => (j.job_category || '').toLowerCase().includes(c.match.toLowerCase()))?.job_category || c.label)}
-                  className="relative overflow-hidden bg-white border border-slate-200 hover:border-slate-400 hover:bg-slate-50/50 rounded-xl p-3.5 sm:p-4 transition-all cursor-pointer group flex items-center justify-between min-h-[76px] text-left"
+                  data-card
+                  onClick={() => onSelectCategory(jobs.find((j) => (j.job_category || '').toLowerCase().includes(c.match.toLowerCase()))?.job_category || c.match)}
+                  className="relative shrink-0 w-[78vw] max-w-[340px] sm:w-[380px] sm:max-w-none h-[220px] sm:h-[240px] rounded-2xl overflow-hidden text-left snap-start cursor-pointer border border-slate-200"
                 >
-                  <div className="relative z-10 min-w-0 pr-8 text-left">
-                    <h3 className="text-xs sm:text-sm font-medium text-slate-900 group-hover:text-slate-950 transition-colors truncate">{c.label}</h3>
-                    <p className="text-[11px] text-slate-400 font-light mt-0.5">{count} Jobs Available</p>
-                  </div>
-                  <div className="absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none text-slate-200 group-hover:text-slate-300 transition-colors">
-                    <svg className="w-14 h-14" fill="none" stroke="currentColor" strokeWidth="1.3" viewBox="0 0 24 24">
-                      {c.icon}
-                    </svg>
+                  <img
+                    src={c.image}
+                    alt={c.label}
+                    loading="lazy"
+                    style={{ objectPosition: c.focus, transform: `scale(${c.zoom})` }}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/90 via-black/60 via-40% to-black/20 to-transparent pointer-events-none" />
+                  <div className="absolute bottom-0 inset-x-0 p-4">
+                    <h3 className="text-sm sm:text-base font-medium text-white leading-snug">{c.label}</h3>
+                    <span className="inline-flex items-center gap-1 mt-2 text-[11px] font-semibold text-white bg-[#0C52EE] px-2.5 py-1 rounded-full">Lihat {">"}</span>
                   </div>
                 </button>
               )
             })}
 
             <button
+              data-card
               onClick={onExploreAll}
-              className="relative overflow-hidden bg-white border border-slate-200 hover:border-slate-400 hover:bg-slate-50/50 rounded-xl p-3.5 sm:p-4 transition-all cursor-pointer group flex items-center justify-between min-h-[76px] text-left"
+              className="relative shrink-0 w-[78vw] max-w-[340px] sm:w-[380px] sm:max-w-none h-[220px] sm:h-[240px] rounded-2xl overflow-hidden snap-start snap-end cursor-pointer border border-[#0C52EE] bg-[#0C52EE] text-white flex items-center text-left"
             >
-              <div className="relative z-10 min-w-0 pr-8 text-left">
-                <h3 className="text-xs sm:text-sm font-medium text-[#0C52EE] group-hover:text-slate-900 transition-colors truncate">Semua Lowongan</h3>
-                <p className="text-[11px] text-slate-400 font-light mt-0.5">Explore Portal {"\u2192"}</p>
-              </div>
-              <div className="absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none text-slate-200 group-hover:text-slate-300 transition-colors">
-                <svg className="w-14 h-14" fill="none" stroke="currentColor" strokeWidth="1.3" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                </svg>
+              {/* overlay icon besar di kanan, dipotong tepi card */}
+              <LuLayoutGrid
+                aria-hidden="true"
+                className="pointer-events-none absolute -right-6 top-1/2 -translate-y-1/2 text-[190px] leading-none text-white/12 select-none"
+              />
+
+              <div className="relative z-10 px-6 sm:px-7">
+                <h3 className="text-base sm:text-lg font-semibold text-white leading-snug">Explore</h3>
+                Semua Lowongan {">"}
               </div>
             </button>
           </div>
 
-          <div className="flex items-center justify-center gap-1.5 pt-4">
-            <span className="w-2 h-2 rounded-full bg-slate-300" />
-            <span className="w-2 h-2 rounded-full bg-[#0C52EE]" />
-            <span className="w-2 h-2 rounded-full bg-slate-300" />
-            <span className="w-2 h-2 rounded-full bg-slate-300" />
-          </div>
+          <button onClick={() => scroll(-1)} aria-label="Prev" className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border border-slate-200 shadow items-center justify-center text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none" disabled={active === 0}>{"<"}</button>
+          <button onClick={() => scroll(1)} aria-label="Next" className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border border-slate-200 shadow items-center justify-center text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none" disabled={active >= pages - 1}>{">"}</button>
+        </div>
+
+        <div className="flex items-center justify-center gap-2">
+          {Array.from({ length: pages }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              aria-label={`Ke halaman ${i + 1}`}
+              aria-current={i === active}
+              className={`h-2 rounded-full transition-all ${
+                i === active ? 'w-6 bg-[#0C52EE]' : 'w-2 bg-slate-300 hover:bg-slate-400'
+              }`}
+            />
+          ))}
         </div>
       </div>
     </section>
@@ -218,12 +302,18 @@ export function StatsPartners({ jobs }: { jobs: RankedJobResult[] }) {
           </div>
         </div>
 
-        <div className="pt-4 flex flex-wrap items-center justify-center gap-8 sm:gap-12 text-slate-400 font-medium text-xs sm:text-sm grayscale opacity-75">
-          <span>Glints</span>
-          <span>Jobstreet</span>
-          <span>Kalibrr</span>
-          <span>LinkedIn</span>
-          <span>Indeed</span>
+        <div className="pt-6 flex flex-wrap items-center justify-center gap-x-10 sm:gap-x-14 gap-y-5">
+          {SOURCE_PORTALS.map((portal) => (
+            <div key={portal.name} className="flex items-center gap-2.5 opacity-80">
+              <img
+                src={portal.logo}
+                alt={`${portal.name} logo`}
+                loading="lazy"
+                className="h-6 w-6 object-contain shrink-0"
+              />
+              <span className="text-xs sm:text-sm font-medium text-slate-500">{portal.name}</span>
+            </div>
+          ))}
         </div>
       </div>
     </section>

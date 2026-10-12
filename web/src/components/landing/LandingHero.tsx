@@ -54,8 +54,6 @@ export function LandingHero({ totalJobs, onEnterPortal }: LandingHeroProps) {
             ))}
           </div>
           <span className="text-slate-700 font-medium">Untuk Mahasiswa Aktif</span>
-          <span className="text-slate-300">{"\u2022"}</span>
-          <span className="text-slate-500">{totalJobs} Lowongan Terverifikasi</span>
         </div>
       </div>
     </section>
