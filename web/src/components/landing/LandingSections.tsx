@@ -368,7 +368,7 @@ export function LandingFooter({
 }) {
   return (
     <footer className="bg-white border-t border-slate-200 py-10 px-4 sm:px-6 lg:px-8 text-xs text-slate-500 font-light">
-      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-8 mb-8">
         <div className="space-y-2 col-span-2 md:col-span-1">
           <div className="font-medium text-slate-900 text-base">upmatch</div>
           <p className="text-[11px] text-slate-400 leading-relaxed font-light">
@@ -380,12 +380,6 @@ export function LandingFooter({
           <p><button onClick={() => onNavigate('landing')} className="hover:text-[#0C52EE]">Beranda</button></p>
           <p><button onClick={() => onNavigate('portal')} className="hover:text-[#0C52EE]">Lowongan</button></p>
           <p><button onClick={() => onNavigate('matrix')} className="hover:text-[#0C52EE]">Perhitungan SPK</button></p>
-        </div>
-        <div className="space-y-1.5">
-          <h4 className="font-medium text-slate-900 text-xs">Metodologi</h4>
-          <p className="text-slate-400">CRISP-DM Fase 3</p>
-          <p className="text-slate-400">Rank Order Centroid</p>
-          <p className="text-slate-400">SMARTER Multi-Attribute</p>
         </div>
         <div className="space-y-1.5">
           <h4 className="font-medium text-slate-900 text-xs">Untuk Siapa</h4>

@@ -59,7 +59,7 @@ export function JobDetailPane({
     <section
       key={job.job_id}
       aria-label={`Detail ${job.job_title}`}
-      className="bg-white border border-slate-200 rounded-xl p-6 sticky top-20 shadow-xs space-y-5"
+      className="bg-white border border-slate-200 rounded-xl p-6 shadow-xs space-y-5"
     >
       <div className="flex items-start justify-between gap-4 pb-4 border-b border-slate-100">
         <div className="flex items-start gap-3 min-w-0">

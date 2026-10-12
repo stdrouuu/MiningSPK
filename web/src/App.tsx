@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { Routes, Route, Navigate, useNavigate, useLocation, useSearchParams } from 'react-router-dom'
 import { RiErrorWarningLine } from 'react-icons/ri'
 import { PortalHeader } from './components/PortalHeader'
@@ -340,6 +340,31 @@ type SharedState = {
   setSortBy: React.Dispatch<React.SetStateAction<'match' | 'salary-high' | 'salary-low' | 'hours-low'>>
 }
 
+/**
+ * Membangun daftar token halaman untuk paginasi: selalu tampilkan halaman 1,
+ * halaman terakhir, dan jendela di sekitar halaman aktif. Celah > 1 diringkas
+ * menjadi elipsis ("…") supaya Controls tidak melebar.
+ */
+function buildPageTokens(current: number, total: number): (number | 'ellipsis')[] {
+  if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1)
+
+  const pages = new Set<number>([1, total])
+  for (let p = current - 1; p <= current + 1; p++) {
+    if (p >= 1 && p <= total) pages.add(p)
+  }
+  // Di dekat ujung, perluas jendela agar tidak ada elipsis bolong di tepi
+  if (current <= 3) [2, 3, 4].forEach((p) => p <= total && pages.add(p))
+  if (current >= total - 2) [total - 3, total - 2, total - 1].forEach((p) => p >= 1 && pages.add(p))
+
+  const sorted = Array.from(pages).sort((a, b) => a - b)
+  const tokens: (number | 'ellipsis')[] = []
+  sorted.forEach((p, i) => {
+    if (i > 0 && p - sorted[i - 1] > 1) tokens.push('ellipsis')
+    tokens.push(p)
+  })
+  return tokens
+}
+
 // ─── Route: /portal (Job Portal feed) ────────────────────────────────────────
 function PortalRoute({
   state,
@@ -353,6 +378,30 @@ function PortalRoute({
   onToggleSave: (jobId: string) => void
 }) {
   const [searchParams, setSearchParams] = useSearchParams()
+
+  // Paginasi feed lowongan (prev/next) supaya daftar tidak terlalu panjang
+  const PAGE_SIZE = 8
+  const [page, setPage] = useState(0)
+
+  // Reset ke halaman pertama setiap kali filter/pencarian/sortir berubah
+  useEffect(() => {
+    setPage(0)
+  }, [state.searchQuery, state.filterCategory, state.filterWorkSystem, state.sortBy])
+
+  const pageCount = Math.max(1, Math.ceil(state.displayJobs.length / PAGE_SIZE))
+  const safePage = Math.min(page, pageCount - 1)
+  const pagedJobs = useMemo(
+    () => state.displayJobs.slice(safePage * PAGE_SIZE, safePage * PAGE_SIZE + PAGE_SIZE),
+    [state.displayJobs, safePage]
+  )
+  const pageTokens = useMemo(() => buildPageTokens(safePage + 1, pageCount), [safePage, pageCount])
+
+  const listTopRef = useRef<HTMLDivElement | null>(null)
+  const goToPage = (next: number) => {
+    const target = Math.min(Math.max(next, 0), pageCount - 1)
+    setPage(target)
+    listTopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
 
   // Deep-link: /portal?job=JOB_ID -> pilih job tersebut saat halaman dibuka / dibagikan
   useEffect(() => {
@@ -497,8 +546,8 @@ function PortalRoute({
             {/* Status bar */}
             <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:justify-between text-xs text-slate-500 gap-1 font-light px-1" role="status" aria-live="polite">
               <div>
-                Menampilkan <span className="font-medium text-slate-900">{state.displayJobs.length}</span> dari{' '}
-                <span className="font-medium text-slate-900">{state.jobs.length}</span> lowongan untuk{' '}
+                Menampilkan <span className="font-medium text-slate-900">{pagedJobs.length}</span> dari{' '}
+                <span className="font-medium text-slate-900">{state.displayJobs.length}</span> lowongan untuk{' '}
                 <span className="font-medium text-slate-900">{state.studentPrefs.name}</span>
               </div>
               <div className="text-[11px] text-slate-400">
@@ -509,7 +558,7 @@ function PortalRoute({
             {/* Split Master-Detail Layout */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
               {/* Left Column: Job Cards Feed */}
-              <div className="lg:col-span-5 space-y-3" role="listbox" aria-label="Daftar lowongan terurut SPK" aria-activedescendant={state.selectedJob ? `job-${state.selectedJob.job_id}` : undefined}>
+              <div ref={listTopRef} className="lg:col-span-5 space-y-3 scroll-mt-20" role="listbox" aria-label="Daftar lowongan terurut SPK" aria-activedescendant={state.selectedJob ? `job-${state.selectedJob.job_id}` : undefined}>
                 {state.displayJobs.length === 0 ? (
                   <div className="p-8 text-center bg-white border border-slate-200 rounded-xl space-y-2">
                     <p className="font-medium text-slate-800 text-sm">Tidak ada lowongan yang cocok</p>
@@ -519,7 +568,7 @@ function PortalRoute({
                     </button>
                   </div>
                 ) : (
-                  state.displayJobs.map((job, i) => (
+                  pagedJobs.map((job, i) => (
                     <JobCardItem
                       key={job.job_id}
                       job={job}
@@ -535,10 +584,71 @@ function PortalRoute({
                     />
                   ))
                 )}
+
+                {/* Pagination: Previous / nomor halaman / Next */}
+                {state.displayJobs.length > PAGE_SIZE && (
+                  <nav
+                    className="flex flex-wrap items-center justify-center gap-1 pt-1"
+                    aria-label="Paginasi daftar lowongan"
+                  >
+                    <button
+                      type="button"
+                      onClick={() => goToPage(safePage - 1)}
+                      disabled={safePage === 0}
+                      aria-label="Halaman sebelumnya"
+                      className="inline-flex items-center gap-1 h-8 px-2.5 rounded-lg border border-slate-200 bg-white text-xs font-medium text-slate-500 transition hover:border-[#0C52EE] hover:text-[#0C52EE] disabled:opacity-40 disabled:pointer-events-none"
+                    >
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                      </svg>
+                      <span className="hidden sm:inline">Previous</span>
+                    </button>
+
+                    {pageTokens.map((token, i) =>
+                      token === 'ellipsis' ? (
+                        <span
+                          key={`gap-${i}`}
+                          className="w-6 h-8 inline-flex items-center justify-center text-xs text-slate-400 select-none"
+                          aria-hidden="true"
+                        >
+                          …
+                        </span>
+                      ) : (
+                        <button
+                          key={token}
+                          type="button"
+                          onClick={() => goToPage(token - 1)}
+                          aria-label={`Halaman ${token}`}
+                          aria-current={token === safePage + 1 ? 'page' : undefined}
+                          className={`h-8 min-w-8 px-2 rounded-lg text-xs font-medium tabular-nums transition ${
+                            token === safePage + 1
+                              ? 'bg-[#0C52EE] text-white shadow-xs'
+                              : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                          }`}
+                        >
+                          {token}
+                        </button>
+                      )
+                    )}
+
+                    <button
+                      type="button"
+                      onClick={() => goToPage(safePage + 1)}
+                      disabled={safePage >= pageCount - 1}
+                      aria-label="Halaman berikutnya"
+                      className="inline-flex items-center gap-1 h-8 px-2.5 rounded-lg border border-slate-200 bg-white text-xs font-medium text-slate-500 transition hover:border-[#0C52EE] hover:text-[#0C52EE] disabled:opacity-40 disabled:pointer-events-none"
+                    >
+                      <span className="hidden sm:inline">Next</span>
+                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </button>
+                  </nav>
+                )}
               </div>
 
-              {/* Right Column: detail panel (sticky handled inside component) */}
-              <div className="lg:col-span-7">
+              {/* Right Column: detail panel — sticky, scroll sendiri */}
+              <div className="lg:col-span-7 sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto overscroll-contain">
                 <JobDetailPane
                   job={state.selectedJob}
                   studentPrefs={state.studentPrefs}

@@ -66,15 +66,7 @@ export function PortalHeader({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-8">
           <button onClick={() => navigate(ROUTES.LANDING)} className="flex items-center group focus:outline-none text-left">
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-xl font-medium tracking-tight text-slate-900">upmatch</span>
-              {activeView !== 'jobs' && (
-                <>
-                  <span className="text-slate-300 font-light">—</span>
-                  <span className="text-xs font-medium uppercase tracking-wider text-slate-500">portal kerja</span>
-                </>
-              )}
-            </div>
+            <span className="text-xl font-medium tracking-tight text-slate-900">upmatch</span>
           </button>
 
           <nav className="hidden md:flex items-center gap-2 text-xs sm:text-sm font-normal">
