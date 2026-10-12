@@ -12,6 +12,12 @@ export interface StudentPreferences {
   avatarStyle: string
   /** Seed avatar DiceBear — default diisi NIM mahasiswa. */
   avatarSeed: string
+  /**
+   * True bila profil sudah diisi user (selesai kuesioner / isi nama manual).
+   * Selama false, semua skor % kecocokan & chip preferensi DISEMBUNYIKAN
+   * karena Dihitung dari nilai default, bukan data user (menyesatkan).
+   */
+  profileComplete: boolean
   // Prioritas 1 sampai 5 untuk kriteria SPK
   priorityRank: {
     C1_kategori: number
@@ -23,17 +29,18 @@ export interface StudentPreferences {
 }
 
 export const DEFAULT_STUDENT_PREFERENCES: StudentPreferences = {
-  name: 'David Santoso',
-  nim: '412024001',
+  name: '',
+  nim: '',
   major: 'Informatika',
   minSalary: 35000,
   maxHours: 18,
   location: 'Jakarta Barat',
   workSystem: 'ALL',
   preferredCategory: 'Education & Tutoring',
-  skills: 'hospitality, espresso machine, manual brew, kebersihan bar, pelayanan ramah, komunikasi',
+  skills: '',
   avatarStyle: '',
-  avatarSeed: '412024001',
+  avatarSeed: '',
+  profileComplete: false,
   priorityRank: {
     C1_kategori: 1, // Kategori prioritas 1
     C2_gaji: 2,     // Gaji prioritas 2

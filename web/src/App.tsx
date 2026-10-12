@@ -9,6 +9,7 @@ import { JobDetailPane } from './components/JobDetailPane'
 import { PreferenceSidebar } from './components/PreferenceSidebar'
 import { SavedJobsModal } from './components/SavedJobsModal'
 import { FullMatrixView } from './components/FullMatrixView'
+import { KuesionerPage } from './components/kuesioner/KuesionerPage'
 import { Button } from './components/ui/Button'
 import type { CleanJob, StudentProfile } from './types/data'
 import type { StudentPreferences } from './types/portal'
@@ -53,8 +54,11 @@ export function App() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  // Student preferences & SPK criteria priority
-  const [studentPrefs, setStudentPrefs] = useState<StudentPreferences>(DEFAULT_STUDENT_PREFERENCES)
+  // Dua sumber profil untuk dua mode (layar sama):
+  // - userPrefs: selalu kosong, diisi user baru via /kuesioner (mode /).
+  // - dataPrefs: dari responden GForm via dropdown avatar (mode /data/*, demo).
+  const [userPrefs, setUserPrefs] = useState<StudentPreferences>(DEFAULT_STUDENT_PREFERENCES)
+  const [dataPrefs, setDataPrefs] = useState<StudentPreferences>(DEFAULT_STUDENT_PREFERENCES)
 
   // Filter & search states (persist across /portal <-> /perhitungan-spk)
   const [searchQuery, setSearchQuery] = useState('')
@@ -80,7 +84,13 @@ export function App() {
     document.documentElement.classList.remove('dark')
   }, [])
 
-  // Load dataset CSV
+  // Mode aktif dilihat dari prefix URL (/data/* = demo data responden).
+  const { pathname } = useLocation()
+  const isDataMode = pathname === ROUTES.DATA || pathname.startsWith('/data/')
+
+  // Load dataset CSV.
+  // userPrefs TIDAK pernah auto-isi (landing / selalu bersih untuk user baru);
+  // hanya dataPrefs yang diisi responden pertama sebagai default mode demo.
   useEffect(() => {
     async function loadData() {
       try {
@@ -93,10 +103,9 @@ export function App() {
         setJobs(jobsData)
         setStudents(studentsData)
 
-        // Set default student data if available
         if (studentsData.length > 0) {
           const s = studentsData[0]
-          setStudentPrefs((prev) => ({
+          setDataPrefs((prev) => ({
             ...prev,
             name: s.student_name,
             nim: s.student_id,
@@ -107,6 +116,7 @@ export function App() {
             skills: s.clean_student_skills || s.student_skills || '',
             avatarSeed: s.student_id,
             avatarStyle: '',
+            profileComplete: true,
           }))
         }
       } catch (err: any) {
@@ -129,10 +139,18 @@ export function App() {
     return Array.from(set).sort()
   }, [jobs])
 
-  // Komputasi SPK dinamis setiap kali preferensi mahasiswa atau prioritas berubah
+  // Profil + setter aktif mengikuti mode URL.
+  const activePrefs = isDataMode ? dataPrefs : userPrefs
+  const updateActivePrefs: React.Dispatch<React.SetStateAction<StudentPreferences>> = (update) => {
+    if (isDataMode) setDataPrefs(update)
+    else setUserPrefs(update)
+  }
+
+  // Komputasi SPK dinamis setiap kali preferensi mode aktif berubah.
+  // /perhitungan-spk user baru = hasil kuesionernya; /data/* = responden terpilih.
   const rankedJobs = useMemo(() => {
-    return computeSPKForCustomStudent(jobs, studentPrefs)
-  }, [jobs, studentPrefs])
+    return computeSPKForCustomStudent(jobs, activePrefs)
+  }, [jobs, activePrefs])
 
   // Filter dan sort hasil untuk tampilan job feed
   const displayJobs = useMemo(() => {
@@ -188,8 +206,11 @@ export function App() {
     students,
     loading,
     error,
-    studentPrefs,
-    setStudentPrefs,
+    studentPrefs: activePrefs,
+    setStudentPrefs: updateActivePrefs,
+    userPrefs,
+    setUserPrefs,
+    isDataMode,
     categories,
     rankedJobs,
     displayJobs,
@@ -208,6 +229,12 @@ export function App() {
     setSortBy,
   }
 
+  // User baru yang profilnya masih kosong diarahkan isi kuesioner dulu.
+  const goFillQuestionnaire = () => {
+    setIsPreferenceOpen(false)
+    navigate(ROUTES.KUESIONER)
+  }
+
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-slate-900 flex flex-col font-sans">
       <ScrollToTop />
@@ -216,6 +243,22 @@ export function App() {
           path={ROUTES.LANDING}
           element={
             <LandingRoute
+              mode="user"
+              savedCount={savedJobIds.length}
+              rankedJobs={rankedJobs}
+              onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
+              setSearchQuery={setSearchQuery}
+              setFilterCategory={setFilterCategory}
+              setSelectedJobId={setSelectedJobId}
+            />
+          }
+        />
+        {/* Mode demo data: beranda yang sama, rekomendasi dari responden terpilih */}
+        <Route
+          path={ROUTES.DATA}
+          element={
+            <LandingRoute
+              mode="data"
               savedCount={savedJobIds.length}
               rankedJobs={rankedJobs}
               onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
@@ -229,10 +272,25 @@ export function App() {
           path={ROUTES.PORTAL}
           element={
             <PortalRoute
+              mode="user"
               state={shared}
               onOpenPreferences={() => setIsPreferenceOpen(true)}
               onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
               onToggleSave={handleToggleSave}
+              onFillQuestionnaire={goFillQuestionnaire}
+            />
+          }
+        />
+        <Route
+          path={ROUTES.DATA_PORTAL}
+          element={
+            <PortalRoute
+              mode="data"
+              state={shared}
+              onOpenPreferences={() => setIsPreferenceOpen(true)}
+              onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
+              onToggleSave={handleToggleSave}
+              onFillQuestionnaire={goFillQuestionnaire}
             />
           }
         />
@@ -240,24 +298,58 @@ export function App() {
           path={ROUTES.MATRIX}
           element={
             <MatrixRoute
+              mode="user"
               state={shared}
               onOpenPreferences={() => setIsPreferenceOpen(true)}
               onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
+              onFillQuestionnaire={goFillQuestionnaire}
             />
           }
         />
-        {/* URL lama / tidak dikenal -> kembali ke landing */}
-        <Route path="*" element={<Navigate to={ROUTES.LANDING} replace />} />
+        <Route
+          path={ROUTES.DATA_MATRIX}
+          element={
+            <MatrixRoute
+              mode="data"
+              state={shared}
+              onOpenPreferences={() => setIsPreferenceOpen(true)}
+              onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
+              onFillQuestionnaire={goFillQuestionnaire}
+            />
+          }
+        />
+        <Route
+          path={ROUTES.KUESIONER}
+          element={
+            <>
+              <KuesionerPage
+                jobs={shared.jobs}
+                students={shared.students}
+                loading={shared.loading}
+                studentPrefs={userPrefs}
+                setStudentPrefs={setUserPrefs}
+                onOpenPreferences={() => setIsPreferenceOpen(true)}
+                onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
+                savedJobsCount={shared.savedJobIds.length}
+              />
+              <PortalFooter onOpenPreferences={() => setIsPreferenceOpen(true)} />
+            </>
+          }
+        />
+        {/* URL lama / tidak dikenal -> kembali ke beranda modenya masing-masing */}
+        <Route path="*" element={<Navigate to={isDataMode ? ROUTES.DATA : ROUTES.LANDING} replace />} />
       </Routes>
 
       {/* Preference Drawer / Modal (global, bisa dibuka dari semua URL) */}
       <PreferenceSidebar
         open={isPreferenceOpen}
         onClose={() => setIsPreferenceOpen(false)}
-        preferences={studentPrefs}
-        onUpdatePreferences={setStudentPrefs}
+        preferences={activePrefs}
+        onUpdatePreferences={updateActivePrefs}
         studentPresets={students}
         categories={categories}
+        mode={isDataMode ? 'data' : 'user'}
+        onFillQuestionnaire={goFillQuestionnaire}
       />
 
       {/* Saved Jobs Modal (global) */}
@@ -269,15 +361,17 @@ export function App() {
         onSelectJob={(job) => {
           setSelectedJobId(job.job_id)
           setIsSavedJobsOpen(false)
-          navigate(`${ROUTES.PORTAL}?job=${encodeURIComponent(job.job_id)}`)
+          const portalPath = isDataMode ? ROUTES.DATA_PORTAL : ROUTES.PORTAL
+          navigate(`${portalPath}?job=${encodeURIComponent(job.job_id)}`)
         }}
       />
     </div>
   )
 }
 
-// ─── Route: / (Landing page marketing) ───────────────────────────────────────
+// ─── Route: / & /data (Beranda, layar sama, beda sumber profil) ───────────────
 function LandingRoute({
+  mode,
   savedCount,
   rankedJobs,
   onOpenSavedJobs,
@@ -285,6 +379,7 @@ function LandingRoute({
   setFilterCategory,
   setSelectedJobId,
 }: {
+  mode: 'user' | 'data'
   savedCount: number
   rankedJobs: SharedState['rankedJobs']
   onOpenSavedJobs: () => void
@@ -293,23 +388,25 @@ function LandingRoute({
   setSelectedJobId: (id: string | null) => void
 }) {
   const navigate = useNavigate()
+  const portalPath = mode === 'data' ? ROUTES.DATA_PORTAL : ROUTES.PORTAL
 
   return (
     <LandingPage
+      mode={mode}
       savedCount={savedCount}
       jobs={rankedJobs}
       onOpenSavedJobs={onOpenSavedJobs}
       onQuickSearch={(q) => {
         setSearchQuery(q)
-        navigate(ROUTES.PORTAL)
+        navigate(portalPath)
       }}
       onSelectCategory={(cat) => {
         setFilterCategory(cat)
-        navigate(ROUTES.PORTAL)
+        navigate(portalPath)
       }}
       onOpenJob={(job) => {
         setSelectedJobId(job.job_id)
-        navigate(`${ROUTES.PORTAL}?job=${encodeURIComponent(job.job_id)}`)
+        navigate(`${portalPath}?job=${encodeURIComponent(job.job_id)}`)
       }}
     />
   )
@@ -322,6 +419,9 @@ type SharedState = {
   error: string | null
   studentPrefs: StudentPreferences
   setStudentPrefs: React.Dispatch<React.SetStateAction<StudentPreferences>>
+  userPrefs: StudentPreferences
+  setUserPrefs: React.Dispatch<React.SetStateAction<StudentPreferences>>
+  isDataMode: boolean
   categories: string[]
   rankedJobs: ReturnType<typeof computeSPKForCustomStudent>
   displayJobs: ReturnType<typeof computeSPKForCustomStudent>
@@ -365,19 +465,26 @@ function buildPageTokens(current: number, total: number): (number | 'ellipsis')[
   return tokens
 }
 
-// ─── Route: /portal (Job Portal feed) ────────────────────────────────────────
+// ─── Route: /portal & /data/portal (feed sama, beda sumber profil) ─────────────
 function PortalRoute({
+  mode,
   state,
   onOpenPreferences,
   onOpenSavedJobs,
   onToggleSave,
+  onFillQuestionnaire,
 }: {
+  mode: 'user' | 'data'
   state: SharedState
   onOpenPreferences: () => void
   onOpenSavedJobs: () => void
   onToggleSave: (jobId: string) => void
+  onFillQuestionnaire: () => void
 }) {
   const [searchParams, setSearchParams] = useSearchParams()
+  // Profil user baru belum terisi (kuesioner belum selesai) -> sembunyikan
+  // semua skor % & chip preferensi yang dihitung dari nilai default.
+  const isProfileEmpty = mode === 'user' && !state.studentPrefs.profileComplete
 
   // Paginasi feed lowongan (prev/next) supaya daftar tidak terlalu panjang
   const PAGE_SIZE = 8
@@ -424,6 +531,7 @@ function PortalRoute({
   return (
     <>
       <PortalHeader
+        mode={mode}
         activeView="jobs"
         studentPrefs={state.studentPrefs}
         onOpenPreferences={onOpenPreferences}
@@ -432,6 +540,21 @@ function PortalRoute({
       />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+        {/* User baru + profil belum terisi -> tawarkan kuesioner sebagai bantuan */}
+        {isProfileEmpty && !state.loading && !state.error && (
+          <section className="bg-[#0C52EE]/[0.04] border border-[#0C52EE]/25 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-3">
+            <div className="flex-1">
+              <h2 className="text-sm font-medium text-slate-900">Dapatkan rekomendasi yang pas buat kamu</h2>
+              <p className="text-xs text-slate-500 font-light mt-0.5">
+                Ceritakan upah, jam, lokasi & skill-mu lewat kuesioner singkat (±3 menit) —
+                221 lowongan langsung diurutkan sesuai kebutuhanmu.
+              </p>
+            </div>
+            <Button size="sm" onClick={onFillQuestionnaire} className="text-xs shrink-0">
+              Mulai kuesioner
+            </Button>
+          </section>
+        )}
         {state.loading ? (
           <div className="space-y-6" role="status" aria-label="Memuat lowongan">
             <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 p-6 sm:p-8 animate-pulse">
@@ -471,11 +594,13 @@ function PortalRoute({
           </div>
         ) : (
           <div className="space-y-6">
-            {/* Banner Hero */}
+            {/* Banner Hero (atau CTA kuesioner bila profil belum terisi) */}
             <PortalHero
               studentPrefs={state.studentPrefs}
               onOpenPreferences={onOpenPreferences}
               totalJobs={state.jobs.length}
+              isProfileEmpty={isProfileEmpty}
+              onFillQuestionnaire={onFillQuestionnaire}
             />
 
             {/* Filter Bar & Controls */}
@@ -548,11 +673,13 @@ function PortalRoute({
               <div>
                 Menampilkan <span className="font-medium text-slate-900">{pagedJobs.length}</span> dari{' '}
                 <span className="font-medium text-slate-900">{state.displayJobs.length}</span> lowongan untuk{' '}
-                <span className="font-medium text-slate-900">{state.studentPrefs.name}</span>
+                <span className="font-medium text-slate-900">{state.studentPrefs.name.trim() || 'kamu'}</span>
               </div>
-              <div className="text-[11px] text-slate-400">
-                {state.studentPrefs.location} {"\u2022"} Rp {state.studentPrefs.minSalary.toLocaleString('id-ID')}/jam {"\u2022"} maks {state.studentPrefs.maxHours} jam/mgg
-              </div>
+              {!isProfileEmpty && (
+                <div className="text-[11px] text-slate-400">
+                  {state.studentPrefs.location} {"\u2022"} Rp {state.studentPrefs.minSalary.toLocaleString('id-ID')}/jam {"\u2022"} maks {state.studentPrefs.maxHours} jam/mgg
+                </div>
+              )}
             </div>
 
             {/* Split Master-Detail Layout */}
@@ -576,6 +703,7 @@ function PortalRoute({
                       isSelected={state.selectedJob?.job_id === job.job_id}
                       onSelect={() => handleSelectJob(job.job_id)}
                       studentPrefs={state.studentPrefs}
+                      hideMatch={isProfileEmpty}
                       isSaved={state.savedJobIds.includes(job.job_id)}
                       onToggleSave={(e) => {
                         e.stopPropagation()
@@ -652,6 +780,8 @@ function PortalRoute({
                 <JobDetailPane
                   job={state.selectedJob}
                   studentPrefs={state.studentPrefs}
+                  hideAnalysis={isProfileEmpty}
+                  onFillQuestionnaire={onFillQuestionnaire}
                   isSaved={!!state.selectedJob && state.savedJobIds.includes(state.selectedJob.job_id)}
                   onToggleSave={() => state.selectedJob && onToggleSave(state.selectedJob.job_id)}
                   onOpenPreferences={onOpenPreferences}
@@ -667,21 +797,29 @@ function PortalRoute({
   )
 }
 
-// ─── Route: /perhitungan-spk (Matriks SPK SMARTER) ────────────────────────────
+// ─── Route: /perhitungan-spk & /data/perhitungan-spk (hasil ikut mode) ─────────
+// Mode user = hasil kuesioner user baru; mode data = responden terpilih.
 function MatrixRoute({
+  mode,
   state,
   onOpenPreferences,
   onOpenSavedJobs,
+  onFillQuestionnaire,
 }: {
+  mode: 'user' | 'data'
   state: SharedState
   onOpenPreferences: () => void
   onOpenSavedJobs: () => void
+  onFillQuestionnaire: () => void
 }) {
   const navigate = useNavigate()
+  const portalPath = mode === 'data' ? ROUTES.DATA_PORTAL : ROUTES.PORTAL
+  const isProfileEmpty = mode === 'user' && !state.studentPrefs.profileComplete
 
   return (
     <>
       <PortalHeader
+        mode={mode}
         activeView="matrix"
         studentPrefs={state.studentPrefs}
         onOpenPreferences={onOpenPreferences}
@@ -709,9 +847,11 @@ function MatrixRoute({
             rankedJobs={state.rankedJobs}
             studentPrefs={state.studentPrefs}
             onOpenPreferences={onOpenPreferences}
+            isProfileEmpty={isProfileEmpty}
+            onFillQuestionnaire={onFillQuestionnaire}
             onSelectJobForDetail={(job) => {
               state.setSelectedJobId(job.job_id)
-              navigate(`${ROUTES.PORTAL}?job=${encodeURIComponent(job.job_id)}`)
+              navigate(`${portalPath}?job=${encodeURIComponent(job.job_id)}`)
             }}
           />
         )}

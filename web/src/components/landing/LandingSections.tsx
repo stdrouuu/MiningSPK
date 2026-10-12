@@ -114,6 +114,40 @@ export function CategoryGrid({
 
   const scroll = (dir: 1 | -1) => goTo(active + dir)
 
+  // Drag-to-scroll dengan mouse (pointer events)
+  const dragRef = useRef({ dragging: false, startX: 0, startScroll: 0, moved: false })
+
+  const onPointerDown = (e: React.PointerEvent) => {
+    const el = trackRef.current
+    if (!el) return
+    e.preventDefault() // cegah gambar ikut ter-drag
+    dragRef.current = { dragging: true, startX: e.clientX, startScroll: el.scrollLeft, moved: false }
+    el.setPointerCapture(e.pointerId)
+  }
+
+  const onPointerMove = (e: React.PointerEvent) => {
+    const el = trackRef.current
+    if (!el || !dragRef.current.dragging) return
+    const dx = e.clientX - dragRef.current.startX
+    if (Math.abs(dx) > 5) dragRef.current.moved = true
+    el.scrollLeft = dragRef.current.startScroll - dx
+  }
+
+  const onPointerUp = (e: React.PointerEvent) => {
+    const el = trackRef.current
+    if (el && el.hasPointerCapture(e.pointerId)) el.releasePointerCapture(e.pointerId)
+    dragRef.current.dragging = false
+  }
+
+  // Cegah klik kartu terpicu setelah drag
+  const onClickCapture = (e: React.MouseEvent) => {
+    if (dragRef.current.moved) {
+      e.preventDefault()
+      e.stopPropagation()
+      dragRef.current.moved = false
+    }
+  }
+
   useEffect(() => {
     measure()
     const ro = new ResizeObserver(measure)
@@ -138,7 +172,12 @@ export function CategoryGrid({
           <div
             ref={trackRef}
             onScroll={syncActive}
-            className="flex gap-3 sm:gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth snap-pl-4 snap-pr-14 sm:snap-pl-10 sm:snap-pr-10 pb-2 px-4 sm:px-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            onPointerDown={onPointerDown}
+            onPointerMove={onPointerMove}
+            onPointerUp={onPointerUp}
+            onPointerCancel={onPointerUp}
+            onClickCapture={onClickCapture}
+            className="flex gap-3 sm:gap-4 overflow-x-auto snap-x snap-mandatory scroll-smooth snap-pl-4 snap-pr-14 sm:snap-pl-10 sm:snap-pr-10 pb-2 px-4 sm:px-10 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden cursor-grab active:cursor-grabbing select-none"
           >
             {CATEGORY_CARDS.map((c) => {
               return (
@@ -146,17 +185,18 @@ export function CategoryGrid({
                   key={c.match}
                   data-card
                   onClick={() => onSelectCategory(jobs.find((j) => (j.job_category || '').toLowerCase().includes(c.match.toLowerCase()))?.job_category || c.match)}
-                  className="relative shrink-0 w-[78vw] max-w-[340px] sm:w-[380px] sm:max-w-none h-[220px] sm:h-[240px] rounded-2xl overflow-hidden text-left snap-start cursor-pointer border border-slate-200"
+                  className="relative shrink-0 w-[78vw] max-w-[340px] sm:w-[380px] sm:max-w-none h-[220px] sm:h-[240px] rounded-2xl overflow-hidden text-left snap-start cursor-pointer border border-slate-200 transition-all duration-200 hover:shadow-lg hover:scale-[1.02] hover:border-slate-300"
                 >
                   <img
                     src={c.image}
                     alt={c.label}
                     loading="lazy"
+                    draggable={false}
                     style={{ objectPosition: c.focus, transform: `scale(${c.zoom})` }}
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className="absolute inset-0 w-full h-full object-cover select-none"
                   />
-                  <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/90 via-black/60 via-40% to-black/20 to-transparent pointer-events-none" />
-                  <div className="absolute bottom-0 inset-x-0 p-4">
+                  <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-black/90 via-black/50 via-45% to-transparent pointer-events-none" />
+                  <div className="absolute bottom-0 inset-x-0 p-5 pb-6">
                     <h3 className="text-sm sm:text-base font-medium text-white leading-snug">{c.label}</h3>
                     <span className="inline-flex items-center gap-1 mt-2 text-[11px] font-semibold text-white bg-[#0C52EE] px-2.5 py-1 rounded-full">Lihat {">"}</span>
                   </div>
@@ -164,10 +204,9 @@ export function CategoryGrid({
               )
             })}
 
-            <button
+            <div
               data-card
-              onClick={onExploreAll}
-              className="relative shrink-0 w-[78vw] max-w-[340px] sm:w-[380px] sm:max-w-none h-[220px] sm:h-[240px] rounded-2xl overflow-hidden snap-start snap-end cursor-pointer border border-[#0C52EE] bg-[#0C52EE] text-white flex items-center text-left"
+              className="relative shrink-0 w-[78vw] max-w-[340px] sm:w-[380px] sm:max-w-none h-[220px] sm:h-[240px] rounded-2xl overflow-hidden snap-start snap-end border border-[#0C52EE] bg-[#0C52EE] text-white flex items-center text-left transition-all duration-200 hover:shadow-lg hover:scale-[1.02] hover:bg-[#0a48d6]"
             >
               {/* overlay icon besar di kanan, dipotong tepi card */}
               <LuLayoutGrid
@@ -177,27 +216,39 @@ export function CategoryGrid({
 
               <div className="relative z-10 px-6 sm:px-7">
                 <h3 className="text-base sm:text-lg font-semibold text-white leading-snug">Explore</h3>
-                Semua Lowongan {">"}
+                <button
+                  onClick={onExploreAll}
+                  className="mt-1 inline-flex items-center gap-1.5 text-sm font-medium text-white underline underline-offset-4 hover:text-blue-100 transition-colors cursor-pointer"
+                >
+                  Semua Lowongan
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+                </button>
               </div>
-            </button>
+            </div>
           </div>
 
-          <button onClick={() => scroll(-1)} aria-label="Prev" className="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border border-slate-200 shadow items-center justify-center text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none" disabled={active === 0}>{"<"}</button>
-          <button onClick={() => scroll(1)} aria-label="Next" className="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white border border-slate-200 shadow items-center justify-center text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none" disabled={active >= pages - 1}>{">"}</button>
         </div>
 
-        <div className="flex items-center justify-center gap-2">
-          {Array.from({ length: pages }).map((_, i) => (
-            <button
-              key={i}
-              onClick={() => goTo(i)}
-              aria-label={`Ke halaman ${i + 1}`}
-              aria-current={i === active}
-              className={`h-2 rounded-full transition-all ${
-                i === active ? 'w-6 bg-[#0C52EE]' : 'w-2 bg-slate-300 hover:bg-slate-400'
-              }`}
-            />
-          ))}
+        <div className="flex items-center justify-center gap-3">
+          <button onClick={() => scroll(-1)} aria-label="Sebelumnya" className="w-8 h-8 rounded-full bg-white border border-slate-200 shadow flex items-center justify-center text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none cursor-pointer" disabled={active === 0}>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
+          </button>
+          <div className="flex items-center gap-2">
+            {Array.from({ length: pages }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goTo(i)}
+                aria-label={`Ke halaman ${i + 1}`}
+                aria-current={i === active}
+                className={`h-2 rounded-full transition-all ${
+                  i === active ? 'w-6 bg-[#0C52EE]' : 'w-2 bg-slate-300 hover:bg-slate-400'
+                }`}
+              />
+            ))}
+          </div>
+          <button onClick={() => scroll(1)} aria-label="Berikutnya" className="w-8 h-8 rounded-full bg-white border border-slate-200 shadow flex items-center justify-center text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none cursor-pointer" disabled={active >= pages - 1}>
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+          </button>
         </div>
       </div>
     </section>
@@ -220,20 +271,19 @@ export function FeaturedJobs({
         <div className="text-center space-y-1.5 max-w-2xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-medium tracking-tight text-slate-900">Explore The Latest Job Openings</h2>
           <p className="text-xs sm:text-sm text-slate-400 font-light">
-            Daftar pekerjaan paruh waktu terverifikasi terkini yang cocok untuk jadwal kuliahmu.
+            Daftar pekerjaan part-time yang mungkin cocok dengan jadwal kuliahmu !
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {featured.map((job) => {
-            const pct = Math.round(Math.min(100, Math.max(0, job.finalScore * 100)))
             return (
               <button
                 key={job.job_id}
                 onClick={() => onOpenJob(job)}
                 className="p-4 bg-white border border-slate-200 hover:border-slate-300 rounded-xl text-left transition-all shadow-2xs cursor-pointer"
               >
-                <div className="flex items-start justify-between gap-3">
+                <div className="flex items-start gap-3">
                   <div className="flex items-center gap-3 min-w-0">
                     <CompanyLogo companyName={job.company_name} logoUrl={job.company_logo} />
                     <div className="min-w-0">
@@ -241,11 +291,8 @@ export function FeaturedJobs({
                       <p className="text-[11px] text-slate-500 font-light truncate">{job.company_name}</p>
                     </div>
                   </div>
-                  <span className="px-2 py-0.5 rounded-md text-[11px] font-medium bg-blue-50 border border-blue-200 text-[#0C52EE] shrink-0">
-                    {pct}%
-                  </span>
                 </div>
-                <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-600 font-light">
+                <div className="mt-3 pt-3 border-t border-slate-100 flex items-center gap-4 text-[11px] text-slate-600 font-light">
                   <span className="font-medium text-slate-900">Rp {job.work_salaryperhour.toLocaleString('id-ID')}/jam</span>
                   <span>{job.work_hours} jam/mgg</span>
                   <span className="px-2 py-0.5 rounded border border-slate-200 bg-slate-50 text-slate-600 text-[10px] font-normal">{job.work_system}</span>

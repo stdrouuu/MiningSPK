@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { RiMenuLine, RiCloseLine } from 'react-icons/ri'
 import type { StudentPreferences } from '../types/portal'
 import { ROUTES } from '../lib/routes'
@@ -7,7 +7,9 @@ import { avatarForPrefs } from '../lib/avatar'
 import { navButtonClass, navIndicatorClass } from '../lib/navStyle'
 
 interface PortalHeaderProps {
-  activeView: 'jobs' | 'matrix'
+  /** Mode halaman: user baru (profil kosong) atau demo data responden. */
+  mode: 'user' | 'data'
+  activeView: 'jobs' | 'matrix' | 'kuesioner'
   studentPrefs: StudentPreferences
   onOpenPreferences: () => void
   savedJobsCount: number
@@ -15,6 +17,7 @@ interface PortalHeaderProps {
 }
 
 export function PortalHeader({
+  mode,
   activeView,
   studentPrefs,
   onOpenPreferences,
@@ -49,6 +52,11 @@ export function PortalHeader({
 
   const headerAvatar = avatarForPrefs(studentPrefs)
   const navIndicator = navIndicatorClass()
+  const landingPath = mode === 'data' ? ROUTES.DATA : ROUTES.LANDING
+  const portalPath = mode === 'data' ? ROUTES.DATA_PORTAL : ROUTES.PORTAL
+  const matrixPath = mode === 'data' ? ROUTES.DATA_MATRIX : ROUTES.MATRIX
+  // Profil user baru masih kosong -> tombol profil mengarah isi kuesioner.
+  const isProfileEmpty = mode === 'user' && !studentPrefs.name.trim()
 
   const renderNavButton = (label: string, active: boolean, onClick: () => void) => (
     <button
@@ -65,14 +73,20 @@ export function PortalHeader({
     <header className="w-full bg-white border-b border-slate-200 sticky top-0 z-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-8">
-          <button onClick={() => navigate(ROUTES.LANDING)} className="flex items-center group focus:outline-none text-left">
+          <button onClick={() => navigate(landingPath)} className="flex items-center group focus:outline-none text-left">
             <span className="text-xl font-medium tracking-tight text-slate-900">upmatch</span>
+            {mode === 'data' && (
+              <span className="ml-2 px-1.5 py-0.5 rounded-md bg-amber-100 border border-amber-300 text-[10px] font-medium text-amber-800">
+                demo data
+              </span>
+            )}
           </button>
 
           <nav className="hidden md:flex items-center gap-2 text-xs sm:text-sm font-normal">
-            {renderNavButton('Beranda', false, () => navigate(ROUTES.LANDING))}
-            {renderNavButton('Lowongan', activeView === 'jobs', () => navigate(ROUTES.PORTAL))}
-            {renderNavButton('Perhitungan', activeView === 'matrix', () => navigate(ROUTES.MATRIX))}
+            {renderNavButton('Beranda', false, () => navigate(landingPath))}
+            {renderNavButton('Lowongan', activeView === 'jobs', () => navigate(portalPath))}
+            {renderNavButton('Perhitungan', activeView === 'matrix', () => navigate(matrixPath))}
+            {mode === 'user' && renderNavButton('Kuesioner', activeView === 'kuesioner', () => navigate(ROUTES.KUESIONER))}
           </nav>
         </div>
 
@@ -104,7 +118,7 @@ export function PortalHeader({
                 className="w-7 h-7 rounded-full bg-slate-100 object-cover shrink-0"
               />
               <div className="hidden sm:block text-xs leading-tight">
-                <div className="font-medium text-slate-900 truncate max-w-[120px]">{studentPrefs.name}</div>
+                <div className="font-medium text-slate-900 truncate max-w-[120px]">{studentPrefs.name.trim() || 'User baru'}</div>
                 <div className="text-[10px] text-slate-400 font-light">{studentPrefs.major}</div>
               </div>
               <svg className="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -121,9 +135,11 @@ export function PortalHeader({
                     className="w-10 h-10 rounded-full bg-slate-100 border border-slate-200 object-cover shrink-0"
                   />
                   <div className="flex-1 min-w-0">
-                    <div className="font-medium text-sm text-slate-900 truncate">{studentPrefs.name}</div>
+                    <div className="font-medium text-sm text-slate-900 truncate">{studentPrefs.name.trim() || 'User baru'}</div>
                     <div className="text-xs text-slate-500 font-light">{studentPrefs.major}</div>
-                    <div className="text-[11px] text-[#0C52EE] font-medium">NIM: {studentPrefs.nim}</div>
+                    <div className="text-[11px] text-[#0C52EE] font-medium">
+                      {studentPrefs.nim.trim() ? `NIM: ${studentPrefs.nim}` : 'Belum isi kuesioner'}
+                    </div>
                   </div>
                 </div>
 
@@ -145,11 +161,12 @@ export function PortalHeader({
                 <button
                   onClick={() => {
                     setShowProfileMenu(false)
-                    onOpenPreferences()
+                    if (isProfileEmpty) navigate(ROUTES.KUESIONER)
+                    else onOpenPreferences()
                   }}
                   className="w-full mt-1 bg-[#0C52EE] hover:bg-[#0942c4] text-white text-xs font-medium py-2 px-3 rounded-lg transition-colors text-center"
                 >
-                  Ubah preferensi saya
+                  {isProfileEmpty ? 'Mulai kuesioner' : 'Ubah preferensi saya'}
                 </button>
               </div>
             )}
@@ -168,9 +185,12 @@ export function PortalHeader({
 
       {showMobileNav && (
         <nav className="md:hidden border-t border-slate-200 bg-white px-4 py-3 space-y-1 text-sm" aria-label="Navigasi seluler">
-          <Link to={ROUTES.LANDING} className="block px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100" onClick={() => setShowMobileNav(false)}>Beranda</Link>
-          <button onClick={() => { navigate(ROUTES.PORTAL); setShowMobileNav(false) }} className="w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Lowongan</button>
-          <button onClick={() => { navigate(ROUTES.MATRIX); setShowMobileNav(false) }} className="w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perhitungan</button>
+          <button onClick={() => { navigate(landingPath); setShowMobileNav(false) }} className="w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Beranda</button>
+          <button onClick={() => { navigate(portalPath); setShowMobileNav(false) }} className="w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Lowongan</button>
+          <button onClick={() => { navigate(matrixPath); setShowMobileNav(false) }} className="w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Perhitungan</button>
+          {mode === 'user' && (
+            <button onClick={() => { navigate(ROUTES.KUESIONER); setShowMobileNav(false) }} className="w-full text-left px-3 py-2 rounded-lg text-slate-700 hover:bg-slate-100">Kuesioner</button>
+          )}
         </nav>
       )}
     </header>

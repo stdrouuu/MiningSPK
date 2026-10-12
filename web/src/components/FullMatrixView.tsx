@@ -11,6 +11,9 @@ interface FullMatrixViewProps {
   studentPrefs: StudentPreferences
   onOpenPreferences: () => void
   onSelectJobForDetail: (job: RankedJobResult) => void
+  /** Profil belum terisi -> tabel skor diganti ajakan kuesioner. */
+  isProfileEmpty?: boolean
+  onFillQuestionnaire?: () => void
 }
 
 export function FullMatrixView({
@@ -18,6 +21,8 @@ export function FullMatrixView({
   studentPrefs,
   onOpenPreferences,
   onSelectJobForDetail,
+  isProfileEmpty = false,
+  onFillQuestionnaire,
 }: FullMatrixViewProps) {
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(0)
@@ -121,23 +126,50 @@ export function FullMatrixView({
           <h1 className="text-xl sm:text-2xl font-medium text-slate-900 mt-0.5">
             Matriks Keputusan &amp; Komputasi SMARTER
           </h1>
-          <p className="text-xs text-slate-500 font-light mt-1">
-            Representasi lengkap perhitungan matematis multi-kriteria untuk profil mahasiswa{' '}
-            <span className="font-medium text-slate-800">{studentPrefs.name} ({studentPrefs.nim})</span>.
-          </p>
+          {isProfileEmpty ? (
+            <p className="text-xs text-slate-500 font-light mt-1">
+              Perhitungan versimu akan muncul di sini setelah kuesioner terisi.
+            </p>
+          ) : (
+            <p className="text-xs text-slate-500 font-light mt-1">
+              Representasi lengkap perhitungan matematis multi-kriteria untuk profil mahasiswa{' '}
+              <span className="font-medium text-slate-800">{studentPrefs.name} ({studentPrefs.nim})</span>.
+            </p>
+          )}
         </div>
 
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" onClick={onOpenPreferences} className="text-xs gap-1.5">
-            <RiEqualizerLine className="h-3.5 w-3.5" /> Atur Prioritas ROC
+        {isProfileEmpty ? (
+          <Button size="sm" onClick={onFillQuestionnaire} className="text-xs gap-1.5 bg-[#0C52EE] hover:bg-[#0942c4] shrink-0">
+            Mulai kuesioner
           </Button>
-          <Button variant="default" size="sm" onClick={handleExportCsv} className="text-xs gap-1.5 bg-[#0C52EE] hover:bg-[#0942c4]">
-            <RiDownloadLine className="h-3.5 w-3.5" /> Unduh CSV Lengkap
-          </Button>
-        </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="sm" onClick={onOpenPreferences} className="text-xs gap-1.5">
+              <RiEqualizerLine className="h-3.5 w-3.5" /> Atur Prioritas ROC
+            </Button>
+            <Button variant="default" size="sm" onClick={handleExportCsv} className="text-xs gap-1.5 bg-[#0C52EE] hover:bg-[#0942c4]">
+              <RiDownloadLine className="h-3.5 w-3.5" /> Unduh CSV Lengkap
+            </Button>
+          </div>
+        )}
       </div>
 
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      {isProfileEmpty ? (
+        <div className="bg-white border border-slate-200 rounded-xl p-8 sm:p-12 text-center space-y-3 shadow-2xs">
+          <h2 className="text-base font-medium text-slate-900">Matriks ini menunggumu</h2>
+          <p className="text-xs text-slate-500 font-light max-w-md mx-auto">
+            Skor U(Ai), utilitas, dan peringkat dihitung dari upah, jam, lokasi & skill-mu.
+            Isi kuesioner singkat (±3 menit) — tabel 221 lowongan langsung terisi sesuai kebutuhanmu.
+          </p>
+          <div>
+            <Button size="sm" onClick={onFillQuestionnaire} className="text-xs bg-[#0C52EE] hover:bg-[#0942c4]">
+              Mulai kuesioner
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div role="tablist" aria-label="Mode tampilan matriks" className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-lg text-xs">
           <button role="tab" aria-selected={matrixDisplayMode === 'ranking'} onClick={() => handleMode('ranking')} className={`px-3 py-1.5 rounded-md transition-all ${matrixDisplayMode === 'ranking' ? 'font-medium bg-white text-[#0C52EE] shadow-2xs' : 'font-normal text-slate-600 hover:text-slate-900'}`}>
             Mode 1: Peringkat &amp; Skor
@@ -176,22 +208,22 @@ export function FullMatrixView({
               {matrixDisplayMode === 'ranking' && (
                 <>
                   <th className="py-3 px-4 min-w-[140px]">Skor Utilitas U(Ai)</th>
-                  <th className="py-3 px-4 font-mono text-center">C1</th>
-                  <th className="py-3 px-4 font-mono text-center">C2</th>
-                  <th className="py-3 px-4 font-mono text-center">C3</th>
-                  <th className="py-3 px-4 font-mono text-center">C4</th>
-                  <th className="py-3 px-4 font-mono text-center">C5</th>
+                  <th className="py-3 px-4 text-center">Kategori</th>
+                  <th className="py-3 px-4 text-center">Gaji</th>
+                  <th className="py-3 px-4 text-center">Lokasi</th>
+                  <th className="py-3 px-4 text-center">Jam</th>
+                  <th className="py-3 px-4 text-center">Skill</th>
                 </>
               )}
 
               {matrixDisplayMode === 'utility' && (
                 <>
-                  <th className="py-3 px-4 font-mono text-center">u1 (Kategori)</th>
-                  <th className="py-3 px-4 font-mono text-center">u2 (Gaji)</th>
-                  <th className="py-3 px-4 font-mono text-center">u3 (Lokasi)</th>
-                  <th className="py-3 px-4 font-mono text-center">u4 (Jam)</th>
-                  <th className="py-3 px-4 font-mono text-center">u5 (Skill)</th>
-                  <th className="py-3 px-4 font-mono font-medium text-slate-900">
+                  <th className="py-3 px-4 text-center">Utilitas Kategori</th>
+                  <th className="py-3 px-4 text-center">Utilitas Gaji</th>
+                  <th className="py-3 px-4 text-center">Utilitas Lokasi</th>
+                  <th className="py-3 px-4 text-center">Utilitas Jam</th>
+                  <th className="py-3 px-4 text-center">Utilitas Skill</th>
+                  <th className="py-3 px-4 font-medium text-slate-900">
                     Total U(Ai)
                   </th>
                 </>
@@ -199,11 +231,11 @@ export function FullMatrixView({
 
               {matrixDisplayMode === 'raw' && (
                 <>
-                  <th className="py-3 px-4 font-mono text-center">X1 (Kategori)</th>
-                  <th className="py-3 px-4 font-mono text-center">X2 (Rasio Gaji)</th>
-                  <th className="py-3 px-4 font-mono text-center">X3 (Lokasi)</th>
-                  <th className="py-3 px-4 font-mono text-center">X4 (Jam Kerja)</th>
-                  <th className="py-3 px-4 font-mono text-center">X5 (Skill Cosine)</th>
+                  <th className="py-3 px-4 text-center">Kategori</th>
+                  <th className="py-3 px-4 text-center">Rasio Gaji</th>
+                  <th className="py-3 px-4 text-center">Lokasi</th>
+                  <th className="py-3 px-4 text-center">Jam Kerja</th>
+                  <th className="py-3 px-4 text-center">Skill Cosine</th>
                 </>
               )}
 
@@ -352,6 +384,8 @@ export function FullMatrixView({
           </Button>
         </div>
       </div>
+        </>
+      )}
     </div>
   )
 }

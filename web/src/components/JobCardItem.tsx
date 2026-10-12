@@ -8,6 +8,8 @@ interface JobCardItemProps {
   isSelected: boolean
   onSelect: () => void
   studentPrefs: StudentPreferences
+  /** Profil belum terisi -> badge % & chip kecocokan disembunyikan. */
+  hideMatch?: boolean
   isSaved: boolean
   onToggleSave: (e: React.MouseEvent) => void
   index?: number
@@ -18,6 +20,7 @@ export function JobCardItem({
   isSelected,
   onSelect,
   studentPrefs,
+  hideMatch = false,
   isSaved,
   onToggleSave,
   index = 0,
@@ -59,9 +62,11 @@ export function JobCardItem({
           </div>
         </div>
         <div className="flex items-center gap-2 shrink-0">
-          <span className={`px-2 py-0.5 rounded-md text-[11px] font-medium ${job.rank === 1 ? 'bg-pink-50 border border-pink-200 text-[#ED1E79]' : 'bg-blue-50 border border-blue-200 text-[#0C52EE]'}`}>
-            {job.rank === 1 ? `#1 • ${matchPct}%` : `${matchPct}%`}
-          </span>
+          {!hideMatch && (
+            <span className={`px-2 py-0.5 rounded-md text-[11px] font-medium ${job.rank === 1 ? 'bg-pink-50 border border-pink-200 text-[#ED1E79]' : 'bg-blue-50 border border-blue-200 text-[#0C52EE]'}`}>
+              {job.rank === 1 ? `#1 • ${matchPct}%` : `${matchPct}%`}
+            </span>
+          )}
           <button
             data-save-btn
             onClick={onToggleSave}
@@ -82,7 +87,7 @@ export function JobCardItem({
         <span className="px-2 py-0.5 rounded border border-slate-200 bg-slate-50 text-slate-600 text-[10px] font-normal">{job.work_system}</span>
       </div>
 
-      {(isSalaryGood || isLocationGood || isCategoryMatch) && (
+      {!hideMatch && (isSalaryGood || isLocationGood || isCategoryMatch) && (
         <div className="mt-2.5 flex flex-wrap gap-1.5">
           {isSalaryGood && (
             <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-50 border border-slate-200 text-slate-600 text-[10px] font-normal"><span className="text-emerald-600 font-medium">&#10003;</span> Upah sesuai</span>

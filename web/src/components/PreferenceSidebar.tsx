@@ -15,7 +15,6 @@ import {
 import { Button } from './ui/Button'
 import { Dialog } from './ui/Dialog'
 import { StudentPresetDropdown } from './StudentPresetDropdown'
-import { randomAvatarStyle } from '../lib/avatar'
 import type { StudentPreferences } from '../types/portal'
 import type { StudentProfile } from '../types/data'
 import { DEFAULT_STUDENT_PREFERENCES } from '../types/portal'
@@ -27,6 +26,9 @@ interface PreferenceSidebarProps {
   onUpdatePreferences: (newPrefs: StudentPreferences) => void
   studentPresets: StudentProfile[]
   categories: string[]
+  /** Mode profil: data = dropdown responden GForm; user = kartu kosong + CTA kuesioner. */
+  mode: 'user' | 'data'
+  onFillQuestionnaire: () => void
 }
 
 const LOCATIONS = [
@@ -50,6 +52,8 @@ export function PreferenceSidebar({
   onUpdatePreferences,
   studentPresets,
   categories,
+  mode,
+  onFillQuestionnaire,
 }: PreferenceSidebarProps) {
   const handleChange = <K extends keyof StudentPreferences>(
     key: K,
@@ -113,19 +117,19 @@ export function PreferenceSidebar({
       // biarkan avatarStyle apa adanya bila user sudah custom? tidak —
       // reset ke otomatis agar tiap mahasiswa beda, user bisa ganti lagi via picker
       avatarStyle: '',
+      profileComplete: true,
     })
   }
 
   const priorityLabels: Array<{
     key: keyof StudentPreferences['priorityRank']
     title: string
-    code: string
   }> = [
-    { key: 'C1_kategori', title: 'Kesesuaian Bidang Kategori', code: 'C1' },
-    { key: 'C2_gaji', title: 'Tawaran Upah / Jam (Gaji)', code: 'C2' },
-    { key: 'C3_lokasi', title: 'Kedekatan Lokasi & Moda Kerja', code: 'C3' },
-    { key: 'C4_jam_kerja', title: 'Beban Jam Kerja per Minggu', code: 'C4' },
-    { key: 'C5_skill', title: 'Kecocokan Keahlian (Skill Cosine)', code: 'C5' },
+    { key: 'C1_kategori', title: 'Kesesuaian Bidang Kategori' },
+    { key: 'C2_gaji', title: 'Tawaran Upah / Jam (Gaji)' },
+    { key: 'C3_lokasi', title: 'Kedekatan Lokasi & Moda Kerja' },
+    { key: 'C4_jam_kerja', title: 'Beban Jam Kerja per Minggu' },
+    { key: 'C5_skill', title: 'Kecocokan Keahlian (Skill Cosine)' },
   ]
 
   const rocWeightsMap: { [rank: number]: string } = {
@@ -146,28 +150,6 @@ export function PreferenceSidebar({
     [preferences.priorityRank]
   )
 
-  const handleAddNewProfile = () => {
-    const newNim = `MHS-${Math.floor(100 + Math.random() * 900)}`
-    onUpdatePreferences({
-      ...preferences,
-      name: '',
-      nim: newNim,
-      major: 'Mahasiswa',
-      minSalary: 25000,
-      maxHours: 15,
-      location: 'Jakarta Barat',
-      preferredCategory: categories[0] || 'Education & Tutoring',
-      skills: '',
-      avatarSeed: newNim,
-      // profil manual tidak punya identitas nyata -> acak style avatar sekali di awal
-      avatarStyle: randomAvatarStyle(),
-    })
-    setTimeout(() => {
-      const el = document.getElementById('pref-name')
-      if (el) (el as HTMLInputElement).focus()
-    }, 50)
-  }
-
   return (
     <Dialog
       open={open}
@@ -179,30 +161,56 @@ export function PreferenceSidebar({
         <h3 className="text-xs font-medium uppercase tracking-wider text-slate-500 dark:text-slate-400">
           Profil mahasiswa
         </h3>
-        {/* Preset Selector — custom designed dropdown + avatar DiceBear */}
-        <div className="p-3.5 rounded-xl border border-blue-200 bg-blue-50/70 space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
-              <RiUserLine className="h-3.5 w-3.5 text-slate-500" />
-              Gunakan Profil Contoh Mahasiswa:
-            </span>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => onUpdatePreferences(DEFAULT_STUDENT_PREFERENCES)}
-              className="text-[11px] h-7 px-2 text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 gap-1"
-            >
-              <RiRefreshLine className="h-3 w-3" /> Reset
+        {mode === 'data' ? (
+          /* Mode demo: profil = dropdown data preferensi responden (avatar DiceBear) */
+          <div className="p-3.5 rounded-xl border border-blue-200 bg-blue-50/70 space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                <RiUserLine className="h-3.5 w-3.5 text-slate-500" />
+                Gunakan Profil Contoh Mahasiswa:
+              </span>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => onUpdatePreferences(DEFAULT_STUDENT_PREFERENCES)}
+                className="text-[11px] h-7 px-2 text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 gap-1"
+              >
+                <RiRefreshLine className="h-3 w-3" /> Reset
+              </Button>
+            </div>
+
+            <StudentPresetDropdown
+              students={studentPresets}
+              selectedId={studentPresets.some((s) => s.student_id === preferences.nim) ? preferences.nim : undefined}
+              onSelect={handleLoadPreset}
+            />
+          </div>
+        ) : (
+          /* Mode user baru: profil kosong -> bantu user dapat rekomendasi */
+          <div className="p-3.5 rounded-xl border border-[#0C52EE]/30 bg-[#0C52EE]/[0.04] space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                <RiUserLine className="h-3.5 w-3.5 text-slate-500" />
+                Belum ada profil
+              </span>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => onUpdatePreferences(DEFAULT_STUDENT_PREFERENCES)}
+                className="text-[11px] h-7 px-2 text-slate-500 hover:text-slate-900 dark:hover:text-slate-100 gap-1"
+              >
+                <RiRefreshLine className="h-3 w-3" /> Reset
+              </Button>
+            </div>
+            <p className="text-[11px] text-slate-500 font-light">
+              Ceritakan preferensimu lewat kuesioner singkat (±3 menit) — hasilnya langsung
+              dipakai menyusun rekomendasi yang pas buatmu.
+            </p>
+            <Button size="sm" onClick={onFillQuestionnaire} className="text-xs w-full">
+              Mulai kuesioner
             </Button>
           </div>
-
-          <StudentPresetDropdown
-            students={studentPresets}
-            selectedId={studentPresets.some((s) => s.student_id === preferences.nim) ? preferences.nim : undefined}
-            onSelect={handleLoadPreset}
-            onAddNewProfile={handleAddNewProfile}
-          />
-        </div>
+        )}
 
         {/* Form Inputs Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -215,7 +223,15 @@ export function PreferenceSidebar({
               id="pref-name"
               type="text"
               value={preferences.name}
-              onChange={(e) => handleChange('name', e.target.value)}
+              onChange={(e) => {
+                const v = e.target.value
+                onUpdatePreferences({
+                  ...preferences,
+                  name: v,
+                  // Mengetik nama = profil milik user sendiri -> skor boleh tampil.
+                  profileComplete: v.trim() ? true : preferences.profileComplete,
+                })
+              }}
               className="w-full h-9 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100"
               placeholder="Contoh: Brandon Jeremiah"
               autoComplete="name"
@@ -448,9 +464,6 @@ export function PreferenceSidebar({
                   </span>
 
                   <div className="flex min-w-0 flex-1 items-center gap-2">
-                    <span className="font-mono font-bold text-slate-500 text-[11px] w-6 shrink-0">
-                      {item.code}
-                    </span>
                     <span className="truncate font-medium text-slate-900 dark:text-slate-100">
                       {item.title}
                     </span>
@@ -464,7 +477,7 @@ export function PreferenceSidebar({
                     <span className="flex flex-col -space-y-0.5">
                       <button
                         type="button"
-                        aria-label={`Naikkan ${item.code}`}
+                        aria-label={`Naikkan ${item.title}`}
                         disabled={index === 0}
                         onClick={() => moveRank(item.key, -1)}
                         className="p-0.5 text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
@@ -473,7 +486,7 @@ export function PreferenceSidebar({
                       </button>
                       <button
                         type="button"
-                        aria-label={`Turunkan ${item.code}`}
+                        aria-label={`Turunkan ${item.title}`}
                         disabled={index === orderedPriorities.length - 1}
                         onClick={() => moveRank(item.key, 1)}
                         className="p-0.5 text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"

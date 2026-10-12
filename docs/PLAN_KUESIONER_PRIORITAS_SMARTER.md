@@ -1,6 +1,6 @@
 # Plan: Kuesioner Preferensi Prioritas, Rekomendasi SMARTER, dan Verifikasi Pengguna
 
-Status: rencana (belum diimplementasikan)
+Status: diimplementasikan sebagian (halaman `/kuesioner` di `web/`) + revisi desain Okt 2026, lihat §12.
 Konteks: SPK rekomendasi part-time UKRIDA, metode SMARTER + bobot ROC (K = 5 kriteria).
 
 ## 1. Latar Belakang & Masalah
@@ -146,6 +146,35 @@ Penyimpanan sesi: awal cukup `localStorage`; opsional backend / Google Sheets bi
 ## 11. Pertanyaan Terbuka
 
 1. Backend untuk menyimpan sesi, atau cukup `localStorage`?
-2. Kuis pairwise 10 pertanyaan atau versi singkat 5 pertanyaan?
-3. Ambang stabilitas (70% / 40%) disetujui?
+2. Kuis pairwise 10 pertanyaan atau versi singkat 5 pertanyaan? → Dipakai 10 pasangan penuh (§12).
+3. Ambang stabilitas (70% / 40%) disetujui? → Versi ringan dulu: hanya 5 skenario pemimpin tunggal, tanpa 120 permutasi (§12).
 4. Apakah hasil verifikasi dipakai sebagai metrik evaluasi di laporan?
+
+## 12. Keputusan Revisi (Okt 2026) — Rank Wajib Unik + Tebakan Otomatis
+
+1. **Rank sama TIDAK dipakai.** SMARTER + ROC standar mensyaratkan rank unik 1–5;
+   ekstensi rata-rata bobot (§4.3) dibatalkan agar metode tetap murni. Modul `weightsWithTies`
+   tetap ada tapi hanya menerima rank unik (hasilnya identik dengan ROC standar).
+2. **Alur baru:** Profil (Q3–Q8 ala Google Form) → **sistem langsung menebak ranking**
+   (`web/src/lib/inferPriority.ts`) → hasil + verifikasi. Langkah bintang 1–5 dihapus.
+   Aturan tebakan (heuristik, transparan, ditampilkan ke user di panel "Kenapa urutan ini?"):
+   - Lokasi: Onsite → tinggi, Hybrid → tengah, Remote → rendah.
+   - Jam: jam ideal ≤10 → tinggi; ≥25 → rendah.
+   - Upah: target ≥Rp 2jt/bln → tinggi; ≤Rp 1jt/bln → rendah.
+   - Skill: ≥4 skill ditulis → tinggi; sedikit → rendah.
+   - Bidang: selalu tengah (jangkar; semua responden pasti memilih satu bidang).
+   - Seri skor dipecah deterministik: Upah > Lokasi > Bidang > Jam > Skill
+     (`strictRanks` di `lib/priority.ts`) → rank selalu unik 1–5.
+3. **Kuis "Saya bingung" dipertahankan** sebagai fallback ("Tidak cocok? Kuis cepat"),
+   hasilnya juga dipaksa unik via `strictRanks`.
+4. **Editor verifikasi** melarang rank sama: memilih rank yang sudah dipakai akan
+   bertukar otomatis (swap). Sensitivitas versi ringan (5 skenario pemimpin tunggal).
+5. Catatan untuk laporan: tebakan sistem adalah **asumsi transparan** (aturan + alasan
+   ditampilkan, user bisa mengubah) — bukan asumsi diam-diam seperti rank default lama.
+   Metrik validasi: % user "Setuju" langsung (`accepted_initial`) dari sesi tersimpan.
+6. **Amendemen: tebakan otomatis DIBATALKAN (bias).** Menebak prioritas dari fakta profil
+   (mis. "banyak skill → skill prioritas tertinggi") tidak valid: fakta menjelaskan kondisi,
+   bukan nilai yang dipegang user. Alur final: Profil → **user menyusun ranking sendiri**
+   (unik 1–5, wajib centang konfirmasi) + kuis pairwise sebagai fallback → Hasil + verifikasi.
+   Yang sah ditanya langsung ke user (susunan ranking / pairwise), bukan ditebak dari profil.
+   File `lib/inferPriority.ts` dihapus; `strictRanks` dipertahankan untuk hasil kuis.

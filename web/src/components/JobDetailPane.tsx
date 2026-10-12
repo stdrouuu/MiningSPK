@@ -5,6 +5,9 @@ import type { StudentPreferences } from '../types/portal'
 interface JobDetailPaneProps {
   job: RankedJobResult | null
   studentPrefs: StudentPreferences
+  /** Profil belum terisi -> badge rank & analisis SPK diganti ajakan kuesioner. */
+  hideAnalysis?: boolean
+  onFillQuestionnaire?: () => void
   isSaved: boolean
   onToggleSave: () => void
   onOpenPreferences: () => void
@@ -13,6 +16,8 @@ interface JobDetailPaneProps {
 export function JobDetailPane({
   job,
   studentPrefs,
+  hideAnalysis = false,
+  onFillQuestionnaire,
   isSaved,
   onToggleSave,
   onOpenPreferences,
@@ -71,9 +76,11 @@ export function JobDetailPane({
             <span className="px-1.5 py-0.2 rounded border border-slate-200 bg-slate-50 text-slate-600 text-[10px] font-normal">{job.work_system}</span>
           </p>
           <div className="flex items-center gap-2 mt-1.5 flex-wrap">
-            <span className="px-2.5 py-0.5 rounded-md bg-[#0C52EE] text-white text-[11px] font-medium">
-              Rekomendasi #{job.rank}
-            </span>
+            {!hideAnalysis && (
+              <span className="px-2.5 py-0.5 rounded-md bg-[#0C52EE] text-white text-[11px] font-medium">
+                Rekomendasi #{job.rank}
+              </span>
+            )}
             <span className="px-2 py-0.5 rounded-md bg-pink-50 border border-pink-200 text-[#ED1E79] text-[11px] font-medium">{job.job_category}</span>
           </div>
           </div>
@@ -136,6 +143,21 @@ export function JobDetailPane({
         </div>
       </div>
 
+      {hideAnalysis ? (
+        <div className="p-4 rounded-xl bg-[#0C52EE]/[0.04] border border-[#0C52EE]/25 space-y-2">
+          <h4 className="text-xs font-medium text-slate-900">Lihat seberapa cocok lowongan ini buatmu</h4>
+          <p className="text-xs text-slate-500 font-light">
+            Isi kuesioner singkat (±3 menit) — skor kecocokan dan analisis SPK lowongan ini
+            langsung dihitung dari kebutuhanmu.
+          </p>
+          <button
+            onClick={onFillQuestionnaire}
+            className="px-4 py-2 bg-[#0C52EE] hover:bg-[#0942c4] text-white rounded-lg text-xs font-medium transition-colors cursor-pointer"
+          >
+            Mulai kuesioner
+          </button>
+        </div>
+      ) : (
       <div className="p-4 rounded-xl bg-blue-50/50 border border-blue-200 space-y-3">
         <div className="flex items-center justify-between">
           <h4 className="text-xs font-medium text-[#0C52EE]">Analisis kesesuaian SPK</h4>
@@ -150,14 +172,13 @@ export function JobDetailPane({
 
         <div className="space-y-2 text-xs font-light text-slate-700">
           {[
-            { code: 'C1', title: 'Kategori pekerjaan: ', body: isCategoryMatch ? `Sesuai minat Anda (${job.job_category}).` : `Berbeda dari minat Anda (${studentPrefs.preferredCategory}).` },
-            { code: 'C2', title: `Upah (${salaryRatio.toFixed(2)}× target): `, body: `Tawaran Rp ${job.work_salaryperhour.toLocaleString('id-ID')} vs target Rp ${studentPrefs.minSalary.toLocaleString('id-ID')}.` },
-            { code: 'C3', title: 'Lokasi & moda: ', body: c3Desc },
-            { code: 'C4', title: `Beban jam (${job.work_hours} jam): `, body: c4Desc },
-            { code: 'C5', title: 'Kecocokan keahlian: ', body: 'Irisan kata kunci skill Anda dengan deskripsi lowongan (TF-IDF cosine).' },
+            { title: 'Kategori pekerjaan: ', body: isCategoryMatch ? `Sesuai minat Anda (${job.job_category}).` : `Berbeda dari minat Anda (${studentPrefs.preferredCategory}).` },
+            { title: `Upah (${salaryRatio.toFixed(2)}× target): `, body: `Tawaran Rp ${job.work_salaryperhour.toLocaleString('id-ID')} vs target Rp ${studentPrefs.minSalary.toLocaleString('id-ID')}.` },
+            { title: 'Lokasi & moda: ', body: c3Desc },
+            { title: `Beban jam (${job.work_hours} jam): `, body: c4Desc },
+            { title: 'Kecocokan keahlian: ', body: 'Irisan kata kunci skill Anda dengan deskripsi lowongan (TF-IDF cosine).' },
           ].map((row) => (
-            <div key={row.code} className="flex items-start gap-2 bg-white p-2 rounded-lg border border-slate-200">
-              <span className="font-medium text-white bg-[#0C52EE] px-1.5 py-0.5 rounded text-[11px] w-7 text-center shrink-0">{row.code}</span>
+            <div key={row.title} className="flex items-start gap-2 bg-white p-2 rounded-lg border border-slate-200">
               <div>
                 <span className="font-normal text-slate-900">{row.title}</span>
                 <span>{row.body}</span>
@@ -173,6 +194,7 @@ export function JobDetailPane({
           </button>
         </div>
       </div>
+      )}
 
       <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5 text-xs text-slate-500 font-light">
         <div className="flex items-center gap-1.5">
