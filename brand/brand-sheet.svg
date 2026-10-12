@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900">
+  <defs>
+    <filter id="card-shadow" x="-4%" y="-4%" width="108%" height="108%">
+      <feDropShadow dx="0" dy="4" stdDeviation="12" flood-color="#0f172a" flood-opacity="0.06"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="900" fill="#f8fafc"/>
+
+  <!-- Header -->
+  <text x="80" y="80" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="38" font-weight="700" fill="#0f172a" letter-spacing="-0.5">upmatch — Brand Identity</text>
+  <text x="80" y="116" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" fill="#64748b">Official Logo System · The Ascending Elbows · Blue #0C52EE &amp; White #FFFFFF</text>
+
+  <!-- Column 1: Primary Logo Presentation (Card) -->
+  <rect x="80" y="150" width="460" height="490" rx="20" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" filter="url(#card-shadow)"/>
+  <text x="110" y="195" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" font-weight="600" fill="#64748b" letter-spacing="1">PRIMARY BRAND LOGO</text>
+  
+  <!-- Centered Primary Logo 256x256 -->
+  <g transform="translate(182, 225)">
+    <rect width="256" height="256" rx="28" fill="#0C52EE"/>
+    <g fill="#FFFFFF">
+      <path d="M28 240V176H116V216H68V240Z"/>
+      <path d="M84 160V96H172V136H124V160Z"/>
+      <path d="M140 80V16H228V56H180V80Z"/>
+    </g>
+  </g>
+  <text x="110" y="530" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="20" font-weight="700" fill="#0f172a">Ascending Elbows on Brand Blue</text>
+  <text x="110" y="560" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" fill="#64748b">White mark centered on #0C52EE blue base canvas.</text>
+  <text x="110" y="585" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" fill="#64748b">Format: SVG &amp; high-density PNG.</text>
+
+  <!-- Column 2: App Icon & Light Surface Variants -->
+  <rect x="570" y="150" width="460" height="490" rx="20" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" filter="url(#card-shadow)"/>
+  <text x="600" y="195" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" font-weight="600" fill="#64748b" letter-spacing="1">SURFACE &amp; ICON VARIANTS</text>
+
+  <!-- Sub-card A: Squircle App Icon -->
+  <g transform="translate(620, 230)">
+    <rect width="160" height="160" rx="40" fill="#0C52EE"/>
+    <g transform="scale(0.625)">
+      <g fill="#FFFFFF">
+        <path d="M28 240V176H116V216H68V240Z"/>
+        <path d="M84 160V96H172V136H124V160Z"/>
+        <path d="M140 80V16H228V56H180V80Z"/>
+      </g>
+    </g>
+    <text x="80" y="190" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">App Icon / Favicon</text>
+  </g>
+
+  <!-- Sub-card B: Blue Mark on White / Light Surface -->
+  <g transform="translate(820, 230)">
+    <rect width="160" height="160" rx="40" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+    <g transform="scale(0.625)">
+      <g fill="#0C52EE">
+        <path d="M28 240V176H116V216H68V240Z"/>
+        <path d="M84 160V96H172V136H124V160Z"/>
+        <path d="M140 80V16H228V56H180V80Z"/>
+      </g>
+    </g>
+    <text x="80" y="190" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" font-weight="500" fill="#64748b" text-anchor="middle">Light Surface Mark</text>
+  </g>
+
+  <!-- Column 3: Multi-Scale Optical Tests -->
+  <rect x="1060" y="150" width="460" height="490" rx="20" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" filter="url(#card-shadow)"/>
+  <text x="1090" y="195" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" font-weight="600" fill="#64748b" letter-spacing="1">OPTICAL SCALE TESTS</text>
+
+  <!-- 128px scale -->
+  <g transform="translate(1090, 220)">
+    <rect width="128" height="128" rx="20" fill="#0C52EE"/>
+    <g transform="scale(0.5)">
+      <g fill="#FFFFFF">
+        <path d="M28 240V176H116V216H68V240Z"/>
+        <path d="M84 160V96H172V136H124V160Z"/>
+        <path d="M140 80V16H228V56H180V80Z"/>
+      </g>
+    </g>
+    <text x="64" y="152" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#64748b" text-anchor="middle">128 px</text>
+  </g>
+
+  <!-- 64px scale -->
+  <g transform="translate(1250, 220)">
+    <rect width="64" height="64" rx="14" fill="#0C52EE"/>
+    <g transform="scale(0.25)">
+      <g fill="#FFFFFF">
+        <path d="M28 240V176H116V216H68V240Z"/>
+        <path d="M84 160V96H172V136H124V160Z"/>
+        <path d="M140 80V16H228V56H180V80Z"/>
+      </g>
+    </g>
+    <text x="32" y="88" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#64748b" text-anchor="middle">64 px</text>
+  </g>
+
+  <!-- 32px scale -->
+  <g transform="translate(1350, 220)">
+    <rect width="32" height="32" rx="8" fill="#0C52EE"/>
+    <g transform="scale(0.125)">
+      <g fill="#FFFFFF">
+        <path d="M28 240V176H116V216H68V240Z"/>
+        <path d="M84 160V96H172V136H124V160Z"/>
+        <path d="M140 80V16H228V56H180V80Z"/>
+      </g>
+    </g>
+    <text x="16" y="56" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#64748b" text-anchor="middle">32 px</text>
+  </g>
+
+  <!-- 16px scale (Favicon scale) -->
+  <g transform="translate(1420, 220)">
+    <rect width="16" height="16" rx="4" fill="#0C52EE"/>
+    <g transform="scale(0.0625)">
+      <g fill="#FFFFFF">
+        <path d="M28 240V176H116V216H68V240Z"/>
+        <path d="M84 160V96H172V136H124V160Z"/>
+        <path d="M140 80V16H228V56H180V80Z"/>
+      </g>
+    </g>
+    <text x="8" y="40" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="12" fill="#64748b" text-anchor="middle">16 px</text>
+  </g>
+
+  <!-- Specs in Column 3 -->
+  <g transform="translate(1090, 420)">
+    <text x="0" y="0" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="15" font-weight="700" fill="#0f172a">Geometry &amp; Pixel Survival</text>
+    <text x="0" y="26" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" fill="#64748b">• 40-unit uniform stem &amp; arm thickness.</text>
+    <text x="0" y="48" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" fill="#64748b">• 16-unit gap between diagonal pairs stays open at 16 px.</text>
+    <text x="0" y="70" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" fill="#64748b">• Exact diagonal translation: (+56, -80).</text>
+    <text x="0" y="92" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" fill="#64748b">• Perfectly centered in 256x256 bounding grid.</text>
+  </g>
+
+  <!-- Bottom Row: Color Tokens & Brand Meaning Cards -->
+  <g transform="translate(80, 665)">
+    <!-- Swatch 1: Blue -->
+    <rect width="215" height="175" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" filter="url(#card-shadow)"/>
+    <rect x="16" y="16" width="183" height="70" rx="10" fill="#0C52EE"/>
+    <text x="16" y="114" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="15" font-weight="700" fill="#0f172a">Primary Brand Blue</text>
+    <text x="16" y="136" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" font-family="monospace" fill="#0C52EE" font-weight="600">#0C52EE</text>
+    <text x="16" y="156" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="11" fill="#94a3b8">RGB(12, 82, 238)</text>
+  </g>
+
+  <g transform="translate(315, 665)">
+    <!-- Swatch 2: White -->
+    <rect width="215" height="175" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" filter="url(#card-shadow)"/>
+    <rect x="16" y="16" width="183" height="70" rx="10" fill="#FFFFFF" stroke="#e2e8f0" stroke-width="1"/>
+    <text x="16" y="114" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="15" font-weight="700" fill="#0f172a">Pure White Mark</text>
+    <text x="16" y="136" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="13" font-family="monospace" fill="#64748b" font-weight="600">#FFFFFF</text>
+    <text x="16" y="156" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="11" fill="#94a3b8">RGB(255, 255, 255)</text>
+  </g>
+
+  <g transform="translate(550, 665)">
+    <!-- Brand Meaning Card -->
+    <rect width="970" height="175" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" filter="url(#card-shadow)"/>
+    <text x="32" y="44" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="700" fill="#0f172a">Brand Symbology — The Ascending Elbows</text>
+    <text x="32" y="74" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" fill="#334155">
+      1. Shortlist Ranking: Three modular, aligned units represent candidate jobs ordered and evaluated by SMARTER &amp; ROC algorithms.
+    </text>
+    <text x="32" y="100" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" fill="#334155">
+      2. Upward Progression: The diagonal step reflects career growth and student empowerment ("up"), matching the name upmatch.
+    </text>
+    <text x="32" y="126" font-family="system-ui,-apple-system,'Segoe UI',Helvetica,Arial,sans-serif" font-size="14" fill="#334155">
+      3. Apex Match: The top elbow reaches the upper right corner as the definitive #1 ranked match for the student.
+    </text>
+  </g>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256"
+     role="img" aria-labelledby="title">
+  <title id="title">upmatch — the ascending elbows</title>
+  <rect width="256" height="256" fill="#0C52EE"/>
+  <g fill="#FFFFFF">
+    <path d="M28 240V176H116V216H68V240Z"/>
+    <path d="M84 160V96H172V136H124V160Z"/>
+    <path d="M140 80V16H228V56H180V80Z"/>
+  </g>
+</svg>

@@ -5,10 +5,10 @@ Konteks: SPK rekomendasi part-time UKRIDA, metode SMARTER + bobot ROC (K = 5 kri
 
 ## 1. Latar Belakang & Masalah
 
-- Kuesioner awal tidak memuat pertanyaan prioritas kriteria (gaji, lokasi, dll.).
+- Kuesioner Survei via google form yang disebar kelupaan untuk memuat pertanyaan prioritas kriteria (gaji, lokasi, dll.).
 - Bobot ROC untuk K = 5 selalu tetap (0,4567 / 0,2567 / 0,1567 / 0,0900 / 0,0400). Yang personal adalah **kriteria mana menduduki rank mana**.
-- Rank default saat ini (Gaji > Jam > Lokasi > Kategori > Skill) harus disebut **asumsi tim/pakar**, bukan hasil survei.
-- Solusi: prioritas dikumpulkan **di web**, bukan lewat kuesioner baru.
+- Rank default saat ini (Gaji > Jam > Lokasi > Kategori > Skill), hal ini malah jadi **asumsi tim/pakar**, bukan hasil survei, tidak ada dasarnya.
+- Solusi: prioritas dikumpulkan **di web**, jadi akan ada pertanyaan untuk mengisi preferensi prioritas, dan akan memuat pertanyaan untuk menjawab preferensi prioritas tersebut. Setelah mengisi, website akan memberikan rekomendasi mengenai rangkingnya, jika usertidak cocok maka bisa mengganti rangkingnya secara mandiri. untuk data2 preferensi mahasiswa (partisipan kuesioner survei) yang sudah dikumpulkan dan mau ditampilkan di website, hasil rangkingnya per mahasiswa itu berbeda2 setiap amhasiswa, karena tidak fixed lagi sekarang, tetapi sudah bentuk dari rekomendasi websitenya.
 
 ## 2. Tujuan
 
