@@ -15,15 +15,22 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+import argparse
+
 import pandas as pd
 
 from src.config import (
     CLEAN_JOBS_PATH,
-    CLEAN_STUDENTS_PATH,
+    CLEAN_MOCK_STUDENTS_PATH,
+    CLEAN_REAL_STUDENTS_PATH,
     DECISION_MATRIX_PATH,
     RAW_JOBS_PATH,
-    RAW_STUDENTS_PATH,
+    RAW_MOCK_STUDENTS_PATH,
+    RAW_REAL_STUDENTS_PATH,
     WEB_DATA_DIR,
+    # Kompatibel layout lama:
+    CLEAN_STUDENTS_PATH,
+    RAW_STUDENTS_PATH,
 )
 from src.decision_matrix import build_clean_jobs_export, build_decision_matrix
 from src.encoding import encode_work_system
@@ -33,10 +40,16 @@ from src.skill_similarity import compute_skill_similarity
 from src.standardization import standardize_and_cap
 
 
-def run_phase_3_pipeline():
+def run_phase_3_pipeline(source="mock"):
+    """Jalankan pipeline. source='mock' (default, perilaku lama) atau 'real'."""
+    if source not in ("mock", "real"):
+        raise ValueError("source harus 'mock' atau 'real'")
+    raw_students = RAW_REAL_STUDENTS_PATH if source == "real" else RAW_MOCK_STUDENTS_PATH
+    clean_students = CLEAN_REAL_STUDENTS_PATH if source == "real" else CLEAN_MOCK_STUDENTS_PATH
     print("=" * 75)
     print("      CRISP-DM FASE 3: DATA PREPARATION PIPELINE EXECUTION")
     print("      Proyek SPK Lowongan Part-Time Mahasiswa UKRIDA")
+    print(f"      Sumber mahasiswa: {source.upper()} ({raw_students.name})")
     print("=" * 75)
 
     # -------------------------------------------------------------
@@ -44,7 +57,7 @@ def run_phase_3_pipeline():
     # -------------------------------------------------------------
     print("\n[LANGKAH 1] Membaca Dataset Mentah (Data Ingestion)...")
     df_raw = pd.read_csv(RAW_JOBS_PATH)
-    df_stud = pd.read_csv(RAW_STUDENTS_PATH)
+    df_stud = pd.read_csv(raw_students)
 
     print(f"-> Total data mentah lowongan: {len(df_raw)} baris")
     print(f"-> Total data mentah kuesioner mahasiswa: {len(df_stud)} responden")
@@ -89,7 +102,9 @@ def run_phase_3_pipeline():
     # 6. TEXT MINING KEAHLIAN: NLP & COSINE SIMILARITY (SECTION 4.2)
     # -------------------------------------------------------------
     print("\n[LANGKAH 6] Text Mining Keahlian (NLP TF-IDF & Cosine Similarity)...")
-    curr_df, sample_student = compute_skill_similarity(curr_df, df_stud_final)
+    curr_df, sample_student = compute_skill_similarity(
+        curr_df, df_stud_final, artifact_dir=DECISION_MATRIX_PATH.parent
+    )
 
     # -------------------------------------------------------------
     # 7. KONSTRUKSI MATRIKS KEPUTUSAN M x N (FITUR C1 - C5)
@@ -106,19 +121,25 @@ def run_phase_3_pipeline():
     clean_jobs_export.to_csv(CLEAN_JOBS_PATH, index=False)
     print(f"-> [OK] Berhasil menyimpan '{CLEAN_JOBS_PATH}' ({len(clean_jobs_export)} baris)")
 
-    df_stud_final.to_csv(CLEAN_STUDENTS_PATH, index=False)
-    print(f"-> [OK] Berhasil menyimpan '{CLEAN_STUDENTS_PATH}' ({len(df_stud_final)} baris)")
+    df_stud_final.to_csv(clean_students, index=False)
+    print(f"-> [OK] Berhasil menyimpan '{clean_students}' ({len(df_stud_final)} baris)")
 
-    decision_matrix.to_csv(DECISION_MATRIX_PATH, index=False)
-    print(f"-> [OK] Berhasil menyimpan '{DECISION_MATRIX_PATH}' ({len(decision_matrix)} baris x {decision_matrix.shape[1]} kolom)")
+    # Matriks keputusan sampel (mahasiswa pertama) hanya ditulis untuk mock
+    # agar artefak referensi Fase 3 tidak tertimpa saat run real.
+    if source == "mock":
+        decision_matrix.to_csv(DECISION_MATRIX_PATH, index=False)
+        print(f"-> [OK] Berhasil menyimpan '{DECISION_MATRIX_PATH}' ({len(decision_matrix)} baris x {decision_matrix.shape[1]} kolom)")
 
-    # Sinkron salinan frontend agar web/public/data selalu sama dengan data/processed/
+    # Sinkron salinan frontend agar web/public/data selalu sama dengan data/processed/.
+    # Nama file web tetap clean_students_dataset.csv (yang dibaca App.tsx),
+    # apa pun sumbernya — sumber terakhir yang di-run menjadi isi /data.
     try:
         WEB_DATA_DIR.mkdir(parents=True, exist_ok=True)
         clean_jobs_export.to_csv(WEB_DATA_DIR / CLEAN_JOBS_PATH.name, index=False)
         df_stud_final.to_csv(WEB_DATA_DIR / CLEAN_STUDENTS_PATH.name, index=False)
-        decision_matrix.to_csv(WEB_DATA_DIR / DECISION_MATRIX_PATH.name, index=False)
-        print(f"-> [OK] Salinan web disinkron ke '{WEB_DATA_DIR}'")
+        if source == "mock":
+            decision_matrix.to_csv(WEB_DATA_DIR / DECISION_MATRIX_PATH.name, index=False)
+        print(f"-> [OK] Salinan web disinkron ke '{WEB_DATA_DIR}' (sumber: {source})")
     except Exception as exc:  # jangan gagalkan pipeline hanya karena sinkron web
         print(f"-> [WARN] Sinkron web dilewati: {exc}")
 
@@ -133,4 +154,8 @@ def run_phase_3_pipeline():
 
 
 if __name__ == "__main__":
-    run_phase_3_pipeline()
+    parser = argparse.ArgumentParser(description="CRISP-DM Fase 3 pipeline")
+    parser.add_argument("--source", choices=["mock", "real"], default="mock",
+                        help="Sumber data mahasiswa (default: mock)")
+    args = parser.parse_args()
+    run_phase_3_pipeline(source=args.source)

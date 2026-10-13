@@ -3,6 +3,8 @@
 import numpy as np
 import pandas as pd
 
+from src.config import C2_RATIO_CAP
+
 
 def calc_c3(row, sample_student):
     sys = str(row["work_system"]).strip().lower()
@@ -22,8 +24,9 @@ def build_decision_matrix(df_jobs, sample_student):
     # C1: Kesesuaian Kategori (1.0 jika sama, 0.3 jika beda)
     c1_scores = np.where(df_jobs["job_category"] == sample_student["student_job_category"], 1.0, 0.3)
 
-    # C2: Rasio Penawaran Gaji
-    c2_scores = np.round(df_jobs["work_salaryperhour"] / sample_student["min_expected_salary"], 4)
+    # C2: Rasio Penawaran Gaji (di-cap agar outlier tidak mendominasi normalisasi)
+    c2_raw = df_jobs["work_salaryperhour"] / sample_student["min_expected_salary"]
+    c2_scores = np.round(np.clip(c2_raw, 0.0, C2_RATIO_CAP), 4)
 
     # C3: Aksesibilitas Lokasi
     c3_scores = df_jobs.apply(lambda row: calc_c3(row, sample_student), axis=1)
