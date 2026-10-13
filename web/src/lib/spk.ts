@@ -1,5 +1,18 @@
 import Papa from 'papaparse'
 import type { CleanJob, StudentProfile, DecisionMatrixRow, RankedJobResult } from '../types/data'
+import type { CriterionKey } from '../types/priority'
+import { cleanTextNlp } from './nlp'
+import { weightsWithTies } from './roc'
+
+/** Cap rasio gaji sebelum normalisasi (samakan src/config.py C2_RATIO_CAP). */
+export const C2_RATIO_CAP = 2.0
+
+/** Artefak TF-IDF dari pipeline (data/processed/matrix/tfidf_skills.json). */
+export interface TfidfArtifact {
+  vocabulary: Record<string, number>
+  idf: number[]
+  ngram_range?: [number, number]
+}
 
 export function calculateRocWeights(ranks: { [key: string]: number }): { [key: string]: number } {
   const K = 5
@@ -17,6 +30,8 @@ export function calculateRocWeights(ranks: { [key: string]: number }): { [key: s
 }
 
 // Tokenize and calculate simple cosine similarity for skills on the fly
+// (LEGACY fallback bila artefak TF-IDF belum termuat — hasilnya TIDAK sama
+// dengan pipeline; jangan pakai untuk perbandingan resmi.)
 export function computeSkillSimilarity(studentSkills: string, jobSkills: string): number {
   if (!studentSkills || !jobSkills) return 0
 
@@ -61,17 +76,65 @@ export function computeSkillSimilarity(studentSkills: string, jobSkills: string)
   return dotProduct / (Math.sqrt(normS) * Math.sqrt(normJ))
 }
 
+/**
+ * Cosine similarity TF-IDF yang IDENTIK dengan pipeline (G1).
+ * Tokenizer + stopwords = cleanTextNlp (port src/nlp.py); token <2 huruf
+ * dibuang mengikuti token_pattern sklearn (?u)\b\w\w+\b; tf = count mentah,
+ * idf dari artefak (smooth_idf sklearn), normalisasi L2.
+ */
+export function computeTfidfSimilarity(
+  studentSkills: string,
+  jobSkills: string,
+  artifact: TfidfArtifact | null | undefined
+): number {
+  if (!artifact) return computeSkillSimilarity(studentSkills, jobSkills)
+
+  const toVector = (text: string): Map<number, number> => {
+    const counts = new Map<number, number>()
+    for (const tok of cleanTextNlp(text).split(/\s+/)) {
+      if (tok.length < 2) continue
+      const idx = artifact.vocabulary[tok]
+      if (idx === undefined) continue
+      counts.set(idx, (counts.get(idx) || 0) + 1)
+    }
+    const vec = new Map<number, number>()
+    let norm = 0
+    counts.forEach((tf, idx) => {
+      const v = tf * (artifact.idf[idx] ?? 0)
+      vec.set(idx, v)
+      norm += v * v
+    })
+    norm = Math.sqrt(norm)
+    if (norm === 0) return new Map()
+    vec.forEach((v, idx) => vec.set(idx, v / norm))
+    return vec
+  }
+
+  const sVec = toVector(studentSkills || '')
+  const jVec = toVector(jobSkills || '')
+  if (sVec.size === 0 || jVec.size === 0) return 0
+
+  let dot = 0
+  const [small, big] = sVec.size <= jVec.size ? [sVec, jVec] : [jVec, sVec]
+  small.forEach((v, idx) => {
+    const w = big.get(idx)
+    if (w !== undefined) dot += v * w
+  })
+  return dot
+}
+
 export function buildDecisionMatrixForStudent(
   jobs: CleanJob[],
-  student: StudentProfile
+  student: StudentProfile,
+  tfidf?: TfidfArtifact | null
 ): DecisionMatrixRow[] {
   return jobs.map((job) => {
     // C1: Kategori
     const c1 = job.job_category.trim().toLowerCase() === student.preferred_category.trim().toLowerCase() ? 1.0 : 0.3
 
-    // C2: Rasio Gaji
+    // C2: Rasio Gaji (di-cap seperti pipeline)
     const expectedSalary = student.min_expected_salary || 35000
-    const c2 = Number((job.work_salaryperhour / expectedSalary).toFixed(4))
+    const c2 = Number(Math.min(job.work_salaryperhour / expectedSalary, C2_RATIO_CAP).toFixed(4))
 
     // C3: Lokasi & Moda Kerja
     let c3 = 0.4
@@ -91,11 +154,12 @@ export function buildDecisionMatrixForStudent(
     const diffHours = Math.abs(job.work_hours - expectedHours)
     const c4 = Number(Math.max(0.0, 1.0 - diffHours / 20.0).toFixed(4))
 
-    // C5: Kemiripan Skill
+    // C5: Kemiripan Skill (TF-IDF pipeline bila artefak tersedia)
     const c5 = Number(
-      computeSkillSimilarity(
+      computeTfidfSimilarity(
         student.clean_student_skills || student.student_skills,
-        job.clean_required_skills || job.work_required_skills
+        job.clean_required_skills || job.work_required_skills,
+        tfidf
       ).toFixed(4)
     )
 
@@ -173,8 +237,14 @@ export function computeSmarter(
     }
   })
 
-  // Urutkan berdasarkan skor tertinggi (Rank 1 .. 221)
-  results.sort((a, b) => b.finalScore - a.finalScore)
+  // Urutkan berdasarkan skor tertinggi (Rank 1 .. 221).
+  // Tie-breaker deterministik (G7): finalScore -> C2 -> C5 -> job_id.
+  results.sort((a, b) =>
+    b.finalScore - a.finalScore ||
+    b.C2_rasio_gaji - a.C2_rasio_gaji ||
+    b.C5_kemiripan_skill - a.C5_kemiripan_skill ||
+    String(a.job_id).localeCompare(String(b.job_id))
+  )
 
   results.forEach((item, idx) => {
     item.rank = idx + 1
@@ -199,7 +269,8 @@ export function computeSPKForCustomStudent(
       C4_jam_kerja: number
       C5_skill: number
     }
-  }
+  },
+  tfidf?: TfidfArtifact | null
 ): RankedJobResult[] {
   if (!jobs.length) return []
 
@@ -211,7 +282,7 @@ export function computeSPKForCustomStudent(
         : 0.3
 
     const minSal = prefs.minSalary > 0 ? prefs.minSalary : 35000
-    const c2 = Number((job.work_salaryperhour / minSal).toFixed(4))
+    const c2 = Number(Math.min(job.work_salaryperhour / minSal, C2_RATIO_CAP).toFixed(4))
 
     let c3 = 0.4
     const jobLoc = (job.work_job_location || '').toLowerCase()
@@ -234,9 +305,10 @@ export function computeSPKForCustomStudent(
     const c4 = Number(Math.max(0.0, 1.0 - diffHours / 20.0).toFixed(4))
 
     const c5 = Number(
-      computeSkillSimilarity(
+      computeTfidfSimilarity(
         prefs.skills,
-        job.clean_required_skills || job.work_required_skills || ''
+        job.clean_required_skills || job.work_required_skills || '',
+        tfidf
       ).toFixed(4)
     )
 
@@ -263,28 +335,23 @@ export function computeSPKForCustomStudent(
     }
   })
 
-  // 2. Hitung Bobot ROC
-  const weights = calculateRocWeights({
-    C1: prefs.priorityRank.C1_kategori,
-    C2: prefs.priorityRank.C2_gaji,
-    C3: prefs.priorityRank.C3_lokasi,
-    C4: prefs.priorityRank.C4_jam_kerja,
-    C5: prefs.priorityRank.C5_skill,
-  })
-
-  // 3. Hitung SMARTER
-  let ranked = computeSmarter(matrix, weights)
-
-  // 4. Jika user memfilter work system tertentu selain ALL
-  if (prefs.workSystem && prefs.workSystem !== 'ALL') {
-    ranked = ranked.filter(
-      (j) => j.work_system?.toLowerCase() === prefs.workSystem.toLowerCase()
-    )
-    ranked.forEach((r, idx) => {
-      r.rank = idx + 1
-    })
+  // 2. Hitung Bobot ROC (dengan ties — sama seperti yang ditampilkan di UI, G6)
+  const tied = weightsWithTies(prefs.priorityRank as Record<CriterionKey, number>)
+  const weights = {
+    C1: tied.C1_kategori,
+    C2: tied.C2_gaji,
+    C3: tied.C3_lokasi,
+    C4: tied.C4_jam_kerja,
+    C5: tied.C5_skill,
   }
 
+  // 3. Hitung SMARTER
+  const ranked = computeSmarter(matrix, weights)
+
+  // 4. SENGAJA tidak ada hard-filter moda di level SPK (global 221) agar
+  // ranking web sama dengan Excel 05_ARSIP_221. prefs.workSystem hanya info
+  // preferensi dari clean dataset (ditampilkan di UI per mahasiswa);
+  // penyaringan feed ada di lapisan tampilan (filterWorkSystem), bukan ranking.
   return ranked
 }
 

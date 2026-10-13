@@ -17,6 +17,7 @@ import { metaOf, strictRanks } from '../../lib/priority'
 import { weightsWithTies, weightPct } from '../../lib/roc'
 import { computeLeaderScenarios } from '../../lib/sensitivity'
 import { computeSPKForCustomStudent } from '../../lib/spk'
+import type { TfidfArtifact } from '../../lib/spk'
 import { formatRupiah } from '../../lib/utils'
 import { ROUTES } from '../../lib/routes'
 
@@ -29,6 +30,7 @@ interface Props {
   onOpenPreferences: () => void
   onOpenSavedJobs: () => void
   savedJobsCount: number
+  tfidf?: TfidfArtifact | null
 }
 
 const STEPS = ['Profil', 'Prioritas', 'Hasil']
@@ -185,6 +187,7 @@ export function KuesionerPage({
   onOpenPreferences,
   onOpenSavedJobs,
   savedJobsCount,
+  tfidf,
 }: Props) {
   const navigate = useNavigate()
   const [step, setStep] = useState(0)
@@ -234,13 +237,13 @@ export function KuesionerPage({
     return computeSPKForCustomStudent(jobs, {
       ...studentPrefs,
       priorityRank: toSpkRank(activeRanks),
-    })
-  }, [jobs, studentPrefs, activeRanks])
+    }, tfidf)
+  }, [jobs, studentPrefs, activeRanks, tfidf])
 
   const scenarios = useMemo(() => {
     if (!activeRanks || !jobs.length) return []
-    return computeLeaderScenarios(jobs, studentPrefs, activeRanks)
-  }, [jobs, studentPrefs, activeRanks])
+    return computeLeaderScenarios(jobs, studentPrefs, activeRanks, tfidf)
+  }, [jobs, studentPrefs, activeRanks, tfidf])
 
   const applyRanks = (ranks: Ranks, goToResult = true) => {
     setInitialRanks(ranks)

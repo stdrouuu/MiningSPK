@@ -15,6 +15,7 @@ import type { CleanJob, StudentProfile } from './types/data'
 import type { StudentPreferences } from './types/portal'
 import { DEFAULT_STUDENT_PREFERENCES } from './types/portal'
 import { fetchCsvData, computeSPKForCustomStudent } from './lib/spk'
+import type { TfidfArtifact } from './lib/spk'
 import { ROUTES } from './lib/routes'
 
 function ScrollToTop() {
@@ -51,6 +52,7 @@ export function App() {
   // Dataset states
   const [jobs, setJobs] = useState<CleanJob[]>([])
   const [students, setStudents] = useState<StudentProfile[]>([])
+  const [tfidf, setTfidf] = useState<TfidfArtifact | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -88,23 +90,33 @@ export function App() {
   const { pathname } = useLocation()
   const isDataMode = pathname === ROUTES.DATA || pathname.startsWith('/data/')
 
-  // Load dataset CSV.
+  // Load dataset CSV (+ artefak TF-IDF agar C5 = pipeline).
   // userPrefs TIDAK pernah auto-isi (landing / selalu bersih untuk user baru);
   // hanya dataPrefs yang diisi responden pertama sebagai default mode demo.
   useEffect(() => {
     async function loadData() {
       try {
         setLoading(true)
-        const [jobsData, studentsData] = await Promise.all([
+        const [jobsData, studentsData, tfidfData] = await Promise.all([
           fetchCsvData<CleanJob>('/data/clean_jobs_dataset.csv'),
           fetchCsvData<StudentProfile>('/data/clean_students_dataset.csv'),
+          fetch('/data/tfidf_skills.json').then((r) => (r.ok ? r.json() : null)).catch(() => null),
         ])
 
         setJobs(jobsData)
         setStudents(studentsData)
+        if (tfidfData) setTfidf(tfidfData as TfidfArtifact)
 
         if (studentsData.length > 0) {
           const s = studentsData[0]
+          const wsRaw = String(
+            (s as unknown as Record<string, unknown>).preferred_work_system ?? ''
+          ).trim().toLowerCase()
+          const ws =
+            wsRaw === 'remote' ? 'Remote'
+            : wsRaw === 'hybrid' ? 'Hybrid'
+            : wsRaw === 'onsite' ? 'Onsite'
+            : 'ALL'
           setDataPrefs((prev) => ({
             ...prev,
             name: s.student_name,
@@ -112,6 +124,7 @@ export function App() {
             minSalary: s.min_expected_salary || 35000,
             maxHours: s.student_expected_work_hour || 18,
             location: s.student_location_clean || s.student_location || 'Jakarta Barat',
+            workSystem: ws as 'ALL' | 'Remote' | 'Hybrid' | 'Onsite',
             preferredCategory: s.preferred_category || 'Education & Tutoring',
             skills: s.clean_student_skills || s.student_skills || '',
             avatarSeed: s.student_id,
@@ -148,9 +161,10 @@ export function App() {
 
   // Komputasi SPK dinamis setiap kali preferensi mode aktif berubah.
   // /perhitungan-spk user baru = hasil kuesionernya; /data/* = responden terpilih.
+  // Selalu global 221 (tanpa hard-filter moda) agar sama dengan Excel 05_ARSIP_221.
   const rankedJobs = useMemo(() => {
-    return computeSPKForCustomStudent(jobs, activePrefs)
-  }, [jobs, activePrefs])
+    return computeSPKForCustomStudent(jobs, activePrefs, tfidf)
+  }, [jobs, activePrefs, tfidf])
 
   // Filter dan sort hasil untuk tampilan job feed
   const displayJobs = useMemo(() => {
@@ -331,6 +345,7 @@ export function App() {
                 onOpenPreferences={() => setIsPreferenceOpen(true)}
                 onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
                 savedJobsCount={shared.savedJobIds.length}
+                tfidf={tfidf}
               />
               <PortalFooter onOpenPreferences={() => setIsPreferenceOpen(true)} />
             </>

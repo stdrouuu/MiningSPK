@@ -102,6 +102,18 @@ export function PreferenceSidebar({
   }
 
   // Muat data dari profil contoh mahasiswa
+  // workSystem mengikuti clean dataset (preferred_work_system) agar tiap
+  // mahasiswa tampil beda (Remote/Hybrid/Onsite), bukan selalu "Semua moda".
+  const normalizeWorkSystem = (
+    v: unknown
+  ): StudentPreferences['workSystem'] => {
+    const s = String(v ?? '').trim().toLowerCase()
+    if (s === 'remote') return 'Remote'
+    if (s === 'hybrid') return 'Hybrid'
+    if (s === 'onsite') return 'Onsite'
+    return 'ALL'
+  }
+
   const handleLoadPreset = (s: StudentProfile) => {
     onUpdatePreferences({
       ...preferences,
@@ -111,6 +123,9 @@ export function PreferenceSidebar({
       minSalary: s.min_expected_salary || 35000,
       maxHours: s.student_expected_work_hour || 18,
       location: s.student_location_clean || s.student_location || 'Jakarta Barat',
+      workSystem: normalizeWorkSystem(
+        (s as StudentProfile).preferred_work_system
+      ),
       preferredCategory: s.preferred_category || categories[0],
       skills: s.clean_student_skills || s.student_skills || '',
       avatarSeed: s.student_id,

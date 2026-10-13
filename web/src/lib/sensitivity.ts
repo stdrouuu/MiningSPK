@@ -3,6 +3,7 @@ import type { StudentPreferences } from '../types/portal'
 import type { CriterionKey, Ranks } from '../types/priority'
 import { ALL_KEYS, metaOf } from './priority'
 import { computeSPKForCustomStudent } from './spk'
+import type { TfidfArtifact } from './spk'
 
 export interface LeaderScenario {
   leader: CriterionKey
@@ -40,14 +41,15 @@ function toSpkRank(r: Ranks): StudentPreferences['priorityRank'] {
 export function computeLeaderScenarios(
   jobs: CleanJob[],
   prefs: StudentPreferences,
-  userRanks: Ranks
+  userRanks: Ranks,
+  tfidf?: TfidfArtifact | null
 ): LeaderScenario[] {
   return ALL_KEYS.map((leader) => {
     const ranks = leaderRanks(userRanks, leader)
     const ranked = computeSPKForCustomStudent(jobs, {
       ...prefs,
       priorityRank: toSpkRank(ranks),
-    })
+    }, tfidf)
     return {
       leader,
       leaderTitle: metaOf(leader).title,
