@@ -5,13 +5,21 @@ from pathlib import Path
 # Root proyek = folder yang memuat src/, data/, scripts/, notebooks/, docs/
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 
-# --- Lokasi dataset ---
-RAW_JOBS_PATH = PROJECT_ROOT / "data" / "raw" / "raw_job_postings.csv"
-RAW_STUDENTS_PATH = PROJECT_ROOT / "data" / "raw" / "raw_student_preferences.csv"
+# --- Lokasi dataset (layout final, lihat docs/PLAN_CRISPDM_FASE_4_6.md) ---
+RAW_JOBS_PATH = PROJECT_ROOT / "data" / "raw" / "raw-jobs" / "raw_job_postings.csv"
+RAW_MOCK_STUDENTS_PATH = PROJECT_ROOT / "data" / "raw" / "raw-mock-students" / "raw_student_preferences.csv"
+RAW_REAL_STUDENTS_PATH = PROJECT_ROOT / "data" / "raw" / "raw-real-students" / "raw_real_student_preferences.csv"
+GFORM_EXPORT_PATH = PROJECT_ROOT / "data" / "raw" / "raw-real-students" / "Survei_GformResponses_1.csv"
 
-CLEAN_JOBS_PATH = PROJECT_ROOT / "data" / "processed" / "clean_jobs_dataset.csv"
-CLEAN_STUDENTS_PATH = PROJECT_ROOT / "data" / "processed" / "clean_students_dataset.csv"
-DECISION_MATRIX_PATH = PROJECT_ROOT / "data" / "processed" / "decision_matrix_sample.csv"
+# Kompatibilitas: path lama = mock (perilaku pipeline tidak berubah bila tanpa argumen)
+RAW_STUDENTS_PATH = RAW_MOCK_STUDENTS_PATH
+
+CLEAN_JOBS_PATH = PROJECT_ROOT / "data" / "processed" / "cleaned-jobs" / "clean_jobs_dataset.csv"
+CLEAN_MOCK_STUDENTS_PATH = PROJECT_ROOT / "data" / "processed" / "cleaned-mock-students" / "clean_students_dataset.csv"
+CLEAN_REAL_STUDENTS_PATH = PROJECT_ROOT / "data" / "processed" / "cleaned-real-students" / "clean_real_student.csv"
+CLEAN_STUDENTS_PATH = CLEAN_MOCK_STUDENTS_PATH
+
+DECISION_MATRIX_PATH = PROJECT_ROOT / "data" / "processed" / "matrix" / "decision_matrix_sample.csv"
 
 # Salinan untuk frontend web (di-serve oleh Vite dari web/public/data/)
 WEB_DATA_DIR = PROJECT_ROOT / "web" / "public" / "data"
@@ -51,6 +59,12 @@ MAX_STUDENT_HOURS = 30.0         # batas jam kerja mahasiswa/minggu
 # --- Imputasi ---
 DEFAULT_SKILLS_TEXT = "Komunikasi, Time Management"
 DEFAULT_WORK_SYSTEM = "Onsite"
+
+# --- Batas modeling SPK (Fase 4) ---
+C2_RATIO_CAP = 2.0            # cap rasio gaji sebelum normalisasi (G4)
+MIN_SALARY_PER_HOUR = 15000.0 # floor gaji/jam mahasiswa (samakan KuesionerPage.perJam)
+MAX_SALARY_PER_HOUR = 60000.0 # ceiling gaji/jam mahasiswa (samakan KuesionerPage.perJam)
+MIN_STUDENT_HOURS = 8.0       # floor jam/minggu (samakan KuesionerPage.jamIdealPerMinggu)
 
 # --- Encoding sistem kerja ---
 SYSTEM_MAPPING = {"Remote": 1, "Hybrid": 2, "Onsite": 3}
