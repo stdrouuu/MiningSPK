@@ -287,3 +287,25 @@ Fase 3 (Data Preparation) telah berhasil diselesaikan dengan capaian sebagai ber
 4. Membentuk **Matriks Keputusan $M \times N$** ($221 \times 13$) yang tersimpan pada `decision_matrix_sample.csv`.
 
 Dengan terbentuknya matriks keputusan ini, **tahap Data Preparation secara resmi selesai** dan seluruh data telah terverifikasi secara matematis siap diolah pada **Fase 4 (Modeling)** untuk pembobotan ROC (_Rank Order Centroid_) dan kalkulasi fungsi utilitas linear SMARTER.
+
+---
+
+## Adendum 2026-10-13 — Data Real GForm + Perbaikan Fase 4
+
+1. **Data real masuk.** 50 respons GForm (`data/raw/raw-real-students/Survei_GformResponses_1.csv`)
+   dikonversi via `scripts/process_gform.py` menjadi `raw_real_student_preferences.csv`,
+   dibersihkan menjadi `clean_real_student.csv` (**49 responden**; MHS-R022 ter-drop karena skill kosong).
+   Dataset mock (55→52) tetap dipertahankan sebagai pembanding; pipeline memilih via
+   `python -m src.pipeline --source mock|real`. Layout `data/` dirapikan
+   (`raw-jobs/`, `raw-mock-students/`, `raw-real-students/`, `cleaned-jobs/`,
+   `cleaned-mock-students/`, `cleaned-real-students/`, `matrix/`).
+2. **IDF distabilkan.** `TfidfVectorizer` kini di-fit pada korpus lowongan saja
+   (sebelumnya sampel+lowongan sehingga IDF bergeser per mahasiswa);
+   `vocabulary_` + `idf_` diekspor ke `matrix/tfidf_skills.json` untuk dipakai web.
+3. **C2 di-cap 2.0** (`src/config.py C2_RATIO_CAP`) sebelum normalisasi agar outlier gaji
+   tidak mendominasi.
+4. **Hasil evaluasi** (`scripts/eval_spk.py`, bobot default survei Fase 2 C2>C4>C3>C1>C5):
+   juara stabil (sama di ≥3/5 skenario leader) pada **39/49 responden real** dan 40/52 mock;
+   bigram (1,2) vs unigram overlap top-10 = **1.000** (tetap unigram, berbasis bukti);
+   variasi nilai non-match C1 {0.2, 0.5} overlap top-5 = **1.000**
+   (normalisasi min-max menghapus nilai absolut C1 — hanya urutan yang berpengaruh).
