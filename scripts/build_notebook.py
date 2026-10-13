@@ -85,11 +85,11 @@ def datapath(*options):
             return str(p)
     return str(ROOT / options[0])
 
-RAW_JOBS = datapath('data/raw/raw_job_postings.csv', 'raw_job_postings.csv')
-RAW_STUDENTS = datapath('data/raw/raw_student_preferences.csv', 'raw_student_preferences.csv')
-CLEAN_JOBS = datapath('data/processed/clean_jobs_dataset.csv', 'clean_jobs_dataset.csv')
-CLEAN_STUDENTS = datapath('data/processed/clean_students_dataset.csv', 'clean_students_dataset.csv')
-DECISION_MATRIX = datapath('data/processed/decision_matrix_sample.csv', 'decision_matrix_sample.csv')
+RAW_JOBS = datapath('data/raw/raw-jobs/raw_job_postings.csv', 'raw_job_postings.csv')
+RAW_STUDENTS = datapath('data/raw/raw-mock-students/raw_student_preferences.csv', 'raw_student_preferences.csv')
+CLEAN_JOBS = datapath('data/processed/cleaned-jobs/clean_jobs_dataset.csv', 'clean_jobs_dataset.csv')
+CLEAN_STUDENTS = datapath('data/processed/cleaned-mock-students/clean_students_dataset.csv', 'clean_students_dataset.csv')
+DECISION_MATRIX = datapath('data/processed/matrix/decision_matrix_sample.csv', 'decision_matrix_sample.csv')
 
 print("✅ Seluruh library berhasil diimpor dengan sukses!")
 print(f"📂 ROOT data: {ROOT}")""")

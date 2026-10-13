@@ -42,8 +42,8 @@ from pathlib import Path
 # Root proyek (folder yang memuat data/, src/, scripts/) — berlaku
 # baik dijalankan dari root maupun dari dalam scripts/.
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-RAW_JOBS_PATH = PROJECT_ROOT / "data" / "raw" / "raw_job_postings.csv"
-RAW_STUDENTS_PATH = PROJECT_ROOT / "data" / "raw" / "raw_student_preferences.csv"
+RAW_JOBS_PATH = PROJECT_ROOT / "data" / "raw" / "raw-jobs" / "raw_job_postings.csv"
+RAW_STUDENTS_PATH = PROJECT_ROOT / "data" / "raw" / "raw-mock-students" / "raw_student_preferences.csv"
 
 random.seed(42)
 np.random.seed(42)

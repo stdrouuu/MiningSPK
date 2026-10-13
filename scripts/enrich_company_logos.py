@@ -16,7 +16,7 @@ from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-SRC = str(PROJECT_ROOT / "data" / "processed" / "clean_jobs_dataset.csv")
+SRC = str(PROJECT_ROOT / "data" / "processed" / "cleaned-jobs" / "clean_jobs_dataset.csv")
 WEB_COPY = str(PROJECT_ROOT / "web" / "public" / "data" / "clean_jobs_dataset.csv")
 
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) upmatch-spk/1.0"}
