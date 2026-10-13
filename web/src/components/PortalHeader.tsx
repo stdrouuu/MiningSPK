@@ -74,7 +74,7 @@ export function PortalHeader({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-8">
           <button onClick={() => navigate(landingPath)} className="flex items-center group focus:outline-none text-left">
-            <span className="text-xl font-medium tracking-tight text-slate-900">upmatch</span>
+            <span className="text-xl font-medium tracking-tighter text-slate-900">upmatch</span>
             {mode === 'data' && (
               <span className="ml-2 px-1.5 py-0.5 rounded-md bg-amber-100 border border-amber-300 text-[10px] font-medium text-amber-800">
                 demo data

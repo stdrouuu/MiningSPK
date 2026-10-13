@@ -10,6 +10,7 @@ import gurules from '../../assets/gurules.webp'
 import barista from '../../assets/barista.jpg'
 import lescoding from '../../assets/lescoding.jpg'
 import kurir from '../../assets/kurir.webp'
+import kasir from '../../assets/kasir.jpg'
 import sales from '../../assets/sales.jpg'
 import glintsLogo from '../../assets/portals/glints.png'
 import kitalulusLogo from '../../assets/portals/kitalulus.png'
@@ -31,19 +32,21 @@ const SOURCE_PORTALS: Array<{ name: string; logo: string }> = [
 const CATEGORY_CARDS: Array<{
   match: string
   label: string
+  category: string
   image: string
   focus: string
   zoom: number
 }> = [
-  { match: 'Admin', label: 'Admin & Office Support', image: officesupport, focus: '50% 46%', zoom: 1.06 },
-  { match: 'Content', label: 'Content & Media', image: hostlive, focus: '50% 42%', zoom: 1.06 },
-  { match: 'Customer', label: 'Customer Service & Support', image: cs, focus: '58% 58%', zoom: 1.1 },
-  { match: 'Design', label: 'Design & Creative', image: graphicdesign, focus: '50% 50%', zoom: 1.1 },
-  { match: 'Education', label: 'Education & Tutoring', image: gurules, focus: '50% 48%', zoom: 1.08 },
-  { match: 'Food', label: 'Food & Beverage (F&B)', image: barista, focus: '44% 62%', zoom: 1.28 },
-  { match: 'IT & Software', label: 'IT & Software', image: lescoding, focus: '50% 55%', zoom: 1.08 },
-  { match: 'Logistics', label: 'Logistics & Delivery', image: kurir, focus: '50% 55%', zoom: 1.06 },
-  { match: 'Marketing', label: 'Marketing & Sales', image: sales, focus: '50% 55%', zoom: 1.06 },
+  { match: 'Admin', label: 'Admin & Office Support', category: 'Admin & Office Support', image: officesupport, focus: '50% 46%', zoom: 1.06 },
+  { match: 'Content', label: 'Content & Media', category: 'Content & Media', image: hostlive, focus: '50% 42%', zoom: 1.06 },
+  { match: 'Customer', label: 'Customer Service & Support', category: 'Customer Service & Support', image: cs, focus: '58% 58%', zoom: 1.1 },
+  { match: 'Design', label: 'Design & Creative', category: 'Design & Creative', image: graphicdesign, focus: '50% 50%', zoom: 1.1 },
+  { match: 'Education', label: 'Education & Tutoring', category: 'Education & Tutoring', image: gurules, focus: '50% 48%', zoom: 1.08 },
+  { match: 'Food', label: 'Food & Beverage (F&B)', category: 'Food & Beverage (F&B)', image: barista, focus: '44% 62%', zoom: 1.28 },
+  { match: 'IT & Software', label: 'IT & Software', category: 'IT & Software', image: lescoding, focus: '50% 55%', zoom: 1.08 },
+  { match: 'Logistics', label: 'Logistics & Delivery', category: 'Logistics & Delivery', image: kurir, focus: '50% 55%', zoom: 1.06 },
+  { match: 'Marketing', label: 'Marketing & Sales', category: 'Marketing & Sales', image: sales, focus: '50% 55%', zoom: 1.06 },
+  { match: 'Retail', label: 'Retail & Store Operations', category: 'Retail & Store Operations', image: kasir, focus: '50% 50%', zoom: 1.06 },
 ]
 
 
@@ -115,27 +118,37 @@ export function CategoryGrid({
   const scroll = (dir: 1 | -1) => goTo(active + dir)
 
   // Drag-to-scroll dengan mouse (pointer events)
-  const dragRef = useRef({ dragging: false, startX: 0, startScroll: 0, moved: false })
+  const dragRef = useRef({ dragging: false, startX: 0, startScroll: 0, moved: false, pointerId: -1 })
 
   const onPointerDown = (e: React.PointerEvent) => {
     const el = trackRef.current
     if (!el) return
-    e.preventDefault() // cegah gambar ikut ter-drag
-    dragRef.current = { dragging: true, startX: e.clientX, startScroll: el.scrollLeft, moved: false }
-    el.setPointerCapture(e.pointerId)
+    dragRef.current.startX = e.clientX
+    dragRef.current.startScroll = el.scrollLeft
+    dragRef.current.pointerId = e.pointerId
+    dragRef.current.dragging = false
+    dragRef.current.moved = false
   }
 
   const onPointerMove = (e: React.PointerEvent) => {
     const el = trackRef.current
-    if (!el || !dragRef.current.dragging) return
+    if (!el || e.pointerId !== dragRef.current.pointerId) return
     const dx = e.clientX - dragRef.current.startX
-    if (Math.abs(dx) > 5) dragRef.current.moved = true
-    el.scrollLeft = dragRef.current.startScroll - dx
+    if (!dragRef.current.dragging && Math.abs(dx) > 5) {
+      dragRef.current.dragging = true
+      try { el.setPointerCapture(e.pointerId) } catch { /* ignore */ }
+    }
+    if (dragRef.current.dragging) {
+      dragRef.current.moved = true
+      el.scrollLeft = dragRef.current.startScroll - dx
+    }
   }
 
   const onPointerUp = (e: React.PointerEvent) => {
     const el = trackRef.current
-    if (el && el.hasPointerCapture(e.pointerId)) el.releasePointerCapture(e.pointerId)
+    if (el && dragRef.current.dragging && e.pointerId === dragRef.current.pointerId) {
+      try { el.releasePointerCapture(e.pointerId) } catch { /* ignore */ }
+    }
     dragRef.current.dragging = false
   }
 
@@ -184,8 +197,8 @@ export function CategoryGrid({
                 <button
                   key={c.match}
                   data-card
-                  onClick={() => onSelectCategory(jobs.find((j) => (j.job_category || '').toLowerCase().includes(c.match.toLowerCase()))?.job_category || c.match)}
-                  className="relative shrink-0 w-[78vw] max-w-[340px] sm:w-[380px] sm:max-w-none h-[220px] sm:h-[240px] rounded-2xl overflow-hidden text-left snap-start cursor-pointer border border-slate-200 transition-all duration-200 hover:shadow-lg hover:scale-[1.02] hover:border-slate-300"
+                  onClick={() => onSelectCategory(c.category)}
+                  className="relative shrink-0 w-[78vw] max-w-[340px] sm:w-[380px] sm:max-w-none h-[220px] sm:h-[240px] rounded-2xl overflow-hidden text-left snap-start cursor-pointer border border-slate-200"
                 >
                   <img
                     src={c.image}
@@ -198,7 +211,7 @@ export function CategoryGrid({
                   <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-black/90 via-black/50 via-45% to-transparent pointer-events-none" />
                   <div className="absolute bottom-0 inset-x-0 p-5 pb-6">
                     <h3 className="text-sm sm:text-base font-medium text-white leading-snug">{c.label}</h3>
-                    <span className="inline-flex items-center gap-1 mt-2 text-[11px] font-semibold text-white bg-[#0C52EE] px-2.5 py-1 rounded-full">Lihat {">"}</span>
+                    <span className="inline-flex items-center gap-1 mt-2 text-[11px] font-semibold text-white bg-[#0C52EE] px-2.5 py-1 rounded-full transition-all duration-200 hover:bg-[#0942c4] hover:scale-105">Lihat {">"}</span>
                   </div>
                 </button>
               )
@@ -206,7 +219,7 @@ export function CategoryGrid({
 
             <div
               data-card
-              className="relative shrink-0 w-[78vw] max-w-[340px] sm:w-[380px] sm:max-w-none h-[220px] sm:h-[240px] rounded-2xl overflow-hidden snap-start snap-end border border-[#0C52EE] bg-[#0C52EE] text-white flex items-center text-left transition-all duration-200 hover:shadow-lg hover:scale-[1.02] hover:bg-[#0a48d6]"
+              className="relative shrink-0 w-[78vw] max-w-[340px] sm:w-[380px] sm:max-w-none h-[220px] sm:h-[240px] rounded-2xl overflow-hidden snap-start snap-end border border-[#0C52EE] bg-[#0C52EE] text-white flex items-center text-left"
             >
               {/* overlay icon besar di kanan, dipotong tepi card */}
               <LuLayoutGrid
@@ -218,7 +231,7 @@ export function CategoryGrid({
                 <h3 className="text-base sm:text-lg font-semibold text-white leading-snug">Explore</h3>
                 <button
                   onClick={onExploreAll}
-                  className="mt-1 inline-flex items-center gap-1.5 text-sm font-medium text-white underline underline-offset-4 hover:text-blue-100 transition-colors cursor-pointer"
+                  className="mt-1 inline-flex items-center gap-1.5 text-sm font-medium text-white underline underline-offset-4 hover:text-blue-100 hover:gap-2.5 transition-all duration-200 cursor-pointer"
                 >
                   Semua Lowongan
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
@@ -321,17 +334,17 @@ export function StatsPartners({ jobs }: { jobs: RankedJobResult[] }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
         <div className="max-w-2xl mx-auto space-y-1.5">
           <h2 className="text-2xl sm:text-3xl font-medium text-slate-900 tracking-tight">
-            Guiding You To Your Dream Job With Renowned Companies
+            Find Your Perfect Part-Time Job
           </h2>
           <p className="text-xs sm:text-sm text-slate-400 font-light">
-            Menghubungkan mahasiswa dengan peluang kerja resmi tanpa mengorbankan indeks prestasi kumulatif.
+            Rekomendasi pekerjaan part-time yang paling cocok untuk kamu dengan sumber yang terpercaya
           </p>
         </div>
 
         <div className="grid grid-cols-3 gap-6 max-w-3xl mx-auto py-2">
           <div className="space-y-1">
             <div className="text-3xl sm:text-4xl lg:text-5xl font-medium text-slate-900 tracking-tight">
-              {jobs.length}<span className="text-[#0C52EE]">+</span>
+              {jobs.length - 21}<span className="text-[#0C52EE]">+</span>
             </div>
             <p className="text-xs text-slate-400 font-light">Loker Terverifikasi</p>
           </div>
@@ -372,7 +385,6 @@ export function BlueBanner({
 }: {
   onQuickSearch: (q: string) => void
 }) {
-  const [q, setQ] = useState('')
   return (
     <section className="py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <div className="w-full rounded-2xl bg-[#0C52EE] p-8 sm:p-12 text-center text-white space-y-4 shadow-sm">
@@ -383,23 +395,14 @@ export function BlueBanner({
           Temukan posisi kerja yang paling fleksibel dengan jadwal kuliahmu hari ini menggunakan algoritma SMARTER &amp; ROC.
         </p>
 
-        <div className="pt-4 max-w-md mx-auto">
-          <div className="bg-white rounded-xl p-1.5 flex items-center gap-2 shadow-sm text-slate-800">
-            <input
-              type="text"
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && onQuickSearch(q.trim())}
-              placeholder="Cari posisi atau keahlian..."
-              className="w-full text-xs px-3 py-2 bg-transparent focus:outline-none font-light placeholder-slate-400"
-            />
-            <button
-              onClick={() => onQuickSearch(q.trim())}
-              className="px-4 py-2 bg-[#0C52EE] hover:bg-[#0942c4] text-white rounded-lg text-xs font-medium transition-colors whitespace-nowrap"
-            >
-              Get Started
-            </button>
-          </div>
+        <div className="pt-4">
+          <button
+            onClick={() => onQuickSearch('')}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-white text-slate-900 hover:bg-blue-50 rounded-xl text-sm font-medium transition-all duration-200 hover:gap-3 shadow-sm cursor-pointer"
+          >
+            Eksplore Semua Lowongan
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+          </button>
         </div>
       </div>
     </section>
@@ -417,7 +420,7 @@ export function LandingFooter({
     <footer className="bg-white border-t border-slate-200 py-10 px-4 sm:px-6 lg:px-8 text-xs text-slate-500 font-light">
       <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-8 mb-8">
         <div className="space-y-2 col-span-2 md:col-span-1">
-          <div className="font-medium text-slate-900 text-base">upmatch</div>
+          <div className="font-medium text-slate-900 text-base tracking-tighter">upmatch</div>
           <p className="text-[11px] text-slate-400 leading-relaxed font-light">
             Sistem rekomendasi part-time untuk mahasiswa berbasis metode Multi-Criteria Decision Making (MCDM) SMARTER &amp; ROC.
           </p>
@@ -436,7 +439,7 @@ export function LandingFooter({
         </div>
       </div>
       <div className="max-w-7xl mx-auto pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between text-slate-400 text-[11px]">
-        <span>{"\u00A9"} 2026 upmatch. All rights reserved.</span>
+        <span className="tracking-tighter">{"\u00A9"} 2026 upmatch. All rights reserved.</span>
         <span>{totalJobs} Lowongan Terverifikasi {"\u2022"} Untuk Mahasiswa</span>
       </div>
     </footer>

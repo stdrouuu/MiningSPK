@@ -29,7 +29,7 @@ export function PortalFooter({ onOpenPreferences }: { onOpenPreferences: () => v
   return (
     <footer className="border-t border-slate-200 bg-white mt-16 py-6 text-xs text-slate-500">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <p>© 2026 upmatch • Sistem Rekomendasi Part-Time Mahasiswa (SMARTER &amp; ROC)</p>
+        <p className="tracking-tighter">© 2026 upmatch • Sistem Rekomendasi Part-Time Mahasiswa (SMARTER &amp; ROC)</p>
         <div className="flex items-center gap-4 text-slate-600">
           <span>221 Lowongan Terverifikasi</span>
           <span>•</span>

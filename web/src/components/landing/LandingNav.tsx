@@ -29,7 +29,7 @@ export function LandingNav({ active, savedCount, onNavigate, onOpenSavedJobs }: 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-8">
           <button onClick={() => onNavigate('landing')} className="flex items-center text-left group focus:outline-none">
-            <span className="text-xl font-medium tracking-tight text-slate-900">upmatch</span>
+            <span className="text-xl font-medium tracking-tighter text-slate-900">upmatch</span>
           </button>
 
           <nav className="hidden md:flex items-center gap-2 text-sm font-normal">
