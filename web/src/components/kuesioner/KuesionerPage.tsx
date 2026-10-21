@@ -5,16 +5,15 @@ import { RiArrowLeftLine, RiArrowRightLine, RiQuestionLine } from 'react-icons/r
 import { PortalHeader } from '../PortalHeader'
 import { Button } from '../ui/Button'
 import { CompanyLogo } from '../CompanyLogo'
+import { ConfirmRankModal } from './ConfirmRankModal'
 import { PairwiseQuiz } from './PairwiseQuiz'
 import { PriorityEditor } from './PriorityEditor'
 import { SensitivityPanel } from './SensitivityPanel'
-import { VerificationPanel } from './VerificationPanel'
 import type { CleanJob, RankedJobResult, StudentProfile } from '../../types/data'
 import type { StudentPreferences } from '../../types/portal'
 import type { CriterionKey, Ranks } from '../../types/priority'
 import { saveSession } from '../../types/priority'
-import { metaOf, strictRanks } from '../../lib/priority'
-import { weightsWithTies, weightPct } from '../../lib/roc'
+import { strictRanks } from '../../lib/priority'
 import { computeLeaderScenarios } from '../../lib/sensitivity'
 import { computeSPKForCustomStudent } from '../../lib/spk'
 import type { TfidfArtifact } from '../../lib/spk'
@@ -221,16 +220,10 @@ export function KuesionerPage({
   // Draf susunan user di langkah Prioritas + centang konfirmasi (wajib sebelum lanjut)
   const [draftRanks, setDraftRanks] = useState<Ranks>(DEFAULT_DRAFT)
   const [confirmed, setConfirmed] = useState(false)
-  const [editCount, setEditCount] = useState(0)
-  const [saved, setSaved] = useState(false)
-  const [editing, setEditing] = useState(false)
+  const [confirmOpen, setConfirmOpen] = useState(false)
   const [quizOpen, setQuizOpen] = useState(false)
 
   const activeRanks = finalRanks ?? initialRanks
-  const weights = useMemo(
-    () => (activeRanks ? weightsWithTies(activeRanks) : null),
-    [activeRanks]
-  )
 
   const ranked: RankedJobResult[] = useMemo(() => {
     if (!activeRanks || !jobs.length) return []
@@ -245,12 +238,9 @@ export function KuesionerPage({
     return computeLeaderScenarios(jobs, studentPrefs, activeRanks, tfidf)
   }, [jobs, studentPrefs, activeRanks, tfidf])
 
-  const applyRanks = (ranks: Ranks, goToResult = true) => {
-    setInitialRanks(ranks)
-    setFinalRanks(ranks)
-    setEditCount(0)
-    setSaved(false)
-    setEditing(false)
+  const applyRanks = (r: Ranks, goToResult = true) => {
+    setInitialRanks(r)
+    setFinalRanks(r)
     // Kuesioner selesai sampai hasil -> profil user dianggap terisi,
     // skor % kecocokan & matriks boleh ditampilkan.
     set('profileComplete', true)
@@ -267,33 +257,13 @@ export function KuesionerPage({
     setStep(1)
   }
 
-  /** Kunci susunan user lalu tampilkan hasil. */
-  const showResult = () => {
-    applyRanks({ ...draftRanks })
-  }
+  /** Buka modal konfirmasi ranking sebelum hasil dihitung. */
+  const showResult = () => setConfirmOpen(true)
 
-  /** Kuis pilihan paksa → isi draf (user tetap bisa mengubah sebelum konfirmasi). */
-  const finishQuiz = (points: Record<CriterionKey, number>) => {
-    setDraftRanks(strictRanks(points))
-    setConfirmed(true)
-    setQuizOpen(false)
-  }
-
-  const handleEditRanks = (next: Ranks) => {
-    setFinalRanks(next)
-    setEditCount((c) => c + 1)
-    setSaved(false)
-  }
-
-  const handleReset = () => {
-    if (initialRanks) {
-      setFinalRanks(initialRanks)
-      setSaved(false)
-    }
-  }
-
-  const handleAccept = () => {
-    if (!initialRanks || !finalRanks) return
+  /** Ranking disetujui dari modal: kunci susunan, simpan sesi, lalu tampilkan hasil. */
+  const confirmRanks = () => {
+    const ranks = { ...draftRanks }
+    applyRanks(ranks)
     saveSession({
       timestamp: new Date().toISOString(),
       profile: {
@@ -303,13 +273,24 @@ export function KuesionerPage({
         preferredCategory: studentPrefs.preferredCategory,
         skills: studentPrefs.skills,
       },
-      initialRanks,
-      finalRanks,
-      status: editCount === 0 ? 'accepted_initial' : 'edited',
-      editCount,
-      top3: ranked.slice(0, 3).map((j) => j.job_id),
+      initialRanks: ranks,
+      finalRanks: ranks,
+      status: 'accepted_initial',
+      editCount: 0,
+      top3: computeSPKForCustomStudent(
+        jobs,
+        { ...studentPrefs, priorityRank: toSpkRank(ranks) },
+        tfidf
+      ).slice(0, 3).map((j) => j.job_id),
     })
-    setSaved(true)
+    setConfirmOpen(false)
+  }
+
+  /** Kuis pilihan paksa → isi draf (user tetap bisa mengubah sebelum konfirmasi). */
+  const finishQuiz = (points: Record<CriterionKey, number>) => {
+    setDraftRanks(strictRanks(points))
+    setConfirmed(true)
+    setQuizOpen(false)
   }
 
   const set = <K extends keyof StudentPreferences>(k: K, v: StudentPreferences[K]) =>
@@ -336,7 +317,7 @@ export function KuesionerPage({
               ? 'Jawabanmu dipakai menghitung upah/jam & jam ideal, lalu dipakai di rekomendasi. Jawab satu per satu — 6 pertanyaan, semua wajib diisi.'
               : step === 1
                 ? 'Susun ranking kriteria 1–5 versimu — ini murni pilihanmu, bukan tebakan sistem.'
-                : 'Rekomendasi dihitung dari ranking pilihanmu (SMARTER + ROC). Verifikasi: setuju atau atur ulang.'}
+                : 'Rekomendasi dihitung dari ranking pilihanmu (SMARTER + ROC) yang sudah kamu konfirmasi.'}
           </p>
         </div>
 
@@ -603,47 +584,17 @@ export function KuesionerPage({
               </section>
             )}
 
-            {/* STEP 2 — Hasil + verifikasi */}
-            {step === 2 && activeRanks && weights && (
+            {/* STEP 2 — Hasil */}
+            {step === 2 && activeRanks && (
               <section className="space-y-4">
-                {/* Ringkasan rank */}
-                <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs">
-                  <h2 className="text-sm font-medium text-slate-900">Ranking pilihanmu</h2>
-                  <p className="text-[11px] text-slate-500 font-light mt-0.5">
-                    Susunan versimu yang sudah dikonfirmasi. Rank unik 1–5, total bobot 100%.
-                  </p>
-                  <ol className="mt-2.5 space-y-1.5">
-                    {(Object.keys(activeRanks) as CriterionKey[])
-                      .sort((a, b) => activeRanks[a] - activeRanks[b])
-                      .map((key) => (
-                        <li key={key} className="flex items-center gap-2 text-xs">
-                          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-[#0C52EE] text-white font-mono text-[11px]">
-                            {activeRanks[key]}
-                          </span>
-                          <span className="font-medium text-slate-900">{metaOf(key).title}</span>
-                          <span className="text-slate-400 font-light tabular-nums">
-                            {weightPct(weights[key])}
-                          </span>
-                        </li>
-                      ))}
-                  </ol>
-                </div>
-
-                {(editing || editCount > 0) && (
-                  <PriorityEditor ranks={activeRanks} onChange={handleEditRanks} onReset={handleReset} />
-                )}
-
-                <VerificationPanel
-                  saved={saved}
-                  editCount={editCount}
-                  editing={editing}
-                  onAccept={handleAccept}
-                  onToggleEdit={() => setEditing((v) => !v)}
-                />
-
                 {/* Top 3 */}
                 <div className="space-y-2.5">
-                  <h2 className="text-sm font-medium text-slate-900">Top 3 untukmu</h2>
+                  <div>
+                    <h2 className="text-sm font-medium text-slate-900">Top 3 pekerjaan part-time untukmu</h2>
+                    <p className="text-xs text-slate-500 font-light mt-0.5">
+                      Diurutkan dari yang paling cocok, berdasarkan jawaban profil dan ranking prioritas yang sudah kamu isi.
+                    </p>
+                  </div>
                   {ranked.slice(0, 3).map((job, i) => (
                     <article key={job.job_id} className="bg-white border border-slate-200 rounded-xl p-3.5 shadow-2xs flex items-start gap-3">
                       <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#0C52EE] text-white text-xs font-medium">
@@ -688,6 +639,12 @@ export function KuesionerPage({
       </main>
 
       <PairwiseQuiz open={quizOpen} onClose={() => setQuizOpen(false)} onFinish={finishQuiz} />
+      <ConfirmRankModal
+        open={confirmOpen}
+        onClose={() => setConfirmOpen(false)}
+        ranks={draftRanks}
+        onConfirm={confirmRanks}
+      />
     </>
   )
 }
