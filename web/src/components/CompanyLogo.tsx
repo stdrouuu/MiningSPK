@@ -3,35 +3,56 @@ import { useState } from 'react'
 interface CompanyLogoProps {
   companyName: string
   logoUrl?: string
-  size?: 'sm' | 'md'
+  size?: 'sm' | 'md' | 'lg' | 'xl'
 }
 
 // Shows the original company logo from the source posting when available.
-// Falls back to the initial-letter tile when missing or failing to load.
+// Falls back to a neutral empty-state building icon when missing or failing to load.
 export function CompanyLogo({ companyName, logoUrl, size = 'md' }: CompanyLogoProps) {
+  const [attempt, setAttempt] = useState(0)
   const [failed, setFailed] = useState(false)
-  const dims = size === 'sm' ? 'h-8 w-8 text-[11px]' : 'h-10 w-10 text-xs'
-  const letters = (companyName || '??').substring(0, 2).toUpperCase()
+  // 'lg' untuk kartu feed, 'xl' untuk panel detail. Tanpa border & tanpa sudut
+  // membulat (kotak penuh) sesuai gaya JobStreet.
+  const dims =
+    size === 'sm' ? 'h-8 w-8 text-[11px]'
+    : size === 'md' ? 'h-10 w-10 text-xs'
+    : size === 'lg' ? 'h-12 w-12 text-sm'
+    : 'h-16 w-16 sm:h-20 sm:w-20 text-lg'
 
+  // Fallback: ikon gedung placeholder ala kosong (bukan inisial), gaya netral & lembut.
   if (!logoUrl || failed) {
     return (
       <div
-        className={`${dims} rounded-lg bg-slate-100 border border-slate-200 text-slate-700 font-medium flex items-center justify-center shrink-0`}
+        className={`${dims} bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center shrink-0`}
         aria-hidden="true"
+        title={`Belum ada logo untuk ${companyName}`}
       >
-        {letters}
+        <svg
+          className="h-1/2 w-1/2 text-slate-300"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
+            d="M3 21h18M5 21V5a1 1 0 011-1h8a1 1 0 011 1v16m0-9h3a1 1 0 011 1v9M8 8h.01M8 12h.01M8 16h.01M11 8h.01M11 12h.01M11 16h.01"
+          />
+        </svg>
       </div>
     )
   }
 
   return (
     <img
-      src={logoUrl}
+      // Retry sekali dengan cache-buster sebelum menyerah (CDN kadang transien gagal).
+      src={attempt === 0 ? logoUrl : `${logoUrl}${logoUrl.includes('?') ? '&' : '?'}retry=1`}
       alt={`Logo ${companyName}`}
       loading="lazy"
       referrerPolicy="no-referrer"
-      onError={() => setFailed(true)}
-      className={`${dims} rounded-lg object-contain bg-white border border-slate-200 shrink-0`}
+      onError={() => (attempt === 0 ? setAttempt(1) : setFailed(true))}
+      className={`${dims} object-contain bg-white shrink-0`}
     />
   )
 }

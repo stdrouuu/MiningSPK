@@ -14,15 +14,12 @@ export function PortalHero({ studentPrefs, onOpenPreferences, totalJobs, isProfi
   return (
     <section className="relative w-full rounded-2xl bg-[#0C52EE] overflow-hidden min-h-[160px] p-6 sm:p-8 lg:p-10 shadow-sm text-white flex items-center justify-between">
       <div className="relative z-10 max-w-2xl lg:max-w-3xl space-y-2">
-        <h1 className="text-2xl sm:text-3xl lg:text-[34px] font-medium tracking-tight leading-snug">
+        <h1 className="text-2xl sm:text-3xl lg:text-[36px] font-medium tracking-tight leading-snug">
           Halo{' '}
-          {/* Avatar duduk flush di baseline (vertical-align: baseline memakai bottom margin edge
-              untuk elemen inline), jadi sisi bawahnya rata dengan huruf "Halo" & ", ini
-              part-time". Ukurannya 0.72em ≈ cap-height, jadi sisi atasnya juga rata dengan
-              tops huruf kapital. Pakai em (bukan px) supaya ikut menyesuaikan font-size
-              di semua breakpoint. */}
+          {/* Nama diitalic + diunderline agar terlihat sebagai "sisipan" personal,
+              avatar tetap di sebelahnya flush ke baseline huruf. */}
           <span className="whitespace-nowrap">
-            {(studentPrefs.name || '').trim().split(' ')[0] || 'kamu'}
+            <span className="italic underline underline-offset-4">{(studentPrefs.name || '').trim().split(' ')[0] || 'kamu'}</span>
             <img
               src={avatarForPrefs(studentPrefs)}
               alt=""
@@ -35,14 +32,14 @@ export function PortalHero({ studentPrefs, onOpenPreferences, totalJobs, isProfi
           </span>
           {isProfileEmpty ? ', yuk susun rekomendasi versimu' : ', ini part–time paling cocok untukmu'}
         </h1>
-        <p className="text-xs sm:text-sm text-blue-100 font-light leading-relaxed max-w-xl">
+        <p className="text-sm sm:text-base text-blue-100 font-light leading-relaxed max-w-xl">
           {isProfileEmpty
             ? 'Ceritakan kebutuhanmu lewat kuesioner singkat (±3 menit) — ratusan lowongan part-time terverifikasi langsung diurutkan sesuai upah, jarak, jam kuliah, dan skill kamu.'
             : `${totalJobs} lowongan part-time terverifikasi di Jabodetabek, diurutkan real-time dari upah, jarak, jam kuliah, dan skill kamu.`}
         </p>
 
         {isProfileEmpty ? (
-          <div className="pt-2 flex flex-wrap items-center gap-2 text-xs">
+          <div className="pt-2 flex flex-wrap items-center gap-2 text-sm">
             <button onClick={onFillQuestionnaire} className="px-4 py-2 rounded-lg bg-white text-slate-900 font-medium hover:bg-blue-50 transition-colors cursor-pointer">
               Mulai kuesioner (±3 menit)
             </button>
@@ -51,7 +48,7 @@ export function PortalHero({ studentPrefs, onOpenPreferences, totalJobs, isProfi
             </button>
           </div>
         ) : (
-          <div className="pt-2 flex flex-wrap items-center gap-2 text-xs">
+          <div className="pt-2 flex flex-wrap items-center gap-2 text-sm">
             <span className="px-3 py-1.5 rounded-lg bg-white font-normal text-slate-900 shadow-2xs">
               Lokasi: {studentPrefs.location}
             </span>

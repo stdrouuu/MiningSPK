@@ -559,13 +559,13 @@ function PortalRoute({
         {isProfileEmpty && !state.loading && !state.error && (
           <section className="bg-[#0C52EE]/[0.04] border border-[#0C52EE]/25 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-3">
             <div className="flex-1">
-              <h2 className="text-sm font-medium text-slate-900">Dapatkan rekomendasi yang pas buat kamu</h2>
-              <p className="text-xs text-slate-500 font-light mt-0.5">
+              <h2 className="text-[15px] font-medium text-slate-900">Dapatkan rekomendasi yang pas buat kamu</h2>
+              <p className="text-sm text-slate-500 font-light mt-0.5">
                 Ceritakan upah, jam, lokasi & skill-mu lewat kuesioner singkat (±3 menit) —
                 221 lowongan langsung diurutkan sesuai kebutuhanmu.
               </p>
             </div>
-            <Button size="sm" onClick={onFillQuestionnaire} className="text-xs shrink-0">
+            <Button size="sm" onClick={onFillQuestionnaire} className="text-sm shrink-0">
               Mulai kuesioner
             </Button>
           </section>
@@ -632,7 +632,7 @@ function PortalRoute({
                     placeholder="Cari posisi, perusahaan, atau keahlian…"
                     value={state.searchQuery}
                     onChange={(e) => state.setSearchQuery(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs font-light text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-[#0C52EE]"
+                    className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-light text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-[#0C52EE]"
                   />
                 </div>
 
@@ -642,7 +642,7 @@ function PortalRoute({
                     id="filter-category"
                     value={state.filterCategory}
                     onChange={(e) => state.setFilterCategory(e.target.value)}
-                    className="w-full py-2 px-3 bg-slate-50 border border-slate-200 rounded-lg text-xs font-light text-slate-700 focus:bg-white focus:outline-none focus:border-[#0C52EE]"
+                    className="w-full py-2.5 px-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-light text-slate-700 focus:bg-white focus:outline-none focus:border-[#0C52EE]"
                   >
                     <option value="ALL">Semua Kategori</option>
                     {state.categories.map((c) => (
@@ -657,7 +657,7 @@ function PortalRoute({
                     id="filter-mode"
                     value={state.filterWorkSystem}
                     onChange={(e) => state.setFilterWorkSystem(e.target.value)}
-                    className="w-full py-2 px-3 bg-slate-50 border border-slate-200 rounded-lg text-xs font-light text-slate-700 focus:bg-white focus:outline-none focus:border-[#0C52EE]"
+                    className="w-full py-2.5 px-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-light text-slate-700 focus:bg-white focus:outline-none focus:border-[#0C52EE]"
                   >
                     <option value="ALL">Semua Moda</option>
                     <option value="Remote">Remote Only</option>
@@ -672,7 +672,7 @@ function PortalRoute({
                     id="sort-by"
                     value={state.sortBy}
                     onChange={(e) => state.setSortBy(e.target.value as any)}
-                    className="w-full py-2 px-3 bg-slate-50 border border-slate-200 rounded-lg text-xs font-light text-slate-700 focus:bg-white focus:outline-none focus:border-[#0C52EE]"
+                    className="w-full py-2.5 px-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-light text-slate-700 focus:bg-white focus:outline-none focus:border-[#0C52EE]"
                   >
                     <option value="match">Urutkan: Kecocokan SPK</option>
                     <option value="salary-high">Upah Tertinggi</option>
@@ -684,14 +684,14 @@ function PortalRoute({
             </section>
 
             {/* Status bar */}
-            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:justify-between text-xs text-slate-500 gap-1 font-light px-1" role="status" aria-live="polite">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:justify-between text-sm text-slate-500 gap-1 font-light px-1" role="status" aria-live="polite">
               <div>
                 Menampilkan <span className="font-medium text-slate-900">{pagedJobs.length}</span> dari{' '}
                 <span className="font-medium text-slate-900">{state.displayJobs.length}</span> lowongan untuk{' '}
                 <span className="font-medium text-slate-900">{state.studentPrefs.name.trim() || 'kamu'}</span>
               </div>
               {!isProfileEmpty && (
-                <div className="text-[11px] text-slate-400">
+                <div className="text-sm text-slate-400">
                   {state.studentPrefs.location} {"\u2022"} Rp {state.studentPrefs.minSalary.toLocaleString('id-ID')}/jam {"\u2022"} maks {state.studentPrefs.maxHours} jam/mgg
                 </div>
               )}
@@ -700,12 +700,12 @@ function PortalRoute({
             {/* Split Master-Detail Layout */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
               {/* Left Column: Job Cards Feed */}
-              <div ref={listTopRef} className="lg:col-span-5 space-y-3 scroll-mt-20" role="listbox" aria-label="Daftar lowongan terurut SPK" aria-activedescendant={state.selectedJob ? `job-${state.selectedJob.job_id}` : undefined}>
+              <div ref={listTopRef} className="lg:col-span-5 space-y-3 scroll-mt-6" role="listbox" aria-label="Daftar lowongan terurut SPK" aria-activedescendant={state.selectedJob ? `job-${state.selectedJob.job_id}` : undefined}>
                 {state.displayJobs.length === 0 ? (
                   <div className="p-8 text-center bg-white border border-slate-200 rounded-xl space-y-2">
-                    <p className="font-medium text-slate-800 text-sm">Tidak ada lowongan yang cocok</p>
-                    <p className="text-xs text-slate-400 font-light">Coba hapus kata kunci, pilih "Semua Kategori", atau turunkan target upah di Preferensi.</p>
-                    <button onClick={() => { state.setSearchQuery(''); state.setFilterCategory('ALL'); state.setFilterWorkSystem('ALL') }} className="text-xs font-medium text-[#0C52EE] hover:underline pt-2">
+                    <p className="font-medium text-slate-800 text-[15px]">Tidak ada lowongan yang cocok</p>
+                    <p className="text-sm text-slate-400 font-light">Coba hapus kata kunci, pilih "Semua Kategori", atau turunkan target upah di Preferensi.</p>
+                    <button onClick={() => { state.setSearchQuery(''); state.setFilterCategory('ALL'); state.setFilterWorkSystem('ALL') }} className="text-sm font-medium text-[#0C52EE] hover:underline pt-2">
                       Atur ulang filter
                     </button>
                   </div>
@@ -763,7 +763,7 @@ function PortalRoute({
                           onClick={() => goToPage(token - 1)}
                           aria-label={`Halaman ${token}`}
                           aria-current={token === safePage + 1 ? 'page' : undefined}
-                          className={`h-8 min-w-8 px-2 rounded-lg text-xs font-medium tabular-nums transition ${
+                          className={`h-8 min-w-8 px-2 rounded-lg text-sm font-medium tabular-nums transition ${
                             token === safePage + 1
                               ? 'bg-[#0C52EE] text-white shadow-xs'
                               : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
@@ -790,8 +790,8 @@ function PortalRoute({
                 )}
               </div>
 
-              {/* Right Column: detail panel — sticky, scroll sendiri */}
-              <div className="lg:col-span-7 sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto overscroll-contain">
+              {/* Right Column: detail panel — sticky, scroll sendiri (navbar ikut menghilang saat scroll) */}
+              <div className="lg:col-span-7 sticky top-6 max-h-[calc(100vh-3rem)] overflow-y-auto overscroll-contain">
                 <JobDetailPane
                   job={state.selectedJob}
                   studentPrefs={state.studentPrefs}
