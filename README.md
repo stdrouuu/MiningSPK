@@ -7,6 +7,8 @@
 
 ---
 
+![Screenshot 2026-10-19 114958.png](https://github.com/user-attachments/assets/a5b07317-62df-43a4-adde-91ec1acaf5ee)
+
 ## 1. Judul Aplikasi
 
 **Sistem Pendukung Keputusan Rekomendasi Pekerjaan Part-Time untuk Mahasiswa Menggunakan Metode SMARTER (Studi Kasus: Mahasiswa Informatika UKRIDA)**
