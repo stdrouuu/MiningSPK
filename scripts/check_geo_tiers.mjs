@@ -20,6 +20,11 @@ assert.strictEqual(jobProximity({ work_job_location: 'Jakarta Pusat', work_syste
 const p3 = jobProximity({ work_job_location: 'Jakarta Selatan', work_system: 'Onsite' }, 'Depok')
 assert.strictEqual(p3.tier, 1, `Depok-Jaksel harus tier 1 (komuter), dapat ${JSON.stringify(p3)}`)
 
+// Batas tier pakai jarak mentah, bukan label bulat: Jakbar->Depok 26,6 km -> tier 2
+const p4 = jobProximity({ work_job_location: 'Depok', work_system: 'Onsite' }, 'Jakarta Barat')
+assert.strictEqual(p4.tier, 2, `Jakbar-Depok (26,6 km) harus tier 2, dapat ${JSON.stringify(p4)}`)
+assert.ok(p4.label.startsWith('±30'), `label harus naik ke ±30 km, dapat ${p4.label}`)
+
 // Jauh: Jakbar-Bogor & Tangsel-Bekasi -> tier 2
 assert.strictEqual(jobProximity({ work_job_location: 'Bogor', work_system: 'Onsite' }, 'Jakarta Barat').tier, 2)
 assert.strictEqual(jobProximity({ work_job_location: 'Bekasi', work_system: 'Onsite' }, 'Tangerang Selatan').tier, 2)

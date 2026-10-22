@@ -65,6 +65,9 @@ export function jobProximity(job: ProximityJob, studentLocation: string): JobPro
   if (!sCity || !jCity) return { tier: 0, label: null }
 
   if (sLoc === jLoc) return { tier: 0, label: 'Satu area' }
-  const km = Math.round(haversineKm(sCity, jCity) / 5) * 5
-  return { tier: km <= NEARBY_KM ? 1 : 2, label: `±${km} km` }
+  const kmRaw = haversineKm(sCity, jCity)
+  // Tier ditentukan jarak mentah; pembulatan hanya untuk label (ceil ke 5 km
+  // supaya label tier 1 & tier 2 tidak bentrok di batas 25 km).
+  const km = Math.ceil(kmRaw / 5) * 5
+  return { tier: kmRaw <= NEARBY_KM ? 1 : 2, label: `±${km} km` }
 }
