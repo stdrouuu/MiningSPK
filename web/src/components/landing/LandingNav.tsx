@@ -1,16 +1,19 @@
 import { navButtonClass, navIndicatorClass } from '../../lib/navStyle'
 
+type NavView = 'landing' | 'portal' | 'matrix' | 'kuesioner'
+
 interface LandingNavProps {
-  active: 'landing' | 'portal' | 'matrix'
+  mode: 'user' | 'data'
+  active: NavView
   savedCount: number
-  onNavigate: (view: 'landing' | 'portal' | 'matrix') => void
+  onNavigate: (view: NavView) => void
   onOpenSavedJobs: () => void
 }
 
-export function LandingNav({ active, savedCount, onNavigate, onOpenSavedJobs }: LandingNavProps) {
+export function LandingNav({ mode, active, savedCount, onNavigate, onOpenSavedJobs }: LandingNavProps) {
   const navIndicator = navIndicatorClass()
 
-  const link = (view: 'landing' | 'portal' | 'matrix', label: string) => {
+  const link = (view: NavView, label: string) => {
     const isActive = active === view
     return (
       <button
@@ -29,13 +32,19 @@ export function LandingNav({ active, savedCount, onNavigate, onOpenSavedJobs }: 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-8">
           <button onClick={() => onNavigate('landing')} className="flex items-center text-left group focus:outline-none">
-            <span className="text-xl font-medium tracking-tighter text-slate-900">upmatch</span>
+            <span className="text-2xl font-medium tracking-tighter text-slate-900">upmatch</span>
+            {mode === 'data' && (
+              <span className="ml-2 px-1.5 py-0.5 rounded-md bg-amber-100 border border-amber-300 text-[10px] font-medium text-amber-800">
+                demo data
+              </span>
+            )}
           </button>
 
-          <nav className="hidden md:flex items-center gap-2 text-sm font-normal">
+          <nav className="hidden md:flex items-center gap-2 text-sm sm:text-base font-normal">
             {link('landing', 'Beranda')}
             {link('portal', 'Lowongan')}
             {link('matrix', 'Perhitungan')}
+            {mode === 'user' && link('kuesioner', 'Kuesioner')}
           </nav>
         </div>
 

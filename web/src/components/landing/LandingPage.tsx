@@ -4,7 +4,6 @@ import { LandingHero } from './LandingHero'
 import { CategoryGrid, FeaturedJobs, StatsPartners, BlueBanner, LandingFooter } from './LandingSections'
 import type { RankedJobResult } from '../../types/data'
 import { ROUTES } from '../../lib/routes'
-
 interface LandingPageProps {
   mode: 'user' | 'data'
   savedCount: number
@@ -29,13 +28,16 @@ export function LandingPage({
   const matrixPath = mode === 'data' ? ROUTES.DATA_MATRIX : ROUTES.MATRIX
   const landingPath = mode === 'data' ? ROUTES.DATA : ROUTES.LANDING
 
-  const onNavigate = (view: 'landing' | 'portal' | 'matrix') => {
-    navigate(view === 'landing' ? landingPath : view === 'portal' ? portalPath : matrixPath)
+  const onNavigate = (view: 'landing' | 'portal' | 'matrix' | 'kuesioner') => {
+    if (view === 'landing') navigate(landingPath)
+    else if (view === 'portal') navigate(portalPath)
+    else if (view === 'matrix') navigate(matrixPath)
+    else navigate(ROUTES.KUESIONER)
   }
 
   return (
     <div className="min-h-[100dvh] bg-[#F8FAFC] font-sans text-slate-900">
-      <LandingNav active="landing" savedCount={savedCount} onNavigate={onNavigate} onOpenSavedJobs={onOpenSavedJobs} />
+      <LandingNav mode={mode} active="landing" savedCount={savedCount} onNavigate={onNavigate} onOpenSavedJobs={onOpenSavedJobs} />
       <main>
         <LandingHero totalJobs={jobs.length} onEnterPortal={() => navigate(portalPath)} />
         <CategoryGrid

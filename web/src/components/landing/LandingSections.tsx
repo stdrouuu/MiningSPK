@@ -414,7 +414,7 @@ export function LandingFooter({
   onNavigate,
 }: {
   totalJobs: number
-  onNavigate: (view: 'landing' | 'portal' | 'matrix') => void
+  onNavigate: (view: 'landing' | 'portal' | 'matrix' | 'kuesioner') => void
 }) {
   return (
     <footer className="bg-white border-t border-slate-200 py-10 px-4 sm:px-6 lg:px-8 text-xs text-slate-500 font-light">
