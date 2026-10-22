@@ -170,7 +170,7 @@ export function JobDetailPane({
       </p>
 
       {hideAnalysis ? (
-        <div className="p-4 rounded-xl bg-[#0C52EE]/[0.04] border border-[#0C52EE]/25 space-y-2">
+        <div className="mt-2 border-t border-slate-200 pt-5 space-y-2">
           <h4 className="text-[15px] font-medium text-slate-900">Lihat seberapa cocok lowongan ini buatmu</h4>
           <p className="text-sm text-slate-500 font-light">
             Isi kuesioner singkat (±3 menit) — skor kecocokan dan analisis SPK lowongan ini
@@ -184,55 +184,58 @@ export function JobDetailPane({
           </button>
         </div>
       ) : (
-      <div className="p-4 rounded-xl bg-blue-50/50 border border-blue-200 space-y-3">
-        <div className="flex items-center justify-between">
-          <h4 className="text-[15px] font-medium text-[#0C52EE]">Analisis kesesuaian SPK</h4>
-          <span className="text-sm font-medium text-[#0C52EE]">
-            Skor U(Ai) {job.finalScore.toFixed(4)} ({matchPct}%)
-          </span>
+      <div className="mt-2 border-t border-slate-200 pt-5 space-y-4">
+        <div className="flex items-baseline justify-between gap-3">
+          <h4 className="text-[15px] font-medium text-slate-900 shrink-0">Analisis kesesuaian SPK</h4>
+          <p className="shrink-0 flex items-baseline gap-1.5 text-[13px] text-slate-500">
+            Skor U(Ai) {job.finalScore.toFixed(4)}
+            <span className="text-sm font-semibold text-slate-900 tabular-nums">{matchPct}%</span>
+          </p>
         </div>
 
-        <div className="w-full h-2 rounded-full bg-slate-200 overflow-hidden" role="progressbar" aria-valuenow={matchPct} aria-valuemin={0} aria-valuemax={100} aria-label={`Kecocokan SPK ${matchPct}%`}>
-          <div className="h-full bg-[#0C52EE]" style={{ width: `${matchPct}%` }} />
+        <div className="w-full h-1 rounded-full bg-slate-200/70 overflow-hidden" role="progressbar" aria-valuenow={matchPct} aria-valuemin={0} aria-valuemax={100} aria-label={`Kecocokan SPK ${matchPct}%`}>
+          <div className="h-full rounded-full bg-[#0C52EE]" style={{ width: `${matchPct}%` }} />
         </div>
 
-        <div className="space-y-2 text-xs sm:text-sm font-light text-slate-700">
+        <div className="space-y-2.5">
           {[
-            { title: 'Kategori pekerjaan: ', body: isCategoryMatch ? `Sesuai minat Anda (${job.job_category}).` : `Berbeda dari minat Anda (${studentPrefs.preferredCategory}).` },
-            { title: `Upah (${salaryRatio.toFixed(2)}× target): `, body: `Tawaran Rp ${job.work_salaryperhour.toLocaleString('id-ID')} vs target Rp ${studentPrefs.minSalary.toLocaleString('id-ID')}.` },
-            { title: 'Lokasi & moda: ', body: c3Desc },
-            { title: `Beban jam (${job.work_hours} jam): `, body: c4Desc },
-            { title: 'Kecocokan keahlian: ', body: 'Irisan kata kunci skill Anda dengan deskripsi lowongan (TF-IDF cosine).' },
+            { label: 'Kategori pekerjaan', body: isCategoryMatch ? `Sesuai minat Anda (${job.job_category}).` : `Berbeda dari minat Anda (${studentPrefs.preferredCategory}).`, warn: false },
+            { label: `Upah (${salaryRatio.toFixed(2)}× target)`, body: `Tawaran Rp ${job.work_salaryperhour.toLocaleString('id-ID')} vs target Rp ${studentPrefs.minSalary.toLocaleString('id-ID')}.`, warn: false },
+            { label: 'Lokasi & moda', body: c3Desc, warn: false },
+            { label: `Beban jam (${job.work_hours} jam)`, body: c4Desc, warn: !isWithinHours },
+            { label: 'Kecocokan keahlian', body: 'Irisan kata kunci skill Anda dengan deskripsi lowongan (TF-IDF cosine).', warn: false },
           ].map((row) => (
-            <div key={row.title} className="flex items-start gap-2 bg-white p-2 rounded-lg border border-slate-200">
-              <div>
-                <span className="font-normal text-slate-900">{row.title}</span>
-                <span>{row.body}</span>
-              </div>
+            <div key={row.label} className="flex gap-4">
+              <span className="w-36 shrink-0 text-[13px] leading-normal text-slate-500">{row.label}</span>
+              <span className={`flex-1 text-sm leading-relaxed ${row.warn ? 'text-[#d12e32] font-medium' : 'text-slate-700 font-normal'}`}>{row.body}</span>
             </div>
           ))}
         </div>
 
-        <div className="pt-2 border-t border-blue-200/60 flex items-center justify-between text-sm text-slate-500 font-light">
-          <span>U(Ai) = {"\u03A3"} (w{'\u2C7C'} {"\u00D7"} u{'\u2C7C'}) {"\u2022"} bobot ROC</span>
-          <button onClick={onOpenPreferences} className="text-[#0C52EE] font-medium hover:underline">
+        <div className="flex items-center justify-between gap-3 text-sm">
+          <span className="text-[13px] text-slate-500">U(Ai) = {"\u03A3"} (w{'\u2C7C'} {"\u00D7"} u{'\u2C7C'}) {"\u2022"} bobot ROC</span>
+          <button onClick={onOpenPreferences} className="text-[#0C52EE] font-medium hover:underline underline-offset-4">
             Ubah bobot prioritas
           </button>
         </div>
       </div>
       )}
 
-      <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5 text-xs sm:text-sm text-slate-500 font-light">
-        <div className="flex items-center gap-1.5">
-          <span className="px-2 py-0.5 rounded bg-emerald-600 text-white text-[11px] font-medium">Terverifikasi 6-lapis CRISP-DM</span>
-        </div>
-        <p className="leading-relaxed">
+      <div className="mt-2 border-t border-slate-200 pt-5 space-y-1.5">
+        <p className="flex items-center gap-1.5 text-[15px] font-medium text-slate-900">
+          <svg className="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" aria-label="Terverifikasi">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12.5l2 2 4-4.5" />
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3l7.5 3.2v4.6c0 4.6-3.2 8.3-7.5 9.9-4.3-1.6-7.5-5.3-7.5-9.9V6.2L12 3z" />
+          </svg>
+          Terverifikasi 6-lapis CRISP-DM
+        </p>
+        <p className="text-sm text-slate-600 leading-relaxed">
           Bebas kata kunci magang/freelance bersyarat, gaji wajar, di bawah 30 jam/minggu, dan tautan aktif.
         </p>
-        <div className="pt-2 border-t border-slate-200/60 flex items-center justify-between">
+        <div className="flex items-center justify-between gap-3 pt-1 text-[13px] text-slate-500">
           <span>Posting: {job.date_posted || '2026/02'}</span>
           {job.url && (
-            <a href={job.url} target="_blank" rel="noopener noreferrer" className="text-[#0C52EE] font-medium hover:underline">
+            <a href={job.url} target="_blank" rel="noopener noreferrer" className="text-[#0C52EE] font-medium hover:underline underline-offset-4">
               Buka portal {job.source_portal || 'resmi'} {"\u2192"}
             </a>
           )}

@@ -120,9 +120,6 @@ export function FullMatrixView({
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div>
-          <div className="text-[11px] font-medium uppercase tracking-wider text-[#0C52EE]">
-            TRANSPARANSI KEPUTUSAN MULTI-KRITERIA
-          </div>
           <h1 className="text-xl sm:text-2xl font-medium text-slate-900 mt-0.5">
             Matriks Keputusan &amp; Komputasi SMARTER
           </h1>

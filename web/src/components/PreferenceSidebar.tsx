@@ -8,6 +8,7 @@ import {
   RiToolsLine,
   RiArrowUpDownLine,
   RiUserLine,
+  RiLockLine,
   RiDraggable,
   RiArrowUpSLine,
   RiArrowDownSLine,
@@ -55,6 +56,9 @@ export function PreferenceSidebar({
   mode,
   onFillQuestionnaire,
 }: PreferenceSidebarProps) {
+  // Mode data: nilai preferensi milik responden GForm — form dibekukan (baca-saja).
+  const isLocked = mode === 'data'
+
   const handleChange = <K extends keyof StudentPreferences>(
     key: K,
     val: StudentPreferences[K]
@@ -199,6 +203,10 @@ export function PreferenceSidebar({
               selectedId={studentPresets.some((s) => s.student_id === preferences.nim) ? preferences.nim : undefined}
               onSelect={handleLoadPreset}
             />
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 font-light flex items-center gap-1.5">
+              <RiLockLine className="h-3 w-3 shrink-0" aria-hidden="true" />
+              Form preferensi terkunci — mengikuti data responden yang dipilih.
+            </p>
           </div>
         ) : (
           /* Mode user baru: profil kosong -> bantu user dapat rekomendasi */
@@ -247,7 +255,8 @@ export function PreferenceSidebar({
                   profileComplete: v.trim() ? true : preferences.profileComplete,
                 })
               }}
-              className="w-full h-9 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100"
+              disabled={isLocked}
+              className="w-full h-9 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100 disabled:cursor-not-allowed disabled:bg-slate-100/80 dark:disabled:bg-slate-900 disabled:text-slate-500 dark:disabled:text-slate-400"
               placeholder="Contoh: Brandon Jeremiah"
               autoComplete="name"
             />
@@ -263,7 +272,8 @@ export function PreferenceSidebar({
               id="pref-location"
               value={preferences.location}
               onChange={(e) => handleChange('location', e.target.value)}
-              className="w-full h-9 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100 cursor-pointer"
+              disabled={isLocked}
+              className="w-full h-9 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100 cursor-pointer disabled:cursor-not-allowed disabled:bg-slate-100/80 dark:disabled:bg-slate-900 disabled:text-slate-500 dark:disabled:text-slate-400"
             >
               {LOCATIONS.map((loc) => (
                 <option key={loc} value={loc}>
@@ -293,7 +303,8 @@ export function PreferenceSidebar({
                 step="1000"
                 value={preferences.minSalary}
                 onChange={(e) => handleChange('minSalary', parseInt(e.target.value))}
-                className="flex-1 accent-[#0C52EE] cursor-pointer"
+                disabled={isLocked}
+                className="flex-1 accent-[#0C52EE] cursor-pointer disabled:cursor-not-allowed disabled:accent-slate-300"
                 aria-describedby="pref-salary-hint"
               />
               <input
@@ -303,8 +314,9 @@ export function PreferenceSidebar({
                 step={1000}
                 value={preferences.minSalary}
                 onChange={(e) => handleChange('minSalary', Math.min(60000, Math.max(15000, Number(e.target.value) || 15000)))}
+                disabled={isLocked}
                 aria-label="Target upah per jam dalam rupiah"
-                className="w-24 h-8 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-2 text-xs font-mono text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100"
+                className="w-24 h-8 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-2 text-xs font-mono text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100 disabled:cursor-not-allowed disabled:bg-slate-100/80 dark:disabled:bg-slate-900 disabled:text-slate-500 dark:disabled:text-slate-400"
               />
             </div>
             <span id="pref-salary-hint" className="sr-only">Rentang 15 ribu sampai 60 ribu rupiah per jam</span>
@@ -330,7 +342,8 @@ export function PreferenceSidebar({
                 step="1"
                 value={preferences.maxHours}
                 onChange={(e) => handleChange('maxHours', parseInt(e.target.value))}
-                className="flex-1 accent-[#0C52EE] cursor-pointer"
+                disabled={isLocked}
+                className="flex-1 accent-[#0C52EE] cursor-pointer disabled:cursor-not-allowed disabled:accent-slate-300"
               />
               <input
                 type="number"
@@ -339,8 +352,9 @@ export function PreferenceSidebar({
                 step={1}
                 value={preferences.maxHours}
                 onChange={(e) => handleChange('maxHours', Math.min(30, Math.max(8, Number(e.target.value) || 8)))}
+                disabled={isLocked}
                 aria-label="Batas jam kerja per minggu"
-                className="w-16 h-8 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-2 text-xs font-mono text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100"
+                className="w-16 h-8 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-2 text-xs font-mono text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100 disabled:cursor-not-allowed disabled:bg-slate-100/80 dark:disabled:bg-slate-900 disabled:text-slate-500 dark:disabled:text-slate-400"
               />
             </div>
           </div>
@@ -355,7 +369,8 @@ export function PreferenceSidebar({
               id="pref-category"
               value={preferences.preferredCategory}
               onChange={(e) => handleChange('preferredCategory', e.target.value)}
-              className="w-full h-9 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100 cursor-pointer"
+              disabled={isLocked}
+              className="w-full h-9 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100 cursor-pointer disabled:cursor-not-allowed disabled:bg-slate-100/80 dark:disabled:bg-slate-900 disabled:text-slate-500 dark:disabled:text-slate-400"
             >
               {categories.map((c) => (
                 <option key={c} value={c}>
@@ -374,7 +389,8 @@ export function PreferenceSidebar({
               id="pref-system"
               value={preferences.workSystem}
               onChange={(e) => handleChange('workSystem', e.target.value as any)}
-              className="w-full h-9 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100 cursor-pointer"
+              disabled={isLocked}
+              className="w-full h-9 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100 cursor-pointer disabled:cursor-not-allowed disabled:bg-slate-100/80 dark:disabled:bg-slate-900 disabled:text-slate-500 dark:disabled:text-slate-400"
             >
               <option value="ALL">Semua moda (Remote, Hybrid, Onsite)</option>
               <option value="Remote">Remote saja</option>
@@ -395,7 +411,8 @@ export function PreferenceSidebar({
             rows={2}
             value={preferences.skills}
             onChange={(e) => handleChange('skills', e.target.value)}
-            className="w-full rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 p-2.5 text-xs text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100"
+            disabled={isLocked}
+            className="w-full rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 p-2.5 text-xs text-slate-900 dark:text-slate-100 placeholder:text-slate-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100 disabled:cursor-not-allowed disabled:bg-slate-100/80 dark:disabled:bg-slate-900 disabled:text-slate-500 dark:disabled:text-slate-400"
             placeholder="Contoh: python, canva, excel, komunikasi, barista, english"
             aria-describedby="pref-skills-hint"
           />

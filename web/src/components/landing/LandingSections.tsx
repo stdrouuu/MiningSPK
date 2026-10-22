@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import { LuLayoutGrid } from 'react-icons/lu'
-import { CompanyLogo } from '../CompanyLogo'
 import type { RankedJobResult } from '../../types/data'
 import officesupport from '../../assets/officesupport.jpg'
 import hostlive from '../../assets/hostlive.webp'
@@ -268,6 +267,48 @@ export function CategoryGrid({
   )
 }
 
+// Logo perusahaan utuh di sisi kanan card — tampil penuh tanpa dipotong tepi
+// card dan tanpa transparansi. Tanpa logo (atau gagal load) → placeholder
+// ikon gedung netral.
+function LogoSide({ logoUrl, name }: { logoUrl?: string; name: string }) {
+  const [failed, setFailed] = useState(false)
+
+  if (!logoUrl || failed) {
+    return (
+      <div
+        aria-hidden="true"
+        title={`Belum ada logo untuk ${name}`}
+        className="shrink-0 h-16 w-16 sm:h-20 sm:w-20 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center"
+      >
+        <svg
+          className="h-1/2 w-1/2 text-slate-200"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={1}
+            d="M3 21h18M5 21V5a1 1 0 011-1h8a1 1 0 011 1v16m0-9h3a1 1 0 011 1v9M8 8h.01M8 12h.01M8 16h.01M11 8h.01M11 12h.01M11 16h.01"
+          />
+        </svg>
+      </div>
+    )
+  }
+
+  return (
+    <img
+      src={logoUrl}
+      alt={`Logo ${name}`}
+      loading="lazy"
+      referrerPolicy="no-referrer"
+      onError={() => setFailed(true)}
+      className="shrink-0 h-16 w-16 sm:h-20 sm:w-20 object-contain"
+    />
+  )
+}
+
 export function FeaturedJobs({
   jobs,
   onOpenJob,
@@ -296,15 +337,17 @@ export function FeaturedJobs({
                 onClick={() => onOpenJob(job)}
                 className="p-4 bg-white border border-slate-200 hover:border-slate-300 rounded-xl text-left transition-all shadow-2xs cursor-pointer"
               >
-                <div className="flex items-start gap-3">
-                  <div className="flex items-center gap-3 min-w-0">
-                    <CompanyLogo companyName={job.company_name} logoUrl={job.company_logo} />
-                    <div className="min-w-0">
-                      <h3 className="text-xs sm:text-sm font-medium text-slate-900 truncate">{job.job_title}</h3>
-                      <p className="text-[11px] text-slate-500 font-light truncate">{job.company_name}</p>
-                    </div>
+                <div className="flex items-center gap-3">
+                  <div className="min-w-0 flex-1">
+                    <h3 className="text-xs sm:text-sm font-medium text-slate-900 truncate">{job.job_title}</h3>
+                    <p className="text-[11px] text-slate-500 font-light truncate">{job.company_name}</p>
+                    <span className="inline-flex items-center mt-2 px-2 py-0.5 rounded-full bg-pink-50 text-[#ED1E79] text-[10px] font-semibold">
+                      {job.job_category}
+                    </span>
                   </div>
+                  <LogoSide logoUrl={job.company_logo} name={job.company_name} />
                 </div>
+
                 <div className="mt-3 pt-3 border-t border-slate-100 flex items-center gap-4 text-[11px] text-slate-600 font-light">
                   <span className="font-medium text-slate-900">Rp {job.work_salaryperhour.toLocaleString('id-ID')}/jam</span>
                   <span>{job.work_hours} jam/mgg</span>
