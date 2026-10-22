@@ -2,6 +2,11 @@ import React, { useState } from 'react'
 import { CompanyLogo } from './CompanyLogo'
 import type { RankedJobResult } from '../types/data'
 import type { StudentPreferences } from '../types/portal'
+import { jobProximity } from '../lib/geo'
+
+/** Komp util badge: jobProximity lalu ambil labelnya. */
+const proximityLabel = (job: RankedJobResult, location: string) =>
+  jobProximity(job, location).label
 
 interface JobCardItemProps {
   job: RankedJobResult
@@ -83,7 +88,14 @@ export function JobCardItem({
               {job.job_category}
             </span>
           </div>
-          <p className="text-sm text-slate-500 font-light mt-1.5 truncate">{job.work_job_location}</p>
+          <p className="text-sm text-slate-500 font-light mt-1.5 truncate">
+            {job.work_job_location}
+            {proximityLabel(job, studentPrefs.location) && (
+              <span className="ml-1.5 inline-flex items-center px-1.5 py-0.5 rounded bg-slate-100 text-[11px] font-normal text-slate-500 align-middle">
+                {proximityLabel(job, studentPrefs.location)}
+              </span>
+            )}
+          </p>
         </div>
         <CompanyLogo companyName={job.company_name} logoUrl={job.company_logo} size="xl" />
       </div>

@@ -43,8 +43,9 @@ const Q3_OPTIONS = [
   { value: 'Jakarta Timur', label: 'Jakarta Timur', hint: 'Jatinegara, Matraman, Duren Sawit, Cakung, dsb.' },
   { value: 'Jakarta Utara', label: 'Jakarta Utara', hint: 'Penjaringan, Kelapa Gading, Pluit, Pademangan, dsb.' },
   { value: 'Tangerang Selatan', label: 'Tangerang / Tangerang Selatan / BSD / Serpong' },
-  { value: 'Depok', label: 'Depok / Bogor' },
-  { value: 'Bekasi', label: 'Bekasi' },
+  { value: 'Depok', label: 'Depok', hint: 'Margonda, Cinere, Cimanggis, Pancoran Mas, dsb.' },
+  { value: 'Bogor', label: 'Bogor', hint: 'Kota Bogor, Cibinong, Cibubur, dsb.' },
+  { value: 'Bekasi', label: 'Bekasi', hint: 'Kota Bekasi, Cikarang, Tambun, dsb.' },
 ]
 
 const Q4_OPTIONS = [
