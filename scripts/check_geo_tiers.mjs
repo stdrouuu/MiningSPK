@@ -1,4 +1,4 @@
-import { jobProximity, NEARBY_KM } from '../tmp-geo-check/lib/geo.js'
+import { jobProximity, NEARBY_KM } from '../web/src/lib/geo.ts'
 import assert from 'node:assert'
 
 // Sama area -> tier 0, badge "Satu area"
