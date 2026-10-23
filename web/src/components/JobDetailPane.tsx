@@ -116,7 +116,7 @@ export function JobDetailPane({
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12.5l2 2 4-4.5" />
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3l7.5 3.2v4.6c0 4.6-3.2 8.3-7.5 9.9-4.3-1.6-7.5-5.3-7.5-9.9V6.2L12 3z" />
           </svg>
-          <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-pink-100/70 text-pink-600 text-[13px] font-medium leading-none">
+          <span className="inline-flex items-center px-2.5 py-1 rounded-md bg-pink-100/60 text-[#c83472] text-[13px] font-medium leading-none">
             {job.job_category}
           </span>
         </div>
@@ -220,27 +220,6 @@ export function JobDetailPane({
         </div>
       </div>
       )}
-
-      <div className="mt-2 border-t border-slate-200 pt-5 space-y-1.5">
-        <p className="flex items-center gap-1.5 text-[15px] font-medium text-slate-900">
-          <svg className="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" aria-label="Terverifikasi">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12.5l2 2 4-4.5" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3l7.5 3.2v4.6c0 4.6-3.2 8.3-7.5 9.9-4.3-1.6-7.5-5.3-7.5-9.9V6.2L12 3z" />
-          </svg>
-          Terverifikasi 6-lapis CRISP-DM
-        </p>
-        <p className="text-sm text-slate-600 leading-relaxed">
-          Bebas kata kunci magang/freelance bersyarat, gaji wajar, di bawah 30 jam/minggu, dan tautan aktif.
-        </p>
-        <div className="flex items-center justify-between gap-3 pt-1 text-[13px] text-slate-500">
-          <span>Posting: {job.date_posted || '2026/02'}</span>
-          {job.url && (
-            <a href={job.url} target="_blank" rel="noopener noreferrer" className="text-[#0C52EE] font-medium hover:underline underline-offset-4">
-              Buka portal {job.source_portal || 'resmi'} {"\u2192"}
-            </a>
-          )}
-        </div>
-      </div>
     </section>
   )
 }

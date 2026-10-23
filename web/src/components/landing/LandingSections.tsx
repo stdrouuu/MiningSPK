@@ -341,7 +341,7 @@ export function FeaturedJobs({
                   <div className="min-w-0 flex-1">
                     <h3 className="text-xs sm:text-sm font-medium text-slate-900 truncate">{job.job_title}</h3>
                     <p className="text-[11px] text-slate-500 font-light truncate">{job.company_name}</p>
-                    <span className="inline-flex items-center mt-2 px-2 py-0.5 rounded-full bg-pink-50 text-[#ED1E79] text-[10px] font-semibold">
+                    <span className="inline-flex items-center mt-2 px-2 py-0.5 rounded-full bg-pink-50 text-[#c83472] text-[10px] font-semibold">
                       {job.job_category}
                     </span>
                   </div>

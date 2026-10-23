@@ -10,7 +10,13 @@ interface PortalHeroProps {
   onFillQuestionnaire?: () => void
 }
 
-export function PortalHero({ studentPrefs, onOpenPreferences, totalJobs, isProfileEmpty = false, onFillQuestionnaire }: PortalHeroProps) {
+export function PortalHero({
+  studentPrefs,
+  onOpenPreferences,
+  totalJobs,
+  isProfileEmpty = false,
+  onFillQuestionnaire,
+}: PortalHeroProps) {
   return (
     <section className="relative w-full rounded-2xl bg-[#0C52EE] overflow-hidden min-h-[160px] p-6 sm:p-8 lg:p-10 shadow-sm text-white flex items-center justify-between">
       <div className="relative z-10 max-w-2xl lg:max-w-3xl space-y-2">
@@ -49,17 +55,23 @@ export function PortalHero({ studentPrefs, onOpenPreferences, totalJobs, isProfi
           </div>
         ) : (
           <div className="pt-2 flex flex-wrap items-center gap-2 text-sm">
-            <span className="px-3 py-1.5 rounded-lg bg-white font-normal text-slate-900 shadow-2xs">
+            <span className="px-3.5 py-1.5 rounded-xl bg-white/20 border border-white/10 text-white font-medium shadow-2xs backdrop-blur-xs">
               Lokasi: {studentPrefs.location}
             </span>
-            <span className="px-3 py-1.5 rounded-lg bg-white font-normal text-slate-900 shadow-2xs">
+            <span className="px-3.5 py-1.5 rounded-xl bg-white/20 border border-white/10 text-white font-medium shadow-2xs backdrop-blur-xs">
               Target: Rp {studentPrefs.minSalary.toLocaleString('id-ID')}/jam
             </span>
-            <span className="px-3 py-1.5 rounded-lg bg-white font-normal text-slate-900 shadow-2xs">
+            <span className="px-3.5 py-1.5 rounded-xl bg-white/20 border border-white/10 text-white font-medium shadow-2xs backdrop-blur-xs">
               Max: {studentPrefs.maxHours} jam/mgg
             </span>
-            <button onClick={onOpenPreferences} className="ml-2 font-medium underline hover:text-slate-200 transition-colors cursor-pointer">
-              Sesuaikan preferensi &amp; prioritas
+            <button
+              onClick={onOpenPreferences}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white text-slate-900 font-medium hover:bg-slate-100 transition-colors cursor-pointer shadow-2xs"
+            >
+              <svg className="w-3.5 h-3.5 text-slate-700 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+              </svg>
+              <span>Sesuaikan preferensi</span>
             </button>
           </div>
         )}

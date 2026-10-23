@@ -597,11 +597,16 @@ export function KuesionerPage({
                     </p>
                   </div>
                   {ranked.slice(0, 3).map((job, i) => (
-                    <article key={job.job_id} className="bg-white border border-slate-200 rounded-xl p-3.5 shadow-2xs flex items-start gap-3">
+                    <article key={job.job_id} className="bg-white border border-slate-200 rounded-xl p-3.5 shadow-2xs flex items-center gap-3.5">
                       <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#0C52EE] text-white text-xs font-medium">
                         {i + 1}
                       </span>
-                      <CompanyLogo companyName={job.company_name} logoUrl={job.company_logo} size="sm" />
+                      <CompanyLogo
+                        companyName={job.company_name}
+                        logoUrl={job.company_logo}
+                        size="lg"
+                        className="h-12 w-16 object-contain shrink-0"
+                      />
                       <div className="min-w-0 flex-1">
                         <div className="text-sm font-medium text-slate-900 truncate">{job.job_title}</div>
                         <div className="text-[11px] text-slate-500 font-light truncate">

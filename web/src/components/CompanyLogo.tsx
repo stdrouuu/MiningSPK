@@ -4,11 +4,12 @@ interface CompanyLogoProps {
   companyName: string
   logoUrl?: string
   size?: 'sm' | 'md' | 'lg' | 'xl'
+  className?: string
 }
 
 // Shows the original company logo from the source posting when available.
 // Falls back to a neutral empty-state building icon when missing or failing to load.
-export function CompanyLogo({ companyName, logoUrl, size = 'md' }: CompanyLogoProps) {
+export function CompanyLogo({ companyName, logoUrl, size = 'md', className }: CompanyLogoProps) {
   const [attempt, setAttempt] = useState(0)
   const [failed, setFailed] = useState(false)
   // 'lg' untuk kartu feed, 'xl' untuk panel detail. Tanpa border & tanpa sudut
@@ -19,11 +20,13 @@ export function CompanyLogo({ companyName, logoUrl, size = 'md' }: CompanyLogoPr
     : size === 'lg' ? 'h-12 w-12 text-sm'
     : 'h-16 w-16 sm:h-20 sm:w-20 text-lg'
 
+  const effectiveClasses = className || dims
+
   // Fallback: ikon gedung placeholder ala kosong (bukan inisial), gaya netral & lembut.
   if (!logoUrl || failed) {
     return (
       <div
-        className={`${dims} bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center shrink-0`}
+        className={`${effectiveClasses} bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center shrink-0`}
         aria-hidden="true"
         title={`Belum ada logo untuk ${companyName}`}
       >
@@ -52,7 +55,7 @@ export function CompanyLogo({ companyName, logoUrl, size = 'md' }: CompanyLogoPr
       loading="lazy"
       referrerPolicy="no-referrer"
       onError={() => (attempt === 0 ? setAttempt(1) : setFailed(true))}
-      className={`${dims} object-contain bg-white shrink-0`}
+      className={`${effectiveClasses} object-contain bg-white shrink-0`}
     />
   )
 }

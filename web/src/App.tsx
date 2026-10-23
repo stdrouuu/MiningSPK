@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, useNavigate, useLocation, useSearchParams } fr
 import { RiErrorWarningLine } from 'react-icons/ri'
 import { PortalHeader } from './components/PortalHeader'
 import { PortalHero } from './components/PortalHero'
+import { PortalStickyNav } from './components/PortalStickyNav'
 import { LandingPage } from './components/landing/LandingPage'
 import { JobCardItem } from './components/JobCardItem'
 import { JobDetailPane } from './components/JobDetailPane'
@@ -571,6 +572,13 @@ function PortalRoute({
 
   return (
     <>
+      <PortalStickyNav
+        studentPrefs={state.studentPrefs}
+        onOpenPreferences={onOpenPreferences}
+        isProfileEmpty={isProfileEmpty}
+        onFillQuestionnaire={onFillQuestionnaire}
+      />
+
       <PortalHeader
         mode={mode}
         activeView="jobs"
@@ -819,8 +827,8 @@ function PortalRoute({
                 )}
               </div>
 
-              {/* Right Column: detail panel — sticky, scroll sendiri (navbar ikut menghilang saat scroll) */}
-              <div className="lg:col-span-7 sticky top-6 max-h-[calc(100vh-3rem)] overflow-y-auto overscroll-contain">
+              {/* Right Column: detail panel — sticky, scroll sendiri (berada di bawah sticky navbar) */}
+              <div className="lg:col-span-7 sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto overscroll-contain">
                 <JobDetailPane
                   job={state.selectedJob}
                   studentPrefs={state.studentPrefs}
