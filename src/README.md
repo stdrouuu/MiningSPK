@@ -1,4 +1,4 @@
-# src (sumber pipeline Fase 3)
+# src (pipeline data preparation)
 
 | File | Tugas (mapping ke laporan) |
 |---|---|
@@ -13,3 +13,14 @@
 | `pipeline.py` | Orkestrasi `run_phase_3_pipeline()` |
 
 Jalankan: `python -m src.pipeline` dari root.
+
+## Posisi `src/` dalam CRISP-DM
+
+Folder ini mencakup **Fase 3 (Data Preparation)**. Tahap selanjutnya diimplementasikan di luar `src/`:
+
+| Fase | Implementasi |
+|---|---|
+| 4 — Modeling (bobot ROC + rank) | `web/src/lib/roc.ts`, `web/src/lib/priority.ts` |
+| 4 — Modeling (matriks, normalisasi, skor SMARTER) | `web/src/lib/spk.ts` |
+| 4 — Sensitivitas | `web/src/lib/sensitivity.ts` |
+| 5 — Evaluation | `scripts/eval_spk.py` |

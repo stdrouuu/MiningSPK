@@ -1,4 +1,4 @@
-# Dependensi Python Fase 3 (Data Preparation)
+# Dependensi Python (pipeline data preparation + evaluasi SPK)
 # Instal: pip install -r requirements.txt
 numpy
 pandas

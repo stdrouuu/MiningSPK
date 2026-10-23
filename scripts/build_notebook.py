@@ -45,9 +45,9 @@ Fase ini berfokus pada **pembersihan, penyaringan, transformasi, dan persiapan f
 Output akhir dari notebook ini adalah:
 1. **`clean_jobs_dataset.csv`**: Dataset lowongan kerja *part-time* terkini di Jabodetabek yang bebas dari data bodong/anomali/duplikat.
 2. **`clean_students_dataset.csv`**: Dataset preferensi mahasiswa UKRIDA yang telah dibersihkan dari *missing values* dan distandardisasi.
-3. **`decision_matrix_sample.csv`**: Matriks keputusan $M \times N$ berisi 5 kriteria utama ($C_1 - C_5$) yang siap diolah pada **Fase 4 (Modeling)**.
+3. **`decision_matrix_sample.csv`**: Matriks keputusan $M \times N$ berisi 5 kriteria utama ($C_1 - C_5$) yang menjadi input **Fase 4 (Modeling)** — diimplementasikan di `web/src/lib/spk.ts`.
 
-> **Catatan Akademik:** Sesuai batasan metodologi CRISP-DM, notebook ini **berhenti tepat pada output kesiapan data Fase 3** dan tidak menjalankan perangkingan akhir SPK (yang merupakan ranah Fase 4).""")
+> **Catatan Akademik:** Notebook ini mendokumentasikan **Fase 3 (Data Preparation)**. Kelanjutan CRISP-DM sudah diimplementasikan pada proyek ini: **Fase 4 (Modeling SMARTER)** di `web/src/lib/spk.ts` + `roc.ts`, dan **Fase 5 (Evaluation)** di `scripts/eval_spk.py`.""")
 
 # ==========================================
 # 2. SETUP & ENVIRONMENT
@@ -451,7 +451,7 @@ decision_matrix.head(5)""")
 # 10. EXPORT & KESIMPULAN
 # ==========================================
 add_md("""---
-## 💾 9. Penyimpanan Hasil & Validasi Kesiapan Fase 4
+## 💾 9. Penyimpanan Artefak Fase 3 & Kelanjutan ke Fase 4
 Menyimpan dataset hasil akhir dari Fase 3 ke dalam file CSV terstruktur:
 1. `clean_jobs_dataset.csv`
 2. `clean_students_dataset.csv`
@@ -475,7 +475,7 @@ print("🎉 Seluruh artefak dataset Fase 3 berhasil diekspor:")
 print(f"1. clean_jobs_dataset.csv     : {len(clean_jobs_export)} baris data lowongan siap pakai")
 print(f"2. clean_students_dataset.csv : {len(df_students_final)} baris data preferensi mahasiswa")
 print(f"3. decision_matrix_sample.csv : {len(decision_matrix)} baris matriks keputusan (C1 - C5)")
-print("\\n🏁 DATA PREPARATION SELESAI — Data siap dimasukkan ke Fase 4 (Modeling / SPK SMARTER)!")""")
+print("\\n🏁 FASE 3 SELESAI — Matriks keputusan diteruskan ke Fase 4 (Modeling / SPK SMARTER).")""")
 
 # Build final notebook dictionary
 nb = {

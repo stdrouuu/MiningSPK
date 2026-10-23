@@ -24,8 +24,8 @@
 Dokumen ini menyajikan dokumentasi teknis pelaksanaan **Fase 3: Data Preparation** dalam siklus hidup CRISP-DM. Tujuan utama dari fase ini adalah mengolah data mentah yang bising (_noisy_), tidak terstruktur, dan memiliki inkonsistensi dari portal kerja daring serta kuesioner mahasiswa menjadi kumpulan data terstruktur, bersih, terstandardisasi, dan siap diumpankan ke algoritma pemodelan Sistem Pendukung Keputusan (SPK) pada Fase 4.
 
 > [!IMPORTANT]
-> **Batasan Lingkup Progres Fase 3:**  
-> Sesuai metodologi CRISP-DM, tahapan ini **tidak menyentuh pemodelan akhir atau perangkingan utilitas SPK (Fase 4: Modeling)**. Deliverable utama dari fase ini adalah:
+> **Lingkup Dokumen Ini:**  
+> Dokumen ini khusus membahas **Fase 3 (Data Preparation)**. Fase lanjutan sudah diimplementasikan pada proyek ini: **Fase 4 (Modeling) — SMARTER + ROC** di `web/src/lib/spk.ts` dan `web/src/lib/roc.ts`, serta **Fase 5 (Evaluation)** di `scripts/eval_spk.py`. Deliverable utama fase ini adalah:
 >
 > 1. Dataset lowongan _part-time_ bersih (`clean_jobs_dataset.csv`).
 > 2. Dataset preferensi mahasiswa UKRIDA bersih (`clean_students_dataset.csv`).
@@ -85,7 +85,7 @@ Sistem memisahkan secara tegas antara modul pengumpulan/penyucian data (_Offline
   ├── 'clean_students_dataset.csv' (52 profil preferensi mahasiswa)
   └── 'decision_matrix_sample.csv' (221 alternatif x 13 atribut fitur)
         │
-        └──> SIAP DIUMPANKAN KE FASE 4 (MODELING SMARTER)
+        └──> DIUMPANKAN KE FASE 4 (MODELING SMARTER — web/src/lib/spk.ts)
 ```
 
 ---
@@ -277,7 +277,7 @@ $$
 
 ---
 
-## 9. Kesimpulan & Kesiapan Menuju Fase 4 (Modeling)
+## 9. Kesimpulan & Kelanjutan ke Fase 4 (Modeling)
 
 Fase 3 (Data Preparation) telah berhasil diselesaikan dengan capaian sebagai berikut:
 
@@ -286,7 +286,7 @@ Fase 3 (Data Preparation) telah berhasil diselesaikan dengan capaian sebagai ber
 3. Mengonversi teks keahlian menjadi nilai numerik kontinu melalui **NLP TF-IDF & Cosine Similarity** ($C_5$).
 4. Membentuk **Matriks Keputusan $M \times N$** ($221 \times 13$) yang tersimpan pada `decision_matrix_sample.csv`.
 
-Dengan terbentuknya matriks keputusan ini, **tahap Data Preparation secara resmi selesai** dan seluruh data telah terverifikasi secara matematis siap diolah pada **Fase 4 (Modeling)** untuk pembobotan ROC (_Rank Order Centroid_) dan kalkulasi fungsi utilitas linear SMARTER.
+Dengan terbentuknya matriks keputusan ini, **tahap Data Preparation selesai** dan matriks tersebut **telah diolah pada Fase 4 (Modeling)**: pembobotan ROC (_Rank Order Centroid_) dan kalkulasi fungsi utilitas linear SMARTER diimplementasikan di `web/src/lib/roc.ts` dan `web/src/lib/spk.ts`. Evaluasi Fase 5 (`scripts/eval_spk.py`) mencatat juara stabil pada **39/49 responden riil** dan **40/52 responden mock**.
 
 ---
 

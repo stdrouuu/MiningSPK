@@ -3,7 +3,8 @@ CRISP-DM Fase 3: Data Preparation Pipeline
 Proyek: SPK Rekomendasi Pekerjaan Part-Time Mahasiswa UKRIDA
 Fokus: Persiapan data, pembersihan 6 lapisan, imputasi, standardisasi, NLP TF-IDF Cosine Similarity,
        dan konstruksi matriks keputusan M x N (Kriteria C1 - C5).
-Catatan: Pipeline ini murni data preparation untuk Fase 3, berhenti sebelum pemodelan SPK Fase 4.
+Catatan: Pipeline ini menghasilkan matriks keputusan (Fase 3). Pemodelan SMARTER
+(Fase 4) diimplementasikan di web/src/lib/spk.ts, evaluasinya di scripts/eval_spk.py.
 
 Cara jalan:
     python -m src.pipeline        # dari root proyek
@@ -146,7 +147,7 @@ def run_phase_3_pipeline(source="mock"):
     print("\n" + "=" * 75)
     print(" FASE 3 (DATA PREPARATION) SELESAI DENGAN SUKSES!")
     print(" Data telah bersih, terstandardisasi, dan fitur kriteria C1 - C5 telah terbentuk.")
-    print(" Pipeline BERHENTI DI SINI sebagai output resmi persiapan data untuk Fase 4.")
+    print(" Matriks keputusan diteruskan ke Fase 4 (Modeling) di web/src/lib/spk.ts.")
     print("=" * 75)
 
     print("\nSampel 5 Baris Teratas Matriks Keputusan:")

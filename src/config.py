@@ -1,4 +1,4 @@
-"""Konfigurasi terpusat Fase 3 (satu-satunya sumber konstanta & path)."""
+"""Konfigurasi terpusat pipeline data preparation (satu-satunya sumber konstanta & path)."""
 
 from pathlib import Path
 
