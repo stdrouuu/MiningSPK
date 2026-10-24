@@ -120,7 +120,6 @@ export function PortalHeader({
               />
               <div className="hidden sm:block text-sm leading-tight">
                 <div className="font-medium text-slate-900 truncate max-w-[140px]">{studentPrefs.name.trim() || 'User baru'}</div>
-                <div className="text-xs text-slate-400 font-light">{studentPrefs.major}</div>
               </div>
               <svg className="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
@@ -137,8 +136,7 @@ export function PortalHeader({
                   />
                   <div className="flex-1 min-w-0">
                     <div className="font-medium text-sm text-slate-900 truncate">{studentPrefs.name.trim() || 'User baru'}</div>
-                    <div className="text-xs text-slate-500 font-light">{studentPrefs.major}</div>
-                    <div className="text-[11px] text-[#0C52EE] font-medium">
+                    <div className="text-[11px] text-[#0C52EE] font-medium mt-0.5">
                       {studentPrefs.nim.trim() ? `NIM: ${studentPrefs.nim}` : 'Belum isi kuesioner'}
                     </div>
                   </div>
