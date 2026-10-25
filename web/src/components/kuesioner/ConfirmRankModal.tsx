@@ -19,7 +19,7 @@ export function ConfirmRankModal({ open, onClose, ranks, onConfirm }: Props) {
   return (
     <Dialog open={open} onClose={onClose} title="Kunci ranking ini?" className="max-w-lg">
       <div className="space-y-3">
-        <p className="text-xs text-slate-500 font-light">
+        <p className="text-xs text-slate-500 dark:text-slate-400 font-light">
           Ini susunan yang dipakai menghitung rekomendasimu. Rank unik 1–5, total bobot 100%.
         </p>
         <ol className="space-y-1.5">
@@ -27,22 +27,22 @@ export function ConfirmRankModal({ open, onClose, ranks, onConfirm }: Props) {
             .sort((a, b) => ranks[a] - ranks[b])
             .map((key) => (
               <li key={key} className="flex items-center gap-2 text-xs">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-[#0C52EE] text-white font-mono text-[11px]">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-[#0C52EE] dark:bg-blue-600 text-white font-mono text-[11px]">
                   {ranks[key]}
                 </span>
-                <span className="font-medium text-slate-900">{metaOf(key).title}</span>
-                <span className="text-slate-400 font-light tabular-nums">
+                <span className="font-medium text-slate-900 dark:text-white">{metaOf(key).title}</span>
+                <span className="text-slate-400 dark:text-slate-500 font-light tabular-nums">
                   {weightPct(weights[key])}
                 </span>
               </li>
             ))}
         </ol>
         <div className="flex flex-col sm:flex-row gap-2 pt-4">
-          <Button onClick={onConfirm} className="text-xs gap-1.5 flex-1">
+          <Button onClick={onConfirm} className="text-xs gap-1.5 flex-1 bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500">
             <RiCheckLine className="h-3.5 w-3.5" />
             Setuju dengan ranking kriteria
           </Button>
-          <Button variant="outline" onClick={onClose} className="text-xs gap-1.5 flex-1">
+          <Button variant="outline" onClick={onClose} className="text-xs gap-1.5 flex-1 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">
             <RiEditLine className="h-3.5 w-3.5" />
             Ubah ranking kriteria
           </Button>

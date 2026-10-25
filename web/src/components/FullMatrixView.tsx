@@ -118,19 +118,19 @@ export function FullMatrixView({
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-200">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
         <div>
-          <h1 className="text-xl sm:text-2xl font-medium text-slate-900 mt-0.5">
+          <h1 className="text-xl sm:text-2xl font-medium text-slate-900 dark:text-white mt-0.5">
             Matriks Keputusan &amp; Komputasi SMARTER
           </h1>
           {isProfileEmpty ? (
-            <p className="text-xs text-slate-500 font-light mt-1">
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-light mt-1">
               Perhitungan versimu akan muncul di sini setelah kuesioner terisi.
             </p>
           ) : (
-            <p className="text-xs text-slate-500 font-light mt-1">
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-light mt-1">
               Representasi lengkap perhitungan matematis multi-kriteria untuk profil mahasiswa{' '}
-              <span className="font-medium text-slate-800">{studentPrefs.name} ({studentPrefs.nim})</span>.
+              <span className="font-medium text-slate-800 dark:text-slate-200">{studentPrefs.name} ({studentPrefs.nim})</span>.
             </p>
           )}
         </div>
@@ -141,10 +141,10 @@ export function FullMatrixView({
           </Button>
         ) : (
           <div className="flex items-center gap-2">
-            <Button variant="outline" size="sm" onClick={onOpenPreferences} className="text-xs gap-1.5">
+            <Button variant="outline" size="sm" onClick={onOpenPreferences} className="text-xs gap-1.5 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">
               <RiEqualizerLine className="h-3.5 w-3.5" /> Atur Prioritas ROC
             </Button>
-            <Button variant="default" size="sm" onClick={handleExportCsv} className="text-xs gap-1.5 bg-[#0C52EE] hover:bg-[#0942c4]">
+            <Button variant="default" size="sm" onClick={handleExportCsv} className="text-xs gap-1.5 bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500">
               <RiDownloadLine className="h-3.5 w-3.5" /> Unduh CSV Lengkap
             </Button>
           </div>
@@ -152,14 +152,14 @@ export function FullMatrixView({
       </div>
 
       {isProfileEmpty ? (
-        <div className="bg-white border border-slate-200 rounded-xl p-8 sm:p-12 text-center space-y-3 shadow-2xs">
-          <h2 className="text-base font-medium text-slate-900">Matriks ini menunggumu</h2>
-          <p className="text-xs text-slate-500 font-light max-w-md mx-auto">
+        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-8 sm:p-12 text-center space-y-3 shadow-2xs">
+          <h2 className="text-base font-medium text-slate-900 dark:text-white">Matriks ini menunggumu</h2>
+          <p className="text-xs text-slate-500 dark:text-slate-400 font-light max-w-md mx-auto">
             Skor U(Ai), utilitas, dan peringkat dihitung dari upah, jam, lokasi & skill-mu.
             Isi kuesioner singkat (±3 menit) — tabel 221 lowongan langsung terisi sesuai kebutuhanmu.
           </p>
           <div>
-            <Button size="sm" onClick={onFillQuestionnaire} className="text-xs bg-[#0C52EE] hover:bg-[#0942c4]">
+            <Button size="sm" onClick={onFillQuestionnaire} className="text-xs bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500">
               Mulai kuesioner
             </Button>
           </div>
@@ -167,14 +167,14 @@ export function FullMatrixView({
       ) : (
         <>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-        <div role="tablist" aria-label="Mode tampilan matriks" className="flex items-center gap-1.5 bg-slate-100 p-1 rounded-lg text-xs">
-          <button role="tab" aria-selected={matrixDisplayMode === 'ranking'} onClick={() => handleMode('ranking')} className={`px-3 py-1.5 rounded-md transition-all ${matrixDisplayMode === 'ranking' ? 'font-medium bg-white text-[#0C52EE] shadow-2xs' : 'font-normal text-slate-600 hover:text-slate-900'}`}>
+        <div role="tablist" aria-label="Mode tampilan matriks" className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 p-1 rounded-lg text-xs">
+          <button role="tab" aria-selected={matrixDisplayMode === 'ranking'} onClick={() => handleMode('ranking')} className={`px-3 py-1.5 rounded-md transition-all ${matrixDisplayMode === 'ranking' ? 'font-medium bg-white dark:bg-slate-900 text-[#0C52EE] dark:text-blue-400 shadow-2xs' : 'font-normal text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}>
             Mode 1: Peringkat &amp; Skor
           </button>
-          <button role="tab" aria-selected={matrixDisplayMode === 'utility'} onClick={() => handleMode('utility')} className={`px-3 py-1.5 rounded-md transition-all ${matrixDisplayMode === 'utility' ? 'font-medium bg-white text-[#0C52EE] shadow-2xs' : 'font-normal text-slate-600 hover:text-slate-900'}`}>
+          <button role="tab" aria-selected={matrixDisplayMode === 'utility'} onClick={() => handleMode('utility')} className={`px-3 py-1.5 rounded-md transition-all ${matrixDisplayMode === 'utility' ? 'font-medium bg-white dark:bg-slate-900 text-[#0C52EE] dark:text-blue-400 shadow-2xs' : 'font-normal text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}>
             Mode 2: Utilitas (uⱼ)
           </button>
-          <button role="tab" aria-selected={matrixDisplayMode === 'raw'} onClick={() => handleMode('raw')} className={`px-3 py-1.5 rounded-md transition-all ${matrixDisplayMode === 'raw' ? 'font-medium bg-white text-[#0C52EE] shadow-2xs' : 'font-normal text-slate-600 hover:text-slate-900'}`}>
+          <button role="tab" aria-selected={matrixDisplayMode === 'raw'} onClick={() => handleMode('raw')} className={`px-3 py-1.5 rounded-md transition-all ${matrixDisplayMode === 'raw' ? 'font-medium bg-white dark:bg-slate-900 text-[#0C52EE] dark:text-blue-400 shadow-2xs' : 'font-normal text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}>
             Mode 3: Matriks awal (Xᵢⱼ)
           </button>
         </div>
@@ -186,15 +186,15 @@ export function FullMatrixView({
             onChange={(e) => handleSearch(e.target.value)}
             placeholder="Cari dalam matriks…"
             aria-label="Cari dalam matriks"
-            className="w-full px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-lg text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#0C52EE]"
+            className="w-full px-3 py-1.5 text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#0C52EE] dark:focus:border-blue-400"
           />
         </div>
       </div>
 
       {/* Table Container */}
-      <div className="border border-slate-200 rounded-xl bg-white overflow-x-auto shadow-2xs">
+      <div className="border border-slate-200 dark:border-slate-800 rounded-xl bg-white dark:bg-slate-900 overflow-x-auto shadow-2xs">
         <table className="w-full text-left text-xs">
-          <thead className="bg-slate-50 border-b border-slate-200 text-[11px] font-medium text-slate-600 uppercase tracking-wider">
+          <thead className="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-[11px] font-medium text-slate-600 dark:text-slate-300 uppercase tracking-wider">
             <tr>
               <th className="py-3 px-4 w-14 text-center">Rank</th>
               <th className="py-3 px-4 w-28">ID Loker</th>
@@ -220,7 +220,7 @@ export function FullMatrixView({
                   <th className="py-3 px-4 text-center">Utilitas Lokasi</th>
                   <th className="py-3 px-4 text-center">Utilitas Jam</th>
                   <th className="py-3 px-4 text-center">Utilitas Skill</th>
-                  <th className="py-3 px-4 font-medium text-slate-900">
+                  <th className="py-3 px-4 font-medium text-slate-900 dark:text-white">
                     Total U(Ai)
                   </th>
                 </>
@@ -239,14 +239,14 @@ export function FullMatrixView({
               <th className="py-3 px-4 text-center">Aksi</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100 text-slate-700">
+          <tbody className="divide-y divide-slate-100 dark:divide-slate-800/70 text-slate-700 dark:text-slate-300">
             {pagedJobs.map((job) => (
               <tr
                 key={job.job_id}
-                className="hover:bg-slate-50 transition-colors cursor-pointer"
+                className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer"
                 onClick={() => onSelectJobForDetail(job)}
               >
-                <td className="py-3 px-4 text-center font-medium text-[#0C52EE]">
+                <td className="py-3 px-4 text-center font-medium text-[#0C52EE] dark:text-blue-400">
                   #{job.rank}
                 </td>
 
@@ -258,10 +258,10 @@ export function FullMatrixView({
                   <div className="flex items-center gap-2.5">
                     <CompanyLogo companyName={job.company_name} logoUrl={job.company_logo} size="sm" />
                     <div className="min-w-0">
-                      <div className="font-medium text-slate-900 truncate max-w-xs">
+                      <div className="font-medium text-slate-900 dark:text-white truncate max-w-xs">
                         {job.job_title}
                       </div>
-                      <div className="text-[11px] text-slate-500 truncate max-w-xs">
+                      <div className="text-[11px] text-slate-500 dark:text-slate-400 truncate max-w-xs">
                         {job.company_name} • {job.work_job_location}
                       </div>
                     </div>
@@ -280,30 +280,30 @@ export function FullMatrixView({
                   <>
                     <td className="py-3 px-4">
                       <div className="flex items-center gap-2">
-                        <span className="font-mono font-medium text-slate-900">
+                        <span className="font-mono font-medium text-slate-900 dark:text-white">
                           {job.finalScore.toFixed(4)}
                         </span>
-                        <div className="w-16 bg-slate-200 rounded-full h-1.5 overflow-hidden">
+                        <div className="w-16 bg-slate-200 dark:bg-slate-800 rounded-full h-1.5 overflow-hidden">
                           <div
-                            className="bg-[#0C52EE] h-full rounded-full"
+                            className="bg-[#0C52EE] dark:bg-blue-500 h-full rounded-full"
                             style={{ width: `${Math.min(100, job.finalScore * 100)}%` }}
                           />
                         </div>
                       </div>
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-slate-600">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
                       {job.C1_kategori}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-slate-600">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
                       {job.C2_rasio_gaji}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-slate-600">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
                       {job.C3_lokasi}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-slate-600">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
                       {job.C4_jam_kerja}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center font-medium text-slate-900">
+                    <td className="py-3 px-4 font-mono text-center font-medium text-slate-900 dark:text-white">
                       {job.C5_kemiripan_skill}
                     </td>
                   </>
@@ -311,22 +311,22 @@ export function FullMatrixView({
 
                 {matrixDisplayMode === 'utility' && (
                   <>
-                    <td className="py-3 px-4 font-mono text-center text-slate-600">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
                       {job.u1}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-slate-600">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
                       {job.u2}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-slate-600">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
                       {job.u3}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-slate-600">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
                       {job.u4}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-slate-600">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
                       {job.u5}
                     </td>
-                    <td className="py-3 px-4 font-mono font-medium text-slate-900">
+                    <td className="py-3 px-4 font-mono font-medium text-slate-900 dark:text-white">
                       {job.finalScore}
                     </td>
                   </>
@@ -334,19 +334,19 @@ export function FullMatrixView({
 
                 {matrixDisplayMode === 'raw' && (
                   <>
-                    <td className="py-3 px-4 font-mono text-center text-slate-600">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
                       {job.C1_kategori}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-slate-600">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
                       {job.C2_rasio_gaji}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-slate-600">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
                       {job.C3_lokasi}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-slate-600">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
                       {job.C4_jam_kerja}
                     </td>
-                    <td className="py-3 px-4 font-mono text-center text-slate-600">
+                    <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
                       {job.C5_kemiripan_skill}
                     </td>
                   </>
@@ -354,7 +354,7 @@ export function FullMatrixView({
 
                 <td className="py-3 px-4 text-right">
                   <button
-                    className="px-2.5 py-1 bg-[#0C52EE] hover:bg-[#0942c4] text-white rounded text-[10px] font-medium transition-colors"
+                    className="px-2.5 py-1 bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500 text-white rounded text-[10px] font-medium transition-colors"
                     onClick={(e) => {
                       e.stopPropagation()
                       onSelectJobForDetail(job)
@@ -369,14 +369,14 @@ export function FullMatrixView({
         </table>
       </div>
 
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-500">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
         <span aria-live="polite">Menampilkan {pagedJobs.length} dari {filteredJobs.length} baris • halaman {safePage + 1}/{pageCount} • U(Ai) = Σ (wⱼ × uⱼ)</span>
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" className="h-7 text-xs" disabled={safePage === 0} onClick={() => setPage((p) => Math.max(0, p - 1))}>
+          <Button variant="outline" size="sm" className="h-7 text-xs dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800" disabled={safePage === 0} onClick={() => setPage((p) => Math.max(0, p - 1))}>
             Sebelumnya
           </Button>
-          <span className="font-mono">{safePage + 1} / {pageCount}</span>
-          <Button variant="outline" size="sm" className="h-7 text-xs" disabled={safePage >= pageCount - 1} onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}>
+          <span className="font-mono text-slate-700 dark:text-slate-300">{safePage + 1} / {pageCount}</span>
+          <Button variant="outline" size="sm" className="h-7 text-xs dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800" disabled={safePage >= pageCount - 1} onClick={() => setPage((p) => Math.min(pageCount - 1, p + 1))}>
             Berikutnya
           </Button>
         </div>

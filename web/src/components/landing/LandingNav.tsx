@@ -1,4 +1,5 @@
 import { navButtonClass, navIndicatorClass } from '../../lib/navStyle'
+import { ThemeToggle } from '../ui/ThemeToggle'
 
 type NavView = 'landing' | 'portal' | 'matrix' | 'kuesioner'
 
@@ -28,13 +29,13 @@ export function LandingNav({ mode, active, savedCount, onNavigate, onOpenSavedJo
   }
 
   return (
-    <header className="w-full bg-white border-b border-slate-200 sticky top-0 z-40 transition-colors">
+    <header className="w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-40 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-8">
           <button onClick={() => onNavigate('landing')} className="flex items-center text-left group focus:outline-none">
-            <span className="text-2xl font-medium tracking-tighter text-slate-900">upmatch</span>
+            <span className="text-2xl font-medium tracking-tighter text-slate-900 dark:text-white">upmatch</span>
             {mode === 'data' && (
-              <span className="ml-2 px-1.5 py-0.5 rounded-md bg-amber-100 border border-amber-300 text-[10px] font-medium text-amber-800">
+              <span className="ml-2 px-1.5 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 text-[10px] font-medium text-amber-800 dark:text-amber-300">
                 demo data
               </span>
             )}
@@ -51,7 +52,7 @@ export function LandingNav({ mode, active, savedCount, onNavigate, onOpenSavedJo
         <div className="flex items-center gap-3">
           <button
             onClick={onOpenSavedJobs}
-            className="relative p-2 rounded-lg border border-slate-200 bg-white hover:border-slate-400 hover:bg-slate-50 text-slate-700 transition-colors flex items-center justify-center"
+            className="relative p-2 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-400 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-200 transition-colors flex items-center justify-center cursor-pointer"
             title={`Lowongan tersimpan (${savedCount})`}
             aria-label={`Lowongan tersimpan (${savedCount})`}
           >
@@ -63,12 +64,8 @@ export function LandingNav({ mode, active, savedCount, onNavigate, onOpenSavedJo
             </span>
           </button>
 
-          <button
-            onClick={() => onNavigate('portal')}
-            className="px-4 py-2 bg-[#0C52EE] hover:bg-[#0942c4] text-white text-xs sm:text-sm font-medium rounded-lg transition-colors shadow-sm focus:outline-none"
-          >
-            Lihat lowongan
-          </button>
+          {/* Theme Toggle (Light Mode Default & Dark Mode) */}
+          <ThemeToggle />
         </div>
       </div>
     </header>

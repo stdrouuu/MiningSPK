@@ -117,8 +117,8 @@ function RadioOption({
     <label
       className={`emil-press flex items-start gap-2.5 rounded-lg border p-2.5 cursor-pointer text-xs ${
         checked
-          ? 'border-[#0C52EE] bg-[#0C52EE]/[0.04]'
-          : 'border-slate-200 bg-white hover:border-slate-300'
+          ? 'border-[#0C52EE] dark:border-blue-500 bg-[#0C52EE]/[0.04] dark:bg-blue-500/10'
+          : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700'
       }`}
     >
       <input
@@ -126,13 +126,13 @@ function RadioOption({
         name={name}
         checked={checked}
         onChange={onPick}
-        className="mt-0.5 accent-[#0C52EE]"
+        className="mt-0.5 accent-[#0C52EE] dark:accent-blue-500"
       />
       <span className="min-w-0">
-        <span className={`block font-medium ${checked ? 'text-[#0C52EE]' : 'text-slate-700'}`}>
+        <span className={`block font-medium ${checked ? 'text-[#0C52EE] dark:text-blue-400' : 'text-slate-700 dark:text-slate-200'}`}>
           {label}
         </span>
-        {hint && <span className="block text-[11px] text-slate-400 font-light mt-0.5">{hint}</span>}
+        {hint && <span className="block text-[11px] text-slate-400 dark:text-slate-500 font-light mt-0.5">{hint}</span>}
       </span>
     </label>
   )
@@ -150,10 +150,10 @@ function QBlock({
   return (
     <div className="space-y-2">
       <div>
-        <p className="text-base sm:text-lg font-medium text-slate-900 leading-snug">
+        <p className="text-base sm:text-lg font-medium text-slate-900 dark:text-white leading-snug">
           {title}
         </p>
-        {desc && <p className="text-xs text-slate-400 font-light mt-1">{desc}</p>}
+        {desc && <p className="text-xs text-slate-400 dark:text-slate-400 font-light mt-1">{desc}</p>}
       </div>
       {children}
     </div>
@@ -310,10 +310,10 @@ export function KuesionerPage({
 
       <main className="flex-1 max-w-3xl w-full mx-auto px-4 sm:px-6 py-6 space-y-5">
         <div>
-          <h1 className="text-xl sm:text-2xl font-medium text-slate-900 mt-0.5">
+          <h1 className="text-xl sm:text-2xl font-medium text-slate-900 dark:text-white mt-0.5">
             Isi profil, susun prioritas, lihat rekomendasi
           </h1>
-          <p className="text-xs text-slate-500 font-light mt-1">
+          <p className="text-xs text-slate-500 dark:text-slate-400 font-light mt-1">
             {step === 0
               ? 'Jawabanmu dipakai menghitung upah/jam & jam ideal, lalu dipakai di rekomendasi. Jawab satu per satu — 6 pertanyaan, semua wajib diisi.'
               : step === 1
@@ -330,43 +330,43 @@ export function KuesionerPage({
                 onClick={() => i < step && setStep(i)}
                 className={`flex items-center gap-2 flex-1 rounded-lg border px-3 py-2 text-xs transition-colors ${
                   i === step
-                    ? 'border-[#0C52EE] bg-[#0C52EE]/5 font-medium text-[#0C52EE]'
+                    ? 'border-[#0C52EE] dark:border-blue-500 bg-[#0C52EE]/5 dark:bg-blue-500/10 font-medium text-[#0C52EE] dark:text-blue-400'
                     : i < step
-                      ? 'border-slate-200 bg-white text-slate-700 hover:border-slate-300'
-                      : 'border-slate-200 bg-white text-slate-400'
+                      ? 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-700'
+                      : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-400 dark:text-slate-600'
                 }`}
               >
                 <span
                   className={`flex h-5 w-5 items-center justify-center rounded-full text-[11px] font-mono ${
-                    i === step ? 'bg-[#0C52EE] text-white' : i < step ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-400'
+                    i === step ? 'bg-[#0C52EE] text-white' : i < step ? 'bg-slate-900 dark:bg-slate-700 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500'
                   }`}
                 >
                   {i + 1}
                 </span>
                 {label}
               </button>
-              {i < STEPS.length - 1 && <span className="text-slate-300">›</span>}
+              {i < STEPS.length - 1 && <span className="text-slate-300 dark:text-slate-700">›</span>}
             </li>
           ))}
         </ol>
 
         {loading ? (
-          <div className="rounded-xl border border-slate-200 bg-white p-6 animate-pulse">
-            <div className="h-5 w-1/2 rounded bg-slate-200" />
-            <div className="mt-3 h-4 w-2/3 rounded bg-slate-100" />
+          <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 animate-pulse">
+            <div className="h-5 w-1/2 rounded bg-slate-200 dark:bg-slate-800" />
+            <div className="mt-3 h-4 w-2/3 rounded bg-slate-100 dark:bg-slate-800/60" />
           </div>
         ) : (
           <>
             {/* STEP 0 — Profil ala Google Form (Q3–Q8) */}
             {step === 0 && (
-              <section className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs space-y-5">
+              <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-2xs space-y-5">
                 <div>
-                  <div className="flex justify-between text-[11px] text-slate-500 mb-1.5">
+                  <div className="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 mb-1.5">
                     <span>Pertanyaan {qIndex + 1} dari 6</span>
                     <span className="tabular-nums">{Math.round(((qIndex + 1) / 6) * 100)}%</span>
                   </div>
-                  <div className="h-1.5 rounded-full bg-slate-100 overflow-hidden">
-                    <div className="emil-meter h-full bg-[#0C52EE] rounded-full" style={{ width: `${((qIndex + 1) / 6) * 100}%` }} />
+                  <div className="h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                    <div className="emil-meter h-full bg-[#0C52EE] dark:bg-blue-500 rounded-full" style={{ width: `${((qIndex + 1) / 6) * 100}%` }} />
                   </div>
                 </div>
 
@@ -390,7 +390,7 @@ export function KuesionerPage({
                     aria-label="Bidang pekerjaan yang diminati"
                     value={picked.q4 ? studentPrefs.preferredCategory : ''}
                     onChange={(e) => { set('preferredCategory', e.target.value); mark('q4') }}
-                    className="w-full h-9 rounded-md border border-slate-200 bg-white px-3 text-xs text-slate-800 focus:outline-none focus:border-[#0C52EE]"
+                    className="w-full h-9 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:border-[#0C52EE] dark:focus:border-blue-400"
                   >
                     <option value="" disabled>Pilih satu bidang…</option>
                     {Q4_OPTIONS.map((o) => (
@@ -444,13 +444,13 @@ export function KuesionerPage({
                     ))}
                   </div>
                   {jamIdeal !== null ? (
-                    <p className="text-xs text-slate-700 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 font-light" aria-live="polite">
-                      Jam idealmu ≈ <span className="font-medium text-slate-900">{jamIdeal} jam/minggu</span>
-                      <span className="text-slate-400"> ({timeSummary})</span>.
+                    <p className="text-xs text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 font-light" aria-live="polite">
+                      Jam idealmu ≈ <span className="font-medium text-slate-900 dark:text-white">{jamIdeal} jam/minggu</span>
+                      <span className="text-slate-400 dark:text-slate-500"> ({timeSummary})</span>.
                       Makin dekat jam lowongan ke angka ini, makin cocok.
                     </p>
                   ) : (
-                    <p className="text-[11px] text-slate-400 bg-slate-50 border border-dashed border-slate-200 rounded-lg px-3 py-2 font-light">
+                    <p className="text-[11px] text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-800/80 border border-dashed border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 font-light">
                       Pilih hari dan jam di atas — jam idealmu dihitung otomatis di sini.
                     </p>
                   )}
@@ -470,12 +470,12 @@ export function KuesionerPage({
                     ))}
                   </div>
                   {hourly !== null ? (
-                    <p className="text-xs text-slate-700 bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 font-light" aria-live="polite">
-                      ≈ <span className="font-medium text-slate-900">Rp {hourly.toLocaleString('id-ID')}/jam</span>
-                      <span className="text-slate-400"> {paySummary}</span>.
+                    <p className="text-xs text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 font-light" aria-live="polite">
+                      ≈ <span className="font-medium text-slate-900 dark:text-white">Rp {hourly.toLocaleString('id-ID')}/jam</span>
+                      <span className="text-slate-400 dark:text-slate-500"> {paySummary}</span>.
                     </p>
                   ) : (
-                    <p className="text-[11px] text-slate-400 bg-slate-50 border border-dashed border-slate-200 rounded-lg px-3 py-2 font-light">
+                    <p className="text-[11px] text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-800/80 border border-dashed border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 font-light">
                       Pilih rentang upah di atas — hasil per jamnya muncul di sini.
                     </p>
                   )}
@@ -487,9 +487,9 @@ export function KuesionerPage({
                     value={studentPrefs.skills}
                     onChange={(e) => set('skills', e.target.value)}
                     placeholder="Contoh: Canva, komunikasi ramah, kemampuan bekerja sama"
-                    className="w-full rounded-md border border-slate-200 p-2.5 text-xs focus:outline-none focus:border-[#0C52EE]"
+                    className="w-full rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 p-2.5 text-xs focus:outline-none focus:border-[#0C52EE] dark:focus:border-blue-400"
                   />
-                  <p className="text-[11px] text-slate-400 font-light">
+                  <p className="text-[11px] text-slate-400 dark:text-slate-500 font-light">
                     Contoh: "Microsoft Excel, pengetikan cepat, rekap data teliti" atau "Espresso machine, manual brewing, hospitality".
                   </p>
                 </QBlock>)}
@@ -499,7 +499,7 @@ export function KuesionerPage({
                   {qIndex > 0 ? (
                     <button
                       onClick={() => setQIndex((i) => i - 1)}
-                      className="emil-press inline-flex items-center gap-1.5 h-8 px-3 rounded-md border border-slate-200 bg-white text-xs font-medium text-slate-600 hover:text-slate-900"
+                      className="emil-press inline-flex items-center gap-1.5 h-8 px-3 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800 text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
                     >
                       <RiArrowLeftLine className="h-3.5 w-3.5" /> Kembali
                     </button>
@@ -508,12 +508,12 @@ export function KuesionerPage({
                   )}
                   <div className="text-right space-y-1.5">
                     {!screenValid && (
-                      <p className="text-[11px] font-light text-[#ED1E79]">
+                      <p className="text-[11px] font-light text-[#ED1E79] dark:text-pink-400">
                         {qIndex === 5 ? 'Tulis minimal 1 skill untuk lanjut.' : 'Wajib diisi — pilih salah satu untuk lanjut.'}
                       </p>
                     )}
                     {qIndex < 5 ? (
-                      <Button size="sm" onClick={() => setQIndex((i) => i + 1)} disabled={!screenValid} className="text-xs gap-1.5">
+                      <Button size="sm" onClick={() => setQIndex((i) => i + 1)} disabled={!screenValid} className="text-xs gap-1.5 bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500">
                         Lanjut <RiArrowRightLine className="h-3.5 w-3.5" />
                       </Button>
                     ) : (
@@ -521,7 +521,7 @@ export function KuesionerPage({
                         size="sm"
                         onClick={goToPriority}
                         disabled={!screenValid}
-                        className="text-xs gap-1.5"
+                        className="text-xs gap-1.5 bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500"
                       >
                         Susun prioritasku <RiArrowRightLine className="h-3.5 w-3.5" />
                       </Button>
@@ -536,14 +536,14 @@ export function KuesionerPage({
               <section className="space-y-3">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <h2 className="text-sm font-medium text-slate-900">Urutkan dari yang paling penting buatmu</h2>
-                    <p className="text-xs text-slate-500 font-light mt-0.5">
+                    <h2 className="text-sm font-medium text-slate-900 dark:text-white">Urutkan dari yang paling penting buatmu</h2>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-light mt-0.5">
                       Urutan di bawah hanya contoh — geser rank-nya sampai sesuai versimu.
                     </p>
                   </div>
                   <button
                     onClick={() => setQuizOpen(true)}
-                    className="emil-press shrink-0 inline-flex items-center gap-1.5 h-8 px-3 rounded-lg border border-slate-200 bg-white text-xs font-medium text-slate-600 hover:border-[#0C52EE] hover:text-[#0C52EE]"
+                    className="emil-press shrink-0 inline-flex items-center gap-1.5 h-8 px-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs font-medium text-slate-600 dark:text-slate-300 hover:border-[#0C52EE] dark:hover:border-blue-400 hover:text-[#0C52EE] dark:hover:text-blue-400"
                   >
                     <RiQuestionLine className="h-3.5 w-3.5" />
                     Saya bingung
@@ -559,26 +559,26 @@ export function KuesionerPage({
                   }}
                 />
 
-                <label className="emil-press flex items-start gap-2.5 rounded-xl border border-slate-200 bg-white p-3.5 cursor-pointer text-xs shadow-2xs">
+                <label className="emil-press flex items-start gap-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-3.5 cursor-pointer text-xs shadow-2xs">
                   <input
                     type="checkbox"
                     checked={confirmed}
                     onChange={(e) => setConfirmed(e.target.checked)}
-                    className="mt-0.5 h-4 w-4 accent-[#0C52EE]"
+                    className="mt-0.5 h-4 w-4 accent-[#0C52EE] dark:accent-blue-500"
                   />
-                  <span className="text-slate-700 font-light">
-                    <span className="font-medium text-slate-900">Urutan ini sudah sesuai prioritas saya.</span>
+                  <span className="text-slate-700 dark:text-slate-300 font-light">
+                    <span className="font-medium text-slate-900 dark:text-white">Urutan ini sudah sesuai prioritas saya.</span>
                   </span>
                 </label>
 
                 <div className="flex items-center justify-between gap-2">
                   <button
                     onClick={() => setStep(0)}
-                    className="text-xs text-slate-500 hover:text-slate-900 underline"
+                    className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white underline"
                   >
                     Kembali ke profil
                   </button>
-                  <Button size="sm" onClick={showResult} disabled={!confirmed} className="text-xs gap-1.5">
+                  <Button size="sm" onClick={showResult} disabled={!confirmed} className="text-xs gap-1.5 bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500">
                     Lihat rekomendasi <RiArrowRightLine className="h-3.5 w-3.5" />
                   </Button>
                 </div>
@@ -591,14 +591,14 @@ export function KuesionerPage({
                 {/* Top 3 */}
                 <div className="space-y-2.5">
                   <div>
-                    <h2 className="text-sm font-medium text-slate-900">Top 3 pekerjaan part-time untukmu</h2>
-                    <p className="text-xs text-slate-500 font-light mt-0.5">
+                    <h2 className="text-sm font-medium text-slate-900 dark:text-white">Top 3 pekerjaan part-time untukmu</h2>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-light mt-0.5">
                       Diurutkan dari yang paling cocok, berdasarkan jawaban profil dan ranking prioritas yang sudah kamu isi.
                     </p>
                   </div>
                   {ranked.slice(0, 3).map((job, i) => (
-                    <article key={job.job_id} className="bg-white border border-slate-200 rounded-xl p-3.5 shadow-2xs flex items-center gap-3.5">
-                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#0C52EE] text-white text-xs font-medium">
+                    <article key={job.job_id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3.5 shadow-2xs flex items-center gap-3.5">
+                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#0C52EE] dark:bg-blue-600 text-white text-xs font-medium">
                         {i + 1}
                       </span>
                       <CompanyLogo
@@ -608,15 +608,15 @@ export function KuesionerPage({
                         className="h-12 w-16 object-contain shrink-0"
                       />
                       <div className="min-w-0 flex-1">
-                        <div className="text-sm font-medium text-slate-900 truncate">{job.job_title}</div>
-                        <div className="text-[11px] text-slate-500 font-light truncate">
+                        <div className="text-sm font-medium text-slate-900 dark:text-white truncate">{job.job_title}</div>
+                        <div className="text-[11px] text-slate-500 dark:text-slate-400 font-light truncate">
                           {job.company_name} • {job.work_job_location} • {formatRupiah(job.work_salaryperhour)}/jam
                         </div>
                         <div className="flex items-center gap-2 mt-1.5">
-                          <div className="flex-1 h-1.5 rounded-full bg-slate-100 overflow-hidden">
-                            <div className="emil-meter h-full bg-[#0C52EE] rounded-full" style={{ width: `${Math.min(100, job.finalScore * 100)}%` }} />
+                          <div className="flex-1 h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                            <div className="emil-meter h-full bg-[#0C52EE] dark:bg-blue-500 rounded-full" style={{ width: `${Math.min(100, job.finalScore * 100)}%` }} />
                           </div>
-                          <span className="text-[11px] font-mono font-medium text-slate-700 tabular-nums">
+                          <span className="text-[11px] font-mono font-medium text-slate-700 dark:text-slate-300 tabular-nums">
                             {job.finalScore.toFixed(4)}
                           </span>
                         </div>
@@ -624,17 +624,17 @@ export function KuesionerPage({
                     </article>
                   ))}
                   {ranked.length === 0 && (
-                    <p className="text-xs text-slate-500">Belum ada lowongan yang bisa dihitung.</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">Belum ada lowongan yang bisa dihitung.</p>
                   )}
                 </div>
 
                 <SensitivityPanel scenarios={scenarios} />
 
                 <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
-                  <button onClick={() => setStep(0)} className="text-xs text-slate-500 hover:text-slate-900 underline">
+                  <button onClick={() => setStep(0)} className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white underline">
                     Ulangi isi profil
                   </button>
-                  <Button variant="outline" size="sm" onClick={() => navigate(ROUTES.PORTAL)} className="text-xs">
+                  <Button variant="outline" size="sm" onClick={() => navigate(ROUTES.PORTAL)} className="text-xs dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">
                     Lihat semua di portal
                   </Button>
                 </div>

@@ -174,7 +174,7 @@ export function CategoryGrid({
     <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <div className="space-y-6">
         <div className="text-center space-y-1.5 max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-medium tracking-tight text-slate-900">Browse by category</h2>
+          <h2 className="text-2xl sm:text-3xl font-medium tracking-tight text-slate-900 dark:text-white">Browse by category</h2>
           <p className="text-xs sm:text-sm text-slate-400 font-light">
             Temukan pekerjaan yang tepat untukmu dari {jobs.length}+ lowongan terverifikasi di Jabodetabek.
           </p>
@@ -197,7 +197,7 @@ export function CategoryGrid({
                   key={c.match}
                   data-card
                   onClick={() => onSelectCategory(c.category)}
-                  className="relative shrink-0 w-[78vw] max-w-[340px] sm:w-[380px] sm:max-w-none h-[220px] sm:h-[240px] rounded-2xl overflow-hidden text-left snap-start cursor-pointer border border-slate-200"
+                  className="relative shrink-0 w-[78vw] max-w-[340px] sm:w-[380px] sm:max-w-none h-[220px] sm:h-[240px] rounded-2xl overflow-hidden text-left snap-start cursor-pointer border border-slate-200 dark:border-slate-800 shadow-2xs"
                 >
                   <img
                     src={c.image}
@@ -242,7 +242,7 @@ export function CategoryGrid({
         </div>
 
         <div className="flex items-center justify-center gap-3">
-          <button onClick={() => scroll(-1)} aria-label="Sebelumnya" className="w-8 h-8 rounded-full bg-white border border-slate-200 shadow flex items-center justify-center text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none cursor-pointer" disabled={active === 0}>
+          <button onClick={() => scroll(-1)} aria-label="Sebelumnya" className="w-8 h-8 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow flex items-center justify-center text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-40 disabled:pointer-events-none cursor-pointer" disabled={active === 0}>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
           </button>
           <div className="flex items-center gap-2">
@@ -253,12 +253,12 @@ export function CategoryGrid({
                 aria-label={`Ke halaman ${i + 1}`}
                 aria-current={i === active}
                 className={`h-2 rounded-full transition-all ${
-                  i === active ? 'w-6 bg-[#0C52EE]' : 'w-2 bg-slate-300 hover:bg-slate-400'
+                  i === active ? 'w-6 bg-[#0C52EE]' : 'w-2 bg-slate-300 dark:bg-slate-700 hover:bg-slate-400 dark:hover:bg-slate-600'
                 }`}
               />
             ))}
           </div>
-          <button onClick={() => scroll(1)} aria-label="Berikutnya" className="w-8 h-8 rounded-full bg-white border border-slate-200 shadow flex items-center justify-center text-slate-700 hover:bg-slate-50 disabled:opacity-40 disabled:pointer-events-none cursor-pointer" disabled={active >= pages - 1}>
+          <button onClick={() => scroll(1)} aria-label="Berikutnya" className="w-8 h-8 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow flex items-center justify-center text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-40 disabled:pointer-events-none cursor-pointer" disabled={active >= pages - 1}>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
           </button>
         </div>
@@ -278,10 +278,10 @@ function LogoSide({ logoUrl, name }: { logoUrl?: string; name: string }) {
       <div
         aria-hidden="true"
         title={`Belum ada logo untuk ${name}`}
-        className="shrink-0 h-16 w-16 sm:h-20 sm:w-20 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center"
+        className="shrink-0 h-16 w-16 sm:h-20 sm:w-20 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl flex items-center justify-center"
       >
         <svg
-          className="h-1/2 w-1/2 text-slate-200"
+          className="h-1/2 w-1/2 text-slate-200 dark:text-slate-600"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -320,10 +320,10 @@ export function FeaturedJobs({
 }) {
   const featured = jobs.slice(0, 9)
   return (
-    <section className="py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-100">
+    <section className="py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-100 dark:border-slate-800">
       <div className="space-y-8">
         <div className="text-center space-y-1.5 max-w-2xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-medium tracking-tight text-slate-900">Explore The Latest Job Openings</h2>
+          <h2 className="text-2xl sm:text-3xl font-medium tracking-tight text-slate-900 dark:text-white">Explore The Latest Job Openings</h2>
           <p className="text-xs sm:text-sm text-slate-400 font-light">
             Daftar pekerjaan part-time yang mungkin cocok dengan jadwal kuliahmu !
           </p>
@@ -335,23 +335,23 @@ export function FeaturedJobs({
               <button
                 key={job.job_id}
                 onClick={() => onOpenJob(job)}
-                className="p-4 bg-white border border-slate-200 hover:border-slate-300 rounded-xl text-left transition-all shadow-2xs cursor-pointer"
+                className="p-4 bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 rounded-xl text-left transition-all shadow-2xs cursor-pointer"
               >
                 <div className="flex items-center gap-3">
                   <div className="min-w-0 flex-1">
-                    <h3 className="text-xs sm:text-sm font-medium text-slate-900 truncate">{job.job_title}</h3>
-                    <p className="text-[11px] text-slate-500 font-light truncate">{job.company_name}</p>
-                    <span className="inline-flex items-center mt-2 px-2 py-0.5 rounded-full bg-pink-50 text-[#c83472] text-[10px] font-semibold">
+                    <h3 className="text-xs sm:text-sm font-medium text-slate-900 dark:text-white truncate">{job.job_title}</h3>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 font-light truncate">{job.company_name}</p>
+                    <span className="inline-flex items-center mt-2 px-2 py-0.5 rounded-full bg-pink-50 dark:bg-pink-950/40 text-[#c83472] dark:text-pink-300 text-[10px] font-semibold">
                       {job.job_category}
                     </span>
                   </div>
                   <LogoSide logoUrl={job.company_logo} name={job.company_name} />
                 </div>
 
-                <div className="mt-3 pt-3 border-t border-slate-100 flex items-center gap-4 text-[11px] text-slate-600 font-light">
-                  <span className="font-medium text-slate-900">Rp {job.work_salaryperhour.toLocaleString('id-ID')}/jam</span>
+                <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center gap-4 text-[11px] text-slate-600 dark:text-slate-400 font-light">
+                  <span className="font-medium text-slate-900 dark:text-white">Rp {job.work_salaryperhour.toLocaleString('id-ID')}/jam</span>
                   <span>{job.work_hours} jam/mgg</span>
-                  <span className="px-2 py-0.5 rounded border border-slate-200 bg-slate-50 text-slate-600 text-[10px] font-normal">{job.work_system}</span>
+                  <span className="px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] font-normal">{job.work_system}</span>
                 </div>
               </button>
             )
@@ -361,7 +361,7 @@ export function FeaturedJobs({
         <div className="text-center pt-2">
           <button
             onClick={onBrowseAll}
-            className="px-5 py-2.5 rounded-xl border border-slate-300 hover:border-slate-400 hover:text-slate-900 hover:bg-slate-50 text-slate-700 text-xs font-medium transition-colors bg-white shadow-2xs"
+            className="px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-medium transition-colors bg-white dark:bg-slate-900 shadow-2xs cursor-pointer"
           >
             Browse All {jobs.length} Jobs {"\u2192"}
           </button>
@@ -373,10 +373,10 @@ export function FeaturedJobs({
 
 export function StatsPartners({ jobs }: { jobs: RankedJobResult[] }) {
   return (
-    <section className="py-14 bg-white border-y border-slate-200">
+    <section className="py-14 bg-white dark:bg-slate-900/60 border-y border-slate-200 dark:border-slate-800 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
         <div className="max-w-2xl mx-auto space-y-1.5">
-          <h2 className="text-2xl sm:text-3xl font-medium text-slate-900 tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-medium text-slate-900 dark:text-white tracking-tight">
             Find Your Perfect Part-Time Job
           </h2>
           <p className="text-xs sm:text-sm text-slate-400 font-light">
@@ -386,19 +386,19 @@ export function StatsPartners({ jobs }: { jobs: RankedJobResult[] }) {
 
         <div className="grid grid-cols-3 gap-6 max-w-3xl mx-auto py-2">
           <div className="space-y-1">
-            <div className="text-3xl sm:text-4xl lg:text-5xl font-medium text-slate-900 tracking-tight">
+            <div className="text-3xl sm:text-4xl lg:text-5xl font-medium text-slate-900 dark:text-white tracking-tight">
               {jobs.length - 21}<span className="text-[#0C52EE]">+</span>
             </div>
             <p className="text-xs text-slate-400 font-light">Loker Terverifikasi</p>
           </div>
           <div className="space-y-1">
-            <div className="text-3xl sm:text-4xl lg:text-5xl font-medium text-slate-900 tracking-tight">
+            <div className="text-3xl sm:text-4xl lg:text-5xl font-medium text-slate-900 dark:text-white tracking-tight">
               5<span className="text-[#0C52EE]">+</span>
             </div>
             <p className="text-xs text-slate-400 font-light">Kriteria Penilaian</p>
           </div>
           <div className="space-y-1">
-            <div className="text-3xl sm:text-4xl lg:text-5xl font-medium text-slate-900 tracking-tight">
+            <div className="text-3xl sm:text-4xl lg:text-5xl font-medium text-slate-900 dark:text-white tracking-tight">
               100<span className="text-[#ED1E79]">%</span>
             </div>
             <p className="text-xs text-slate-400 font-light">Transparansi ROC</p>
@@ -407,14 +407,14 @@ export function StatsPartners({ jobs }: { jobs: RankedJobResult[] }) {
 
         <div className="pt-6 flex flex-wrap items-center justify-center gap-x-10 sm:gap-x-14 gap-y-5">
           {SOURCE_PORTALS.map((portal) => (
-            <div key={portal.name} className="flex items-center gap-2.5 opacity-80">
+            <div key={portal.name} className="flex items-center gap-2.5 opacity-80 hover:opacity-100 transition-opacity">
               <img
                 src={portal.logo}
                 alt={`${portal.name} logo`}
                 loading="lazy"
                 className="h-6 w-6 object-contain shrink-0"
               />
-              <span className="text-xs sm:text-sm font-medium text-slate-500">{portal.name}</span>
+              <span className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400">{portal.name}</span>
             </div>
           ))}
         </div>
@@ -460,28 +460,28 @@ export function LandingFooter({
   onNavigate: (view: 'landing' | 'portal' | 'matrix' | 'kuesioner') => void
 }) {
   return (
-    <footer className="bg-white border-t border-slate-200 py-10 px-4 sm:px-6 lg:px-8 text-xs text-slate-500 font-light">
+    <footer className="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-10 px-4 sm:px-6 lg:px-8 text-xs text-slate-500 dark:text-slate-400 font-light transition-colors">
       <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-8 mb-8">
         <div className="space-y-2 col-span-2 md:col-span-1">
-          <div className="font-medium text-slate-900 text-base tracking-tighter">upmatch</div>
+          <div className="font-medium text-slate-900 dark:text-white text-base tracking-tighter">upmatch</div>
           <p className="text-[11px] text-slate-400 leading-relaxed font-light">
             Sistem rekomendasi part-time untuk mahasiswa berbasis metode Multi-Criteria Decision Making (MCDM) SMARTER &amp; ROC.
           </p>
         </div>
         <div className="space-y-1.5">
-          <h4 className="font-medium text-slate-900 text-xs">Navigasi</h4>
-          <p><button onClick={() => onNavigate('landing')} className="hover:text-[#0C52EE]">Beranda</button></p>
-          <p><button onClick={() => onNavigate('portal')} className="hover:text-[#0C52EE]">Lowongan</button></p>
-          <p><button onClick={() => onNavigate('matrix')} className="hover:text-[#0C52EE]">Perhitungan SPK</button></p>
+          <h4 className="font-medium text-slate-900 dark:text-white text-xs">Navigasi</h4>
+          <p><button onClick={() => onNavigate('landing')} className="hover:text-[#0C52EE] cursor-pointer">Beranda</button></p>
+          <p><button onClick={() => onNavigate('portal')} className="hover:text-[#0C52EE] cursor-pointer">Lowongan</button></p>
+          <p><button onClick={() => onNavigate('matrix')} className="hover:text-[#0C52EE] cursor-pointer">Perhitungan SPK</button></p>
         </div>
         <div className="space-y-1.5">
-          <h4 className="font-medium text-slate-900 text-xs">Untuk Siapa</h4>
+          <h4 className="font-medium text-slate-900 dark:text-white text-xs">Untuk Siapa</h4>
           <p className="text-slate-400">Mahasiswa Aktif</p>
           <p className="text-slate-400">Semua Jurusan & Kampus</p>
           <p className="text-slate-400">Indonesia</p>
         </div>
       </div>
-      <div className="max-w-7xl mx-auto pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between text-slate-400 text-[11px]">
+      <div className="max-w-7xl mx-auto pt-6 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between text-slate-400 text-[11px]">
         <span className="tracking-tighter">{"\u00A9"} 2026 upmatch. All rights reserved.</span>
         <span>{totalJobs} Lowongan Terverifikasi {"\u2022"} Untuk Mahasiswa</span>
       </div>

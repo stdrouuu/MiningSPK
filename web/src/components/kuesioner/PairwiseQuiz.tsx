@@ -65,16 +65,16 @@ export function PairwiseQuiz({ open, onClose, onFinish }: Props) {
       {!done && pair ? (
         <div className="space-y-4">
           <div>
-            <div className="flex justify-between text-[11px] text-slate-500 mb-1.5">
+            <div className="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 mb-1.5">
               <span>Pertanyaan {step + 1} dari {PAIRWISE_PAIRS.length}</span>
               <span className="tabular-nums">{progress}%</span>
             </div>
-            <div className="h-1.5 rounded-full bg-slate-100 overflow-hidden">
-              <div className="emil-meter h-full bg-[#0C52EE] rounded-full" style={{ width: `${progress}%` }} />
+            <div className="h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+              <div className="emil-meter h-full bg-[#0C52EE] dark:bg-blue-500 rounded-full" style={{ width: `${progress}%` }} />
             </div>
           </div>
 
-          <p className="text-sm text-slate-900 font-medium text-center">Mana yang lebih penting buatmu?</p>
+          <p className="text-sm text-slate-900 dark:text-white font-medium text-center">Mana yang lebih penting buatmu?</p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             {pair.map((key) => {
@@ -83,10 +83,10 @@ export function PairwiseQuiz({ open, onClose, onFinish }: Props) {
                 <button
                   key={key}
                   onClick={() => choose(key)}
-                  className="emil-press text-left bg-white border border-slate-200 rounded-xl p-4 hover:border-[#0C52EE] hover:bg-[#0C52EE]/[0.03]"
+                  className="emil-press text-left bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 hover:border-[#0C52EE] dark:hover:border-blue-400 hover:bg-[#0C52EE]/[0.03] dark:hover:bg-blue-500/10 transition-colors"
                 >
-                  <div className="text-sm font-medium text-slate-900 mt-0.5">{m.title}</div>
-                  <div className="text-[11px] text-slate-500 font-light mt-1">{m.desc}</div>
+                  <div className="text-sm font-medium text-slate-900 dark:text-white mt-0.5">{m.title}</div>
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400 font-light mt-1">{m.desc}</div>
                 </button>
               )
             })}
@@ -96,23 +96,23 @@ export function PairwiseQuiz({ open, onClose, onFinish }: Props) {
             <button
               onClick={undo}
               disabled={step === 0}
-              className="text-xs text-slate-400 hover:text-slate-700 disabled:opacity-40 underline"
+              className="text-xs text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 disabled:opacity-40 underline"
             >
               Kembali ke soal sebelumnya
             </button>
-            <button onClick={handleClose} className="text-xs text-slate-400 hover:text-slate-700 underline">
+            <button onClick={handleClose} className="text-xs text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 underline">
               Batalkan kuis
             </button>
           </div>
         </div>
       ) : (
         <div className="text-center space-y-3 py-4">
-          <div className="mx-auto w-10 h-10 rounded-full bg-green-50 border border-green-200 flex items-center justify-center">
-            <RiCheckLine className="h-5 w-5 text-green-600" />
+          <div className="mx-auto w-10 h-10 rounded-full bg-green-50 dark:bg-emerald-950/60 border border-green-200 dark:border-emerald-800 flex items-center justify-center">
+            <RiCheckLine className="h-5 w-5 text-green-600 dark:text-emerald-400" />
           </div>
-          <p className="text-sm font-medium text-slate-900">Kuis selesai</p>
-          <p className="text-xs text-slate-500 font-light">Prioritasmu sudah dihitung dari jawabanmu.</p>
-          <Button size="sm" onClick={handleClose} className="text-xs">Lihat hasilku</Button>
+          <p className="text-sm font-medium text-slate-900 dark:text-white">Kuis selesai</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400 font-light">Prioritasmu sudah dihitung dari jawabanmu.</p>
+          <Button size="sm" onClick={handleClose} className="text-xs bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500">Lihat hasilku</Button>
         </div>
       )}
     </Dialog>

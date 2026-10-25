@@ -74,18 +74,18 @@ export function PriorityEditor({ ranks, onChange, onReset, showReset = true }: P
   }
 
   return (
-    <div className="bg-white border border-slate-200 rounded-xl p-4 shadow-2xs space-y-3">
+    <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-2xs space-y-3">
       <div className="flex items-center justify-between gap-2">
         <div>
-          <h3 className="text-sm font-medium text-slate-900">Susunan kriteria versimu</h3>
-          <p className="text-[11px] text-slate-500 font-light">
+          <h3 className="text-sm font-medium text-slate-900 dark:text-white">Susunan kriteria versimu</h3>
+          <p className="text-[11px] text-slate-500 dark:text-slate-400 font-light">
             Seret untuk menyusun — atas = paling penting • bobot otomatis
           </p>
         </div>
         {showReset && (
           <button
             onClick={onReset}
-            className="emil-press shrink-0 inline-flex items-center gap-1 text-[11px] font-medium text-slate-500 hover:text-slate-900 border border-slate-200 rounded-lg px-2.5 h-7"
+            className="emil-press shrink-0 inline-flex items-center gap-1 text-[11px] font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 h-7 bg-white dark:bg-slate-800"
           >
             <RiRefreshLine className="h-3 w-3" />
             Reset
@@ -141,31 +141,31 @@ export function PriorityEditor({ ranks, onChange, onReset, showReset = true }: P
               }}
               className={`emil-press flex items-center gap-2 p-2.5 rounded-lg border text-xs select-none transition-opacity ${
                 isDragged
-                  ? 'border-[#0C52EE] bg-[#0C52EE]/[0.04] opacity-40'
-                  : 'border-slate-200 bg-slate-50/50'
+                  ? 'border-[#0C52EE] dark:border-blue-500 bg-[#0C52EE]/[0.04] dark:bg-blue-500/10 opacity-40'
+                  : 'border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50'
               }`}
             >
               {/* Drag handle */}
               <span
                 title="Seret untuk memindahkan"
-                className="flex h-8 w-6 shrink-0 items-center justify-center rounded-md text-slate-400 hover:text-slate-900 hover:bg-slate-200/70 cursor-grab active:cursor-grabbing touch-none"
+                className="flex h-8 w-6 shrink-0 items-center justify-center rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/70 dark:hover:bg-slate-700 cursor-grab active:cursor-grabbing touch-none"
               >
                 <RiDraggable className="h-4 w-4" />
               </span>
 
               {/* Nomor prioritas */}
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-[#0C52EE] text-white font-medium text-xs font-mono">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-[#0C52EE] dark:bg-blue-600 text-white font-medium text-xs font-mono">
                 {currentRank}
               </span>
 
               <div className="flex min-w-0 flex-1 items-center gap-2">
-                <span className="truncate font-medium text-slate-900">
+                <span className="truncate font-medium text-slate-900 dark:text-white">
                   {m.title}
                 </span>
               </div>
 
               <div className="flex shrink-0 items-center gap-2">
-                <span className="font-medium text-white bg-[#0C52EE] px-2.5 py-1 rounded-md text-xs shadow-2xs tabular-nums">
+                <span className="font-medium text-white bg-[#0C52EE] dark:bg-blue-600 px-2.5 py-1 rounded-md text-xs shadow-2xs tabular-nums">
                   {weightPct(weights[key])}
                 </span>
                 {/* Fallback tombol untuk mobile / keyboard */}
@@ -175,7 +175,7 @@ export function PriorityEditor({ ranks, onChange, onReset, showReset = true }: P
                     aria-label={`Naikkan ${m.title}`}
                     disabled={index === 0}
                     onClick={() => moveRank(key, -1)}
-                    className="p-0.5 text-slate-400 hover:text-slate-900 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+                    className="p-0.5 text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
                   >
                     <RiArrowUpSLine className="h-3.5 w-3.5" />
                   </button>
@@ -184,7 +184,7 @@ export function PriorityEditor({ ranks, onChange, onReset, showReset = true }: P
                     aria-label={`Turunkan ${m.title}`}
                     disabled={index === orderedKeys.length - 1}
                     onClick={() => moveRank(key, 1)}
-                    className="p-0.5 text-slate-400 hover:text-slate-900 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+                    className="p-0.5 text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
                   >
                     <RiArrowDownSLine className="h-3.5 w-3.5" />
                   </button>
@@ -194,7 +194,7 @@ export function PriorityEditor({ ranks, onChange, onReset, showReset = true }: P
           )
         })}
       </div>
-      <p className="text-[10px] text-slate-500">
+      <p className="text-[10px] text-slate-500 dark:text-slate-400">
         Posisi paling atas = Rank 1 (bobot 45.7%). Rank selalu unik 1–5.
       </p>
     </div>

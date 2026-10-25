@@ -30,17 +30,17 @@ function ScrollToTop() {
 
 export function PortalFooter({ onOpenPreferences }: { onOpenPreferences: () => void }) {
   return (
-    <footer className="border-t border-slate-200 bg-white mt-16 py-6 text-xs text-slate-500">
+    <footer className="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 mt-16 py-6 text-xs text-slate-500 dark:text-slate-400 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
         <p className="tracking-tighter">© 2026 upmatch • Sistem Rekomendasi Part-Time Mahasiswa (SMARTER &amp; ROC)</p>
-        <div className="flex items-center gap-4 text-slate-600">
+        <div className="flex items-center gap-4 text-slate-600 dark:text-slate-400">
           <span>221 Lowongan Terverifikasi</span>
           <span>•</span>
           <span>Untuk Mahasiswa</span>
           <span>•</span>
           <button
             onClick={onOpenPreferences}
-            className="hover:text-slate-900 underline cursor-pointer"
+            className="hover:text-slate-900 dark:hover:text-slate-100 underline cursor-pointer"
           >
             Atur Kriteria SPK
           </button>
@@ -83,10 +83,6 @@ export function App() {
   const [isPreferenceOpen, setIsPreferenceOpen] = useState(false)
   const [isSavedJobsOpen, setIsSavedJobsOpen] = useState(false)
 
-  // Sinkronkan URL lama / tidak dikenal & pastikan selalu mode terang (prototipe light-only)
-  useEffect(() => {
-    document.documentElement.classList.remove('dark')
-  }, [])
 
   // Mode aktif dilihat dari prefix URL (/data/* = demo data responden).
   const { pathname } = useLocation()
@@ -275,7 +271,7 @@ export function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 flex flex-col font-sans">
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
       <ScrollToTop />
       <Routes>
         <Route
@@ -591,15 +587,15 @@ function PortalRoute({
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
         {/* User baru + profil belum terisi -> tawarkan kuesioner sebagai bantuan */}
         {isProfileEmpty && !state.loading && !state.error && (
-          <section className="bg-[#0C52EE]/[0.04] border border-[#0C52EE]/25 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-3">
+          <section className="bg-[#0C52EE]/[0.04] dark:bg-blue-950/30 border border-[#0C52EE]/25 dark:border-blue-900/40 rounded-xl p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-3">
             <div className="flex-1">
-              <h2 className="text-[15px] font-medium text-slate-900">Dapatkan rekomendasi yang pas buat kamu</h2>
-              <p className="text-sm text-slate-500 font-light mt-0.5">
+              <h2 className="text-[15px] font-medium text-slate-900 dark:text-white">Dapatkan rekomendasi yang pas buat kamu</h2>
+              <p className="text-sm text-slate-500 dark:text-slate-400 font-light mt-0.5">
                 Ceritakan upah, jam, lokasi & skill-mu lewat kuesioner singkat (±3 menit) —
                 221 lowongan langsung diurutkan sesuai kebutuhanmu.
               </p>
             </div>
-            <Button size="sm" onClick={onFillQuestionnaire} className="text-sm shrink-0">
+            <Button size="sm" onClick={onFillQuestionnaire} className="text-sm shrink-0 bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500">
               Mulai kuesioner
             </Button>
           </section>
@@ -637,7 +633,7 @@ function PortalRoute({
           <div className="p-6 rounded-xl border border-red-200 dark:border-red-900 bg-red-50 dark:bg-red-950/20 text-center space-y-3 max-w-md mx-auto my-20">
             <RiErrorWarningLine className="h-8 w-8 text-red-500 mx-auto" />
             <h3 className="text-sm font-medium text-red-800 dark:text-red-200">{state.error}</h3>
-            <Button variant="outline" size="sm" onClick={() => window.location.reload()} className="text-xs">
+            <Button variant="outline" size="sm" onClick={() => window.location.reload()} className="text-xs dark:border-red-800 dark:text-red-300">
               Coba muat ulang
             </Button>
           </div>
@@ -653,11 +649,11 @@ function PortalRoute({
             />
 
             {/* Filter Bar & Controls */}
-            <section className="bg-white border border-slate-200 rounded-xl p-3 sm:p-4 shadow-2xs">
+            <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3 sm:p-4 shadow-2xs">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 items-center">
                 <div className="lg:col-span-5 relative">
                   <label htmlFor="portal-search" className="sr-only">Cari lowongan, perusahaan, atau keahlian</label>
-                  <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                  <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
                   </span>
                   <input
@@ -666,7 +662,7 @@ function PortalRoute({
                     placeholder="Cari posisi, perusahaan, atau keahlian…"
                     value={state.searchQuery}
                     onChange={(e) => state.setSearchQuery(e.target.value)}
-                    className="w-full pl-9 pr-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-light text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:border-[#0C52EE]"
+                    className="w-full pl-9 pr-3 py-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm font-light text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:bg-white dark:focus:bg-slate-950 focus:outline-none focus:border-[#0C52EE] dark:focus:border-blue-400"
                   />
                 </div>
 
@@ -676,7 +672,7 @@ function PortalRoute({
                     id="filter-category"
                     value={state.filterCategory}
                     onChange={(e) => state.setFilterCategory(e.target.value)}
-                    className="w-full py-2.5 px-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-light text-slate-700 focus:bg-white focus:outline-none focus:border-[#0C52EE]"
+                    className="w-full py-2.5 px-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm font-light text-slate-700 dark:text-slate-200 focus:bg-white dark:focus:bg-slate-950 focus:outline-none focus:border-[#0C52EE] dark:focus:border-blue-400"
                   >
                     <option value="ALL">Semua Kategori</option>
                     {state.categories.map((c) => (
@@ -691,7 +687,7 @@ function PortalRoute({
                     id="filter-mode"
                     value={state.filterWorkSystem}
                     onChange={(e) => state.setFilterWorkSystem(e.target.value)}
-                    className="w-full py-2.5 px-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-light text-slate-700 focus:bg-white focus:outline-none focus:border-[#0C52EE]"
+                    className="w-full py-2.5 px-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm font-light text-slate-700 dark:text-slate-200 focus:bg-white dark:focus:bg-slate-950 focus:outline-none focus:border-[#0C52EE] dark:focus:border-blue-400"
                   >
                     <option value="ALL">Semua Moda</option>
                     <option value="Remote">Remote Only</option>
@@ -706,7 +702,7 @@ function PortalRoute({
                     id="sort-by"
                     value={state.sortBy}
                     onChange={(e) => state.setSortBy(e.target.value as any)}
-                    className="w-full py-2.5 px-3 bg-slate-50 border border-slate-200 rounded-lg text-sm font-light text-slate-700 focus:bg-white focus:outline-none focus:border-[#0C52EE]"
+                    className="w-full py-2.5 px-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm font-light text-slate-700 dark:text-slate-200 focus:bg-white dark:focus:bg-slate-950 focus:outline-none focus:border-[#0C52EE] dark:focus:border-blue-400"
                   >
                     <option value="match">Urutkan: Kecocokan SPK</option>
                     <option value="salary-high">Upah Tertinggi</option>
@@ -718,17 +714,17 @@ function PortalRoute({
             </section>
 
             {/* Status bar */}
-            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:justify-between text-sm text-slate-500 gap-1 font-light px-1" role="status" aria-live="polite">
+            <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:justify-between text-sm text-slate-500 dark:text-slate-400 font-light px-1" role="status" aria-live="polite">
               <div>
-                Menampilkan <span className="font-medium text-slate-900">{pagedJobs.length}</span> dari{' '}
-                <span className="font-medium text-slate-900">{state.displayJobs.length}</span> lowongan untuk{' '}
-                <span className="font-medium text-slate-900">{state.studentPrefs.name.trim() || 'kamu'}</span>
+                Menampilkan <span className="font-medium text-slate-900 dark:text-slate-100">{pagedJobs.length}</span> dari{' '}
+                <span className="font-medium text-slate-900 dark:text-slate-100">{state.displayJobs.length}</span> lowongan untuk{' '}
+                <span className="font-medium text-slate-900 dark:text-slate-100">{state.studentPrefs.name.trim() || 'kamu'}</span>
                 {state.nearbyNote && (
-                  <p className="text-xs text-slate-400 mt-0.5">{state.nearbyNote}</p>
+                  <p className="text-xs text-slate-400 dark:text-slate-500 mt-0.5">{state.nearbyNote}</p>
                 )}
               </div>
               {!isProfileEmpty && (
-                <div className="text-sm text-slate-400">
+                <div className="text-sm text-slate-400 dark:text-slate-500">
                   {state.studentPrefs.location} {"\u2022"} Rp {state.studentPrefs.minSalary.toLocaleString('id-ID')}/jam {"\u2022"} maks {state.studentPrefs.maxHours} jam/mgg
                 </div>
               )}
@@ -739,10 +735,10 @@ function PortalRoute({
               {/* Left Column: Job Cards Feed */}
               <div ref={listTopRef} className="lg:col-span-5 space-y-3 scroll-mt-6" role="listbox" aria-label="Daftar lowongan terurut SPK" aria-activedescendant={state.selectedJob ? `job-${state.selectedJob.job_id}` : undefined}>
                 {state.displayJobs.length === 0 ? (
-                  <div className="p-8 text-center bg-white border border-slate-200 rounded-xl space-y-2">
-                    <p className="font-medium text-slate-800 text-[15px]">Tidak ada lowongan yang cocok</p>
-                    <p className="text-sm text-slate-400 font-light">Coba hapus kata kunci, pilih "Semua Kategori", atau turunkan target upah di Preferensi.</p>
-                    <button onClick={() => { state.setSearchQuery(''); state.setFilterCategory('ALL'); state.setFilterWorkSystem('ALL') }} className="text-sm font-medium text-[#0C52EE] hover:underline pt-2">
+                  <div className="p-8 text-center bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl space-y-2">
+                    <p className="font-medium text-slate-800 dark:text-slate-100 text-[15px]">Tidak ada lowongan yang cocok</p>
+                    <p className="text-sm text-slate-400 dark:text-slate-400 font-light">Coba hapus kata kunci, pilih "Semua Kategori", atau turunkan target upah di Preferensi.</p>
+                    <button onClick={() => { state.setSearchQuery(''); state.setFilterCategory('ALL'); state.setFilterWorkSystem('ALL') }} className="text-sm font-medium text-[#0C52EE] dark:text-blue-400 hover:underline pt-2">
                       Atur ulang filter
                     </button>
                   </div>
@@ -776,7 +772,7 @@ function PortalRoute({
                       onClick={() => goToPage(safePage - 1)}
                       disabled={safePage === 0}
                       aria-label="Halaman sebelumnya"
-                      className="inline-flex items-center gap-1 h-8 px-2.5 rounded-lg border border-slate-200 bg-white text-xs font-medium text-slate-500 transition hover:border-[#0C52EE] hover:text-[#0C52EE] disabled:opacity-40 disabled:pointer-events-none"
+                      className="inline-flex items-center gap-1 h-8 px-2.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs font-medium text-slate-500 dark:text-slate-400 transition hover:border-[#0C52EE] dark:hover:border-blue-400 hover:text-[#0C52EE] dark:hover:text-blue-400 disabled:opacity-40 disabled:pointer-events-none"
                     >
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
@@ -788,7 +784,7 @@ function PortalRoute({
                       token === 'ellipsis' ? (
                         <span
                           key={`gap-${i}`}
-                          className="w-6 h-8 inline-flex items-center justify-center text-xs text-slate-400 select-none"
+                          className="w-6 h-8 inline-flex items-center justify-center text-xs text-slate-400 dark:text-slate-500 select-none"
                           aria-hidden="true"
                         >
                           …
@@ -802,8 +798,8 @@ function PortalRoute({
                           aria-current={token === safePage + 1 ? 'page' : undefined}
                           className={`h-8 min-w-8 px-2 rounded-lg text-sm font-medium tabular-nums transition ${
                             token === safePage + 1
-                              ? 'bg-[#0C52EE] text-white shadow-xs'
-                              : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                              ? 'bg-[#0C52EE] dark:bg-blue-600 text-white shadow-xs'
+                              : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
                           }`}
                         >
                           {token}
@@ -816,7 +812,7 @@ function PortalRoute({
                       onClick={() => goToPage(safePage + 1)}
                       disabled={safePage >= pageCount - 1}
                       aria-label="Halaman berikutnya"
-                      className="inline-flex items-center gap-1 h-8 px-2.5 rounded-lg border border-slate-200 bg-white text-xs font-medium text-slate-500 transition hover:border-[#0C52EE] hover:text-[#0C52EE] disabled:opacity-40 disabled:pointer-events-none"
+                      className="inline-flex items-center gap-1 h-8 px-2.5 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs font-medium text-slate-500 dark:text-slate-400 transition hover:border-[#0C52EE] dark:hover:border-blue-400 hover:text-[#0C52EE] dark:hover:text-blue-400 disabled:opacity-40 disabled:pointer-events-none"
                     >
                       <span className="hidden sm:inline">Next</span>
                       <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

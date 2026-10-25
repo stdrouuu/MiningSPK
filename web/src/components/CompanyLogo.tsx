@@ -26,12 +26,12 @@ export function CompanyLogo({ companyName, logoUrl, size = 'md', className }: Co
   if (!logoUrl || failed) {
     return (
       <div
-        className={`${effectiveClasses} bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center shrink-0`}
+        className={`${effectiveClasses} bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl flex items-center justify-center shrink-0`}
         aria-hidden="true"
         title={`Belum ada logo untuk ${companyName}`}
       >
         <svg
-          className="h-1/2 w-1/2 text-slate-300"
+          className="h-1/2 w-1/2 text-slate-300 dark:text-slate-600"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -55,7 +55,7 @@ export function CompanyLogo({ companyName, logoUrl, size = 'md', className }: Co
       loading="lazy"
       referrerPolicy="no-referrer"
       onError={() => (attempt === 0 ? setAttempt(1) : setFailed(true))}
-      className={`${effectiveClasses} object-contain bg-white shrink-0`}
+      className={`${effectiveClasses} object-contain bg-white dark:bg-slate-800 rounded-lg p-0.5 shrink-0`}
     />
   )
 }

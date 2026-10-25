@@ -36,7 +36,7 @@ export function LandingPage({
   }
 
   return (
-    <div className="min-h-[100dvh] bg-[#F8FAFC] font-sans text-slate-900">
+    <div className="min-h-[100dvh] bg-[#F8FAFC] dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100 transition-colors">
       <LandingNav mode={mode} active="landing" savedCount={savedCount} onNavigate={onNavigate} onOpenSavedJobs={onOpenSavedJobs} />
       <main>
         <LandingHero totalJobs={jobs.length} onEnterPortal={() => navigate(portalPath)} />

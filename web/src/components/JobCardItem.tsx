@@ -74,31 +74,31 @@ export function JobCardItem({
           "--enter-delay": `${Math.min(index, 8) * 40}ms`,
         } as React.CSSProperties
       }
-      className={`group p-4 sm:p-5 rounded-xl bg-white border ${
+      className={`group p-4 sm:p-5 rounded-xl bg-white dark:bg-slate-900/90 border ${
         isSelected
-          ? "border-[#0C52EE] ring-1 ring-[#0C52EE] shadow-sm"
-          : "border-slate-200 hover:border-slate-300 shadow-2xs"
+          ? "border-[#0C52EE] dark:border-blue-500 ring-1 ring-[#0C52EE] dark:ring-blue-500 shadow-sm"
+          : "border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 shadow-2xs"
       } transition-all cursor-pointer`}
     >
       {/* Baris atas: Kiri info posisi & perusahaan; Kanan logo perusahaan */}
       <div className="flex items-start justify-between gap-3 sm:gap-4">
         <div className="flex-1 min-w-0">
-          <h3 className="text-[15px] sm:text-base font-medium text-[#2b1560] leading-snug line-clamp-2 underline underline-offset-2 decoration-1 group-hover:text-[#0942c4] group-hover:decoration-[#0942c4] transition-colors">
+          <h3 className="text-[15px] sm:text-base font-medium text-[#2b1560] dark:text-indigo-300 leading-snug line-clamp-2 underline underline-offset-2 decoration-1 group-hover:text-[#0942c4] dark:group-hover:text-indigo-200 group-hover:decoration-[#0942c4] dark:group-hover:decoration-indigo-200 transition-colors">
             {job.job_title}
           </h3>
-          <p className="text-[15px] text-slate-800 mt-1 truncate">
+          <p className="text-[15px] text-slate-800 dark:text-slate-200 mt-1 truncate">
             {job.company_name}
           </p>
           <div className="mt-1.5">
-            <span className="inline-flex items-center px-3 py-1 rounded-md bg-pink-100/60 text-[#c83472] text-xs font-medium">
+            <span className="inline-flex items-center px-3 py-1 rounded-md bg-pink-100/60 dark:bg-pink-950/60 text-[#c83472] dark:text-pink-300 text-xs font-medium">
               {job.job_category}
             </span>
           </div>
-          <p className="text-sm text-slate-500 font-light mt-1.5 truncate">
+          <p className="text-sm text-slate-500 dark:text-slate-400 font-light mt-1.5 truncate">
             {job.work_job_location}
             {proximityLabel(job, studentPrefs.location) &&
               (job.work_job_location || "").toLowerCase() !== "remote" && (
-                <span className="ml-1.5 inline-flex items-center px-1.5 py-0.5 rounded bg-slate-100 text-[11px] font-normal text-slate-500 align-middle">
+                <span className="ml-1.5 inline-flex items-center px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[11px] font-normal text-slate-500 dark:text-slate-400 align-middle">
                   {proximityLabel(job, studentPrefs.location)}
                 </span>
               )}
@@ -113,28 +113,28 @@ export function JobCardItem({
       </div>
 
       {/* Baris bawah: Chip kecocokan SPK di kiri & tombol simpan (save) di pojok kanan bawah */}
-      <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-end justify-between gap-2">
+      <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 flex items-end justify-between gap-2">
         <div className="flex flex-wrap items-center gap-1.5 flex-1 min-w-0">
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-50 border border-slate-200 text-slate-600 text-xs font-normal">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs font-normal">
             {job.work_hours} jam/mgg {"\u2022"} {job.work_system}
           </span>
           {!hideMatch && (
             <>
               {isSalaryGood && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-50 border border-slate-200 text-slate-600 text-xs font-normal">
-                  <span className="text-emerald-600 font-medium">&#10003;</span>{" "}
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs font-normal">
+                  <span className="text-emerald-600 dark:text-emerald-400 font-medium">&#10003;</span>{" "}
                   Upah sesuai
                 </span>
               )}
               {isLocationGood && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-50 border border-slate-200 text-slate-600 text-xs font-normal">
-                  <span className="text-[#0C52EE] font-medium">&#10003;</span>{" "}
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs font-normal">
+                  <span className="text-[#0C52EE] dark:text-blue-400 font-medium">&#10003;</span>{" "}
                   Lokasi cocok
                 </span>
               )}
               {isCategoryMatch && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-50 border border-slate-200 text-slate-600 text-xs font-normal">
-                  <span className="text-[#ED1E79] font-medium">&#10003;</span> Minat
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs font-normal">
+                  <span className="text-[#ED1E79] dark:text-pink-400 font-medium">&#10003;</span> Minat
                   kategori
                 </span>
               )}
@@ -150,10 +150,10 @@ export function JobCardItem({
           }}
           aria-pressed={isSaved}
           title={isSaved ? "Hapus simpanan" : "Simpan lowongan"}
-          className="p-1.5 text-slate-400 hover:text-slate-700 transition-colors rounded hover:bg-slate-50 shrink-0 self-end"
+          className="p-1.5 text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-200 transition-colors rounded hover:bg-slate-50 dark:hover:bg-slate-800 shrink-0 self-end"
         >
           <svg
-            className={`w-4 h-4 ${isSaved ? "text-[#ED1E79] fill-current" : ""}`}
+            className={`w-4 h-4 ${isSaved ? "text-[#ED1E79] dark:text-pink-400 fill-current" : ""}`}
             fill={isSaved ? "currentColor" : "none"}
             stroke="currentColor"
             viewBox="0 0 24 24"
