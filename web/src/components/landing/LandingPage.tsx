@@ -3,6 +3,7 @@ import { LandingNav } from './LandingNav'
 import { LandingHero } from './LandingHero'
 import { CategoryGrid, FeaturedJobs, StatsPartners, BlueBanner, LandingFooter } from './LandingSections'
 import type { RankedJobResult } from '../../types/data'
+import type { StudentPreferences } from '../../types/portal'
 import { ROUTES } from '../../lib/routes'
 interface LandingPageProps {
   mode: 'user' | 'data'
@@ -12,6 +13,8 @@ interface LandingPageProps {
   onQuickSearch: (q: string) => void
   onSelectCategory: (cat: string) => void
   onOpenJob: (job: RankedJobResult) => void
+  studentPrefs: StudentPreferences
+  onOpenPreferences: () => void
 }
 
 export function LandingPage({
@@ -22,6 +25,8 @@ export function LandingPage({
   onQuickSearch,
   onSelectCategory,
   onOpenJob,
+  studentPrefs,
+  onOpenPreferences,
 }: LandingPageProps) {
   const navigate = useNavigate()
   const portalPath = mode === 'data' ? ROUTES.DATA_PORTAL : ROUTES.PORTAL
@@ -37,7 +42,15 @@ export function LandingPage({
 
   return (
     <div className="min-h-[100dvh] bg-[#F8FAFC] dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100 transition-colors">
-      <LandingNav mode={mode} active="landing" savedCount={savedCount} onNavigate={onNavigate} onOpenSavedJobs={onOpenSavedJobs} />
+      <LandingNav
+        mode={mode}
+        active="landing"
+        savedCount={savedCount}
+        onNavigate={onNavigate}
+        onOpenSavedJobs={onOpenSavedJobs}
+        studentPrefs={studentPrefs}
+        onOpenPreferences={onOpenPreferences}
+      />
       <main>
         <LandingHero totalJobs={jobs.length} onEnterPortal={() => navigate(portalPath)} />
         <CategoryGrid

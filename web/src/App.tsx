@@ -285,6 +285,8 @@ export function App() {
               setSearchQuery={setSearchQuery}
               setFilterCategory={setFilterCategory}
               setSelectedJobId={setSelectedJobId}
+              studentPrefs={activePrefs}
+              onOpenPreferences={() => setIsPreferenceOpen(true)}
             />
           }
         />
@@ -300,6 +302,8 @@ export function App() {
               setSearchQuery={setSearchQuery}
               setFilterCategory={setFilterCategory}
               setSelectedJobId={setSelectedJobId}
+              studentPrefs={activePrefs}
+              onOpenPreferences={() => setIsPreferenceOpen(true)}
             />
           }
         />
@@ -414,6 +418,8 @@ function LandingRoute({
   setSearchQuery,
   setFilterCategory,
   setSelectedJobId,
+  studentPrefs,
+  onOpenPreferences,
 }: {
   mode: 'user' | 'data'
   savedCount: number
@@ -422,6 +428,8 @@ function LandingRoute({
   setSearchQuery: (q: string) => void
   setFilterCategory: (c: string) => void
   setSelectedJobId: (id: string | null) => void
+  studentPrefs: StudentPreferences
+  onOpenPreferences: () => void
 }) {
   const navigate = useNavigate()
   const portalPath = mode === 'data' ? ROUTES.DATA_PORTAL : ROUTES.PORTAL
@@ -444,6 +452,8 @@ function LandingRoute({
         setSelectedJobId(job.job_id)
         navigate(`${portalPath}?job=${encodeURIComponent(job.job_id)}`)
       }}
+      studentPrefs={studentPrefs}
+      onOpenPreferences={onOpenPreferences}
     />
   )
 }
