@@ -1,48 +1,79 @@
-import { useTheme } from '../../lib/theme'
-import { RiSunLine, RiMoonLine } from 'react-icons/ri'
+import { Moon, Sun } from "lucide-react"
+import { cn } from "@/lib/utils"
+import { useTheme } from "@/lib/theme"
 
 interface ThemeToggleProps {
   className?: string
 }
 
-export function ThemeToggle({ className = '' }: ThemeToggleProps) {
-  const { theme, setTheme } = useTheme()
+export function ThemeToggle({ className }: ThemeToggleProps) {
+  const { theme, toggleTheme } = useTheme()
+  const isDark = theme === "dark"
 
   return (
     <div
-      role="group"
-      aria-label="Pilih Tema Tampilan (Light / Dark Mode)"
-      className={`inline-flex items-center rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-100/90 dark:bg-slate-900/90 p-0.5 text-xs font-medium transition-colors ${className}`}
+      className={cn(
+        "flex w-16 h-8 p-1 rounded-full cursor-pointer transition-all duration-300 select-none",
+        isDark 
+          ? "bg-zinc-950 border border-zinc-800" 
+          : "bg-white border border-zinc-200",
+        className
+      )}
+      onClick={toggleTheme}
+      onKeyDown={(event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault()
+          toggleTheme()
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={isDark ? "Ganti ke mode terang" : "Ganti ke mode gelap"}
+      aria-pressed={isDark}
     >
-      <button
-        type="button"
-        onClick={() => setTheme('light')}
-        aria-pressed={theme === 'light'}
-        className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md transition-all duration-150 cursor-pointer ${
-          theme === 'light'
-            ? 'bg-white text-slate-900 font-semibold shadow-2xs border border-slate-200/80'
-            : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
-        }`}
-        title="Mode Terang (Light Mode - Default)"
-      >
-        <RiSunLine className="w-3.5 h-3.5 text-amber-500 shrink-0" aria-hidden="true" />
-        <span className="hidden sm:inline">Light</span>
-      </button>
-
-      <button
-        type="button"
-        onClick={() => setTheme('dark')}
-        aria-pressed={theme === 'dark'}
-        className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md transition-all duration-150 cursor-pointer ${
-          theme === 'dark'
-            ? 'bg-slate-800 text-blue-400 font-semibold shadow-2xs border border-slate-700/80'
-            : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
-        }`}
-        title="Mode Gelap (Dark Mode)"
-      >
-        <RiMoonLine className="w-3.5 h-3.5 text-indigo-400 dark:text-blue-400 shrink-0" aria-hidden="true" />
-        <span className="hidden sm:inline">Dark</span>
-      </button>
+      <div className="flex justify-between items-center w-full">
+        <div
+          className={cn(
+            "flex justify-center items-center w-6 h-6 rounded-full transition-transform duration-300",
+            isDark 
+              ? "transform translate-x-0 bg-zinc-800" 
+              : "transform translate-x-8 bg-gray-200"
+          )}
+        >
+          {isDark ? (
+            <Moon 
+              className="w-4 h-4 text-white" 
+              strokeWidth={1.5}
+            />
+          ) : (
+            <Sun 
+              className="w-4 h-4 text-gray-700" 
+              strokeWidth={1.5}
+            />
+          )}
+        </div>
+        <div
+          className={cn(
+            "flex justify-center items-center w-6 h-6 rounded-full transition-transform duration-300",
+            isDark 
+              ? "bg-transparent" 
+              : "transform -translate-x-8"
+          )}
+        >
+          {isDark ? (
+            <Sun 
+              className="w-4 h-4 text-gray-500" 
+              strokeWidth={1.5}
+            />
+          ) : (
+            <Moon 
+              className="w-4 h-4 text-black" 
+              strokeWidth={1.5}
+            />
+          )}
+        </div>
+      </div>
     </div>
   )
 }
+export default ThemeToggle
