@@ -1,37 +1,45 @@
-import { useState } from 'react'
+import { useState } from "react";
 
 interface CompanyLogoProps {
-  companyName: string
-  logoUrl?: string
-  size?: 'sm' | 'md' | 'lg' | 'xl'
-  className?: string
+  companyName: string;
+  logoUrl?: string;
+  size?: "sm" | "md" | "lg" | "xl";
+  className?: string;
 }
 
 // Shows the original company logo from the source posting when available.
 // Falls back to a neutral empty-state building icon when missing or failing to load.
-export function CompanyLogo({ companyName, logoUrl, size = 'md', className }: CompanyLogoProps) {
-  const [attempt, setAttempt] = useState(0)
-  const [failed, setFailed] = useState(false)
+export function CompanyLogo({
+  companyName,
+  logoUrl,
+  size = "md",
+  className,
+}: CompanyLogoProps) {
+  const [attempt, setAttempt] = useState(0);
+  const [failed, setFailed] = useState(false);
   // 'lg' untuk kartu feed, 'xl' untuk panel detail. Tanpa border & tanpa sudut
   // membulat (kotak penuh) sesuai gaya JobStreet.
   const dims =
-    size === 'sm' ? 'h-8 w-8 text-[11px]'
-    : size === 'md' ? 'h-10 w-10 text-xs'
-    : size === 'lg' ? 'h-12 w-12 text-sm'
-    : 'h-16 w-16 sm:h-20 sm:w-20 text-lg'
+    size === "sm"
+      ? "h-8 w-8 text-[11px]"
+      : size === "md"
+        ? "h-10 w-10 text-xs"
+        : size === "lg"
+          ? "h-12 w-12 text-sm"
+          : "h-16 w-16 sm:h-20 sm:w-20 text-lg";
 
-  const effectiveClasses = className || dims
+  const effectiveClasses = className || dims;
 
   // Fallback: ikon gedung placeholder ala kosong (bukan inisial), gaya netral & lembut.
   if (!logoUrl || failed) {
     return (
       <div
-        className={`${effectiveClasses} bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl flex items-center justify-center shrink-0`}
+        className={`${effectiveClasses} bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl flex items-center justify-center shrink-0`}
         aria-hidden="true"
         title={`Belum ada logo untuk ${companyName}`}
       >
         <svg
-          className="h-1/2 w-1/2 text-slate-400 dark:text-slate-500"
+          className="h-1/2 w-1/2 text-slate-300 dark:text-slate-600"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -44,18 +52,22 @@ export function CompanyLogo({ companyName, logoUrl, size = 'md', className }: Co
           />
         </svg>
       </div>
-    )
+    );
   }
 
   return (
     <img
       // Retry sekali dengan cache-buster sebelum menyerah (CDN kadang transien gagal).
-      src={attempt === 0 ? logoUrl : `${logoUrl}${logoUrl.includes('?') ? '&' : '?'}retry=1`}
+      src={
+        attempt === 0
+          ? logoUrl
+          : `${logoUrl}${logoUrl.includes("?") ? "&" : "?"}retry=1`
+      }
       alt={`Logo ${companyName}`}
       loading="lazy"
       referrerPolicy="no-referrer"
       onError={() => (attempt === 0 ? setAttempt(1) : setFailed(true))}
-      className={`${effectiveClasses} object-contain bg-white rounded-xl p-1.5 border border-slate-100 dark:border-slate-700/60 shadow-2xs shrink-0`}
+      className={`${effectiveClasses} object-contain bg-white dark:bg-slate-800 rounded-lg p-0.5 shrink-0`}
     />
-  )
+  );
 }
