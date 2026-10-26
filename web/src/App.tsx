@@ -573,6 +573,8 @@ function PortalRoute({
         onOpenPreferences={onOpenPreferences}
         isProfileEmpty={isProfileEmpty}
         onFillQuestionnaire={onFillQuestionnaire}
+        savedJobsCount={state.savedJobIds.length}
+        onOpenSavedJobs={onOpenSavedJobs}
       />
 
       <PortalHeader

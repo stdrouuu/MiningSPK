@@ -7,6 +7,8 @@ interface PortalStickyNavProps {
   onOpenPreferences: () => void
   isProfileEmpty?: boolean
   onFillQuestionnaire?: () => void
+  savedJobsCount?: number
+  onOpenSavedJobs?: () => void
 }
 
 /**
@@ -18,6 +20,8 @@ export function PortalStickyNav({
   onOpenPreferences,
   isProfileEmpty = false,
   onFillQuestionnaire,
+  savedJobsCount = 0,
+  onOpenSavedJobs,
 }: PortalStickyNavProps) {
   const [isVisible, setIsVisible] = useState(false)
 
@@ -61,7 +65,7 @@ export function PortalStickyNav({
           </span>
         </div>
 
-        {/* Sisi Kanan: Pill preferensi yang sudah diisi (persis seperti permintaan & screenshot pengguna) */}
+        {/* Sisi Kanan: Pill preferensi yang sudah diisi & Tombol Bookmark */}
         <div className="relative z-10 flex items-center gap-2 shrink-0">
           {isProfileEmpty ? (
             <div className="flex items-center gap-2">
@@ -95,6 +99,23 @@ export function PortalStickyNav({
                 <span>Sesuaikan preferensi</span>
               </button>
             </div>
+          )}
+
+          {/* Bookmark Button */}
+          {onOpenSavedJobs && (
+            <button
+              onClick={onOpenSavedJobs}
+              className="relative p-2 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-colors flex items-center justify-center cursor-pointer shadow-2xs dark:border dark:border-slate-700 shrink-0"
+              title={`Lowongan tersimpan (${savedJobsCount})`}
+              aria-label={`Lowongan tersimpan (${savedJobsCount})`}
+            >
+              <svg className="w-4 h-4 text-[#ED1E79]" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z" />
+              </svg>
+              <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 bg-[#ED1E79] text-white text-[10px] font-bold rounded-full flex items-center justify-center leading-none shadow-2xs">
+                {savedJobsCount}
+              </span>
+            </button>
           )}
         </div>
 
