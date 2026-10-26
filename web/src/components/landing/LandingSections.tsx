@@ -304,7 +304,7 @@ function LogoSide({ logoUrl, name }: { logoUrl?: string; name: string }) {
       loading="lazy"
       referrerPolicy="no-referrer"
       onError={() => setFailed(true)}
-      className="shrink-0 h-16 w-16 sm:h-20 sm:w-20 object-contain"
+      className="shrink-0 h-16 w-16 sm:h-20 sm:w-20 object-contain bg-white rounded-xl p-1.5 border border-slate-100 dark:border-slate-700/60 shadow-2xs"
     />
   )
 }
@@ -408,12 +408,14 @@ export function StatsPartners({ jobs }: { jobs: RankedJobResult[] }) {
         <div className="pt-6 flex flex-wrap items-center justify-center gap-x-10 sm:gap-x-14 gap-y-5">
           {SOURCE_PORTALS.map((portal) => (
             <div key={portal.name} className="flex items-center gap-2.5 opacity-80 hover:opacity-100 transition-opacity">
-              <img
-                src={portal.logo}
-                alt={`${portal.name} logo`}
-                loading="lazy"
-                className="h-6 w-6 object-contain shrink-0"
-              />
+              <div className="h-7 w-7 rounded-lg bg-white p-1 flex items-center justify-center shadow-2xs border border-slate-100 dark:border-slate-700/60 shrink-0">
+                <img
+                  src={portal.logo}
+                  alt={`${portal.name} logo`}
+                  loading="lazy"
+                  className="h-full w-full object-contain"
+                />
+              </div>
               <span className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400">{portal.name}</span>
             </div>
           ))}
