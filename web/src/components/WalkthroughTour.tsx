@@ -3,6 +3,7 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -10,182 +11,143 @@ import {
 import { useLocation, useNavigate } from 'react-router-dom'
 import { ROUTES } from '../lib/routes'
 
-type TourRouteKey = 'landing' | 'portal' | 'matrix' | 'kuesioner'
+type TourSectionKey = 'navigasi' | 'lowongan' | 'perhitungan' | 'kuesioner'
 
 interface TourStep {
   id: string
-  route: TourRouteKey
-  section: string
+  section: TourSectionKey
+  sectionLabel: string
   selector: string
   fallbackSelector?: string
   title: string
   description: string
 }
 
-const TOUR_STEPS: TourStep[] = [
-  // ─── 1. HEADER & NAVIGASI GLOBAL ────────────────────────────────────────────
-  {
-    id: 'header-nav',
-    route: 'landing',
-    section: 'Navigasi',
-    selector: '[data-tour="header-nav"]',
-    fallbackSelector: '[data-tour="header-brand"]',
-    title: 'Menu Navigasi Utama',
-    description:
-      'Buka halaman Beranda, Portal Lowongan, Tabel Perhitungan SPK (SMARTER & ROC), dan Kuesioner Rekomendasi melalui menu navigasi di sini.',
-  },
-  {
-    id: 'header-saved',
-    route: 'landing',
-    section: 'Navigasi',
-    selector: '[data-tour="header-saved"]',
-    title: 'Lowongan Tersimpan (Bookmark)',
-    description:
-      'Simpan lowongan yang menarik perhatianmu. Klik ikon pita ini kapan saja untuk membuka daftar lowongan favorit yang sudah kamu tandai.',
-  },
-  {
-    id: 'header-tools',
-    route: 'landing',
-    section: 'Navigasi',
-    selector: '[data-tour="header-tools"]',
-    title: 'Mode Tema & Tombol Panduan (?)',
-    description:
-      'Ubah tampilan website antara Mode Terang dan Mode Gelap, atau klik ikon "?" di sebelahnya kapan pun kamu ingin membuka kembali panduan tutorial ini.',
-  },
-  {
-    id: 'header-profile',
-    route: 'landing',
-    section: 'Navigasi',
-    selector: '[data-tour="header-profile"]',
-    title: 'Profil & Ringkasan Mahasiswa',
-    description:
-      'Menampilkan nama profilmu (yang otomatis terhubung dari pengisian Kuesioner), avatar personal, serta ringkasan target gaji, lokasi, dan jam kerja mingguan.',
-  },
+const SECTION_STEPS: Record<TourSectionKey, TourStep[]> = {
+  navigasi: [
+    {
+      id: 'header-nav',
+      section: 'navigasi',
+      sectionLabel: 'Navigasi',
+      selector: '[data-tour="header-nav"]',
+      fallbackSelector: '[data-tour="header-brand"]',
+      title: 'Menu Navigasi',
+      description:
+        'Pindah halaman ke Beranda, Lowongan, Perhitungan SPK, atau Kuesioner di sini.',
+    },
+    {
+      id: 'header-saved',
+      section: 'navigasi',
+      sectionLabel: 'Navigasi',
+      selector: '[data-tour="header-saved"]',
+      title: 'Lowongan Tersimpan',
+      description:
+        'Lihat kembali daftar lowongan favorit yang sudah kamu tandai (bookmark).',
+    },
+    {
+      id: 'header-tools',
+      section: 'navigasi',
+      sectionLabel: 'Navigasi',
+      selector: '[data-tour="header-tools"]',
+      title: 'Tema & Panduan',
+      description:
+        'Ganti tampilan mode terang/gelap atau klik "?" untuk membuka panduan ini lagi.',
+    },
+    {
+      id: 'header-profile',
+      section: 'navigasi',
+      sectionLabel: 'Navigasi',
+      selector: '[data-tour="header-profile"]',
+      title: 'Profil Kamu',
+      description:
+        'Cek nama profil, ringkasan target gaji, lokasi, dan batas jam kerjamu di sini.',
+    },
+  ],
+  lowongan: [
+    {
+      id: 'portal-hero',
+      section: 'lowongan',
+      sectionLabel: 'Lowongan',
+      selector: '[data-tour="portal-hero"]',
+      title: 'Ringkasan Preferensi',
+      description:
+        'Menampilkan sapaan nama dan filter aktifmu. Klik "Sesuaikan preferensi" untuk mengubahnya.',
+    },
+    {
+      id: 'portal-filter',
+      section: 'lowongan',
+      sectionLabel: 'Lowongan',
+      selector: '[data-tour="portal-filter"]',
+      title: 'Cari & Filter Lowongan',
+      description:
+        'Cari posisi kerja, saring kategori & moda kerja, atau atur urutan lowongan di sini.',
+    },
+    {
+      id: 'portal-job-list',
+      section: 'lowongan',
+      sectionLabel: 'Lowongan',
+      selector: '[data-tour="portal-job-list"]',
+      title: 'Daftar Lowongan',
+      description:
+        'Pilih lowongan dari daftar yang sudah diurutkan otomatis dari yang paling cocok untukmu.',
+    },
+    {
+      id: 'portal-job-detail',
+      section: 'lowongan',
+      sectionLabel: 'Lowongan',
+      selector: '[data-tour="portal-job-detail"]',
+      title: 'Detail & Skor SPK',
+      description:
+        'Lihat deskripsi pekerjaan, rincian skor 5 kriteria (C1–C5), dan tombol untuk melamar.',
+    },
+  ],
+  perhitungan: [
+    {
+      id: 'matrix-header',
+      section: 'perhitungan',
+      sectionLabel: 'Perhitungan',
+      selector: '[data-tour="matrix-header"]',
+      title: 'Kontrol & Unduh CSV',
+      description:
+        'Atur ulang bobot prioritas ROC atau unduh tabel perhitungan lengkap ke file CSV.',
+    },
+    {
+      id: 'matrix-content',
+      section: 'perhitungan',
+      sectionLabel: 'Perhitungan',
+      selector: '[data-tour="matrix-content"]',
+      title: 'Tabel Matriks SPK',
+      description:
+        'Lihat detail peringkat, skor utilitas, dan matriks awal dari 221 lowongan kerja.',
+    },
+  ],
+  kuesioner: [
+    {
+      id: 'kuesioner-stepper',
+      section: 'kuesioner',
+      sectionLabel: 'Kuesioner',
+      selector: '[data-tour="kuesioner-stepper"]',
+      title: 'Tahapan Kuesioner',
+      description:
+        'Ikuti 3 tahap singkat: isi Profil, urutkan Prioritas kriteria, lalu lihat Hasil rekomendasi.',
+    },
+    {
+      id: 'kuesioner-content',
+      section: 'kuesioner',
+      sectionLabel: 'Kuesioner',
+      selector: '[data-tour="kuesioner-content"]',
+      title: 'Form Pengisian Profil',
+      description:
+        'Jawab pertanyaan satu per satu. Nama yang kamu isi akan langsung tampil di profil website.',
+    },
+  ],
+}
 
-  // ─── 2. HALAMAN BERANDA ─────────────────────────────────────────────────────
-  {
-    id: 'landing-hero',
-    route: 'landing',
-    section: 'Beranda',
-    selector: '[data-tour="landing-hero"]',
-    title: 'Selamat Datang di upmatch',
-    description:
-      'Platform pencari kerja part-time mahasiswa yang mengurutkan 221 lowongan terverifikasi secara objektif menggunakan metode SMARTER & pembobotan ROC. Klik "Lihat Lowongan Sekarang" untuk mulai.',
-  },
-  {
-    id: 'landing-categories',
-    route: 'landing',
-    section: 'Beranda',
-    selector: '[data-tour="landing-categories"]',
-    title: 'Eksplorasi Kategori Bidang',
-    description:
-      'Geser kartu untuk melihat 10 kategori bidang pekerjaan (Tutor, F&B, Design, IT, dll.). Klik salah satu kartu untuk langsung memfilter lowongan pada bidang tersebut.',
-  },
-  {
-    id: 'landing-featured',
-    route: 'landing',
-    section: 'Beranda',
-    selector: '[data-tour="landing-featured"]',
-    title: 'Lowongan Terbaru Pilihan',
-    description:
-      'Cuplikan lowongan part-time lengkap dengan informasi upah per jam, beban jam kerja per minggu, dan moda kerja (Remote, Hybrid, atau Onsite). Klik kartu untuk melihat detailnya.',
-  },
-  {
-    id: 'landing-stats',
-    route: 'landing',
-    section: 'Beranda',
-    selector: '[data-tour="landing-stats"]',
-    title: 'Transparansi Data & Sumber Resmi',
-    description:
-      'Menampilkan statistik 200+ loker terverifikasi dari 4 portal karir terpercaya (Glints, Loker.id, KitaLulus, Kalibrr) yang dihitung dengan 5 kriteria SPK dan 100% transparansi ROC.',
-  },
-  {
-    id: 'landing-cta',
-    route: 'landing',
-    section: 'Beranda',
-    selector: '[data-tour="landing-cta"]',
-    title: 'Pintasan Menuju Portal',
-    description:
-      'Siap mencari pekerjaan yang pas dengan jadwal kuliahmu? Klik tombol di banner ini untuk langsung menuju halaman eksplorasi seluruh lowongan.',
-  },
-
-  // ─── 3. HALAMAN PORTAL LOWONGAN ─────────────────────────────────────────────
-  {
-    id: 'portal-hero',
-    route: 'portal',
-    section: 'Lowongan',
-    selector: '[data-tour="portal-hero"]',
-    title: 'Banner Sapaan & Filter Preferensi',
-    description:
-      'Menyapa nama profilmu secara personal serta menampilkan ringkasan Lokasi, Target Upah/Jam, dan Maks Jam/Minggu. Klik "Sesuaikan preferensi" atau "Mulai kuesioner" untuk mengatur parameter SPK.',
-  },
-  {
-    id: 'portal-filter',
-    route: 'portal',
-    section: 'Lowongan',
-    selector: '[data-tour="portal-filter"]',
-    title: 'Pencarian, Filter & Urutan',
-    description:
-      'Cari nama posisi, perusahaan, atau skill tertentu; saring berdasarkan Kategori Bidang dan Moda Kerja; serta urutkan daftar berdasarkan Kecocokan SPK, Upah Tertinggi, atau Jam Tersedikit.',
-  },
-  {
-    id: 'portal-job-list',
-    route: 'portal',
-    section: 'Lowongan',
-    selector: '[data-tour="portal-job-list"]',
-    title: 'Daftar Lowongan Terurut SPK',
-    description:
-      'Daftar lowongan di sisi kiri diurutkan otomatis berdasarkan skor kecocokan tertinggi dengan profilmu. Klik kartu untuk melihat rinciannya, atau klik ikon pita untuk menyimpan lowongan.',
-  },
-  {
-    id: 'portal-job-detail',
-    route: 'portal',
-    section: 'Lowongan',
-    selector: '[data-tour="portal-job-detail"]',
-    title: 'Detail Lowongan & Skor Kriteria C1–C5',
-    description:
-      'Panel kanan menampilkan deskripsi pekerjaan, keahlian yang dibutuhkan, tombol lamar asli, serta rincian nilai utilitas 5 kriteria SPK (C1 Bidang, C2 Gaji, C3 Lokasi, C4 Jam Kerja, C5 Skill Cosine).',
-  },
-
-  // ─── 4. HALAMAN PERHITUNGAN SPK ─────────────────────────────────────────────
-  {
-    id: 'matrix-header',
-    route: 'matrix',
-    section: 'Perhitungan',
-    selector: '[data-tour="matrix-header"]',
-    title: 'Pusat Komputasi & Ekspor CSV',
-    description:
-      'Halaman ini menampilkan transparansi perhitungan matematis SPK untuk profilmu. Kamu dapat mengubah prioritas ROC secara langsung atau mengunduh tabel lengkap 221 lowongan dalam format CSV.',
-  },
-  {
-    id: 'matrix-content',
-    route: 'matrix',
-    section: 'Perhitungan',
-    selector: '[data-tour="matrix-content"]',
-    title: 'Tabel Matriks Keputusan (3 Mode)',
-    description:
-      'Beralih antara Mode 1 (Peringkat & Skor Akhir U(Ai)), Mode 2 (Nilai Normalisasi Utilitas u1–u5), dan Mode 3 (Matriks Awal Xij sebelum normalisasi). Klik baris tabel untuk membuka detail lowongan.',
-  },
-
-  // ─── 5. HALAMAN KUESIONER ───────────────────────────────────────────────────
-  {
-    id: 'kuesioner-stepper',
-    route: 'kuesioner',
-    section: 'Kuesioner',
-    selector: '[data-tour="kuesioner-stepper"]',
-    title: 'Tahapan Kuesioner 3 Langkah',
-    description:
-      'Alur pengisian terbagi menjadi 3 tahap: (1) Profil untuk data diri & preferensi dasar, (2) Prioritas untuk mengurutkan 5 kriteria SPK, dan (3) Hasil untuk melihat Top 3 rekomendasi & Analisis Sensitivitas.',
-  },
-  {
-    id: 'kuesioner-content',
-    route: 'kuesioner',
-    section: 'Kuesioner',
-    selector: '[data-tour="kuesioner-content"]',
-    title: 'Pengisian Profil & Korelasi Nama',
-    description:
-      'Jawab pertanyaan kuesioner satu per satu di area ini. Nama yang kamu masukkan pada pertanyaan pertama akan langsung tersimpan dan menggantikan label "User baru" di seluruh halaman website!',
-  },
+const SECTION_LIST: Array<{ key: TourSectionKey; label: string }> = [
+  { key: 'navigasi', label: 'Navigasi' },
+  { key: 'lowongan', label: 'Lowongan' },
+  { key: 'perhitungan', label: 'Perhitungan' },
+  { key: 'kuesioner', label: 'Kuesioner' },
 ]
 
 interface WalkthroughContextValue {
@@ -231,22 +193,24 @@ interface SpotlightRect {
   height: number
 }
 
-function resolveRoutePath(routeKey: TourRouteKey, isDataMode: boolean): string {
-  if (routeKey === 'landing') return isDataMode ? ROUTES.DATA : ROUTES.LANDING
-  if (routeKey === 'portal') return isDataMode ? ROUTES.DATA_PORTAL : ROUTES.PORTAL
-  if (routeKey === 'matrix') return isDataMode ? ROUTES.DATA_MATRIX : ROUTES.MATRIX
+function resolveSectionPath(section: TourSectionKey, isDataMode: boolean): string | null {
+  if (section === 'navigasi') return null // Navbar ada di semua halaman
+  if (section === 'lowongan') return isDataMode ? ROUTES.DATA_PORTAL : ROUTES.PORTAL
+  if (section === 'perhitungan') return isDataMode ? ROUTES.DATA_MATRIX : ROUTES.MATRIX
   return ROUTES.KUESIONER
 }
 
-function currentRouteKey(pathname: string): TourRouteKey {
-  if (pathname === ROUTES.PORTAL || pathname === ROUTES.DATA_PORTAL) return 'portal'
-  if (pathname === ROUTES.MATRIX || pathname === ROUTES.DATA_MATRIX) return 'matrix'
+function defaultSectionForPath(pathname: string): TourSectionKey {
+  if (pathname === ROUTES.PORTAL || pathname === ROUTES.DATA_PORTAL) return 'lowongan'
+  if (pathname === ROUTES.MATRIX || pathname === ROUTES.DATA_MATRIX) return 'perhitungan'
   if (pathname === ROUTES.KUESIONER) return 'kuesioner'
-  return 'landing'
+  // Di Beranda tidak ada tutorial konten beranda, langsung tampilkan tutorial Navbar (Navigasi)
+  return 'navigasi'
 }
 
 export function WalkthroughProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState<TourSectionKey>('navigasi')
   const [stepIndex, setStepIndex] = useState(0)
   const [spotlight, setSpotlight] = useState<SpotlightRect | null>(null)
   const [viewport, setViewport] = useState({
@@ -260,15 +224,9 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
     location.pathname === ROUTES.DATA || location.pathname.startsWith('/data/')
 
   const startTour = useCallback(() => {
-    const activeKey = currentRouteKey(location.pathname)
-    // Jika user menekan "?" di halaman selain Beranda, mulai langsung dari
-    // langkah pertama halaman tersebut (untuk Beranda mulai dari step 0: Header + Beranda).
-    if (activeKey === 'landing') {
-      setStepIndex(0)
-    } else {
-      const idx = TOUR_STEPS.findIndex((s) => s.route === activeKey)
-      setStepIndex(idx >= 0 ? idx : 0)
-    }
+    const sec = defaultSectionForPath(location.pathname)
+    setActiveSection(sec)
+    setStepIndex(0)
     setIsOpen(true)
   }, [location.pathname])
 
@@ -276,25 +234,48 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
     setIsOpen(false)
   }, [])
 
-  const step = TOUR_STEPS[stepIndex] ?? TOUR_STEPS[0]
+  const steps = SECTION_STEPS[activeSection]
+  const step = steps[stepIndex] ?? steps[0]
 
-  // Sinkronisasi URL halaman ketika step berpindah lintas halaman
+  // Kunci scroll halaman selama panduan aktif agar posisi highlight tidak bergeser/bug
   useEffect(() => {
-    if (!isOpen || !step) return
-    const activeKey = currentRouteKey(location.pathname)
-    // Langkah 0..3 adalah elemen Header yang ada di semua halaman, namun agar
-    // konsisten jika berada di step beranda/portal/matrix/kuesioner kita pastikan rutenya sesuai
-    if (step.id.startsWith('header-')) {
-      return
-    }
-    if (activeKey !== step.route) {
-      navigate(resolveRoutePath(step.route, isDataMode))
-    }
-  }, [isOpen, step, location.pathname, isDataMode, navigate])
+    if (!isOpen) return
 
-  // Temukan elemen target, scroll ke layar, dan hitung koordinat spotlight
-  const updatePosition = useCallback(
-    (shouldScroll = false) => {
+    const html = document.documentElement
+    const body = document.body
+    const prevHtmlOverflow = html.style.overflow
+    const prevBodyOverflow = body.style.overflow
+
+    html.style.overflow = 'hidden'
+    body.style.overflow = 'hidden'
+
+    const preventScroll = (e: Event) => {
+      e.preventDefault()
+    }
+
+    window.addEventListener('wheel', preventScroll, { passive: false })
+    window.addEventListener('touchmove', preventScroll, { passive: false })
+
+    return () => {
+      html.style.overflow = prevHtmlOverflow
+      body.style.overflow = prevBodyOverflow
+      window.removeEventListener('wheel', preventScroll)
+      window.removeEventListener('touchmove', preventScroll)
+    }
+  }, [isOpen])
+
+  // Pindah halaman otomatis bila pengguna memilih tab bagian lain di dalam popover
+  useEffect(() => {
+    if (!isOpen) return
+    const targetPath = resolveSectionPath(activeSection, isDataMode)
+    if (targetPath && location.pathname !== targetPath) {
+      navigate(targetPath)
+    }
+  }, [isOpen, activeSection, isDataMode, location.pathname, navigate])
+
+  // Posisikan scroll secara instan ke elemen target lalu ukur koordinat spotlight
+  const alignAndMeasure = useCallback(
+    (doScroll: boolean) => {
       if (!isOpen || !step) return
 
       setViewport({
@@ -312,69 +293,62 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
         return
       }
 
-      const rawRect = el.getBoundingClientRect()
-      if (rawRect.width === 0 || rawRect.height === 0) {
+      const initialRect = el.getBoundingClientRect()
+      if (initialRect.width === 0 || initialRect.height === 0) {
         setSpotlight(null)
         return
       }
 
-      if (shouldScroll) {
-        const isHeaderEl = step.id.startsWith('header-')
-        if (isHeaderEl) {
-          window.scrollTo({ top: 0, behavior: 'smooth' })
+      if (doScroll) {
+        const html = document.documentElement
+        const body = document.body
+        html.style.overflow = ''
+        body.style.overflow = ''
+
+        if (activeSection === 'navigasi') {
+          window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior })
         } else {
-          const absoluteTop = window.scrollY + rawRect.top
-          const targetScrollY = Math.max(0, absoluteTop - 110)
-          const OutOfView =
-            rawRect.top < 70 ||
-            rawRect.top > window.innerHeight - 220
-          if (OutOfView) {
-            window.scrollTo({ top: targetScrollY, behavior: 'smooth' })
-          }
+          const pageTop = window.scrollY + initialRect.top
+          const desiredTop = Math.max(0, pageTop - 84)
+          window.scrollTo({ top: desiredTop, behavior: 'instant' as ScrollBehavior })
         }
+
+        html.style.overflow = 'hidden'
+        body.style.overflow = 'hidden'
       }
 
-      // Hitung ulang setelah potensial scroll
       const rect = el.getBoundingClientRect()
       const pad = 8
-      const maxSpotHeight = Math.max(160, window.innerHeight - 250)
-      const clampedHeight = Math.min(rect.height, maxSpotHeight)
+      const maxSpotHeight = Math.max(140, window.innerHeight - 250)
+      const visibleHeight = Math.min(rect.height, maxSpotHeight)
 
-      const top = Math.max(6, rect.top - pad)
+      const top = rect.top - pad
       const left = Math.max(6, rect.left - pad)
       const width = Math.min(window.innerWidth - left - 6, rect.width + pad * 2)
-      const height = clampedHeight + pad * 2
+      const height = visibleHeight + pad * 2
 
       setSpotlight({ top, left, width, height })
     },
-    [isOpen, step]
+    [isOpen, step, activeSection]
   )
 
-  // Saat step berubah atau halaman baru selesai dirender, scroll & ukur posisi
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!isOpen) return
-    // Panggil bertahap agar saat pindah route DOM sempat ter-mount & scroll selesai
-    const t0 = window.setTimeout(() => updatePosition(true), 40)
-    const t1 = window.setTimeout(() => updatePosition(false), 260)
-    const t2 = window.setTimeout(() => updatePosition(false), 520)
+    alignAndMeasure(true)
+    const t1 = window.setTimeout(() => alignAndMeasure(true), 60)
+    const t2 = window.setTimeout(() => alignAndMeasure(false), 200)
     return () => {
-      window.clearTimeout(t0)
       window.clearTimeout(t1)
       window.clearTimeout(t2)
     }
-  }, [isOpen, stepIndex, location.pathname, updatePosition])
+  }, [isOpen, activeSection, stepIndex, location.pathname, alignAndMeasure])
 
-  // Update posisi saat pengguna scroll atau resize jendela
   useEffect(() => {
     if (!isOpen) return
-    const onScrollOrResize = () => updatePosition(false)
-    window.addEventListener('scroll', onScrollOrResize, { passive: true })
-    window.addEventListener('resize', onScrollOrResize, { passive: true })
-    return () => {
-      window.removeEventListener('scroll', onScrollOrResize)
-      window.removeEventListener('resize', onScrollOrResize)
-    }
-  }, [isOpen, updatePosition])
+    const onResize = () => alignAndMeasure(false)
+    window.addEventListener('resize', onResize, { passive: true })
+    return () => window.removeEventListener('resize', onResize)
+  }, [isOpen, alignAndMeasure])
 
   // Navigasi keyboard (Escape, ArrowRight, ArrowLeft)
   useEffect(() => {
@@ -383,23 +357,23 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
       if (e.key === 'Escape') {
         stopTour()
       } else if (e.key === 'ArrowRight') {
-        setStepIndex((i) => (i < TOUR_STEPS.length - 1 ? i + 1 : i))
+        setStepIndex((i) => (i < steps.length - 1 ? i + 1 : i))
       } else if (e.key === 'ArrowLeft') {
         setStepIndex((i) => (i > 0 ? i - 1 : i))
       }
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [isOpen, stopTour])
+  }, [isOpen, steps.length, stopTour])
 
-  // Hitung posisi kartu popover dan panah penunjuk (seperti gambar referensi)
+  // Hitung posisi kartu popover dan panah penunjuk
   const popoverLayout = useMemo(() => {
-    const cardWidth = Math.min(380, viewport.width - 24)
+    const cardWidth = Math.min(360, viewport.width - 24)
     if (!spotlight) {
       return {
         cardWidth,
         left: Math.max(12, (viewport.width - cardWidth) / 2),
-        top: Math.max(80, viewport.height / 2 - 110),
+        top: Math.max(80, viewport.height / 2 - 100),
         placement: 'center' as const,
         arrowLeft: cardWidth / 2,
       }
@@ -411,13 +385,13 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
       viewport.width - cardWidth - 12
     )
     const arrowLeft = Math.min(
-      Math.max(28, targetCenterX - left),
-      cardWidth - 28
+      Math.max(24, targetCenterX - left),
+      cardWidth - 24
     )
 
     const spaceBelow = viewport.height - (spotlight.top + spotlight.height)
     const spaceAbove = spotlight.top
-    const estimatedCardHeight = 225
+    const estimatedCardHeight = 195
 
     if (spaceBelow >= estimatedCardHeight || spaceBelow >= spaceAbove) {
       const top = Math.min(
@@ -443,14 +417,6 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
     }
   }, [spotlight, viewport])
 
-  const sections = useMemo(() => {
-    const seen = new Map<string, number>()
-    TOUR_STEPS.forEach((s, idx) => {
-      if (!seen.has(s.section)) seen.set(s.section, idx)
-    })
-    return Array.from(seen.entries())
-  }, [])
-
   const ctxValue = useMemo(
     () => ({ isOpen, startTour, stopTour }),
     [isOpen, startTour, stopTour]
@@ -462,7 +428,7 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
 
       {isOpen && step && (
         <div
-          className="fixed inset-0 z-[95]"
+          className="fixed inset-0 z-[95] select-none"
           role="dialog"
           aria-modal="true"
           aria-label={`Panduan website: ${step.title}`}
@@ -484,7 +450,7 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
                     rx={16}
                     ry={16}
                     fill="black"
-                    className="transition-all duration-300 ease-out"
+                    className="transition-all duration-200 ease-out"
                   />
                 )}
               </mask>
@@ -499,7 +465,7 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
             />
           </svg>
 
-          {/* Klik area gelap untuk melewati/menutup panduan */}
+          {/* Klik area gelap untuk menutup panduan */}
           <div
             className="fixed inset-0"
             onClick={stopTour}
@@ -515,11 +481,11 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
                 width: spotlight.width,
                 height: spotlight.height,
               }}
-              className="fixed rounded-2xl ring-2 ring-white dark:ring-blue-400 shadow-[0_0_0_4px_rgba(12,82,238,0.35)] pointer-events-none transition-all duration-300 ease-out z-[96]"
+              className="fixed rounded-2xl ring-2 ring-white dark:ring-blue-400 shadow-[0_0_0_4px_rgba(12,82,238,0.35)] pointer-events-none transition-all duration-200 ease-out z-[96]"
             />
           )}
 
-          {/* Kartu Popover Panduan (Gaya Coachmark seperti referensi gambar) */}
+          {/* Kartu Popover Panduan */}
           <div
             style={{
               width: popoverLayout.cardWidth,
@@ -527,7 +493,7 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
               top: popoverLayout.top,
             }}
             onClick={(e) => e.stopPropagation()}
-            className="fixed z-[97] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-2xl p-5 transition-all duration-300 ease-out"
+            className="fixed z-[97] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-2xl p-4 sm:p-5 transition-all duration-200 ease-out"
           >
             {/* Segitiga Panah Penunjuk ke Elemen */}
             {popoverLayout.placement === 'bottom' && (
@@ -545,30 +511,33 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
               />
             )}
 
-            {/* Tab Pintasan Bagian Halaman */}
-            <div className="flex flex-wrap items-center justify-center gap-1 mb-3">
-              {sections.map(([secName, firstIdx]) => {
-                const isActiveSec = step.section === secName
+            {/* Tab Pilihan Bagian (tanpa Beranda, terpisah tiap bagian) */}
+            <div className="flex flex-wrap items-center justify-center gap-1 mb-2.5">
+              {SECTION_LIST.map((sec) => {
+                const isActiveSec = activeSection === sec.key
                 return (
                   <button
-                    key={secName}
+                    key={sec.key}
                     type="button"
-                    onClick={() => setStepIndex(firstIdx)}
-                    className={`px-2 py-0.5 rounded-full text-[10px] font-medium transition-colors cursor-pointer ${
+                    onClick={() => {
+                      setActiveSection(sec.key)
+                      setStepIndex(0)
+                    }}
+                    className={`px-2.5 py-0.5 rounded-full text-[11px] font-medium transition-colors cursor-pointer ${
                       isActiveSec
                         ? 'bg-[#0C52EE]/10 dark:bg-blue-500/20 text-[#0C52EE] dark:text-blue-300 border border-[#0C52EE]/30 dark:border-blue-500/40'
                         : 'text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
                     }`}
                   >
-                    {secName}
+                    {sec.label}
                   </button>
                 )
               })}
             </div>
 
-            {/* Judul & Penjelasan Spesifik */}
-            <div className="text-center space-y-1.5 px-1">
-              <h3 className="text-[15px] sm:text-base font-semibold text-[#0C52EE] dark:text-blue-400 leading-snug">
+            {/* Judul & Penjelasan Singkat */}
+            <div className="text-center space-y-1 px-1">
+              <h3 className="text-[15px] font-semibold text-[#0C52EE] dark:text-blue-400 leading-snug">
                 {step.title}
               </h3>
               <p className="text-xs sm:text-[13px] text-slate-600 dark:text-slate-300 font-normal leading-relaxed">
@@ -576,8 +545,8 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
               </p>
             </div>
 
-            {/* Tombol Navigasi Bawah: Lewati | Kembali | Lanjut (X dari N) */}
-            <div className="flex items-center justify-between gap-2 pt-4 mt-3 border-t border-slate-100 dark:border-slate-800/80">
+            {/* Tombol Navigasi Bawah: Lewati | Kembali | Lanjut (X dari N bagian ini) */}
+            <div className="flex items-center justify-between gap-2 pt-3.5 mt-3 border-t border-slate-100 dark:border-slate-800/80">
               <button
                 type="button"
                 onClick={stopTour}
@@ -597,21 +566,21 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
                   </button>
                 )}
 
-                {stepIndex < TOUR_STEPS.length - 1 ? (
+                {stepIndex < steps.length - 1 ? (
                   <button
                     type="button"
-                    onClick={() => setStepIndex((i) => Math.min(TOUR_STEPS.length - 1, i + 1))}
-                    className="px-4 py-2 rounded-full bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500 text-white text-xs sm:text-[13px] font-semibold shadow-xs transition-all cursor-pointer whitespace-nowrap"
+                    onClick={() => setStepIndex((i) => Math.min(steps.length - 1, i + 1))}
+                    className="px-4 py-1.5 rounded-full bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500 text-white text-xs sm:text-[13px] font-semibold shadow-xs transition-all cursor-pointer whitespace-nowrap"
                   >
-                    Lanjut ({stepIndex + 1} dari {TOUR_STEPS.length})
+                    Lanjut ({stepIndex + 1} dari {steps.length})
                   </button>
                 ) : (
                   <button
                     type="button"
                     onClick={stopTour}
-                    className="px-4 py-2 rounded-full bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500 text-white text-xs sm:text-[13px] font-semibold shadow-xs transition-all cursor-pointer whitespace-nowrap"
+                    className="px-4 py-1.5 rounded-full bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500 text-white text-xs sm:text-[13px] font-semibold shadow-xs transition-all cursor-pointer whitespace-nowrap"
                   >
-                    Selesai ({TOUR_STEPS.length} dari {TOUR_STEPS.length})
+                    Selesai ({steps.length} dari {steps.length})
                   </button>
                 )}
               </div>
