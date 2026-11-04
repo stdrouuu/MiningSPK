@@ -6,6 +6,7 @@ import { ROUTES } from '../lib/routes'
 import { avatarForPrefs } from '../lib/avatar'
 import { navButtonClass, navIndicatorClass } from '../lib/navStyle'
 import { ThemeToggle } from './ui/ThemeToggle'
+import { GuideTriggerButton } from './WalkthroughTour'
 
 interface PortalHeaderProps {
   /** Mode halaman: user baru (profil kosong) atau demo data responden. */
@@ -56,8 +57,8 @@ export function PortalHeader({
   const landingPath = mode === 'data' ? ROUTES.DATA : ROUTES.LANDING
   const portalPath = mode === 'data' ? ROUTES.DATA_PORTAL : ROUTES.PORTAL
   const matrixPath = mode === 'data' ? ROUTES.DATA_MATRIX : ROUTES.MATRIX
-  // Profil user baru masih kosong -> tombol profil mengarah isi kuesioner.
-  const isProfileEmpty = mode === 'user' && !studentPrefs.name.trim()
+  // Profil user baru belum selesai kuesioner -> tombol profil mengarah isi kuesioner.
+  const isProfileEmpty = mode === 'user' && !studentPrefs.profileComplete
 
   const renderNavButton = (label: string, active: boolean, onClick: () => void) => (
     <button
@@ -75,7 +76,11 @@ export function PortalHeader({
     <header className="w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-8">
-          <button onClick={() => navigate(landingPath)} className="flex items-center group focus:outline-none text-left">
+          <button
+            data-tour="header-brand"
+            onClick={() => navigate(landingPath)}
+            className="flex items-center group focus:outline-none text-left"
+          >
             <span className="text-2xl font-medium tracking-tighter text-slate-900 dark:text-white">upmatch</span>
             {mode === 'data' && (
               <span className="ml-2 px-1.5 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 text-[10px] font-medium text-amber-800 dark:text-amber-300">
@@ -84,7 +89,7 @@ export function PortalHeader({
             )}
           </button>
 
-          <nav className="hidden md:flex items-center gap-2 text-sm sm:text-base font-normal">
+          <nav data-tour="header-nav" className="hidden md:flex items-center gap-2 text-sm sm:text-base font-normal">
             {renderNavButton('Beranda', false, () => navigate(landingPath))}
             {renderNavButton('Lowongan', activeView === 'jobs', () => navigate(portalPath))}
             {renderNavButton('Perhitungan', activeView === 'matrix', () => navigate(matrixPath))}
@@ -94,6 +99,7 @@ export function PortalHeader({
 
         <div className="flex items-center gap-3">
           <button
+            data-tour="header-saved"
             onClick={onOpenSavedJobs}
             className="relative p-2 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-400 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800/80 text-slate-700 dark:text-slate-200 transition-colors flex items-center justify-center cursor-pointer"
             title={`Lowongan tersimpan (${savedJobsCount})`}
@@ -107,10 +113,13 @@ export function PortalHeader({
             </span>
           </button>
 
-          {/* Theme Toggle (Light & Dark) */}
-          <ThemeToggle />
+          {/* Theme Toggle (Light & Dark) + Panduan ("?") di samping kanannya */}
+          <div data-tour="header-tools" className="flex items-center gap-2">
+            <ThemeToggle />
+            <GuideTriggerButton />
+          </div>
 
-          <div className="relative" ref={profileRef}>
+          <div className="relative" ref={profileRef} data-tour="header-profile">
             <button
               onClick={() => setShowProfileMenu((v) => !v)}
               aria-haspopup="menu"
@@ -140,8 +149,14 @@ export function PortalHeader({
                   />
                   <div className="flex-1 min-w-0">
                     <div className="font-medium text-sm text-slate-900 dark:text-slate-100 truncate">{studentPrefs.name.trim() || 'User baru'}</div>
-                    <div className="text-[11px] text-[#0C52EE] font-medium mt-0.5">
-                      {studentPrefs.nim.trim() ? `NIM: ${studentPrefs.nim}` : 'Belum isi kuesioner'}
+                    <div className="text-[11px] text-[#0C52EE] dark:text-blue-400 font-medium mt-0.5">
+                      {studentPrefs.nim.trim()
+                        ? `NIM: ${studentPrefs.nim}`
+                        : studentPrefs.profileComplete
+                          ? 'Sudah isi kuesioner'
+                          : studentPrefs.name.trim()
+                            ? 'Sedang isi kuesioner'
+                            : 'Belum isi kuesioner'}
                     </div>
                   </div>
                 </div>
@@ -169,7 +184,11 @@ export function PortalHeader({
                   }}
                   className="w-full mt-1 bg-[#0C52EE] hover:bg-[#0942c4] text-white text-xs font-medium py-2 px-3 rounded-lg transition-colors text-center cursor-pointer"
                 >
-                  {isProfileEmpty ? 'Mulai kuesioner' : 'Ubah preferensi saya'}
+                  {isProfileEmpty
+                    ? studentPrefs.name.trim()
+                      ? 'Lanjutkan kuesioner'
+                      : 'Mulai kuesioner'
+                    : 'Ubah preferensi saya'}
                 </button>
               </div>
             )}

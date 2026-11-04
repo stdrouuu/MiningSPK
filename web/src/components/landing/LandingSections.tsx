@@ -262,7 +262,7 @@ export function CategoryGrid({
     };
   }, []);
   return (
-    <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section data-tour="landing-categories" className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <div className="space-y-6">
         <div className="text-center space-y-1.5 max-w-2xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-medium tracking-tight text-slate-900 dark:text-white">
@@ -470,7 +470,7 @@ export function FeaturedJobs({
 }) {
   const featured = jobs.slice(0, 9);
   return (
-    <section className="py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-100 dark:border-slate-800">
+    <section data-tour="landing-featured" className="py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-100 dark:border-slate-800">
       <div className="space-y-8">
         <div className="text-center space-y-1.5 max-w-2xl mx-auto">
           <h2 className="text-2xl sm:text-3xl font-medium tracking-tight text-slate-900 dark:text-white">
@@ -537,7 +537,7 @@ export function FeaturedJobs({
 
 export function StatsPartners({ jobs }: { jobs: RankedJobResult[] }) {
   return (
-    <section className="py-14 bg-white dark:bg-slate-900/60 border-y border-slate-200 dark:border-slate-800 transition-colors">
+    <section data-tour="landing-stats" className="py-14 bg-white dark:bg-slate-900/60 border-y border-slate-200 dark:border-slate-800 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
         <div className="max-w-2xl mx-auto space-y-1.5">
           <h2 className="text-2xl sm:text-3xl font-medium text-slate-900 dark:text-white tracking-tight">
@@ -607,7 +607,7 @@ export function BlueBanner({
 }) {
   return (
     <section className="py-14 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <div className="w-full rounded-2xl bg-[#0C52EE] p-8 sm:p-12 text-center text-white space-y-4 shadow-sm">
+      <div data-tour="landing-cta" className="w-full rounded-2xl bg-[#0C52EE] p-8 sm:p-12 text-center text-white space-y-4 shadow-sm">
         <h2 className="text-2xl sm:text-3xl font-medium tracking-tight">
           Start Looking For The Best Part-Time
         </h2>
