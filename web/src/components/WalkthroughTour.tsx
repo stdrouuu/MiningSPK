@@ -5,6 +5,7 @@ import {
   useEffect,
   useLayoutEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from 'react'
@@ -22,6 +23,13 @@ interface TourStep {
   title: string
   description: string
 }
+
+const SECTION_ORDER: TourSectionKey[] = [
+  'navigasi',
+  'lowongan',
+  'perhitungan',
+  'kuesioner',
+]
 
 const SECTION_STEPS: Record<TourSectionKey, TourStep[]> = {
   navigasi: [
@@ -143,13 +151,6 @@ const SECTION_STEPS: Record<TourSectionKey, TourStep[]> = {
   ],
 }
 
-const SECTION_LIST: Array<{ key: TourSectionKey; label: string }> = [
-  { key: 'navigasi', label: 'Navigasi' },
-  { key: 'lowongan', label: 'Lowongan' },
-  { key: 'perhitungan', label: 'Perhitungan' },
-  { key: 'kuesioner', label: 'Kuesioner' },
-]
-
 interface WalkthroughContextValue {
   isOpen: boolean
   startTour: () => void
@@ -204,19 +205,36 @@ function defaultSectionForPath(pathname: string): TourSectionKey {
   if (pathname === ROUTES.PORTAL || pathname === ROUTES.DATA_PORTAL) return 'lowongan'
   if (pathname === ROUTES.MATRIX || pathname === ROUTES.DATA_MATRIX) return 'perhitungan'
   if (pathname === ROUTES.KUESIONER) return 'kuesioner'
-  // Di Beranda tidak ada tutorial konten beranda, langsung tampilkan tutorial Navbar (Navigasi)
+  // Di Beranda hanya menampilkan tutorial Navbar (Navigasi)
   return 'navigasi'
+}
+
+function getNextSection(current: TourSectionKey): TourSectionKey | null {
+  const idx = SECTION_ORDER.indexOf(current)
+  if (idx === -1 || idx >= SECTION_ORDER.length - 1) return null
+  return SECTION_ORDER[idx + 1]
+}
+
+function clearAnyBodyScrollLock() {
+  if (typeof document === 'undefined') return
+  document.documentElement.style.removeProperty('overflow')
+  document.body.style.removeProperty('overflow')
 }
 
 export function WalkthroughProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false)
   const [activeSection, setActiveSection] = useState<TourSectionKey>('navigasi')
   const [stepIndex, setStepIndex] = useState(0)
+  const [showContinuePrompt, setShowContinuePrompt] = useState(false)
   const [spotlight, setSpotlight] = useState<SpotlightRect | null>(null)
   const [viewport, setViewport] = useState({
     width: typeof window !== 'undefined' ? window.innerWidth : 1280,
     height: typeof window !== 'undefined' ? window.innerHeight : 800,
   })
+
+  // Menyimpan posisi scroll yang dikunci selama tutorial aktif tanpa mengubah CSS overflow html/body
+  const lockedScrollYRef = useRef(0)
+  const isProgrammaticScrollRef = useRef(false)
 
   const location = useLocation()
   const navigate = useNavigate()
@@ -224,59 +242,78 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
     location.pathname === ROUTES.DATA || location.pathname.startsWith('/data/')
 
   const startTour = useCallback(() => {
+    clearAnyBodyScrollLock()
+    lockedScrollYRef.current = window.scrollY
     const sec = defaultSectionForPath(location.pathname)
     setActiveSection(sec)
     setStepIndex(0)
+    setShowContinuePrompt(false)
     setIsOpen(true)
   }, [location.pathname])
 
   const stopTour = useCallback(() => {
+    clearAnyBodyScrollLock()
+    setShowContinuePrompt(false)
     setIsOpen(false)
   }, [])
 
   const steps = SECTION_STEPS[activeSection]
   const step = steps[stepIndex] ?? steps[0]
+  const nextSection = getNextSection(activeSection)
 
-  // Kunci scroll halaman selama panduan aktif agar posisi highlight tidak bergeser/bug
+  // Pastikan tidak pernah ada inline overflow:hidden yang tertinggal di html/body.
+  // Selama tutorial aktif (isOpen === true), tahan scroll menggunakan event listener
+  // sehingga begitu user klik "Selesai" atau "Lewati", halaman langsung 100% bisa di-scroll.
   useEffect(() => {
+    clearAnyBodyScrollLock()
+
     if (!isOpen) return
 
-    const html = document.documentElement
-    const body = document.body
-    const prevHtmlOverflow = html.style.overflow
-    const prevBodyOverflow = body.style.overflow
+    lockedScrollYRef.current = window.scrollY
 
-    html.style.overflow = 'hidden'
-    body.style.overflow = 'hidden'
-
-    const preventScroll = (e: Event) => {
+    const preventWheelAndTouch = (e: Event) => {
       e.preventDefault()
     }
 
-    window.addEventListener('wheel', preventScroll, { passive: false })
-    window.addEventListener('touchmove', preventScroll, { passive: false })
+    const handleWindowScroll = () => {
+      if (isProgrammaticScrollRef.current) return
+      if (Math.abs(window.scrollY - lockedScrollYRef.current) > 1) {
+        isProgrammaticScrollRef.current = true
+        window.scrollTo({
+          top: lockedScrollYRef.current,
+          behavior: 'instant' as ScrollBehavior,
+        })
+        window.requestAnimationFrame(() => {
+          isProgrammaticScrollRef.current = false
+        })
+      }
+    }
+
+    window.addEventListener('wheel', preventWheelAndTouch, { passive: false })
+    window.addEventListener('touchmove', preventWheelAndTouch, { passive: false })
+    window.addEventListener('scroll', handleWindowScroll, { passive: true })
 
     return () => {
-      html.style.overflow = prevHtmlOverflow
-      body.style.overflow = prevBodyOverflow
-      window.removeEventListener('wheel', preventScroll)
-      window.removeEventListener('touchmove', preventScroll)
+      clearAnyBodyScrollLock()
+      window.removeEventListener('wheel', preventWheelAndTouch)
+      window.removeEventListener('touchmove', preventWheelAndTouch)
+      window.removeEventListener('scroll', handleWindowScroll)
     }
   }, [isOpen])
 
-  // Pindah halaman otomatis bila pengguna memilih tab bagian lain di dalam popover
+  // Pindah halaman otomatis saat masuk ke bagian panduan berikutnya
   useEffect(() => {
-    if (!isOpen) return
+    if (!isOpen || showContinuePrompt) return
     const targetPath = resolveSectionPath(activeSection, isDataMode)
     if (targetPath && location.pathname !== targetPath) {
       navigate(targetPath)
     }
-  }, [isOpen, activeSection, isDataMode, location.pathname, navigate])
+  }, [isOpen, showContinuePrompt, activeSection, isDataMode, location.pathname, navigate])
 
   // Posisikan scroll secara instan ke elemen target lalu ukur koordinat spotlight
   const alignAndMeasure = useCallback(
     (doScroll: boolean) => {
-      if (!isOpen || !step) return
+      if (!isOpen || showContinuePrompt || !step) return
 
       setViewport({
         width: window.innerWidth,
@@ -300,11 +337,7 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
       }
 
       if (doScroll) {
-        const html = document.documentElement
-        const body = document.body
-        html.style.overflow = ''
-        body.style.overflow = ''
-
+        isProgrammaticScrollRef.current = true
         if (activeSection === 'navigasi') {
           window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior })
         } else {
@@ -312,9 +345,10 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
           const desiredTop = Math.max(0, pageTop - 84)
           window.scrollTo({ top: desiredTop, behavior: 'instant' as ScrollBehavior })
         }
-
-        html.style.overflow = 'hidden'
-        body.style.overflow = 'hidden'
+        lockedScrollYRef.current = window.scrollY
+        window.requestAnimationFrame(() => {
+          isProgrammaticScrollRef.current = false
+        })
       }
 
       const rect = el.getBoundingClientRect()
@@ -329,11 +363,11 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
 
       setSpotlight({ top, left, width, height })
     },
-    [isOpen, step, activeSection]
+    [isOpen, showContinuePrompt, step, activeSection]
   )
 
   useLayoutEffect(() => {
-    if (!isOpen) return
+    if (!isOpen || showContinuePrompt) return
     alignAndMeasure(true)
     const t1 = window.setTimeout(() => alignAndMeasure(true), 60)
     const t2 = window.setTimeout(() => alignAndMeasure(false), 200)
@@ -341,39 +375,77 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
       window.clearTimeout(t1)
       window.clearTimeout(t2)
     }
-  }, [isOpen, activeSection, stepIndex, location.pathname, alignAndMeasure])
+  }, [isOpen, showContinuePrompt, activeSection, stepIndex, location.pathname, alignAndMeasure])
 
   useEffect(() => {
-    if (!isOpen) return
+    if (!isOpen || showContinuePrompt) return
     const onResize = () => alignAndMeasure(false)
     window.addEventListener('resize', onResize, { passive: true })
     return () => window.removeEventListener('resize', onResize)
-  }, [isOpen, alignAndMeasure])
+  }, [isOpen, showContinuePrompt, alignAndMeasure])
 
-  // Navigasi keyboard (Escape, ArrowRight, ArrowLeft)
+  const handleFinishSection = useCallback(() => {
+    if (nextSection) {
+      setShowContinuePrompt(true)
+    } else {
+      stopTour()
+    }
+  }, [nextSection, stopTour])
+
+  const handleContinueToNextSection = useCallback(() => {
+    if (!nextSection) {
+      stopTour()
+      return
+    }
+    const targetPath = resolveSectionPath(nextSection, isDataMode)
+    setShowContinuePrompt(false)
+    setActiveSection(nextSection)
+    setStepIndex(0)
+    if (targetPath && location.pathname !== targetPath) {
+      navigate(targetPath)
+    }
+  }, [nextSection, isDataMode, location.pathname, navigate, stopTour])
+
+  // Navigasi keyboard (Escape, ArrowRight, ArrowLeft, serta blokir tombol scroll halaman saat tutorial aktif)
   useEffect(() => {
     if (!isOpen) return
+    const scrollKeys = new Set([
+      ' ',
+      'PageUp',
+      'PageDown',
+      'End',
+      'Home',
+      'ArrowUp',
+      'ArrowDown',
+    ])
     const onKeyDown = (e: KeyboardEvent) => {
+      if (scrollKeys.has(e.key)) {
+        e.preventDefault()
+      }
       if (e.key === 'Escape') {
         stopTour()
-      } else if (e.key === 'ArrowRight') {
-        setStepIndex((i) => (i < steps.length - 1 ? i + 1 : i))
-      } else if (e.key === 'ArrowLeft') {
+      } else if (!showContinuePrompt && e.key === 'ArrowRight') {
+        if (stepIndex < steps.length - 1) {
+          setStepIndex((i) => i + 1)
+        } else {
+          handleFinishSection()
+        }
+      } else if (!showContinuePrompt && e.key === 'ArrowLeft') {
         setStepIndex((i) => (i > 0 ? i - 1 : i))
       }
     }
     window.addEventListener('keydown', onKeyDown)
     return () => window.removeEventListener('keydown', onKeyDown)
-  }, [isOpen, steps.length, stopTour])
+  }, [isOpen, showContinuePrompt, stepIndex, steps.length, stopTour, handleFinishSection])
 
   // Hitung posisi kartu popover dan panah penunjuk
   const popoverLayout = useMemo(() => {
-    const cardWidth = Math.min(360, viewport.width - 24)
+    const cardWidth = Math.min(350, viewport.width - 24)
     if (!spotlight) {
       return {
         cardWidth,
         left: Math.max(12, (viewport.width - cardWidth) / 2),
-        top: Math.max(80, viewport.height / 2 - 100),
+        top: Math.max(80, viewport.height / 2 - 90),
         placement: 'center' as const,
         arrowLeft: cardWidth / 2,
       }
@@ -391,7 +463,7 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
 
     const spaceBelow = viewport.height - (spotlight.top + spotlight.height)
     const spaceAbove = spotlight.top
-    const estimatedCardHeight = 195
+    const estimatedCardHeight = 165
 
     if (spaceBelow >= estimatedCardHeight || spaceBelow >= spaceAbove) {
       const top = Math.min(
@@ -422,6 +494,8 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
     [isOpen, startTour, stopTour]
   )
 
+  const isLastStepInSection = stepIndex === steps.length - 1
+
   return (
     <WalkthroughContext.Provider value={ctxValue}>
       {children}
@@ -431,7 +505,11 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
           className="fixed inset-0 z-[95] select-none"
           role="dialog"
           aria-modal="true"
-          aria-label={`Panduan website: ${step.title}`}
+          aria-label={
+            showContinuePrompt
+              ? 'Lanjutkan panduan ke halaman berikutnya'
+              : `Panduan website: ${step.title}`
+          }
         >
           {/* SVG Backdrop dengan lubang Spotlight (Cutout) */}
           <svg
@@ -441,7 +519,7 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
             <defs>
               <mask id="upmatch-tour-spotlight-mask">
                 <rect x="0" y="0" width="100%" height="100%" fill="white" />
-                {spotlight && (
+                {!showContinuePrompt && spotlight && (
                   <rect
                     x={spotlight.left}
                     y={spotlight.top}
@@ -472,120 +550,151 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
             aria-hidden="true"
           />
 
-          {/* Bingkai Highlight di sekeliling elemen aktif */}
-          {spotlight && (
-            <div
-              style={{
-                top: spotlight.top,
-                left: spotlight.left,
-                width: spotlight.width,
-                height: spotlight.height,
-              }}
-              className="fixed rounded-2xl ring-2 ring-white dark:ring-blue-400 shadow-[0_0_0_4px_rgba(12,82,238,0.35)] pointer-events-none transition-all duration-200 ease-out z-[96]"
-            />
-          )}
+          {/* Mode 1: Langkah Walkthrough aktif */}
+          {!showContinuePrompt && (
+            <>
+              {/* Bingkai Highlight di sekeliling elemen aktif */}
+              {spotlight && (
+                <div
+                  style={{
+                    top: spotlight.top,
+                    left: spotlight.left,
+                    width: spotlight.width,
+                    height: spotlight.height,
+                  }}
+                  className="fixed rounded-2xl ring-2 ring-white dark:ring-blue-400 shadow-[0_0_0_4px_rgba(12,82,238,0.35)] pointer-events-none transition-all duration-200 ease-out z-[96]"
+                />
+              )}
 
-          {/* Kartu Popover Panduan */}
-          <div
-            style={{
-              width: popoverLayout.cardWidth,
-              left: popoverLayout.left,
-              top: popoverLayout.top,
-            }}
-            onClick={(e) => e.stopPropagation()}
-            className="fixed z-[97] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-2xl p-4 sm:p-5 transition-all duration-200 ease-out"
-          >
-            {/* Segitiga Panah Penunjuk ke Elemen */}
-            {popoverLayout.placement === 'bottom' && (
+              {/* Kartu Popover Panduan */}
               <div
-                style={{ left: popoverLayout.arrowLeft - 8 }}
-                className="absolute -top-2 w-4 h-4 bg-white dark:bg-slate-900 border-l border-t border-slate-100 dark:border-slate-800 rotate-45 pointer-events-none"
-                aria-hidden="true"
-              />
-            )}
-            {popoverLayout.placement === 'top' && (
-              <div
-                style={{ left: popoverLayout.arrowLeft - 8 }}
-                className="absolute -bottom-2 w-4 h-4 bg-white dark:bg-slate-900 border-r border-b border-slate-100 dark:border-slate-800 rotate-45 pointer-events-none"
-                aria-hidden="true"
-              />
-            )}
-
-            {/* Tab Pilihan Bagian (tanpa Beranda, terpisah tiap bagian) */}
-            <div className="flex flex-wrap items-center justify-center gap-1 mb-2.5">
-              {SECTION_LIST.map((sec) => {
-                const isActiveSec = activeSection === sec.key
-                return (
-                  <button
-                    key={sec.key}
-                    type="button"
-                    onClick={() => {
-                      setActiveSection(sec.key)
-                      setStepIndex(0)
-                    }}
-                    className={`px-2.5 py-0.5 rounded-full text-[11px] font-medium transition-colors cursor-pointer ${
-                      isActiveSec
-                        ? 'bg-[#0C52EE]/10 dark:bg-blue-500/20 text-[#0C52EE] dark:text-blue-300 border border-[#0C52EE]/30 dark:border-blue-500/40'
-                        : 'text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
-                    }`}
-                  >
-                    {sec.label}
-                  </button>
-                )
-              })}
-            </div>
-
-            {/* Judul & Penjelasan Singkat */}
-            <div className="text-center space-y-1 px-1">
-              <h3 className="text-[15px] font-semibold text-[#0C52EE] dark:text-blue-400 leading-snug">
-                {step.title}
-              </h3>
-              <p className="text-xs sm:text-[13px] text-slate-600 dark:text-slate-300 font-normal leading-relaxed">
-                {step.description}
-              </p>
-            </div>
-
-            {/* Tombol Navigasi Bawah: Lewati | Kembali | Lanjut (X dari N bagian ini) */}
-            <div className="flex items-center justify-between gap-2 pt-3.5 mt-3 border-t border-slate-100 dark:border-slate-800/80">
-              <button
-                type="button"
-                onClick={stopTour}
-                className="text-xs sm:text-[13px] font-medium text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 transition-colors cursor-pointer px-1 py-1"
+                style={{
+                  width: popoverLayout.cardWidth,
+                  left: popoverLayout.left,
+                  top: popoverLayout.top,
+                }}
+                onClick={(e) => e.stopPropagation()}
+                className="fixed z-[97] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-2xl p-4 sm:p-5 transition-all duration-200 ease-out"
               >
-                Lewati
-              </button>
-
-              <div className="flex items-center gap-3">
-                {stepIndex > 0 && (
-                  <button
-                    type="button"
-                    onClick={() => setStepIndex((i) => Math.max(0, i - 1))}
-                    className="text-xs sm:text-[13px] font-medium text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white transition-colors cursor-pointer px-2 py-1"
-                  >
-                    Kembali
-                  </button>
+                {/* Segitiga Panah Penunjuk ke Elemen */}
+                {popoverLayout.placement === 'bottom' && (
+                  <div
+                    style={{ left: popoverLayout.arrowLeft - 8 }}
+                    className="absolute -top-2 w-4 h-4 bg-white dark:bg-slate-900 border-l border-t border-slate-100 dark:border-slate-800 rotate-45 pointer-events-none"
+                    aria-hidden="true"
+                  />
+                )}
+                {popoverLayout.placement === 'top' && (
+                  <div
+                    style={{ left: popoverLayout.arrowLeft - 8 }}
+                    className="absolute -bottom-2 w-4 h-4 bg-white dark:bg-slate-900 border-r border-b border-slate-100 dark:border-slate-800 rotate-45 pointer-events-none"
+                    aria-hidden="true"
+                  />
                 )}
 
-                {stepIndex < steps.length - 1 ? (
-                  <button
-                    type="button"
-                    onClick={() => setStepIndex((i) => Math.min(steps.length - 1, i + 1))}
-                    className="px-4 py-1.5 rounded-full bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500 text-white text-xs sm:text-[13px] font-semibold shadow-xs transition-all cursor-pointer whitespace-nowrap"
-                  >
-                    Lanjut ({stepIndex + 1} dari {steps.length})
-                  </button>
+                {/* Judul & Penjelasan Singkat */}
+                <div className="text-center space-y-1.5 px-1">
+                  <h3 className="text-[15px] font-semibold text-[#0C52EE] dark:text-blue-400 leading-snug">
+                    {step.title}
+                  </h3>
+                  <p className="text-xs sm:text-[13px] text-slate-600 dark:text-slate-300 font-normal leading-relaxed">
+                    {step.description}
+                  </p>
+                </div>
+
+                {/* Tombol Navigasi Bawah */}
+                {isLastStepInSection ? (
+                  /* Langkah terakhir pada bagian ini: hanya "Kembali" dan "Selesai" (sesuai Gambar 1) */
+                  <div className="flex items-center justify-end gap-3 pt-4 mt-2">
+                    {stepIndex > 0 && (
+                      <button
+                        type="button"
+                        onClick={() => setStepIndex((i) => Math.max(0, i - 1))}
+                        className="text-xs sm:text-[13px] font-medium text-slate-700 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white transition-colors cursor-pointer px-2 py-1"
+                      >
+                        Kembali
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      onClick={handleFinishSection}
+                      className="px-5 py-1.5 rounded-full bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500 text-white text-xs sm:text-[13px] font-semibold shadow-xs transition-all cursor-pointer whitespace-nowrap"
+                    >
+                      Selesai
+                    </button>
+                  </div>
                 ) : (
-                  <button
-                    type="button"
-                    onClick={stopTour}
-                    className="px-4 py-1.5 rounded-full bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500 text-white text-xs sm:text-[13px] font-semibold shadow-xs transition-all cursor-pointer whitespace-nowrap"
-                  >
-                    Selesai ({steps.length} dari {steps.length})
-                  </button>
+                  /* Langkah 1..(N-1): "Lewati", "Kembali" (jika > 0), dan "Lanjut (X dari N)" */
+                  <div className="flex items-center justify-between gap-2 pt-4 mt-2">
+                    <button
+                      type="button"
+                      onClick={stopTour}
+                      className="text-xs sm:text-[13px] font-medium text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200 transition-colors cursor-pointer px-1 py-1"
+                    >
+                      Lewati
+                    </button>
+
+                    <div className="flex items-center gap-3">
+                      {stepIndex > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => setStepIndex((i) => Math.max(0, i - 1))}
+                          className="text-xs sm:text-[13px] font-medium text-slate-700 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white transition-colors cursor-pointer px-2 py-1"
+                        >
+                          Kembali
+                        </button>
+                      )}
+
+                      <button
+                        type="button"
+                        onClick={() => setStepIndex((i) => Math.min(steps.length - 1, i + 1))}
+                        className="px-4 py-1.5 rounded-full bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500 text-white text-xs sm:text-[13px] font-semibold shadow-xs transition-all cursor-pointer whitespace-nowrap"
+                      >
+                        Lanjut ({stepIndex + 1} dari {steps.length})
+                      </button>
+                    </div>
+                  </div>
                 )}
               </div>
+            </>
+          )}
+
+          {/* Mode 2: Dialog Konfirmasi "Lanjutkan Panduan?" (sesuai Gambar 2) */}
+          {showContinuePrompt && (
+            <div
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                width: Math.min(340, viewport.width - 24),
+              }}
+              className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[97] bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl shadow-2xl p-5 transition-all duration-200 ease-out"
+            >
+              <div className="text-center space-y-1.5 px-1">
+                <h3 className="text-[15px] font-semibold text-[#0C52EE] dark:text-blue-400 leading-snug">
+                  Lanjutkan Panduan?
+                </h3>
+                <p className="text-xs sm:text-[13px] text-slate-600 dark:text-slate-300 font-normal leading-relaxed">
+                  Lanjut ke panduan berikutnya?
+                </p>
+              </div>
+
+              <div className="flex items-center justify-end gap-3 pt-4 mt-2">
+                <button
+                  type="button"
+                  onClick={stopTour}
+                  className="text-xs sm:text-[13px] font-medium text-slate-700 hover:text-slate-950 dark:text-slate-300 dark:hover:text-white transition-colors cursor-pointer px-2 py-1"
+                >
+                  Selesai
+                </button>
+                <button
+                  type="button"
+                  onClick={handleContinueToNextSection}
+                  className="px-5 py-1.5 rounded-full bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500 text-white text-xs sm:text-[13px] font-semibold shadow-xs transition-all cursor-pointer whitespace-nowrap"
+                >
+                  Lanjutkan
+                </button>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       )}
     </WalkthroughContext.Provider>
