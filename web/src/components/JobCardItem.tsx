@@ -1,5 +1,7 @@
 import React from "react";
 import { CompanyLogo } from "./CompanyLogo";
+import { TopRankMedalBadge } from "./TopRankMedalBadge";
+export { TopRankMedalBadge };
 import type { RankedJobResult } from "../types/data";
 import type { StudentPreferences } from "../types/portal";
 import { jobProximity } from "../lib/geo";
@@ -30,101 +32,6 @@ export function relativePosting(dateStr?: string): string {
   if (days === 1) return "Diposting 1 hari yang lalu";
   if (days >= 60) return `Diposting ${Math.floor(days / 30)} bulan yang lalu`;
   return `Diposting ${days} hari yang lalu`;
-}
-
-/** Badge medali ukuran ringkas (Gold #1, Silver #2, Bronze #3) dengan pita biru. */
-function TopRankMedalBadge({ rank }: { rank: 1 | 2 | 3 }) {
-  const palette =
-    rank === 1
-      ? {
-          outerFill: "#FFC72C",
-          outerStroke: "#E09F1F",
-          innerFill: "#F7B519",
-          innerStroke: "#D48806",
-          textFill: "#B4690E",
-          title: "Peringkat #1 Paling Cocok",
-        }
-      : rank === 2
-        ? {
-            outerFill: "#D5D9DF",
-            outerStroke: "#A6ADB7",
-            innerFill: "#C4C9D1",
-            innerStroke: "#949CA8",
-            textFill: "#6E7683",
-            title: "Peringkat #2 Sangat Cocok",
-          }
-        : {
-            outerFill: "#C87D3B",
-            outerStroke: "#9E5B22",
-            innerFill: "#B86E2E",
-            innerStroke: "#8C4D19",
-            textFill: "#753B0E",
-            title: "Peringkat #3 Rekomendasi Utama",
-          };
-
-  return (
-    <svg
-      width="22"
-      height="26"
-      viewBox="0 0 64 76"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className="shrink-0 select-none drop-shadow-2xs"
-       aria-label={palette.title}
-    >
-      {/* Pita Kiri (Biru) */}
-      <path d="M22 40L10 68L20 63L26 73L34 44Z" fill="#1E88E5" />
-      <path d="M26 42L20 63L26 73L34 44Z" fill="#1565C0" />
-
-      {/* Pita Kanan (Biru) */}
-      <path d="M42 40L54 68L44 63L38 73L30 44Z" fill="#1976D2" />
-      <path d="M38 42L44 63L38 73L30 44Z" fill="#0D47A1" />
-
-      {/* Lingkaran Luar Medali */}
-      <circle
-        cx="32"
-        cy="26"
-        r="22"
-        fill={palette.outerFill}
-        stroke={palette.outerStroke}
-        strokeWidth="1.5"
-      />
-
-      {/* Lingkaran Dalam Medali */}
-      <circle
-        cx="32"
-        cy="26"
-        r="16.5"
-        fill={palette.innerFill}
-        stroke={palette.innerStroke}
-        strokeWidth="1.5"
-      />
-
-      {/* Angka Peringkat (1 / 2 / 3) */}
-      <text
-        x="32"
-        y="33"
-        textAnchor="middle"
-        fill={palette.textFill}
-        fontSize="22"
-        fontWeight="800"
-        fontFamily="Georgia, 'Times New Roman', serif"
-      >
-        {rank}
-      </text>
-
-      {/* Kilau Bintang Putih Besar */}
-      <path
-        d="M44 13L45.3 16.7L49 18L45.3 19.3L44 23L42.7 19.3L39 18L42.7 16.7L44 13Z"
-        fill="#FFFFFF"
-      />
-      {/* Kilau Bintang Putih Kecil */}
-      <path
-        d="M49.5 10L50.2 12L52.2 12.7L50.2 13.4L49.5 15.4L48.8 13.4L46.8 12.7L48.8 12L49.5 10Z"
-        fill="#FFFFFF"
-      />
-    </svg>
-  );
 }
 
 export function JobCardItem({
