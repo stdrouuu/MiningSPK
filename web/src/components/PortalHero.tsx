@@ -18,7 +18,10 @@ export function PortalHero({
   onFillQuestionnaire,
 }: PortalHeroProps) {
   return (
-    <section data-tour="portal-hero" className="relative w-full rounded-2xl bg-[#0C52EE] dark:bg-gradient-to-br dark:from-slate-900 dark:via-blue-950 dark:to-slate-900 dark:border dark:border-blue-900/40 overflow-hidden min-h-[160px] p-6 sm:p-8 lg:p-10 shadow-sm text-white flex items-center justify-between">
+    <section
+      data-tour="portal-hero"
+      className="relative w-full rounded-2xl bg-[#0C52EE] dark:bg-gradient-to-br dark:from-slate-900 dark:via-blue-950 dark:to-slate-900 dark:border dark:border-blue-900/40 overflow-hidden min-h-[160px] p-6 sm:p-8 lg:p-10 shadow-sm text-white flex items-center justify-between"
+    >
       <div className="relative z-10 max-w-2xl lg:max-w-3xl space-y-2">
         <h1 className="text-2xl sm:text-3xl lg:text-[36px] font-medium tracking-tight leading-snug">
           Halo{' '}

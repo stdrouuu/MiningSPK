@@ -11,6 +11,7 @@ import { PreferenceSidebar } from './components/PreferenceSidebar'
 import { SavedJobsModal } from './components/SavedJobsModal'
 import { FullMatrixView } from './components/FullMatrixView'
 import { KuesionerPage } from './components/kuesioner/KuesionerPage'
+import { WalkthroughProvider } from './components/WalkthroughTour'
 import { Button } from './components/ui/Button'
 import type { CleanJob, StudentProfile } from './types/data'
 import type { StudentPreferences } from './types/portal'
@@ -82,7 +83,6 @@ export function App() {
   // Modals state
   const [isPreferenceOpen, setIsPreferenceOpen] = useState(false)
   const [isSavedJobsOpen, setIsSavedJobsOpen] = useState(false)
-
 
   // Mode aktif dilihat dari prefix URL (/data/* = demo data responden).
   const { pathname } = useLocation()
@@ -181,7 +181,6 @@ export function App() {
     return nearby === 0
       ? `Belum ada lowongan di sekitar ${loc} — menampilkan seluruh Jabodetabek.`
       : `Hanya ${nearby} lowongan di sekitar ${loc} — lowongan Jabodetabek lainnya ikut ditampilkan.`
-
   }, [rankedJobs, activePrefs.location, proximity])
 
   // Filter dan sort hasil untuk tampilan job feed
@@ -271,141 +270,143 @@ export function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
-      <ScrollToTop />
-      <Routes>
-        <Route
-          path={ROUTES.LANDING}
-          element={
-            <LandingRoute
-              mode="user"
-              savedCount={savedJobIds.length}
-              rankedJobs={rankedJobs}
-              onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
-              setSearchQuery={setSearchQuery}
-              setFilterCategory={setFilterCategory}
-              setSelectedJobId={setSelectedJobId}
-              studentPrefs={activePrefs}
-              onOpenPreferences={() => setIsPreferenceOpen(true)}
-            />
-          }
-        />
-        {/* Mode demo data: beranda yang sama, rekomendasi dari responden terpilih */}
-        <Route
-          path={ROUTES.DATA}
-          element={
-            <LandingRoute
-              mode="data"
-              savedCount={savedJobIds.length}
-              rankedJobs={rankedJobs}
-              onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
-              setSearchQuery={setSearchQuery}
-              setFilterCategory={setFilterCategory}
-              setSelectedJobId={setSelectedJobId}
-              studentPrefs={activePrefs}
-              onOpenPreferences={() => setIsPreferenceOpen(true)}
-            />
-          }
-        />
-        <Route
-          path={ROUTES.PORTAL}
-          element={
-            <PortalRoute
-              mode="user"
-              state={shared}
-              onOpenPreferences={() => setIsPreferenceOpen(true)}
-              onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
-              onToggleSave={handleToggleSave}
-              onFillQuestionnaire={goFillQuestionnaire}
-            />
-          }
-        />
-        <Route
-          path={ROUTES.DATA_PORTAL}
-          element={
-            <PortalRoute
-              mode="data"
-              state={shared}
-              onOpenPreferences={() => setIsPreferenceOpen(true)}
-              onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
-              onToggleSave={handleToggleSave}
-              onFillQuestionnaire={goFillQuestionnaire}
-            />
-          }
-        />
-        <Route
-          path={ROUTES.MATRIX}
-          element={
-            <MatrixRoute
-              mode="user"
-              state={shared}
-              onOpenPreferences={() => setIsPreferenceOpen(true)}
-              onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
-              onFillQuestionnaire={goFillQuestionnaire}
-            />
-          }
-        />
-        <Route
-          path={ROUTES.DATA_MATRIX}
-          element={
-            <MatrixRoute
-              mode="data"
-              state={shared}
-              onOpenPreferences={() => setIsPreferenceOpen(true)}
-              onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
-              onFillQuestionnaire={goFillQuestionnaire}
-            />
-          }
-        />
-        <Route
-          path={ROUTES.KUESIONER}
-          element={
-            <>
-              <KuesionerPage
-                jobs={shared.jobs}
-                students={shared.students}
-                loading={shared.loading}
-                studentPrefs={userPrefs}
-                setStudentPrefs={setUserPrefs}
+    <WalkthroughProvider>
+      <div className="min-h-screen bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
+        <ScrollToTop />
+        <Routes>
+          <Route
+            path={ROUTES.LANDING}
+            element={
+              <LandingRoute
+                mode="user"
+                savedCount={savedJobIds.length}
+                rankedJobs={rankedJobs}
+                onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
+                setSearchQuery={setSearchQuery}
+                setFilterCategory={setFilterCategory}
+                setSelectedJobId={setSelectedJobId}
+                studentPrefs={activePrefs}
+                onOpenPreferences={() => setIsPreferenceOpen(true)}
+              />
+            }
+          />
+          {/* Mode demo data: beranda yang sama, rekomendasi dari responden terpilih */}
+          <Route
+            path={ROUTES.DATA}
+            element={
+              <LandingRoute
+                mode="data"
+                savedCount={savedJobIds.length}
+                rankedJobs={rankedJobs}
+                onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
+                setSearchQuery={setSearchQuery}
+                setFilterCategory={setFilterCategory}
+                setSelectedJobId={setSelectedJobId}
+                studentPrefs={activePrefs}
+                onOpenPreferences={() => setIsPreferenceOpen(true)}
+              />
+            }
+          />
+          <Route
+            path={ROUTES.PORTAL}
+            element={
+              <PortalRoute
+                mode="user"
+                state={shared}
                 onOpenPreferences={() => setIsPreferenceOpen(true)}
                 onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
-                savedJobsCount={shared.savedJobIds.length}
-                tfidf={tfidf}
+                onToggleSave={handleToggleSave}
+                onFillQuestionnaire={goFillQuestionnaire}
               />
-              <PortalFooter onOpenPreferences={() => setIsPreferenceOpen(true)} />
-            </>
-          }
+            }
+          />
+          <Route
+            path={ROUTES.DATA_PORTAL}
+            element={
+              <PortalRoute
+                mode="data"
+                state={shared}
+                onOpenPreferences={() => setIsPreferenceOpen(true)}
+                onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
+                onToggleSave={handleToggleSave}
+                onFillQuestionnaire={goFillQuestionnaire}
+              />
+            }
+          />
+          <Route
+            path={ROUTES.MATRIX}
+            element={
+              <MatrixRoute
+                mode="user"
+                state={shared}
+                onOpenPreferences={() => setIsPreferenceOpen(true)}
+                onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
+                onFillQuestionnaire={goFillQuestionnaire}
+              />
+            }
+          />
+          <Route
+            path={ROUTES.DATA_MATRIX}
+            element={
+              <MatrixRoute
+                mode="data"
+                state={shared}
+                onOpenPreferences={() => setIsPreferenceOpen(true)}
+                onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
+                onFillQuestionnaire={goFillQuestionnaire}
+              />
+            }
+          />
+          <Route
+            path={ROUTES.KUESIONER}
+            element={
+              <>
+                <KuesionerPage
+                  jobs={shared.jobs}
+                  students={shared.students}
+                  loading={shared.loading}
+                  studentPrefs={userPrefs}
+                  setStudentPrefs={setUserPrefs}
+                  onOpenPreferences={() => setIsPreferenceOpen(true)}
+                  onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
+                  savedJobsCount={shared.savedJobIds.length}
+                  tfidf={tfidf}
+                />
+                <PortalFooter onOpenPreferences={() => setIsPreferenceOpen(true)} />
+              </>
+            }
+          />
+          {/* URL lama / tidak dikenal -> kembali ke beranda modenya masing-masing */}
+          <Route path="*" element={<Navigate to={isDataMode ? ROUTES.DATA : ROUTES.LANDING} replace />} />
+        </Routes>
+
+        {/* Preference Drawer / Modal (global, bisa dibuka dari semua URL) */}
+        <PreferenceSidebar
+          open={isPreferenceOpen}
+          onClose={() => setIsPreferenceOpen(false)}
+          preferences={activePrefs}
+          onUpdatePreferences={updateActivePrefs}
+          studentPresets={students}
+          categories={categories}
+          mode={isDataMode ? 'data' : 'user'}
+          onFillQuestionnaire={goFillQuestionnaire}
         />
-        {/* URL lama / tidak dikenal -> kembali ke beranda modenya masing-masing */}
-        <Route path="*" element={<Navigate to={isDataMode ? ROUTES.DATA : ROUTES.LANDING} replace />} />
-      </Routes>
 
-      {/* Preference Drawer / Modal (global, bisa dibuka dari semua URL) */}
-      <PreferenceSidebar
-        open={isPreferenceOpen}
-        onClose={() => setIsPreferenceOpen(false)}
-        preferences={activePrefs}
-        onUpdatePreferences={updateActivePrefs}
-        studentPresets={students}
-        categories={categories}
-        mode={isDataMode ? 'data' : 'user'}
-        onFillQuestionnaire={goFillQuestionnaire}
-      />
-
-      {/* Saved Jobs Modal (global) */}
-      <SavedJobsModal
-        open={isSavedJobsOpen}
-        onClose={() => setIsSavedJobsOpen(false)}
-        savedJobs={savedJobsList}
-        onRemoveSaved={handleToggleSave}
-        onSelectJob={(job) => {
-          setSelectedJobId(job.job_id)
-          setIsSavedJobsOpen(false)
-          const portalPath = isDataMode ? ROUTES.DATA_PORTAL : ROUTES.PORTAL
-          navigate(`${portalPath}?job=${encodeURIComponent(job.job_id)}`)
-        }}
-      />
-    </div>
+        {/* Saved Jobs Modal (global) */}
+        <SavedJobsModal
+          open={isSavedJobsOpen}
+          onClose={() => setIsSavedJobsOpen(false)}
+          savedJobs={savedJobsList}
+          onRemoveSaved={handleToggleSave}
+          onSelectJob={(job) => {
+            setSelectedJobId(job.job_id)
+            setIsSavedJobsOpen(false)
+            const portalPath = isDataMode ? ROUTES.DATA_PORTAL : ROUTES.PORTAL
+            navigate(`${portalPath}?job=${encodeURIComponent(job.job_id)}`)
+          }}
+        />
+      </div>
+    </WalkthroughProvider>
   )
 }
 
@@ -603,7 +604,7 @@ function PortalRoute({
             <div className="flex-1">
               <h2 className="text-[15px] font-medium text-slate-900 dark:text-white">Dapatkan rekomendasi yang pas buat kamu</h2>
               <p className="text-sm text-slate-500 dark:text-slate-400 font-light mt-0.5">
-                Ceritakan upah, jam, lokasi & skill-mu lewat kuesioner singkat (±3 menit) —
+                Ceritakan upah, jam, lokasi &amp; skill-mu lewat kuesioner singkat (±3 menit) —
                 221 lowongan langsung diurutkan sesuai kebutuhanmu.
               </p>
             </div>
@@ -661,7 +662,7 @@ function PortalRoute({
             />
 
             {/* Filter Bar & Controls */}
-            <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3 sm:p-4 shadow-2xs">
+            <section data-tour="portal-filter" className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3 sm:p-4 shadow-2xs">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-3 items-center">
                 <div className="lg:col-span-5 relative">
                   <label htmlFor="portal-search" className="sr-only">Cari lowongan, perusahaan, atau keahlian</label>
