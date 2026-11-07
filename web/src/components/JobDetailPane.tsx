@@ -25,7 +25,7 @@ export function JobDetailPane({
 }: JobDetailPaneProps) {
   if (!job) {
     return (
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 sticky top-6 shadow-xs">
+      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-xs">
         <div className="py-16 text-center space-y-2">
           <div className="w-12 h-12 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 mx-auto flex items-center justify-center font-medium">?</div>
           <h3 className="text-[15px] sm:text-[15px] font-medium text-slate-800 dark:text-slate-200">Pilih lowongan untuk melihat detail</h3>

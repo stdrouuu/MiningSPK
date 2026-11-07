@@ -745,7 +745,7 @@ function PortalRoute({
             {/* Split Master-Detail Layout */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
               {/* Left Column: Job Cards Feed */}
-              <div ref={listTopRef} className="lg:col-span-5 space-y-3 scroll-mt-6" role="listbox" aria-label="Daftar lowongan terurut SPK" aria-activedescendant={state.selectedJob ? `job-${state.selectedJob.job_id}` : undefined}>
+              <div ref={listTopRef} data-tour="portal-job-list" className="lg:col-span-5 space-y-3 scroll-mt-20" role="listbox" aria-label="Daftar lowongan terurut SPK" aria-activedescendant={state.selectedJob ? `job-${state.selectedJob.job_id}` : undefined}>
                 {state.displayJobs.length === 0 ? (
                   <div className="p-8 text-center bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl space-y-2">
                     <p className="font-medium text-slate-800 dark:text-slate-100 text-[15px]">Tidak ada lowongan yang cocok</p>
@@ -835,8 +835,8 @@ function PortalRoute({
                 )}
               </div>
 
-              {/* Right Column: detail panel — sticky, scroll sendiri (berada di bawah sticky navbar) */}
-              <div className="lg:col-span-7 sticky top-20 max-h-[calc(100vh-6rem)] overflow-y-auto overscroll-contain">
+              {/* Right Column: detail panel — sticky mengikuti halaman utama tanpa nested scroll trap */}
+              <div data-tour="portal-job-detail" className="lg:col-span-7 lg:sticky lg:top-20 self-start">
                 <JobDetailPane
                   job={state.selectedJob}
                   studentPrefs={state.studentPrefs}
