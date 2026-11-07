@@ -6,6 +6,7 @@ import { PortalHeader } from '../PortalHeader'
 import { Button } from '../ui/Button'
 import { CompanyLogo } from '../CompanyLogo'
 import { ConfirmRankModal } from './ConfirmRankModal'
+import { JobRadarSearchModal } from './JobRadarSearchModal'
 import { PairwiseQuiz } from './PairwiseQuiz'
 import { PriorityEditor } from './PriorityEditor'
 import { SensitivityPanel } from './SensitivityPanel'
@@ -232,6 +233,7 @@ export function KuesionerPage({
   )
   const [confirmed, setConfirmed] = useState(false)
   const [confirmOpen, setConfirmOpen] = useState(false)
+  const [radarOpen, setRadarOpen] = useState(false)
   const [quizOpen, setQuizOpen] = useState(false)
 
   // Gunakan priorityRank dari studentPrefs bila profil sudah selesai agar selalu sinkron 100%
@@ -279,10 +281,10 @@ export function KuesionerPage({
   /** Buka modal konfirmasi ranking sebelum hasil dihitung. */
   const showResult = () => setConfirmOpen(true)
 
-  /** Ranking disetujui dari modal: kunci susunan, simpan sesi, lalu tampilkan hasil. */
+  /** Ranking disetujui dari modal: kunci susunan, simpan sesi, jalankan animasi radar map sesuai lokasi user, lalu tampilkan hasil. */
   const confirmRanks = () => {
     const ranks = { ...draftRanks }
-    applyRanks(ranks)
+    applyRanks(ranks, false)
     saveSession({
       timestamp: new Date().toISOString(),
       profile: {
@@ -303,6 +305,7 @@ export function KuesionerPage({
       ).slice(0, 3).map((j) => j.job_id),
     })
     setConfirmOpen(false)
+    setRadarOpen(true)
   }
 
   /** Kuis pilihan paksa → isi draf (user tetap bisa mengubah sebelum konfirmasi). */
@@ -764,6 +767,17 @@ export function KuesionerPage({
         onClose={() => setConfirmOpen(false)}
         ranks={draftRanks}
         onConfirm={confirmRanks}
+      />
+      <JobRadarSearchModal
+        open={radarOpen}
+        location={studentPrefs.location}
+        userName={studentPrefs.name}
+        topJobs={ranked}
+        totalJobsCount={jobs.length}
+        onComplete={() => {
+          setRadarOpen(false)
+          setStep(2)
+        }}
       />
     </>
   )
