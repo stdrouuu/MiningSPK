@@ -18,7 +18,6 @@ import type { StudentPreferences } from './types/portal'
 import { DEFAULT_STUDENT_PREFERENCES } from './types/portal'
 import { fetchCsvData, computeSPKForCustomStudent } from './lib/spk'
 import type { TfidfArtifact } from './lib/spk'
-import { jobProximity, NEARBY_MIN_RESULTS, type DistanceTier } from './lib/geo'
 import { ROUTES } from './lib/routes'
 
 function ScrollToTop() {
@@ -158,34 +157,15 @@ export function App() {
   }
 
   // Komputasi SPK dinamis setiap kali preferensi mode aktif berubah.
-  // /perhitungan-spk user baru = hasil kuesionernya; /data/* = responden terpilih.
-  // Selalu global 221 (tanpa hard-filter moda) agar sama dengan Excel 05_ARSIP_221.
+  // /perhitungan-spk, /portal, dan hasil /kuesioner semuanya mengacu pada urutan SPK (SMARTER + ROC) yang sama.
   const rankedJobs = useMemo(() => {
     return computeSPKForCustomStudent(jobs, activePrefs, tfidf)
   }, [jobs, activePrefs, tfidf])
 
-  // Lingkup jarak tampilan (opsi A): SPK tetap dihitung global 221, filter
-  // nearby hanya di lapisan tampilan. Auto-widen bila yang dekat terlalu sedikit.
-  const proximity = useMemo(() => {
-    const tiers = new Map(rankedJobs.map((j) => [j.job_id, jobProximity(j, activePrefs.location).tier]))
-    const nearby = rankedJobs.reduce((n, j) => n + ((tiers.get(j.job_id) ?? 0) <= 1 ? 1 : 0), 0)
-    return { tiers, maxTier: (nearby >= NEARBY_MIN_RESULTS ? 1 : 2) as DistanceTier }
-  }, [rankedJobs, activePrefs.location])
+  const nearbyNote: string | null = null
 
-  // Catatan auto-widen untuk status bar (null = tidak perlu).
-  const nearbyNote = useMemo(() => {
-    const loc = (activePrefs.location || '').trim()
-    if (!loc || loc.toLowerCase() === 'remote') return null
-    const nearby = rankedJobs.filter((j) => (proximity.tiers.get(j.job_id) ?? 0) <= 1).length
-    if (nearby >= NEARBY_MIN_RESULTS) return null
-    return nearby === 0
-      ? `Belum ada lowongan di sekitar ${loc} — menampilkan seluruh Jabodetabek.`
-      : `Hanya ${nearby} lowongan di sekitar ${loc} — lowongan Jabodetabek lainnya ikut ditampilkan.`
-  }, [rankedJobs, activePrefs.location, proximity])
-
-  // Filter dan sort hasil untuk tampilan job feed
+  // Filter dan sort hasil untuk tampilan job feed (secara default 100% mengikuti peringkat SPK user)
   const displayJobs = useMemo(() => {
-    const tierOf = (job: (typeof rankedJobs)[number]) => proximity.tiers.get(job.job_id) ?? 0
     return rankedJobs
       .filter((job) => {
         const q = searchQuery.toLowerCase()
@@ -201,23 +181,23 @@ export function App() {
           filterWorkSystem === 'ALL' ||
           job.work_system?.toLowerCase() === filterWorkSystem.toLowerCase()
 
-        return tierOf(job) <= proximity.maxTier && matchSearch && matchCat && matchSys
+        return matchSearch && matchCat && matchSys
       })
       .sort((a, b) => {
         if (sortBy === 'salary-high') return b.work_salaryperhour - a.work_salaryperhour
         if (sortBy === 'salary-low') return a.work_salaryperhour - b.work_salaryperhour
         if (sortBy === 'hours-low') return a.work_hours - b.work_hours
-        // default 'match' (SPK ranking): yang dekat dulu, SPK mengurutkan di dalam tier
-        return tierOf(a) - tierOf(b) || b.finalScore - a.finalScore
+        // default 'match' (SPK ranking): urut tepat sesuai peringkat SPK (SMARTER + ROC) dari user
+        return a.rank - b.rank
       })
-  }, [rankedJobs, proximity, searchQuery, filterCategory, filterWorkSystem, sortBy])
+  }, [rankedJobs, searchQuery, filterCategory, filterWorkSystem, sortBy])
 
-  // Auto-select job pertama jika belum ada yang terpilih
+  // Auto-select job peringkat #1 setiap kali daftar rekomendasi berubah
   useEffect(() => {
-    if (displayJobs.length > 0 && (!selectedJobId || !displayJobs.some((j) => j.job_id === selectedJobId))) {
+    if (displayJobs.length > 0) {
       setSelectedJobId(displayJobs[0].job_id)
     }
-  }, [displayJobs, selectedJobId])
+  }, [displayJobs])
 
   const selectedJob = useMemo(() => {
     return displayJobs.find((j) => j.job_id === selectedJobId) || displayJobs[0] || null

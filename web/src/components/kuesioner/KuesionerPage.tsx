@@ -220,15 +220,25 @@ export function KuesionerPage({
     : qIndex === 5 ? monthly !== null
     : studentPrefs.skills.trim().length > 0
 
-  const [initialRanks, setInitialRanks] = useState<Ranks | null>(null)
-  const [finalRanks, setFinalRanks] = useState<Ranks | null>(null)
+  const [initialRanks, setInitialRanks] = useState<Ranks | null>(() =>
+    studentPrefs.profileComplete ? { ...studentPrefs.priorityRank } : null
+  )
+  const [finalRanks, setFinalRanks] = useState<Ranks | null>(() =>
+    studentPrefs.profileComplete ? { ...studentPrefs.priorityRank } : null
+  )
   // Draf susunan user di langkah Prioritas + centang konfirmasi (wajib sebelum lanjut)
-  const [draftRanks, setDraftRanks] = useState<Ranks>(DEFAULT_DRAFT)
+  const [draftRanks, setDraftRanks] = useState<Ranks>(() =>
+    studentPrefs.profileComplete ? { ...studentPrefs.priorityRank } : DEFAULT_DRAFT
+  )
   const [confirmed, setConfirmed] = useState(false)
   const [confirmOpen, setConfirmOpen] = useState(false)
   const [quizOpen, setQuizOpen] = useState(false)
 
-  const activeRanks = finalRanks ?? initialRanks
+  // Gunakan priorityRank dari studentPrefs bila profil sudah selesai agar selalu sinkron 100%
+  // dengan halaman Lowongan (/portal) dan Perhitungan (/perhitungan-spk).
+  const activeRanks: Ranks | null = studentPrefs.profileComplete
+    ? studentPrefs.priorityRank
+    : (finalRanks ?? initialRanks)
 
   const ranked: RankedJobResult[] = useMemo(() => {
     if (!activeRanks || !jobs.length) return []
@@ -246,9 +256,13 @@ export function KuesionerPage({
   const applyRanks = (r: Ranks, goToResult = true) => {
     setInitialRanks(r)
     setFinalRanks(r)
-    // Kuesioner selesai sampai hasil -> profil user dianggap terisi,
-    // skor % kecocokan & matriks boleh ditampilkan.
-    set('profileComplete', true)
+    // Kuesioner selesai sampai hasil -> simpan priorityRank pilihan user ke state global
+    // dan tandai profil selesai agar halaman Lowongan & Perhitungan menampilkan urutan yang sama persis.
+    setStudentPrefs((p) => ({
+      ...p,
+      priorityRank: toSpkRank(r),
+      profileComplete: true,
+    }))
     if (goToResult) setStep(2)
   }
 

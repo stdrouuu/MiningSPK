@@ -32,6 +32,101 @@ export function relativePosting(dateStr?: string): string {
   return `Diposting ${days} hari yang lalu`;
 }
 
+/** Badge medali ukuran ringkas (Gold #1, Silver #2, Bronze #3) dengan pita biru. */
+function TopRankMedalBadge({ rank }: { rank: 1 | 2 | 3 }) {
+  const palette =
+    rank === 1
+      ? {
+          outerFill: "#FFC72C",
+          outerStroke: "#E09F1F",
+          innerFill: "#F7B519",
+          innerStroke: "#D48806",
+          textFill: "#B4690E",
+          title: "Peringkat #1 Paling Cocok",
+        }
+      : rank === 2
+        ? {
+            outerFill: "#D5D9DF",
+            outerStroke: "#A6ADB7",
+            innerFill: "#C4C9D1",
+            innerStroke: "#949CA8",
+            textFill: "#6E7683",
+            title: "Peringkat #2 Sangat Cocok",
+          }
+        : {
+            outerFill: "#C87D3B",
+            outerStroke: "#9E5B22",
+            innerFill: "#B86E2E",
+            innerStroke: "#8C4D19",
+            textFill: "#753B0E",
+            title: "Peringkat #3 Rekomendasi Utama",
+          };
+
+  return (
+    <svg
+      width="22"
+      height="26"
+      viewBox="0 0 64 76"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="shrink-0 select-none drop-shadow-2xs"
+       aria-label={palette.title}
+    >
+      {/* Pita Kiri (Biru) */}
+      <path d="M22 40L10 68L20 63L26 73L34 44Z" fill="#1E88E5" />
+      <path d="M26 42L20 63L26 73L34 44Z" fill="#1565C0" />
+
+      {/* Pita Kanan (Biru) */}
+      <path d="M42 40L54 68L44 63L38 73L30 44Z" fill="#1976D2" />
+      <path d="M38 42L44 63L38 73L30 44Z" fill="#0D47A1" />
+
+      {/* Lingkaran Luar Medali */}
+      <circle
+        cx="32"
+        cy="26"
+        r="22"
+        fill={palette.outerFill}
+        stroke={palette.outerStroke}
+        strokeWidth="1.5"
+      />
+
+      {/* Lingkaran Dalam Medali */}
+      <circle
+        cx="32"
+        cy="26"
+        r="16.5"
+        fill={palette.innerFill}
+        stroke={palette.innerStroke}
+        strokeWidth="1.5"
+      />
+
+      {/* Angka Peringkat (1 / 2 / 3) */}
+      <text
+        x="32"
+        y="33"
+        textAnchor="middle"
+        fill={palette.textFill}
+        fontSize="22"
+        fontWeight="800"
+        fontFamily="Georgia, 'Times New Roman', serif"
+      >
+        {rank}
+      </text>
+
+      {/* Kilau Bintang Putih Besar */}
+      <path
+        d="M44 13L45.3 16.7L49 18L45.3 19.3L44 23L42.7 19.3L39 18L42.7 16.7L44 13Z"
+        fill="#FFFFFF"
+      />
+      {/* Kilau Bintang Putih Kecil */}
+      <path
+        d="M49.5 10L50.2 12L52.2 12.7L50.2 13.4L49.5 15.4L48.8 13.4L46.8 12.7L48.8 12L49.5 10Z"
+        fill="#FFFFFF"
+      />
+    </svg>
+  );
+}
+
 export function JobCardItem({
   job,
   isSelected,
@@ -51,6 +146,8 @@ export function JobCardItem({
     (job.work_job_location || "")
       .toLowerCase()
       .includes(studentPrefs.location.toLowerCase());
+  const matchPct = Math.round(Math.min(100, Math.max(0, job.finalScore * 100)));
+  const isTop3 = job.rank === 1 || job.rank === 2 || job.rank === 3;
 
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -74,7 +171,7 @@ export function JobCardItem({
           "--enter-delay": `${Math.min(index, 8) * 40}ms`,
         } as React.CSSProperties
       }
-      className={`group p-4 sm:p-5 rounded-xl bg-white dark:bg-slate-900/90 border ${
+      className={`relative group p-4 sm:p-5 rounded-xl bg-white dark:bg-slate-900/90 border ${
         isSelected
           ? "border-[#0C52EE] dark:border-blue-500 ring-1 ring-[#0C52EE] dark:ring-blue-500 shadow-sm"
           : "border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 shadow-2xs"
@@ -112,8 +209,8 @@ export function JobCardItem({
         />
       </div>
 
-      {/* Baris bawah: Chip kecocokan SPK di kiri & tombol simpan (save) di pojok kanan bawah */}
-      <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 flex items-end justify-between gap-2">
+      {/* Baris bawah: Chip kecocokan SPK di kiri & badge medali kecil + persentase cocok di samping tombol simpan (save) */}
+      <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
         <div className="flex flex-wrap items-center gap-1.5 flex-1 min-w-0">
           <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs font-normal">
             {job.work_hours} jam/mgg {"\u2022"} {job.work_system}
@@ -142,31 +239,50 @@ export function JobCardItem({
           )}
         </div>
 
-        <button
-          data-save-btn
-          onClick={(e) => {
-            e.stopPropagation();
-            onToggleSave(e);
-          }}
-          aria-pressed={isSaved}
-          title={isSaved ? "Hapus simpanan" : "Simpan lowongan"}
-          className="p-1.5 text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-200 transition-colors rounded hover:bg-slate-50 dark:hover:bg-slate-800 shrink-0 self-end"
-        >
-          <svg
-            className={`w-4 h-4 ${isSaved ? "text-[#ED1E79] dark:text-pink-400 fill-current" : ""}`}
-            fill={isSaved ? "currentColor" : "none"}
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
+        <div className="flex items-center gap-2 shrink-0 self-end">
+          {!hideMatch &&
+            (isTop3 ? (
+              <div
+                className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-slate-50 dark:bg-slate-800/90 border border-slate-200/80 dark:border-slate-700/80"
+                title={`Peringkat #${job.rank} (${matchPct}% cocok)`}
+              >
+                <TopRankMedalBadge rank={job.rank as 1 | 2 | 3} />
+                <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 tabular-nums whitespace-nowrap">
+                  {matchPct}% cocok
+                </span>
+              </div>
+            ) : (
+              <span className="text-xs font-medium text-slate-500 dark:text-slate-400 tabular-nums whitespace-nowrap">
+                {matchPct}% cocok
+              </span>
+            ))}
+
+          <button
+            data-save-btn
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleSave(e);
+            }}
+            aria-pressed={isSaved}
+            title={isSaved ? "Hapus simpanan" : "Simpan lowongan"}
+            className="p-1.5 text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-200 transition-colors rounded hover:bg-slate-50 dark:hover:bg-slate-800 shrink-0"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-            />
-          </svg>
-        </button>
+            <svg
+              className={`w-4 h-4 ${isSaved ? "text-[#ED1E79] dark:text-pink-400 fill-current" : ""}`}
+              fill={isSaved ? "currentColor" : "none"}
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+              />
+            </svg>
+          </button>
+        </div>
       </div>
     </article>
   );

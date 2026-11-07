@@ -76,7 +76,7 @@ export function LandingNav({
             onClick={() => onNavigate('landing')}
             className="flex items-center text-left group focus:outline-none"
           >
-            <span className="text-2xl font-medium tracking-tighter text-slate-900 dark:text-white">UpMatch</span>
+            <span className="text-2xl font-medium tracking-tighter text-slate-900 dark:text-white">upmatch</span>
             {mode === 'data' && (
               <span className="ml-2 px-1.5 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 text-[10px] font-medium text-amber-800 dark:text-amber-300">
                 demo data
