@@ -17,6 +17,7 @@ import { strictRanks } from '../../lib/priority'
 import { computeLeaderScenarios } from '../../lib/sensitivity'
 import { computeSPKForCustomStudent } from '../../lib/spk'
 import type { TfidfArtifact } from '../../lib/spk'
+import { avatarForPrefs } from '../../lib/avatar'
 import { formatRupiah } from '../../lib/utils'
 import { ROUTES } from '../../lib/routes'
 
@@ -33,6 +34,7 @@ interface Props {
 }
 
 const STEPS = ['Profil', 'Prioritas', 'Hasil']
+const TOTAL_PROFILE_QUESTIONS = 7
 
 // ─── Opsi Google Form survei (Q3–Q7) ─────────────────────────────────────────
 
@@ -191,7 +193,7 @@ export function KuesionerPage({
 }: Props) {
   const navigate = useNavigate()
   const [step, setStep] = useState(0)
-  // Sub-langkah profil: satu pertanyaan satu layar (0=Q3 … 5=Q8)
+  // Sub-langkah profil: satu pertanyaan satu layar (0=Nama, 1=Q3 … 6=Q8)
   const [qIndex, setQIndex] = useState(0)
   // Jawaban GForm mentah (Q6a/Q6b/Q7) — null = belum dijawab (wajib diisi semua)
   const [days, setDays] = useState<number | null>(null)
@@ -210,12 +212,14 @@ export function KuesionerPage({
       : ''
   /** Tiap layar profil wajib dijawab sebelum bisa Lanjut. */
   const screenValid =
-    qIndex === 0 ? picked.q3
-    : qIndex === 1 ? picked.q4
-    : qIndex === 2 ? picked.q5
-    : qIndex === 3 ? jamIdeal !== null
-    : qIndex === 4 ? monthly !== null
+    qIndex === 0 ? studentPrefs.name.trim().length > 0
+    : qIndex === 1 ? picked.q3
+    : qIndex === 2 ? picked.q4
+    : qIndex === 3 ? picked.q5
+    : qIndex === 4 ? jamIdeal !== null
+    : qIndex === 5 ? monthly !== null
     : studentPrefs.skills.trim().length > 0
+
   const [initialRanks, setInitialRanks] = useState<Ranks | null>(null)
   const [finalRanks, setFinalRanks] = useState<Ranks | null>(null)
   // Draf susunan user di langkah Prioritas + centang konfirmasi (wajib sebelum lanjut)
@@ -297,6 +301,8 @@ export function KuesionerPage({
   const set = <K extends keyof StudentPreferences>(k: K, v: StudentPreferences[K]) =>
     setStudentPrefs((p) => ({ ...p, [k]: v }))
 
+  const previewAvatar = avatarForPrefs(studentPrefs)
+
   return (
     <>
       <PortalHeader
@@ -315,7 +321,7 @@ export function KuesionerPage({
           </h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 font-light mt-1">
             {step === 0
-              ? 'Jawabanmu dipakai menghitung upah/jam & jam ideal, lalu dipakai di rekomendasi. Jawab satu per satu — 6 pertanyaan, semua wajib diisi.'
+              ? `Jawabanmu dipakai mempersonalisasi profil serta menghitung upah/jam & jam ideal rekomendasi. Jawab satu per satu — ${TOTAL_PROFILE_QUESTIONS} pertanyaan, semua wajib diisi.`
               : step === 1
                 ? 'Susun ranking kriteria 1–5 versimu — ini murni pilihanmu, bukan tebakan sistem.'
                 : 'Rekomendasi dihitung dari ranking pilihanmu (SMARTER + ROC) yang sudah kamu konfirmasi.'}
@@ -323,7 +329,7 @@ export function KuesionerPage({
         </div>
 
         {/* Stepper sederhana */}
-        <ol className="flex items-center gap-1.5" aria-label="Langkah kuesioner">
+        <ol data-tour="kuesioner-stepper" className="flex items-center gap-1.5" aria-label="Langkah kuesioner">
           {STEPS.map((label, i) => (
             <li key={label} className="flex items-center gap-1.5 flex-1">
               <button
@@ -356,143 +362,228 @@ export function KuesionerPage({
             <div className="mt-3 h-4 w-2/3 rounded bg-slate-100 dark:bg-slate-800/60" />
           </div>
         ) : (
-          <>
-            {/* STEP 0 — Profil ala Google Form (Q3–Q8) */}
+          <div data-tour="kuesioner-content">
+            {/* STEP 0 — Profil ala Google Form (Nama + Q3–Q8) */}
             {step === 0 && (
               <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-2xs space-y-5">
                 <div>
                   <div className="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 mb-1.5">
-                    <span>Pertanyaan {qIndex + 1} dari 6</span>
-                    <span className="tabular-nums">{Math.round(((qIndex + 1) / 6) * 100)}%</span>
+                    <span>Pertanyaan {qIndex + 1} dari {TOTAL_PROFILE_QUESTIONS}</span>
+                    <span className="tabular-nums">{Math.round(((qIndex + 1) / TOTAL_PROFILE_QUESTIONS) * 100)}%</span>
                   </div>
                   <div className="h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
-                    <div className="emil-meter h-full bg-[#0C52EE] dark:bg-blue-500 rounded-full" style={{ width: `${((qIndex + 1) / 6) * 100}%` }} />
+                    <div
+                      className="emil-meter h-full bg-[#0C52EE] dark:bg-blue-500 rounded-full"
+                      style={{ width: `${((qIndex + 1) / TOTAL_PROFILE_QUESTIONS) * 100}%` }}
+                    />
                   </div>
                 </div>
 
                 <div key={qIndex} className="emil-detail-swap">
-                {qIndex === 0 && (<QBlock title="Di area mana Anda tinggal saat ini?">
-                  <div className="grid grid-cols-1 gap-1.5">
-                    {Q3_OPTIONS.map((o) => (
-                      <RadioOption
-                        key={o.value}
-                        name="q3"
-                        label={o.label}
-                        hint={o.hint}
-                        checked={picked.q3 && studentPrefs.location === o.value}
-                        onPick={() => { set('location', o.value); mark('q3') }}
+                  {qIndex === 0 && (
+                    <QBlock
+                      title="Siapa nama lengkap atau nama panggilan Anda?"
+                      desc="Nama yang Anda masukkan akan langsung terhubung dengan profil di pojok kanan atas website dan sapaan di halaman rekomendasi."
+                    >
+                      <input
+                        type="text"
+                        aria-label="Nama lengkap atau nama panggilan"
+                        value={studentPrefs.name}
+                        onChange={(e) => set('name', e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' && studentPrefs.name.trim().length > 0) {
+                            e.preventDefault()
+                            setQIndex(1)
+                          }
+                        }}
+                        placeholder="Contoh: Brandon Jeremiah"
+                        autoFocus
+                        className="w-full h-10 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3.5 text-xs sm:text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-[#0C52EE] dark:focus:border-blue-400"
                       />
-                    ))}
-                  </div>
-                </QBlock>)}
-                {qIndex === 1 && (<QBlock title="Bidang pekerjaan part-time apa yang paling Anda minati?">
-                  <select
-                    aria-label="Bidang pekerjaan yang diminati"
-                    value={picked.q4 ? studentPrefs.preferredCategory : ''}
-                    onChange={(e) => { set('preferredCategory', e.target.value); mark('q4') }}
-                    className="w-full h-9 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:border-[#0C52EE] dark:focus:border-blue-400"
-                  >
-                    <option value="" disabled>Pilih satu bidang…</option>
-                    {Q4_OPTIONS.map((o) => (
-                      <option key={o.value} value={o.value}>
-                        {o.label} — {o.hint}
-                      </option>
-                    ))}
-                  </select>
-                </QBlock>)}
-                {qIndex === 2 && (<QBlock title="Sistem kerja part-time seperti apa yang Anda harapkan?">
-                  <div className="grid grid-cols-1 gap-1.5">
-                    {Q5_OPTIONS.map((o) => (
-                      <RadioOption
-                        key={o.value}
-                        name="q5"
-                        label={o.value}
-                        hint={o.hint}
-                        checked={picked.q5 && studentPrefs.workSystem === o.value}
-                        onPick={() => { set('workSystem', o.value as StudentPreferences['workSystem']); mark('q5') }}
-                      />
-                    ))}
-                  </div>
-                </QBlock>)}
-                {qIndex === 3 && (<>
-                <QBlock title="Dalam seminggu, berapa hari kerja part-time yang Anda harapkan?">
-                  <div className="grid grid-cols-1 gap-1.5">
-                    {Q6A_OPTIONS.map((o) => (
-                      <RadioOption
-                        key={o.value}
-                        name="q6a"
-                        label={o.label}
-                        hint={o.hint}
-                        checked={days === o.value}
-                        onPick={() => setDays(o.value)}
-                      />
-                    ))}
-                  </div>
-                </QBlock>
 
-                <QBlock title="Berapa jam waktu yang diharapkan untuk bekerja part-time?">
-                  <div className="grid grid-cols-1 gap-1.5">
-                    {Q6B_OPTIONS.map((o) => (
-                      <RadioOption
-                        key={o.value}
-                        name="q6b"
-                        label={o.label}
-                        hint={o.hint}
-                        checked={hoursPerDay === o.value}
-                        onPick={() => setHoursPerDay(o.value)}
-                      />
-                    ))}
-                  </div>
-                  {jamIdeal !== null ? (
-                    <p className="text-xs text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 font-light" aria-live="polite">
-                      Jam idealmu ≈ <span className="font-medium text-slate-900 dark:text-white">{jamIdeal} jam/minggu</span>
-                      <span className="text-slate-400 dark:text-slate-500"> ({timeSummary})</span>.
-                      Makin dekat jam lowongan ke angka ini, makin cocok.
-                    </p>
-                  ) : (
-                    <p className="text-[11px] text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-800/80 border border-dashed border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 font-light">
-                      Pilih hari dan jam di atas — jam idealmu dihitung otomatis di sini.
-                    </p>
+                      {/* Pratinjau korelasi profil dengan header website */}
+                      <div className="flex items-center gap-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-800/50 p-3 mt-2">
+                        <img
+                          src={previewAvatar}
+                          alt={studentPrefs.name || 'User baru'}
+                          className="w-10 h-10 rounded-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 object-cover shrink-0"
+                        />
+                        <div className="min-w-0 flex-1">
+                          <div className="text-xs font-medium text-slate-900 dark:text-slate-100 truncate">
+                            {studentPrefs.name.trim() || 'User baru'}
+                          </div>
+                          <div className="text-[11px] text-[#0C52EE] dark:text-blue-400 font-medium mt-0.5">
+                            {studentPrefs.name.trim()
+                              ? 'Terhubung dengan profil website Anda'
+                              : 'Ketik nama di atas untuk menggantikan "User baru"'}
+                          </div>
+                        </div>
+                      </div>
+                    </QBlock>
                   )}
-                </QBlock>
-                </>)}
-                {qIndex === 4 && (<QBlock title="Berapa banyak upah / gaji yang Anda harapkan per bulan?">
-                  <div className="grid grid-cols-1 gap-1.5">
-                    {Q7_OPTIONS.map((o) => (
-                      <RadioOption
-                        key={o.value}
-                        name="q7"
-                        label={o.label}
-                        hint={o.hint}
-                        checked={monthly === o.value}
-                        onPick={() => setMonthly(o.value)}
-                      />
-                    ))}
-                  </div>
-                  {hourly !== null ? (
-                    <p className="text-xs text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 font-light" aria-live="polite">
-                      ≈ <span className="font-medium text-slate-900 dark:text-white">Rp {hourly.toLocaleString('id-ID')}/jam</span>
-                      <span className="text-slate-400 dark:text-slate-500"> {paySummary}</span>.
-                    </p>
-                  ) : (
-                    <p className="text-[11px] text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-800/80 border border-dashed border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 font-light">
-                      Pilih rentang upah di atas — hasil per jamnya muncul di sini.
-                    </p>
+
+                  {qIndex === 1 && (
+                    <QBlock title="Di area mana Anda tinggal saat ini?">
+                      <div className="grid grid-cols-1 gap-1.5">
+                        {Q3_OPTIONS.map((o) => (
+                          <RadioOption
+                            key={o.value}
+                            name="q3"
+                            label={o.label}
+                            hint={o.hint}
+                            checked={picked.q3 && studentPrefs.location === o.value}
+                            onPick={() => {
+                              set('location', o.value)
+                              mark('q3')
+                            }}
+                          />
+                        ))}
+                      </div>
+                    </QBlock>
                   )}
-                </QBlock>)}
-                {qIndex === 5 && (<QBlock title="Tuliskan skills apa saja yang Anda miliki saat ini:">
-                  <textarea
-                    aria-label="Keahlian yang dimiliki"
-                    rows={3}
-                    value={studentPrefs.skills}
-                    onChange={(e) => set('skills', e.target.value)}
-                    placeholder="Contoh: Canva, komunikasi ramah, kemampuan bekerja sama"
-                    className="w-full rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 p-2.5 text-xs focus:outline-none focus:border-[#0C52EE] dark:focus:border-blue-400"
-                  />
-                  <p className="text-[11px] text-slate-400 dark:text-slate-500 font-light">
-                    Contoh: "Microsoft Excel, pengetikan cepat, rekap data teliti" atau "Espresso machine, manual brewing, hospitality".
-                  </p>
-                </QBlock>)}
+
+                  {qIndex === 2 && (
+                    <QBlock title="Bidang pekerjaan part-time apa yang paling Anda minati?">
+                      <select
+                        aria-label="Bidang pekerjaan yang diminati"
+                        value={picked.q4 ? studentPrefs.preferredCategory : ''}
+                        onChange={(e) => {
+                          set('preferredCategory', e.target.value)
+                          mark('q4')
+                        }}
+                        className="w-full h-9 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:border-[#0C52EE] dark:focus:border-blue-400"
+                      >
+                        <option value="" disabled>
+                          Pilih satu bidang…
+                        </option>
+                        {Q4_OPTIONS.map((o) => (
+                          <option key={o.value} value={o.value}>
+                            {o.label} — {o.hint}
+                          </option>
+                        ))}
+                      </select>
+                    </QBlock>
+                  )}
+
+                  {qIndex === 3 && (
+                    <QBlock title="Sistem kerja part-time seperti apa yang Anda harapkan?">
+                      <div className="grid grid-cols-1 gap-1.5">
+                        {Q5_OPTIONS.map((o) => (
+                          <RadioOption
+                            key={o.value}
+                            name="q5"
+                            label={o.value}
+                            hint={o.hint}
+                            checked={picked.q5 && studentPrefs.workSystem === o.value}
+                            onPick={() => {
+                              set('workSystem', o.value as StudentPreferences['workSystem'])
+                              mark('q5')
+                            }}
+                          />
+                        ))}
+                      </div>
+                    </QBlock>
+                  )}
+
+                  {qIndex === 4 && (
+                    <>
+                      <QBlock title="Dalam seminggu, berapa hari kerja part-time yang Anda harapkan?">
+                        <div className="grid grid-cols-1 gap-1.5">
+                          {Q6A_OPTIONS.map((o) => (
+                            <RadioOption
+                              key={o.value}
+                              name="q6a"
+                              label={o.label}
+                              hint={o.hint}
+                              checked={days === o.value}
+                              onPick={() => setDays(o.value)}
+                            />
+                          ))}
+                        </div>
+                      </QBlock>
+
+                      <QBlock title="Berapa jam waktu yang diharapkan untuk bekerja part-time?">
+                        <div className="grid grid-cols-1 gap-1.5">
+                          {Q6B_OPTIONS.map((o) => (
+                            <RadioOption
+                              key={o.value}
+                              name="q6b"
+                              label={o.label}
+                              hint={o.hint}
+                              checked={hoursPerDay === o.value}
+                              onPick={() => setHoursPerDay(o.value)}
+                            />
+                          ))}
+                        </div>
+                        {jamIdeal !== null ? (
+                          <p
+                            className="text-xs text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 font-light"
+                            aria-live="polite"
+                          >
+                            Jam idealmu ≈{' '}
+                            <span className="font-medium text-slate-900 dark:text-white">
+                              {jamIdeal} jam/minggu
+                            </span>
+                            <span className="text-slate-400 dark:text-slate-500"> ({timeSummary})</span>.
+                            Makin dekat jam lowongan ke angka ini, makin cocok.
+                          </p>
+                        ) : (
+                          <p className="text-[11px] text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-800/80 border border-dashed border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 font-light">
+                            Pilih hari dan jam di atas — jam idealmu dihitung otomatis di sini.
+                          </p>
+                        )}
+                      </QBlock>
+                    </>
+                  )}
+
+                  {qIndex === 5 && (
+                    <QBlock title="Berapa banyak upah / gaji yang Anda harapkan per bulan?">
+                      <div className="grid grid-cols-1 gap-1.5">
+                        {Q7_OPTIONS.map((o) => (
+                          <RadioOption
+                            key={o.value}
+                            name="q7"
+                            label={o.label}
+                            hint={o.hint}
+                            checked={monthly === o.value}
+                            onPick={() => setMonthly(o.value)}
+                          />
+                        ))}
+                      </div>
+                      {hourly !== null ? (
+                        <p
+                          className="text-xs text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 font-light"
+                          aria-live="polite"
+                        >
+                          ≈{' '}
+                          <span className="font-medium text-slate-900 dark:text-white">
+                            Rp {hourly.toLocaleString('id-ID')}/jam
+                          </span>
+                          <span className="text-slate-400 dark:text-slate-500"> {paySummary}</span>.
+                        </p>
+                      ) : (
+                        <p className="text-[11px] text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-800/80 border border-dashed border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 font-light">
+                          Pilih rentang upah di atas — hasil per jamnya muncul di sini.
+                        </p>
+                      )}
+                    </QBlock>
+                  )}
+
+                  {qIndex === 6 && (
+                    <QBlock title="Tuliskan skills apa saja yang Anda miliki saat ini:">
+                      <textarea
+                        aria-label="Keahlian yang dimiliki"
+                        rows={3}
+                        value={studentPrefs.skills}
+                        onChange={(e) => set('skills', e.target.value)}
+                        placeholder="Contoh: Canva, komunikasi ramah, kemampuan bekerja sama"
+                        className="w-full rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 p-2.5 text-xs focus:outline-none focus:border-[#0C52EE] dark:focus:border-blue-400"
+                      />
+                      <p className="text-[11px] text-slate-400 dark:text-slate-500 font-light">
+                        Contoh: "Microsoft Excel, pengetikan cepat, rekap data teliti" atau "Espresso machine, manual brewing, hospitality".
+                      </p>
+                    </QBlock>
+                  )}
                 </div>
 
                 <div className="flex items-center justify-between gap-2 pt-1">
@@ -509,11 +600,20 @@ export function KuesionerPage({
                   <div className="text-right space-y-1.5">
                     {!screenValid && (
                       <p className="text-[11px] font-light text-[#ED1E79] dark:text-pink-400">
-                        {qIndex === 5 ? 'Tulis minimal 1 skill untuk lanjut.' : 'Wajib diisi — pilih salah satu untuk lanjut.'}
+                        {qIndex === 0
+                          ? 'Masukkan nama Anda untuk lanjut.'
+                          : qIndex === TOTAL_PROFILE_QUESTIONS - 1
+                            ? 'Tulis minimal 1 skill untuk lanjut.'
+                            : 'Wajib diisi — pilih salah satu untuk lanjut.'}
                       </p>
                     )}
-                    {qIndex < 5 ? (
-                      <Button size="sm" onClick={() => setQIndex((i) => i + 1)} disabled={!screenValid} className="text-xs gap-1.5 bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500">
+                    {qIndex < TOTAL_PROFILE_QUESTIONS - 1 ? (
+                      <Button
+                        size="sm"
+                        onClick={() => setQIndex((i) => i + 1)}
+                        disabled={!screenValid}
+                        className="text-xs gap-1.5 bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500"
+                      >
                         Lanjut <RiArrowRightLine className="h-3.5 w-3.5" />
                       </Button>
                     ) : (
@@ -640,7 +740,7 @@ export function KuesionerPage({
                 </div>
               </section>
             )}
-          </>
+          </div>
         )}
       </main>
 

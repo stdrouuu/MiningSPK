@@ -209,12 +209,16 @@ export function PreferenceSidebar({
             </p>
           </div>
         ) : (
-          /* Mode user baru: profil kosong -> bantu user dapat rekomendasi */
+          /* Mode user baru: tampilkan status profil & CTA kuesioner */
           <div className="p-3.5 rounded-xl border border-[#0C52EE]/30 bg-[#0C52EE]/[0.04] space-y-2">
             <div className="flex items-center justify-between">
               <span className="text-xs font-medium text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
                 <RiUserLine className="h-3.5 w-3.5 text-slate-500" />
-                Belum ada profil
+                {preferences.name.trim()
+                  ? `Profil: ${preferences.name.trim()}`
+                  : preferences.profileComplete
+                    ? 'Profil kuesioner aktif'
+                    : 'Belum ada profil'}
               </span>
               <Button
                 variant="ghost"
@@ -226,11 +230,12 @@ export function PreferenceSidebar({
               </Button>
             </div>
             <p className="text-[11px] text-slate-500 font-light">
-              Ceritakan preferensimu lewat kuesioner singkat (±3 menit) — hasilnya langsung
-              dipakai menyusun rekomendasi yang pas buatmu.
+              {preferences.profileComplete
+                ? 'Kamu bisa mengubah preferensi langsung di form bawah, atau mengulangi kuesioner dari awal.'
+                : 'Ceritakan preferensimu lewat kuesioner singkat (±3 menit) — hasilnya langsung dipakai menyusun rekomendasi yang pas buatmu.'}
             </p>
             <Button size="sm" onClick={onFillQuestionnaire} className="text-xs w-full">
-              Mulai kuesioner
+              {preferences.profileComplete ? 'Ulangi kuesioner' : 'Mulai kuesioner'}
             </Button>
           </div>
         )}
@@ -543,7 +548,7 @@ export function PreferenceSidebar({
             Batal
           </Button>
           <Button variant="default" size="sm" onClick={onClose} className="text-xs">
-            Terapkan & Perbarui Rekomendasi
+            Terapkan &amp; Perbarui Rekomendasi
           </Button>
         </div>
       </div>

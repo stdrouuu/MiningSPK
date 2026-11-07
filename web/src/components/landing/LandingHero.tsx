@@ -17,7 +17,7 @@ const HERO_AVATARS = [
 export function LandingHero({ totalJobs, onEnterPortal }: LandingHeroProps) {
   return (
     <section className="pt-16 pb-14 px-4 sm:px-6 lg:px-8 text-center bg-[#F8FAFC] dark:bg-slate-950 transition-colors">
-      <div className="max-w-4xl mx-auto space-y-4">
+      <div data-tour="landing-hero" className="max-w-4xl mx-auto space-y-4">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[52px] font-normal sm:font-medium tracking-tight text-slate-900 dark:text-white leading-[1.25]">
           <span className="text-[#0C52EE] font-normal sm:font-medium">Part–time, Fleksibel</span> dan<br />
           <span className="text-slate-900 dark:text-white font-normal sm:font-medium">Jadwal Kuliah Aman</span> <span className="text-[#ED1E79] font-normal sm:font-medium">untuk Mahasiswa</span>
