@@ -100,7 +100,12 @@ export function App() {
           fetch('/data/tfidf_skills.json').then((r) => (r.ok ? r.json() : null)).catch(() => null),
         ])
 
-        setJobs(jobsData)
+        const normalizedJobs = jobsData.map((j) => ({
+          ...j,
+          job_category: (j.job_category || '').replace(/\s+/g, ' ').trim(),
+        }))
+
+        setJobs(normalizedJobs)
         setStudents(studentsData)
         if (tfidfData) setTfidf(tfidfData as TfidfArtifact)
 
@@ -140,11 +145,12 @@ export function App() {
     loadData()
   }, [])
 
-  // Ekstrak list kategori unik
+  // Ekstrak list kategori unik (normalisasi spasi ganda)
   const categories = useMemo(() => {
     const set = new Set<string>()
     jobs.forEach((j) => {
-      if (j.job_category) set.add(j.job_category)
+      const cat = (j.job_category || '').replace(/\s+/g, ' ').trim()
+      if (cat) set.add(cat)
     })
     return Array.from(set).sort()
   }, [jobs])
@@ -176,7 +182,9 @@ export function App() {
           job.job_id?.toLowerCase().includes(q) ||
           job.work_required_skills?.toLowerCase().includes(q)
 
-        const matchCat = filterCategory === 'ALL' || job.job_category === filterCategory
+        const matchCat =
+          filterCategory === 'ALL' ||
+          (job.job_category || '').replace(/\s+/g, ' ').trim() === filterCategory.replace(/\s+/g, ' ').trim()
         const matchSys =
           filterWorkSystem === 'ALL' ||
           job.work_system?.toLowerCase() === filterWorkSystem.toLowerCase()
@@ -243,9 +251,17 @@ export function App() {
     setSortBy,
   }
 
+  const resetPortalFilters = () => {
+    setSearchQuery('')
+    setFilterCategory('ALL')
+    setFilterWorkSystem('ALL')
+    setSortBy('match')
+  }
+
   // User baru yang profilnya masih kosong diarahkan isi kuesioner dulu.
   const goFillQuestionnaire = () => {
     setIsPreferenceOpen(false)
+    resetPortalFilters()
     navigate(ROUTES.KUESIONER)
   }
 
@@ -351,6 +367,10 @@ export function App() {
                   onOpenSavedJobs={() => setIsSavedJobsOpen(true)}
                   savedJobsCount={shared.savedJobIds.length}
                   tfidf={tfidf}
+                  onViewAllInPortal={() => {
+                    resetPortalFilters()
+                    navigate(ROUTES.PORTAL)
+                  }}
                 />
                 <PortalFooter onOpenPreferences={() => setIsPreferenceOpen(true)} />
               </>

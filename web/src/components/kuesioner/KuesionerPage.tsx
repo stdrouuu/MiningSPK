@@ -32,6 +32,7 @@ interface Props {
   onOpenSavedJobs: () => void
   savedJobsCount: number
   tfidf?: TfidfArtifact | null
+  onViewAllInPortal?: () => void
 }
 
 const STEPS = ['Profil', 'Prioritas', 'Hasil']
@@ -191,6 +192,7 @@ export function KuesionerPage({
   onOpenSavedJobs,
   savedJobsCount,
   tfidf,
+  onViewAllInPortal,
 }: Props) {
   const navigate = useNavigate()
   const [step, setStep] = useState(0)
@@ -747,11 +749,13 @@ export function KuesionerPage({
 
                 <SensitivityPanel scenarios={scenarios} />
 
-                <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
-                  <button onClick={() => setStep(0)} className="text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white underline">
-                    Ulangi isi profil
-                  </button>
-                  <Button variant="outline" size="sm" onClick={() => navigate(ROUTES.PORTAL)} className="text-xs dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800">
+                <div className="flex flex-wrap items-center justify-end gap-2 pt-1">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => (onViewAllInPortal ? onViewAllInPortal() : navigate(ROUTES.PORTAL))}
+                    className="text-xs dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-800"
+                  >
                     Lihat semua di portal
                   </Button>
                 </div>

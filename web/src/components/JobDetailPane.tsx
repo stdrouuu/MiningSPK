@@ -212,8 +212,7 @@ export function JobDetailPane({
           ))}
         </div>
 
-        <div className="flex items-center justify-between gap-3 text-sm">
-          <span className="text-[13px] text-slate-500 dark:text-slate-400">U(Ai) = {"\u03A3"} (w{'\u2C7C'} {"\u00D7"} u{'\u2C7C'}) {"\u2022"} bobot ROC</span>
+        <div className="flex items-center justify-end gap-3 text-sm">
           <button onClick={onOpenPreferences} className="text-[#0C52EE] dark:text-blue-400 font-medium hover:underline underline-offset-4">
             Ubah bobot prioritas
           </button>
