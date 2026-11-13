@@ -136,7 +136,7 @@ export function buildDecisionMatrixForStudent(
     const expectedSalary = student.min_expected_salary || 35000
     const c2 = Number(Math.min(job.work_salaryperhour / expectedSalary, C2_RATIO_CAP).toFixed(4))
 
-    // C3: Lokasi & Moda Kerja
+    // C3: Lokasi & Sistem Kerja
     let c3 = 0.4
     const jobLoc = job.work_job_location.toLowerCase()
     const studentLoc = (student.student_location_clean || student.student_location).toLowerCase()
@@ -348,7 +348,7 @@ export function computeSPKForCustomStudent(
   // 3. Hitung SMARTER
   const ranked = computeSmarter(matrix, weights)
 
-  // 4. SENGAJA tidak ada hard-filter moda di level SPK (global 221) agar
+  // 4. SENGAJA tidak ada hard-filter sistem kerja di level SPK (global 221) agar
   // ranking web sama dengan Excel 05_ARSIP_221. prefs.workSystem hanya info
   // preferensi dari clean dataset (ditampilkan di UI per mahasiswa);
   // penyaringan feed ada di lapisan tampilan (filterWorkSystem), bukan ranking.

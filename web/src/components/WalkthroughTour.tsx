@@ -88,7 +88,7 @@ const SECTION_STEPS: Record<TourSectionKey, TourStep[]> = {
       selector: '[data-tour="portal-filter"]',
       title: 'Cari & Filter Lowongan',
       description:
-        'Cari posisi kerja, saring kategori & moda kerja, atau atur urutan lowongan di sini.',
+        'Cari posisi kerja, saring kategori & sistem kerja, atau atur urutan lowongan di sini.',
     },
     {
       id: 'portal-job-list',

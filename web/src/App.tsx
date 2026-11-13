@@ -695,14 +695,14 @@ function PortalRoute({
                 </div>
 
                 <div className="lg:col-span-2">
-                  <label htmlFor="filter-mode" className="sr-only">Filter moda kerja</label>
+                  <label htmlFor="filter-mode" className="sr-only">Filter sistem kerja</label>
                   <select
                     id="filter-mode"
                     value={state.filterWorkSystem}
                     onChange={(e) => state.setFilterWorkSystem(e.target.value)}
                     className="w-full py-2.5 px-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm font-light text-slate-700 dark:text-slate-200 focus:bg-white dark:focus:bg-slate-950 focus:outline-none focus:border-[#0C52EE] dark:focus:border-blue-400"
                   >
-                    <option value="ALL">Semua Moda</option>
+                    <option value="ALL">Semua Sistem</option>
                     <option value="Remote">Remote Only</option>
                     <option value="Hybrid">Hybrid</option>
                     <option value="Onsite">Onsite</option>

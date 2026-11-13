@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, type MouseEvent, type FocusEvent } from 'react'
 import { RiDownloadLine, RiEqualizerLine } from 'react-icons/ri'
 import { Button } from './ui/Button'
 import { CompanyLogo } from './CompanyLogo'
@@ -30,6 +30,122 @@ export function FullMatrixView({
   const [matrixDisplayMode, setMatrixDisplayMode] = useState<'ranking' | 'utility' | 'raw'>(
     'ranking'
   )
+  const [hoveredTip, setHoveredTip] = useState<{
+    title: string
+    value: string
+    meaning: string
+    left: number
+    top: number
+    bottom: number
+  } | null>(null)
+
+  const showTip = (
+    e: MouseEvent<HTMLElement> | FocusEvent<HTMLElement>,
+    title: string,
+    value: string,
+    meaning: string
+  ) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+    const clampedLeft = Math.min(Math.max(rect.left + rect.width / 2, 160), window.innerWidth - 160)
+    setHoveredTip({
+      title,
+      value,
+      meaning,
+      left: clampedLeft,
+      top: rect.top,
+      bottom: rect.bottom,
+    })
+  }
+
+  const hideTip = () => setHoveredTip(null)
+
+  const getCriterionTooltip = (
+    criterion: 'final' | 'C1' | 'C2' | 'C3' | 'C4' | 'C5' | 'u1' | 'u2' | 'u3' | 'u4' | 'u5',
+    job: RankedJobResult
+  ): { title: string; value: string; meaning: string } => {
+    switch (criterion) {
+      case 'final':
+        return {
+          title: 'Skor Utilitas Akhir U(Ai)',
+          value: job.finalScore.toFixed(4),
+          meaning: `Total skor SMARTER dari jumlah bobot ROC × utilitas seluruh kriteria (setara ${(job.finalScore * 100).toFixed(0)}% cocok). Makin mendekati 1, makin direkomendasikan.`,
+        }
+      case 'C1':
+        return {
+          title: 'Skor Kategori (C1)',
+          value: String(job.C1_kategori),
+          meaning:
+            job.C1_kategori >= 1
+              ? `Nilai 1 berarti kategori "${job.job_category}" sesuai penuh dengan minat bidangmu.`
+              : `Nilai ${job.C1_kategori} berarti kategori "${job.job_category}" di luar minat bidang utamamu (skor dasar 0.3).`,
+        }
+      case 'C2':
+        return {
+          title: 'Rasio Gaji (C2)',
+          value: String(job.C2_rasio_gaji),
+          meaning: `Perbandingan upah ${formatRupiah(job.work_salaryperhour)}/jam terhadap targetmu ${formatRupiah(studentPrefs.minSalary)}/jam (maks 2.0). Nilai ≥ 1 berarti upah memenuhi atau melampaui target.`,
+        }
+      case 'C3':
+        return {
+          title: 'Skor Lokasi & Sistem Kerja (C3)',
+          value: String(job.C3_lokasi),
+          meaning:
+            job.C3_lokasi >= 1
+              ? `Nilai 1 berarti lowongan ini Remote atau berlokasi di ${job.work_job_location} (sama dengan domisilimu).`
+              : job.C3_lokasi >= 0.7
+                ? `Nilai ${job.C3_lokasi} berarti lokasi (${job.work_job_location}) berdekatan dengan domisilimu.`
+                : `Nilai ${job.C3_lokasi} berarti lokasi (${job.work_job_location}) di luar domisilimu dan tidak Remote.`,
+        }
+      case 'C4':
+        return {
+          title: 'Skor Kecocokan Jam Kuliah (C4)',
+          value: String(job.C4_jam_kerja),
+          meaning: `Mengukur kecocokan ${job.work_hours} jam/minggu dengan batas idealmu (${studentPrefs.maxHours} jam/minggu). Nilai mendekati 1 berarti beban jam aman untuk kuliah.`,
+        }
+      case 'C5':
+        return {
+          title: 'Skor Kemiripan Skill (C5)',
+          value: String(job.C5_kemiripan_skill),
+          meaning:
+            job.C5_kemiripan_skill === 0
+              ? 'Nilai 0 berarti belum ada irisan kata kunci skill di profilmu dengan kebutuhan skill lowongan ini.'
+              : `Skor TF-IDF Cosine (${job.C5_kemiripan_skill}) menunjukkan tingkat kecocokan skill-mu dengan deskripsi lowongan (skala 0–1).`,
+        }
+      case 'u1':
+      case 'u2':
+      case 'u3':
+      case 'u4':
+      case 'u5': {
+        const labelMap = {
+          u1: 'Utilitas Kategori (u₁)',
+          u2: 'Utilitas Gaji (u₂)',
+          u3: 'Utilitas Lokasi & Sistem (u₃)',
+          u4: 'Utilitas Jam Kuliah (u₄)',
+          u5: 'Utilitas Skill (u₅)',
+        }
+        const val = job[criterion]
+        return {
+          title: labelMap[criterion],
+          value: String(val),
+          meaning: `Nilai normalisasi skala 0–1 terhadap seluruh lowongan. 1 = terbaik di dataset untuk kriteria ini, 0 = terendah, sebelum dikalikan bobot ROC.`,
+        }
+      }
+    }
+  }
+
+  const tipProps = (
+    criterion: 'final' | 'C1' | 'C2' | 'C3' | 'C4' | 'C5' | 'u1' | 'u2' | 'u3' | 'u4' | 'u5',
+    job: RankedJobResult
+  ) => {
+    const { title, value, meaning } = getCriterionTooltip(criterion, job)
+    return {
+      tabIndex: 0,
+      onMouseEnter: (e: MouseEvent<HTMLElement>) => showTip(e, title, value, meaning),
+      onMouseLeave: hideTip,
+      onFocus: (e: FocusEvent<HTMLElement>) => showTip(e, title, value, meaning),
+      onBlur: hideTip,
+    }
+  }
 
   const filteredJobs = useMemo(() => {
     if (!search) return rankedJobs
@@ -288,8 +404,11 @@ export function FullMatrixView({
                     {matrixDisplayMode === 'ranking' && (
                       <>
                         <td className="py-3 px-4">
-                          <div className="flex items-center gap-2">
-                            <span className="font-mono font-medium text-slate-900 dark:text-white">
+                          <div
+                            {...tipProps('final', job)}
+                            className="inline-flex items-center gap-2 cursor-help rounded px-1 -mx-1 hover:bg-blue-50 dark:hover:bg-blue-950/40 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0C52EE]"
+                          >
+                            <span className="font-mono font-medium text-slate-900 dark:text-white underline decoration-dotted decoration-slate-300 dark:decoration-slate-600 underline-offset-4">
                               {job.finalScore.toFixed(4)}
                             </span>
                             <div className="w-16 bg-slate-200 dark:bg-slate-800 rounded-full h-1.5 overflow-hidden">
@@ -301,19 +420,44 @@ export function FullMatrixView({
                           </div>
                         </td>
                         <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
-                          {job.C1_kategori}
+                          <span
+                            {...tipProps('C1', job)}
+                            className="inline-block cursor-help rounded px-1.5 py-0.5 hover:bg-slate-100 dark:hover:bg-slate-800 underline decoration-dotted decoration-slate-300 dark:decoration-slate-600 underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0C52EE]"
+                          >
+                            {job.C1_kategori}
+                          </span>
                         </td>
                         <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
-                          {job.C2_rasio_gaji}
+                          <span
+                            {...tipProps('C2', job)}
+                            className="inline-block cursor-help rounded px-1.5 py-0.5 hover:bg-slate-100 dark:hover:bg-slate-800 underline decoration-dotted decoration-slate-300 dark:decoration-slate-600 underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0C52EE]"
+                          >
+                            {job.C2_rasio_gaji}
+                          </span>
                         </td>
                         <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
-                          {job.C3_lokasi}
+                          <span
+                            {...tipProps('C3', job)}
+                            className="inline-block cursor-help rounded px-1.5 py-0.5 hover:bg-slate-100 dark:hover:bg-slate-800 underline decoration-dotted decoration-slate-300 dark:decoration-slate-600 underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0C52EE]"
+                          >
+                            {job.C3_lokasi}
+                          </span>
                         </td>
                         <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
-                          {job.C4_jam_kerja}
+                          <span
+                            {...tipProps('C4', job)}
+                            className="inline-block cursor-help rounded px-1.5 py-0.5 hover:bg-slate-100 dark:hover:bg-slate-800 underline decoration-dotted decoration-slate-300 dark:decoration-slate-600 underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0C52EE]"
+                          >
+                            {job.C4_jam_kerja}
+                          </span>
                         </td>
                         <td className="py-3 px-4 font-mono text-center font-medium text-slate-900 dark:text-white">
-                          {job.C5_kemiripan_skill}
+                          <span
+                            {...tipProps('C5', job)}
+                            className="inline-block cursor-help rounded px-1.5 py-0.5 hover:bg-slate-100 dark:hover:bg-slate-800 underline decoration-dotted decoration-slate-300 dark:decoration-slate-600 underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0C52EE]"
+                          >
+                            {job.C5_kemiripan_skill}
+                          </span>
                         </td>
                       </>
                     )}
@@ -321,22 +465,52 @@ export function FullMatrixView({
                     {matrixDisplayMode === 'utility' && (
                       <>
                         <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
-                          {job.u1}
+                          <span
+                            {...tipProps('u1', job)}
+                            className="inline-block cursor-help rounded px-1.5 py-0.5 hover:bg-slate-100 dark:hover:bg-slate-800 underline decoration-dotted decoration-slate-300 dark:decoration-slate-600 underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0C52EE]"
+                          >
+                            {job.u1}
+                          </span>
                         </td>
                         <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
-                          {job.u2}
+                          <span
+                            {...tipProps('u2', job)}
+                            className="inline-block cursor-help rounded px-1.5 py-0.5 hover:bg-slate-100 dark:hover:bg-slate-800 underline decoration-dotted decoration-slate-300 dark:decoration-slate-600 underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0C52EE]"
+                          >
+                            {job.u2}
+                          </span>
                         </td>
                         <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
-                          {job.u3}
+                          <span
+                            {...tipProps('u3', job)}
+                            className="inline-block cursor-help rounded px-1.5 py-0.5 hover:bg-slate-100 dark:hover:bg-slate-800 underline decoration-dotted decoration-slate-300 dark:decoration-slate-600 underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0C52EE]"
+                          >
+                            {job.u3}
+                          </span>
                         </td>
                         <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
-                          {job.u4}
+                          <span
+                            {...tipProps('u4', job)}
+                            className="inline-block cursor-help rounded px-1.5 py-0.5 hover:bg-slate-100 dark:hover:bg-slate-800 underline decoration-dotted decoration-slate-300 dark:decoration-slate-600 underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0C52EE]"
+                          >
+                            {job.u4}
+                          </span>
                         </td>
                         <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
-                          {job.u5}
+                          <span
+                            {...tipProps('u5', job)}
+                            className="inline-block cursor-help rounded px-1.5 py-0.5 hover:bg-slate-100 dark:hover:bg-slate-800 underline decoration-dotted decoration-slate-300 dark:decoration-slate-600 underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0C52EE]"
+                          >
+                            {job.u5}
+                          </span>
                         </td>
                         <td className="py-3 px-4 font-mono font-medium text-slate-900 dark:text-white">
-                          {job.finalScore}
+                          <span
+                            {...tipProps('final', job)}
+                            className="inline-block cursor-help rounded px-1.5 py-0.5 hover:bg-blue-50 dark:hover:bg-blue-950/40 underline decoration-dotted decoration-slate-300 dark:decoration-slate-600 underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0C52EE]"
+                          >
+                            {job.finalScore}
+                          </span>
                         </td>
                       </>
                     )}
@@ -344,19 +518,44 @@ export function FullMatrixView({
                     {matrixDisplayMode === 'raw' && (
                       <>
                         <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
-                          {job.C1_kategori}
+                          <span
+                            {...tipProps('C1', job)}
+                            className="inline-block cursor-help rounded px-1.5 py-0.5 hover:bg-slate-100 dark:hover:bg-slate-800 underline decoration-dotted decoration-slate-300 dark:decoration-slate-600 underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0C52EE]"
+                          >
+                            {job.C1_kategori}
+                          </span>
                         </td>
                         <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
-                          {job.C2_rasio_gaji}
+                          <span
+                            {...tipProps('C2', job)}
+                            className="inline-block cursor-help rounded px-1.5 py-0.5 hover:bg-slate-100 dark:hover:bg-slate-800 underline decoration-dotted decoration-slate-300 dark:decoration-slate-600 underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0C52EE]"
+                          >
+                            {job.C2_rasio_gaji}
+                          </span>
                         </td>
                         <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
-                          {job.C3_lokasi}
+                          <span
+                            {...tipProps('C3', job)}
+                            className="inline-block cursor-help rounded px-1.5 py-0.5 hover:bg-slate-100 dark:hover:bg-slate-800 underline decoration-dotted decoration-slate-300 dark:decoration-slate-600 underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0C52EE]"
+                          >
+                            {job.C3_lokasi}
+                          </span>
                         </td>
                         <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
-                          {job.C4_jam_kerja}
+                          <span
+                            {...tipProps('C4', job)}
+                            className="inline-block cursor-help rounded px-1.5 py-0.5 hover:bg-slate-100 dark:hover:bg-slate-800 underline decoration-dotted decoration-slate-300 dark:decoration-slate-600 underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0C52EE]"
+                          >
+                            {job.C4_jam_kerja}
+                          </span>
                         </td>
                         <td className="py-3 px-4 font-mono text-center text-slate-600 dark:text-slate-400">
-                          {job.C5_kemiripan_skill}
+                          <span
+                            {...tipProps('C5', job)}
+                            className="inline-block cursor-help rounded px-1.5 py-0.5 hover:bg-slate-100 dark:hover:bg-slate-800 underline decoration-dotted decoration-slate-300 dark:decoration-slate-600 underline-offset-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0C52EE]"
+                          >
+                            {job.C5_kemiripan_skill}
+                          </span>
                         </td>
                       </>
                     )}
@@ -390,6 +589,30 @@ export function FullMatrixView({
               </Button>
             </div>
           </div>
+        </div>
+      )}
+
+      {hoveredTip && (
+        <div
+          role="tooltip"
+          style={{
+            left: `${hoveredTip.left}px`,
+            top: hoveredTip.top < 150 ? `${hoveredTip.bottom + 8}px` : `${hoveredTip.top - 8}px`,
+            transform: hoveredTip.top < 150 ? 'translate(-50%, 0)' : 'translate(-50%, -100%)',
+          }}
+          className="fixed z-50 w-72 max-w-[90vw] pointer-events-none rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3.5 py-2.5 text-left shadow-lg text-slate-800 dark:text-slate-100"
+        >
+          <div className="flex items-center justify-between gap-2 mb-1">
+            <span className="text-[11px] font-semibold text-[#0C52EE] dark:text-blue-300">
+              {hoveredTip.title}
+            </span>
+            <span className="font-mono text-[11px] font-semibold bg-blue-50 text-[#0C52EE] dark:bg-white/15 dark:text-white px-1.5 py-0.5 rounded">
+              {hoveredTip.value}
+            </span>
+          </div>
+          <p className="text-[11px] leading-relaxed text-slate-600 dark:text-slate-200">
+            {hoveredTip.meaning}
+          </p>
         </div>
       )}
     </div>

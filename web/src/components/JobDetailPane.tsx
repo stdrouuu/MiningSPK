@@ -201,7 +201,7 @@ export function JobDetailPane({
           {[
             { label: 'Kategori pekerjaan', body: isCategoryMatch ? `Sesuai minat Anda (${job.job_category}).` : `Berbeda dari minat Anda (${studentPrefs.preferredCategory}).`, warn: false },
             { label: `Upah (${salaryRatio.toFixed(2)}× target)`, body: `Tawaran Rp ${job.work_salaryperhour.toLocaleString('id-ID')} vs target Rp ${studentPrefs.minSalary.toLocaleString('id-ID')}.`, warn: false },
-            { label: 'Lokasi & moda', body: c3Desc, warn: false },
+            { label: 'Lokasi & sistem', body: c3Desc, warn: false },
             { label: `Beban jam (${job.work_hours} jam)`, body: c4Desc, warn: !isWithinHours },
             { label: 'Kecocokan keahlian', body: 'Irisan kata kunci skill Anda dengan deskripsi lowongan (TF-IDF cosine).', warn: false },
           ].map((row) => (

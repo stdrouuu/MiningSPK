@@ -22,7 +22,7 @@ export const CRITERIA: CriterionMeta[] = [
   },
   {
     key: 'C3_lokasi',
-    title: 'Lokasi & Moda Kerja',
+    title: 'Lokasi & Sistem Kerja',
     desc: 'Seberapa penting dekat domisili / bisa remote?',
     example: 'Contoh: Remote atau Jakarta Barat kalau kamu di sana.',
   },

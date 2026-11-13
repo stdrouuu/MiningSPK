@@ -29,6 +29,7 @@ export function PriorityEditor({ ranks, onChange, onReset, showReset = true }: P
   const preDragRef = useRef<Ranks | null>(null)
   const [dragFromIndex, setDragFromIndex] = useState<number | null>(null)
   const [isDragging, setIsDragging] = useState(false)
+  const [openFaqKey, setOpenFaqKey] = useState<CriterionKey | null>(null)
 
   /** Urutan key baru jika item fromIndex pindah ke toIndex. */
   const movedOrder = (fromIndex: number, toIndex: number): CriterionKey[] => {
@@ -139,35 +140,36 @@ export function PriorityEditor({ ranks, onChange, onReset, showReset = true }: P
                 preDragRef.current = null
                 clearDrag()
               }}
-              className={`emil-press flex items-center gap-2 p-2.5 rounded-lg border text-xs select-none transition-opacity ${
+              className={`emil-press flex flex-col gap-1.5 p-2.5 rounded-lg border text-xs select-none transition-opacity ${
                 isDragged
                   ? 'border-[#0C52EE] dark:border-blue-500 bg-[#0C52EE]/[0.04] dark:bg-blue-500/10 opacity-40'
                   : 'border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50'
               }`}
             >
-              {/* Drag handle */}
-              <span
-                title="Seret untuk memindahkan"
-                className="flex h-8 w-6 shrink-0 items-center justify-center rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/70 dark:hover:bg-slate-700 cursor-grab active:cursor-grabbing touch-none"
-              >
-                <RiDraggable className="h-4 w-4" />
-              </span>
-
-              {/* Nomor prioritas */}
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-[#0C52EE] dark:bg-blue-600 text-white font-medium text-xs font-mono">
-                {currentRank}
-              </span>
-
-              <div className="flex min-w-0 flex-1 items-center gap-2">
-                <span className="truncate font-medium text-slate-900 dark:text-white">
-                  {m.title}
+              <div className="flex items-center gap-2">
+                {/* Drag handle */}
+                <span
+                  title="Seret untuk memindahkan"
+                  className="flex h-8 w-6 shrink-0 items-center justify-center rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/70 dark:hover:bg-slate-700 cursor-grab active:cursor-grabbing touch-none"
+                >
+                  <RiDraggable className="h-4 w-4" />
                 </span>
-              </div>
 
-              <div className="flex shrink-0 items-center gap-2">
-                <span className="font-medium text-white bg-[#0C52EE] dark:bg-blue-600 px-2.5 py-1 rounded-md text-xs shadow-2xs tabular-nums">
-                  {weightPct(weights[key])}
+                {/* Nomor prioritas */}
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-[#0C52EE] dark:bg-blue-600 text-white font-medium text-xs font-mono">
+                  {currentRank}
                 </span>
+
+                <div className="flex min-w-0 flex-1 items-center gap-2">
+                  <span className="truncate font-medium text-slate-900 dark:text-white">
+                    {m.title}
+                  </span>
+                </div>
+
+                <div className="flex shrink-0 items-center gap-2">
+                  <span className="font-medium text-white bg-[#0C52EE] dark:bg-blue-600 px-2.5 py-1 rounded-md text-xs shadow-2xs tabular-nums">
+                    {weightPct(weights[key])}
+                  </span>
                 {/* Fallback tombol untuk mobile / keyboard */}
                 <span className="flex flex-col -space-y-0.5">
                   <button
@@ -189,6 +191,58 @@ export function PriorityEditor({ ranks, onChange, onReset, showReset = true }: P
                     <RiArrowDownSLine className="h-3.5 w-3.5" />
                   </button>
                 </span>
+              </div>
+              </div>
+
+              <div
+                className="pl-8 pr-1"
+                onClick={(e) => e.stopPropagation()}
+                onMouseDown={(e) => e.stopPropagation()}
+                onDragStart={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                }}
+              >
+                <button
+                  type="button"
+                  aria-expanded={openFaqKey === key}
+                  onClick={() => setOpenFaqKey((prev) => (prev === key ? null : key))}
+                  className={`inline-flex cursor-pointer items-center gap-1 text-[11px] font-medium transition-colors ${
+                    openFaqKey === key
+                      ? 'text-[#0C52EE] dark:text-blue-400'
+                      : 'text-slate-500 dark:text-slate-400 hover:text-[#0C52EE] dark:hover:text-blue-400'
+                  }`}
+                >
+                  <span>Apa maksud kriteria ini?</span>
+                  <RiArrowDownSLine
+                    className={`h-3.5 w-3.5 transition-transform duration-150 ${
+                      openFaqKey === key ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
+                {openFaqKey === key && (
+                  <div className="mt-1.5 rounded-md border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/70 px-3 py-2 text-[11px] leading-relaxed text-slate-600 dark:text-slate-300 select-text">
+                    <p>
+                      {
+                        {
+                          C1_kategori:
+                            'Menilai seberapa sesuai bidang pekerjaan dengan minat kategori yang kamu pilih. Lowongan yang bidangnya sama dengan minatmu akan mendapat skor lebih tinggi.',
+                          C2_gaji:
+                            'Membandingkan upah per jam yang ditawarkan lowongan dengan target upah minimalmu. Semakin besar upah dibanding targetmu, semakin tinggi nilainya.',
+                          C3_lokasi:
+                            'Menilai kedekatan lokasi kerja dengan domisilimu serta sistem kerjanya. Lowongan Remote atau yang satu kota/area dengan domisilimu akan lebih diprioritaskan.',
+                          C4_jam_kerja:
+                            'Pekerjaan yang diberikan harus menyesuaikan dengan jam kuliah dan batas maksimal jam kerja per minggu yang kamu pilih agar tidak mengganggu jadwal kuliahmu.',
+                          C5_skill:
+                            'Mengukur kecocokan keahlian (skill) yang kamu miliki dengan kebutuhan skill pada deskripsi lowongan. Semakin banyak skill yang relevan, semakin tinggi skornya.',
+                        }[key]
+                      }
+                    </p>
+                    <p className="mt-1 text-[10px] text-slate-400 dark:text-slate-500">
+                      {m.example}
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           )

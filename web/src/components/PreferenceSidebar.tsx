@@ -107,7 +107,7 @@ export function PreferenceSidebar({
 
   // Muat data dari profil contoh mahasiswa
   // workSystem mengikuti clean dataset (preferred_work_system) agar tiap
-  // mahasiswa tampil beda (Remote/Hybrid/Onsite), bukan selalu "Semua moda".
+  // mahasiswa tampil beda (Remote/Hybrid/Onsite), bukan selalu "Semua sistem".
   const normalizeWorkSystem = (
     v: unknown
   ): StudentPreferences['workSystem'] => {
@@ -146,7 +146,7 @@ export function PreferenceSidebar({
   }> = [
     { key: 'C1_kategori', title: 'Kesesuaian Bidang Kategori' },
     { key: 'C2_gaji', title: 'Tawaran Upah / Jam (Gaji)' },
-    { key: 'C3_lokasi', title: 'Kedekatan Lokasi & Moda Kerja' },
+    { key: 'C3_lokasi', title: 'Kedekatan Lokasi & Sistem Kerja' },
     { key: 'C4_jam_kerja', title: 'Beban Jam Kerja per Minggu' },
     { key: 'C5_skill', title: 'Kecocokan Keahlian (Skill Cosine)' },
   ]
@@ -388,7 +388,7 @@ export function PreferenceSidebar({
           {/* Sistem Kehadiran Kerja */}
           <div>
             <label htmlFor="pref-system" className="text-xs font-medium text-slate-600 dark:text-slate-400 block mb-1">
-              Moda kerja
+              Sistem kerja
             </label>
             <select
               id="pref-system"
@@ -397,7 +397,7 @@ export function PreferenceSidebar({
               disabled={isLocked}
               className="w-full h-9 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100 cursor-pointer disabled:cursor-not-allowed disabled:bg-slate-100/80 dark:disabled:bg-slate-900 disabled:text-slate-500 dark:disabled:text-slate-400"
             >
-              <option value="ALL">Semua moda (Remote, Hybrid, Onsite)</option>
+              <option value="ALL">Semua sistem (Remote, Hybrid, Onsite)</option>
               <option value="Remote">Remote saja</option>
               <option value="Hybrid">Hybrid</option>
               <option value="Onsite">Onsite</option>
