@@ -3,6 +3,7 @@ import { navButtonClass, navIndicatorClass } from '../../lib/navStyle'
 import { ThemeToggle } from '../ui/ThemeToggle'
 import { GuideTriggerButton } from '../WalkthroughTour'
 import { avatarForPrefs } from '../../lib/avatar'
+import { BrandLogo } from '../BrandLogo'
 import type { StudentPreferences } from '../../types/portal'
 
 type NavView = 'landing' | 'portal' | 'matrix' | 'kuesioner'
@@ -74,11 +75,11 @@ export function LandingNav({
           <button
             data-tour="header-brand"
             onClick={() => onNavigate('landing')}
-            className="flex items-center text-left group focus:outline-none"
+            className="flex items-center gap-2 text-left group focus:outline-none cursor-pointer"
           >
-            <span className="text-2xl font-medium tracking-tighter text-slate-900 dark:text-white">upmatch</span>
+            <BrandLogo />
             {mode === 'data' && (
-              <span className="ml-2 px-1.5 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 text-[10px] font-medium text-amber-800 dark:text-amber-300">
+              <span className="px-1.5 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 text-[10px] font-medium text-amber-800 dark:text-amber-300">
                 demo data
               </span>
             )}

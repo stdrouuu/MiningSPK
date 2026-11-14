@@ -7,6 +7,7 @@ import { avatarForPrefs } from '../lib/avatar'
 import { navButtonClass, navIndicatorClass } from '../lib/navStyle'
 import { ThemeToggle } from './ui/ThemeToggle'
 import { GuideTriggerButton } from './WalkthroughTour'
+import { BrandLogo } from './BrandLogo'
 
 interface PortalHeaderProps {
   /** Mode halaman: user baru (profil kosong) atau demo data responden. */
@@ -79,11 +80,11 @@ export function PortalHeader({
           <button
             data-tour="header-brand"
             onClick={() => navigate(landingPath)}
-            className="flex items-center group focus:outline-none text-left"
+            className="flex items-center gap-2 text-left group focus:outline-none cursor-pointer"
           >
-            <span className="text-2xl font-medium tracking-tighter text-slate-900 dark:text-white">upmatch</span>
+            <BrandLogo />
             {mode === 'data' && (
-              <span className="ml-2 px-1.5 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 text-[10px] font-medium text-amber-800 dark:text-amber-300">
+              <span className="px-1.5 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 text-[10px] font-medium text-amber-800 dark:text-amber-300">
                 demo data
               </span>
             )}
