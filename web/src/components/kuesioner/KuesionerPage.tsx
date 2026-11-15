@@ -2,12 +2,13 @@ import { useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { RiArrowLeftLine, RiArrowRightLine, RiQuestionLine } from 'react-icons/ri'
-import { PortalHeader } from '../PortalHeader'
+import { BrandLogo } from '../BrandLogo'
 import { Button } from '../ui/Button'
 import { CompanyLogo } from '../CompanyLogo'
 import { ConfirmRankModal } from './ConfirmRankModal'
 import { JobRadarSearchModal } from './JobRadarSearchModal'
 import { PairwiseQuiz } from './PairwiseQuiz'
+import { StepperPreview } from './StepperPreview'
 import { PriorityEditor } from './PriorityEditor'
 import { SensitivityPanel } from './SensitivityPanel'
 import type { CleanJob, RankedJobResult, StudentProfile } from '../../types/data'
@@ -35,7 +36,6 @@ interface Props {
   onViewAllInPortal?: () => void
 }
 
-const STEPS = ['Profil', 'Prioritas', 'Hasil']
 const TOTAL_PROFILE_QUESTIONS = 7
 
 // ─── Opsi Google Form survei (Q3–Q7) ─────────────────────────────────────────
@@ -188,14 +188,12 @@ export function KuesionerPage({
   loading,
   studentPrefs,
   setStudentPrefs,
-  onOpenPreferences,
-  onOpenSavedJobs,
-  savedJobsCount,
   tfidf,
   onViewAllInPortal,
 }: Props) {
   const navigate = useNavigate()
   const [step, setStep] = useState(0)
+  const [showIntro, setShowIntro] = useState(true)
   // Sub-langkah profil: satu pertanyaan satu layar (0=Nama, 1=Q3 … 6=Q8)
   const [qIndex, setQIndex] = useState(0)
   // Jawaban GForm mentah (Q6a/Q6b/Q7) — null = belum dijawab (wajib diisi semua)
@@ -321,59 +319,34 @@ export function KuesionerPage({
     setStudentPrefs((p) => ({ ...p, [k]: v }))
 
   const previewAvatar = avatarForPrefs(studentPrefs)
+  const profileTopics = ['Nama Anda', 'Lokasi tempat tinggal', 'Bidang pekerjaan', 'Sistem kerja', 'Waktu kerja', 'Target penghasilan', 'Keahlian Anda']
+  const panelTitle = showIntro ? 'Kuesioner: Isi profil untuk dapatkan rekomendasi kerja' : step === 0 ? profileTopics[qIndex] : step === 1 ? 'Susun prioritas kerja' : 'Rekomendasi untuk Anda'
 
   return (
     <>
-      <PortalHeader
-        mode="user"
-        activeView="kuesioner"
-        studentPrefs={studentPrefs}
-        onOpenPreferences={onOpenPreferences}
-        savedJobsCount={savedJobsCount}
-        onOpenSavedJobs={onOpenSavedJobs}
-      />
-
-      <main className="flex-1 max-w-3xl w-full mx-auto px-4 sm:px-6 py-6 space-y-5">
-        <div>
-          <h1 className="text-xl sm:text-2xl font-medium text-slate-900 dark:text-white mt-0.5">
-            Isi profil, susun prioritas, lihat rekomendasi
-          </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 font-light mt-1">
-            {step === 0
-              ? `Jawabanmu dipakai mempersonalisasi profil serta menghitung upah/jam & jam ideal rekomendasi. Jawab satu per satu — ${TOTAL_PROFILE_QUESTIONS} pertanyaan, semua wajib diisi.`
-              : step === 1
-                ? 'Susun ranking kriteria 1–5 versimu — ini murni pilihanmu, bukan tebakan sistem.'
-                : 'Rekomendasi dihitung dari ranking pilihanmu (SMARTER + ROC) yang sudah kamu konfirmasi.'}
-          </p>
-        </div>
-
-        {/* Stepper sederhana */}
-        <ol data-tour="kuesioner-stepper" className="flex items-center gap-1.5" aria-label="Langkah kuesioner">
-          {STEPS.map((label, i) => (
-            <li key={label} className="flex items-center gap-1.5 flex-1">
-              <button
-                onClick={() => i < step && setStep(i)}
-                className={`flex items-center gap-2 flex-1 rounded-lg border px-3 py-2 text-xs transition-colors ${
-                  i === step
-                    ? 'border-[#0C52EE] dark:border-blue-500 bg-[#0C52EE]/5 dark:bg-blue-500/10 font-medium text-[#0C52EE] dark:text-blue-400'
-                    : i < step
-                      ? 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-700'
-                      : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-400 dark:text-slate-600'
-                }`}
-              >
-                <span
-                  className={`flex h-5 w-5 items-center justify-center rounded-full text-[11px] font-mono ${
-                    i === step ? 'bg-[#0C52EE] text-white' : i < step ? 'bg-slate-900 dark:bg-slate-700 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500'
-                  }`}
-                >
-                  {i + 1}
-                </span>
-                {label}
-              </button>
-              {i < STEPS.length - 1 && <span className="text-slate-300 dark:text-slate-700">›</span>}
-            </li>
-          ))}
-        </ol>
+      <main className={`flex-1 w-full min-h-screen grid ${showIntro ? '' : 'md:h-screen md:min-h-0 md:grid-cols-[35%_65%] md:overflow-hidden'} bg-white dark:bg-slate-950`}>
+        <aside className={`relative overflow-hidden px-6 py-7 sm:px-12 md:px-14 md:py-10 flex flex-col min-h-64 md:min-h-screen ${showIntro ? 'bg-white' : 'bg-[#0C52EE] md:fixed md:inset-y-0 md:left-0 md:w-[35%]'}`}>
+          <button onClick={() => navigate(ROUTES.LANDING)} className={`relative z-10 inline-flex items-center gap-2 self-start text-sm font-medium hover:underline ${showIntro ? 'text-[#0C52EE]' : 'text-white'}`}><RiArrowLeftLine /> Beranda</button>
+          <div className={`relative z-10 flex-1 flex flex-col justify-center py-12 md:py-16 ${showIntro ? 'w-full max-w-lg mx-auto items-start text-left' : ''}`}>
+            {showIntro ? (
+              <BrandLogo textClassName="text-2xl font-medium tracking-tighter text-slate-900" />
+            ) : (
+              <p className="text-sm font-medium text-blue-100">{step === 0 ? `Pertanyaan ${qIndex + 1} dari ${TOTAL_PROFILE_QUESTIONS}` : step === 1 ? 'Prioritas' : 'Hasil'}</p>
+            )}
+            <h1 className={`mt-3 max-w-lg text-3xl sm:text-4xl font-semibold leading-tight tracking-tight ${showIntro ? 'text-slate-900' : 'text-white'}`}>{panelTitle}</h1>
+            <p className={`mt-3 max-w-md text-sm leading-relaxed ${showIntro ? 'text-slate-600' : 'text-blue-50'}`}>{showIntro ? 'Jawab pertanyaan dan urutkan prioritasmu untuk melihat rekomendasi lowongan part-time.' : step === 0 ? 'Jawab pertanyaan untuk melanjutkan.' : step === 1 ? 'Urutkan kriteria sesuai kebutuhan Anda.' : 'Lihat lowongan yang sesuai dengan prioritas Anda.'}</p>
+            {showIntro && (
+              <Button onClick={() => setShowIntro(false)} className="mt-7 h-11 gap-2">
+                Mulai kuesioner <RiArrowRightLine className="h-4 w-4" />
+              </Button>
+            )}
+          </div>
+          {!showIntro && <div className="relative z-10"><BrandLogo textClassName="text-2xl font-medium tracking-tighter text-white" /></div>}
+        </aside>
+        {!showIntro && <div className="flex flex-col w-full min-w-0 px-6 py-10 sm:px-12 lg:px-16 md:col-start-2 md:min-h-0 md:overflow-y-auto">
+        <div className="w-full max-w-xl mx-auto my-auto space-y-6">
+        <>
+        <StepperPreview step={step} onStep={setStep} />
 
         {loading ? (
           <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 animate-pulse">
@@ -384,7 +357,7 @@ export function KuesionerPage({
           <div data-tour="kuesioner-content">
             {/* STEP 0 — Profil ala Google Form (Nama + Q3–Q8) */}
             {step === 0 && (
-              <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-2xs space-y-5">
+              <section className="space-y-6">
                 <div>
                   <div className="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 mb-1.5">
                     <span>Pertanyaan {qIndex + 1} dari {TOTAL_PROFILE_QUESTIONS}</span>
@@ -614,7 +587,9 @@ export function KuesionerPage({
                       <RiArrowLeftLine className="h-3.5 w-3.5" /> Kembali
                     </button>
                   ) : (
-                    <span />
+                    <button onClick={() => setShowIntro(true)} className="emil-press inline-flex items-center gap-1.5 h-8 px-3 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800 text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">
+                      <RiArrowLeftLine className="h-3.5 w-3.5" /> Kembali
+                    </button>
                   )}
                   <div className="text-right space-y-1.5">
                     {!screenValid && (
@@ -763,6 +738,9 @@ export function KuesionerPage({
             )}
           </div>
         )}
+        </>
+        </div>
+        </div>}
       </main>
 
       <PairwiseQuiz open={quizOpen} onClose={() => setQuizOpen(false)} onFinish={finishQuiz} />

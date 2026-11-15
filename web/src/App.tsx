@@ -372,7 +372,6 @@ export function App() {
                     navigate(ROUTES.PORTAL)
                   }}
                 />
-                <PortalFooter onOpenPreferences={() => setIsPreferenceOpen(true)} />
               </>
             }
           />
