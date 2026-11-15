@@ -505,7 +505,7 @@ export function KuesionerPage({
                   )}
 
                   {qIndex === 4 && (
-                    <>
+                    <div className="space-y-5">
                       <QBlock title="Dalam seminggu, berapa hari kerja part-time yang Anda harapkan?">
                         <div className="grid grid-cols-1 gap-1.5">
                           {Q6A_OPTIONS.map((o) => (
@@ -552,7 +552,7 @@ export function KuesionerPage({
                           </p>
                         )}
                       </QBlock>
-                    </>
+                    </div>
                   )}
 
                   {qIndex === 5 && (

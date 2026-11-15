@@ -167,23 +167,19 @@ export function LandingNav({
                 </div>
 
                 <div className="py-3 space-y-2 text-sm text-slate-600 dark:text-slate-300 font-light">
-                  <div className="flex justify-between">
-                    <span className="text-slate-400 dark:text-slate-400">Target gaji:</span>
-                    <span className="font-medium text-slate-900 dark:text-slate-100">
-                      Rp {studentPrefs.minSalary.toLocaleString('id-ID')}/jam
-                    </span>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400 dark:text-slate-400">Target gaji:</span>
+                      <span className="font-medium text-slate-900 dark:text-slate-100">{studentPrefs.profileComplete ? `Rp ${studentPrefs.minSalary.toLocaleString('id-ID')}/jam` : '-'}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400 dark:text-slate-400">Lokasi:</span>
+                      <span className="font-medium text-slate-900 dark:text-slate-100">{studentPrefs.profileComplete ? studentPrefs.location : '-'}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-slate-400 dark:text-slate-400">Maks. jam:</span>
+                      <span className="font-medium text-slate-900 dark:text-slate-100">{studentPrefs.profileComplete ? `${studentPrefs.maxHours} jam/mgg` : '-'}</span>
+                    </div>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-400 dark:text-slate-400">Lokasi:</span>
-                    <span className="font-medium text-slate-900 dark:text-slate-100">{studentPrefs.location}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-slate-400 dark:text-slate-400">Maks. jam:</span>
-                    <span className="font-medium text-slate-900 dark:text-slate-100">
-                      {studentPrefs.maxHours} jam/mgg
-                    </span>
-                  </div>
-                </div>
 
                 <button
                   onClick={() => {
