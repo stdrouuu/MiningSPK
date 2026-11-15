@@ -8,9 +8,10 @@ interface DialogProps {
   title?: string
   children: React.ReactNode
   className?: string
+  blurBackdrop?: boolean
 }
 
-export function Dialog({ open, onClose, title, children, className }: DialogProps) {
+export function Dialog({ open, onClose, title, children, className, blurBackdrop = true }: DialogProps) {
   const contentRef = React.useRef<HTMLDivElement>(null)
 
   // onClose sering dibuat inline di parent, jadi identitasnya berubah tiap render.
@@ -49,7 +50,7 @@ export function Dialog({ open, onClose, title, children, className }: DialogProp
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
-        className="emil-backdrop fixed inset-0 bg-slate-950/60 backdrop-blur-sm dark:bg-black/75"
+        className={cn('emil-backdrop fixed inset-0 bg-slate-950/60 dark:bg-black/75', blurBackdrop && 'backdrop-blur-sm')}
         onClick={onClose}
         aria-hidden="true"
       />

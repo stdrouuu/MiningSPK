@@ -119,7 +119,7 @@ function RadioOption({
 }) {
   return (
     <label
-      className={`emil-press flex items-start gap-2.5 rounded-lg border p-2.5 cursor-pointer text-xs ${
+      className={`emil-press flex items-start gap-2.5 rounded-lg border p-2.5 cursor-pointer text-sm ${
         checked
           ? 'border-[#0C52EE] dark:border-blue-500 bg-[#0C52EE]/[0.04] dark:bg-blue-500/10'
           : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-slate-300 dark:hover:border-slate-700'
@@ -136,7 +136,7 @@ function RadioOption({
         <span className={`block font-medium ${checked ? 'text-[#0C52EE] dark:text-blue-400' : 'text-slate-700 dark:text-slate-200'}`}>
           {label}
         </span>
-        {hint && <span className="block text-[11px] text-slate-400 dark:text-slate-500 font-light mt-0.5">{hint}</span>}
+        {hint && <span className="block text-xs text-slate-500 dark:text-slate-400 font-light mt-1">{hint}</span>}
       </span>
     </label>
   )
@@ -157,7 +157,7 @@ function QBlock({
         <p className="text-base sm:text-lg font-medium text-slate-900 dark:text-white leading-snug">
           {title}
         </p>
-        {desc && <p className="text-xs text-slate-400 dark:text-slate-400 font-light mt-1">{desc}</p>}
+        {desc && <p className="text-sm text-slate-500 dark:text-slate-400 font-light mt-1">{desc}</p>}
       </div>
       {children}
     </div>
@@ -662,7 +662,7 @@ export function KuesionerPage({
                   </div>
                   <button
                     onClick={() => setQuizOpen(true)}
-                    className="emil-press shrink-0 inline-flex items-center gap-1.5 h-8 px-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs font-medium text-slate-600 dark:text-slate-300 hover:border-[#0C52EE] dark:hover:border-blue-400 hover:text-[#0C52EE] dark:hover:text-blue-400"
+                    className="emil-press help-attention shrink-0 inline-flex items-center gap-1.5 h-8 px-3 rounded-lg bg-[#0C52EE] text-xs font-medium text-white hover:bg-[#0942c4] cursor-pointer"
                   >
                     <RiQuestionLine className="h-3.5 w-3.5" />
                     Saya bingung

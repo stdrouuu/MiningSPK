@@ -70,6 +70,16 @@
    GPU-only (transform + opacity), interruptible transitions,
    origin-aware popovers, asymmetric press/release. */
 
+@keyframes help-attention {
+  0%, 70%, 100% { transform: translateY(0); }
+  80% { transform: translateY(-4px); }
+  90% { transform: translateY(-2px); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .help-attention { animation: help-attention 2s ease-in-out infinite; }
+}
+
 @keyframes emil-modal-in {
   from {
     opacity: 0;

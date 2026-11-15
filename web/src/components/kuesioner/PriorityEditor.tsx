@@ -79,7 +79,7 @@ export function PriorityEditor({ ranks, onChange, onReset, showReset = true }: P
       <div className="flex items-center justify-between gap-2">
         <div>
           <h3 className="text-sm font-medium text-slate-900 dark:text-white">Susunan kriteria versimu</h3>
-          <p className="text-[11px] text-slate-500 dark:text-slate-400 font-light">
+          <p className="text-sm text-slate-500 dark:text-slate-400 font-light">
             Seret untuk menyusun — atas = paling penting • bobot otomatis
           </p>
         </div>
@@ -207,7 +207,7 @@ export function PriorityEditor({ ranks, onChange, onReset, showReset = true }: P
                   type="button"
                   aria-expanded={openFaqKey === key}
                   onClick={() => setOpenFaqKey((prev) => (prev === key ? null : key))}
-                  className={`inline-flex cursor-pointer items-center gap-1 text-[11px] font-medium transition-colors ${
+                  className={`inline-flex cursor-pointer items-center gap-1 text-xs font-medium transition-colors ${
                     openFaqKey === key
                       ? 'text-[#0C52EE] dark:text-blue-400'
                       : 'text-slate-500 dark:text-slate-400 hover:text-[#0C52EE] dark:hover:text-blue-400'
@@ -221,24 +221,24 @@ export function PriorityEditor({ ranks, onChange, onReset, showReset = true }: P
                   />
                 </button>
                 {openFaqKey === key && (
-                  <div className="mt-1.5 rounded-md border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/70 px-3 py-2 text-[11px] leading-relaxed text-slate-600 dark:text-slate-300 select-text">
+                  <div className="mt-1.5 rounded-md border border-slate-200/80 dark:border-slate-700/80 bg-white/80 dark:bg-slate-900/70 px-3 py-2 text-xs leading-relaxed text-slate-600 dark:text-slate-300 select-text">
                     <p>
                       {
                         {
                           C1_kategori:
-                            'Menilai seberapa sesuai bidang pekerjaan dengan minat kategori yang kamu pilih. Lowongan yang bidangnya sama dengan minatmu akan mendapat skor lebih tinggi.',
+                            'Mencocokkan bidang lowongan dengan kategori yang kamu minati.',
                           C2_gaji:
-                            'Membandingkan upah per jam yang ditawarkan lowongan dengan target upah minimalmu. Semakin besar upah dibanding targetmu, semakin tinggi nilainya.',
+                            'Membandingkan upah per jam dengan target minimum yang kamu pilih.',
                           C3_lokasi:
-                            'Menilai kedekatan lokasi kerja dengan domisilimu serta sistem kerjanya. Lowongan Remote atau yang satu kota/area dengan domisilimu akan lebih diprioritaskan.',
+                            'Mempertimbangkan jarak lokasi dan sistem kerja (onsite, remote, hybrid).',
                           C4_jam_kerja:
-                            'Pekerjaan yang diberikan harus menyesuaikan dengan jam kuliah dan batas maksimal jam kerja per minggu yang kamu pilih agar tidak mengganggu jadwal kuliahmu.',
+                            'Mencocokkan jam kerja lowongan dengan waktu luangmu.',
                           C5_skill:
-                            'Mengukur kecocokan keahlian (skill) yang kamu miliki dengan kebutuhan skill pada deskripsi lowongan. Semakin banyak skill yang relevan, semakin tinggi skornya.',
+                            'Mencocokkan skill yang kamu punya dengan kebutuhan lowongan.',
                         }[key]
                       }
                     </p>
-                    <p className="mt-1 text-[10px] text-slate-400 dark:text-slate-500">
+                    <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
                       {m.example}
                     </p>
                   </div>
@@ -248,7 +248,7 @@ export function PriorityEditor({ ranks, onChange, onReset, showReset = true }: P
           )
         })}
       </div>
-      <p className="text-[10px] text-slate-500 dark:text-slate-400">
+      <p className="text-xs text-slate-500 dark:text-slate-400">
         Posisi paling atas = Rank 1 (bobot 45.7%). Rank selalu unik 1–5.
       </p>
     </div>
