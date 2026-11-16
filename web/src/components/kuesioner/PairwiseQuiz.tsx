@@ -61,7 +61,7 @@ export function PairwiseQuiz({ open, onClose, onFinish }: Props) {
   }
 
   return (
-    <Dialog open={open} onClose={handleClose} title="Kuis cepat: pilih yang lebih penting" className="max-w-lg" blurBackdrop={false}>
+    <Dialog open={open} onClose={handleClose} title="Kuis cepat: pilih yang lebih penting" className="max-w-lg">
       {!done && pair ? (
         <div className="space-y-4">
           <div>
