@@ -1,4 +1,3 @@
-import { useMemo, useRef, useState } from 'react'
 import {
   RiRefreshLine,
   RiMapPinLine,
@@ -6,13 +5,10 @@ import {
   RiTimeLine,
   RiBriefcaseLine,
   RiToolsLine,
-  RiArrowUpDownLine,
   RiUserLine,
   RiLockLine,
-  RiDraggable,
-  RiArrowUpSLine,
-  RiArrowDownSLine,
 } from 'react-icons/ri'
+import { PriorityEditor } from './kuesioner/PriorityEditor'
 import { Button } from './ui/Button'
 import { Dialog } from './ui/Dialog'
 import { StudentPresetDropdown } from './StudentPresetDropdown'
@@ -69,42 +65,6 @@ export function PreferenceSidebar({
     })
   }
 
-  // Drag-to-reorder untuk prioritas kriteria (urutan atas = Prioritas 1)
-  const dragFromRef = useRef<number | null>(null)
-  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null)
-  const [isDragging, setIsDragging] = useState(false)
-
-  const handleReorder = (fromIndex: number, toIndex: number) => {
-    if (fromIndex === toIndex || fromIndex < 0 || toIndex < 0) return
-    const orderedKeys = [...priorityLabels]
-      .sort(
-        (a, b) => preferences.priorityRank[a.key] - preferences.priorityRank[b.key]
-      )
-      .map((item) => item.key)
-    const [moved] = orderedKeys.splice(fromIndex, 1)
-    orderedKeys.splice(toIndex, 0, moved)
-    const nextRanks = { ...preferences.priorityRank }
-    orderedKeys.forEach((key, idx) => {
-      nextRanks[key] = idx + 1
-    })
-    handleChange('priorityRank', nextRanks)
-  }
-
-  const moveRank = (
-    criterionKey: keyof StudentPreferences['priorityRank'],
-    direction: -1 | 1
-  ) => {
-    const orderedKeys = [...priorityLabels]
-      .sort(
-        (a, b) => preferences.priorityRank[a.key] - preferences.priorityRank[b.key]
-      )
-      .map((item) => item.key)
-    const fromIndex = orderedKeys.indexOf(criterionKey)
-    const toIndex = fromIndex + direction
-    if (toIndex < 0 || toIndex >= orderedKeys.length) return
-    handleReorder(fromIndex, toIndex)
-  }
-
   // Muat data dari profil contoh mahasiswa
   // workSystem mengikuti clean dataset (preferred_work_system) agar tiap
   // mahasiswa tampil beda (Remote/Hybrid/Onsite), bukan selalu "Semua sistem".
@@ -139,35 +99,6 @@ export function PreferenceSidebar({
       profileComplete: true,
     })
   }
-
-  const priorityLabels: Array<{
-    key: keyof StudentPreferences['priorityRank']
-    title: string
-  }> = [
-    { key: 'C1_kategori', title: 'Kesesuaian Bidang Kategori' },
-    { key: 'C2_gaji', title: 'Tawaran Upah / Jam (Gaji)' },
-    { key: 'C3_lokasi', title: 'Kedekatan Lokasi & Sistem Kerja' },
-    { key: 'C4_jam_kerja', title: 'Beban Jam Kerja per Minggu' },
-    { key: 'C5_skill', title: 'Kecocokan Keahlian (Skill Cosine)' },
-  ]
-
-  const rocWeightsMap: { [rank: number]: string } = {
-    1: '45.7%',
-    2: '25.7%',
-    3: '15.7%',
-    4: '9.0%',
-    5: '4.0%',
-  }
-
-  // Urutan tampil = urutan prioritas (index 0 = Prioritas 1)
-  const orderedPriorities = useMemo(
-    () =>
-      [...priorityLabels].sort(
-        (a, b) => preferences.priorityRank[a.key] - preferences.priorityRank[b.key]
-      ),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [preferences.priorityRank]
-  )
 
   return (
     <Dialog
@@ -398,7 +329,7 @@ export function PreferenceSidebar({
               className="w-full h-9 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100 cursor-pointer disabled:cursor-not-allowed disabled:bg-slate-100/80 dark:disabled:bg-slate-900 disabled:text-slate-500 dark:disabled:text-slate-400"
             >
               <option value="ALL">Semua sistem (Remote, Hybrid, Onsite)</option>
-              <option value="Remote">Remote saja</option>
+              <option value="Remote">Remote</option>
               <option value="Hybrid">Hybrid</option>
               <option value="Onsite">Onsite</option>
             </select>
@@ -426,120 +357,15 @@ export function PreferenceSidebar({
           </span>
         </div>
 
-        {/* Prioritas Kriteria SPK (ROC Weights) — drag-to-reorder */}
-        <div className="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-2" role="group" aria-labelledby="roc-legend">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <p id="roc-legend" className="text-xs font-medium text-slate-900 dark:text-slate-100 flex items-center gap-1.5">
-              <RiArrowUpDownLine className="h-3.5 w-3.5 text-slate-500" aria-hidden="true" />
-              Urutan prioritas kriteria (ROC)
-            </p>
-            <span className="text-[11px] text-slate-500">
-              Atas = paling penting • bobot otomatis
-            </span>
-          </div>
-
-          <div className="space-y-1.5">
-            {orderedPriorities.map((item, index) => {
-              const currentRank = index + 1
-              const weightPct = rocWeightsMap[currentRank] || '0%'
-              const isDropTarget = dragOverIndex === index && isDragging
-
-              return (
-                <div
-                  key={item.key}
-                  draggable
-                  onDragStart={(e) => {
-                    dragFromRef.current = index
-                    setIsDragging(true)
-                    e.dataTransfer.effectAllowed = 'move'
-                    try {
-                      e.dataTransfer.setData('text/plain', String(index))
-                    } catch {
-                      /* abaikan */
-                    }
-                  }}
-                  onDragOver={(e) => {
-                    e.preventDefault()
-                    e.dataTransfer.dropEffect = 'move'
-                    if (dragOverIndex !== index) setDragOverIndex(index)
-                  }}
-                  onDragLeave={() => {
-                    if (dragOverIndex === index) setDragOverIndex(null)
-                  }}
-                  onDrop={(e) => {
-                    e.preventDefault()
-                    const from =
-                      dragFromRef.current ??
-                      Number(e.dataTransfer.getData('text/plain'))
-                    if (!Number.isNaN(from)) handleReorder(from, index)
-                    dragFromRef.current = null
-                    setDragOverIndex(null)
-                    setIsDragging(false)
-                  }}
-                  onDragEnd={() => {
-                    dragFromRef.current = null
-                    setDragOverIndex(null)
-                    setIsDragging(false)
-                  }}
-                  className={`emil-press flex items-center gap-2 p-2.5 rounded-lg border text-xs select-none ${
-                    isDropTarget
-                      ? 'border-dashed border-slate-500 bg-slate-100 dark:bg-slate-800/70 -translate-y-px shadow-sm'
-                      : 'border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40'
-                  }`}
-                >
-                  {/* Drag handle */}
-                  <span
-                    title="Seret untuk memindahkan"
-                    className="flex h-8 w-6 shrink-0 items-center justify-center rounded-md text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-200/70 dark:hover:bg-slate-800 cursor-grab active:cursor-grabbing touch-none"
-                  >
-                    <RiDraggable className="h-4 w-4" />
-                  </span>
-
-                  {/* Nomor prioritas */}
-                  <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-[#0C52EE] text-white font-medium text-xs font-mono">
-                    {currentRank}
-                  </span>
-
-                  <div className="flex min-w-0 flex-1 items-center gap-2">
-                    <span className="truncate font-medium text-slate-900 dark:text-slate-100">
-                      {item.title}
-                    </span>
-                  </div>
-
-                  <div className="flex shrink-0 items-center gap-2">
-                    <span className="font-medium text-white bg-[#0C52EE] px-2.5 py-1 rounded-md text-xs shadow-2xs">
-                      {weightPct}
-                    </span>
-                    {/* Fallback tombol untuk mobile / keyboard */}
-                    <span className="flex flex-col -space-y-0.5">
-                      <button
-                        type="button"
-                        aria-label={`Naikkan ${item.title}`}
-                        disabled={index === 0}
-                        onClick={() => moveRank(item.key, -1)}
-                        className="p-0.5 text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
-                      >
-                        <RiArrowUpSLine className="h-3.5 w-3.5" />
-                      </button>
-                      <button
-                        type="button"
-                        aria-label={`Turunkan ${item.title}`}
-                        disabled={index === orderedPriorities.length - 1}
-                        onClick={() => moveRank(item.key, 1)}
-                        className="p-0.5 text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
-                      >
-                        <RiArrowDownSLine className="h-3.5 w-3.5" />
-                      </button>
-                    </span>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-          <p className="text-[10px] text-slate-500">
-            Posisi paling atas = Prioritas 1 (bobot 45.7%). Bobot ROC terhitung otomatis
-            dari urutan.
-          </p>
+        <div className="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-3">
+          <h3 className="text-sm font-medium text-slate-900 dark:text-white">
+            Urutkan kriteria dari yang paling penting buatmu
+          </h3>
+          <PriorityEditor
+            ranks={preferences.priorityRank}
+            onChange={(ranks) => handleChange('priorityRank', ranks)}
+            onReset={() => handleChange('priorityRank', { ...DEFAULT_STUDENT_PREFERENCES.priorityRank })}
+          />
         </div>
 
         {/* Action Button */}

@@ -71,9 +71,9 @@
    origin-aware popovers, asymmetric press/release. */
 
 @keyframes help-attention {
-  0%, 70%, 100% { transform: translateY(0); }
-  80% { transform: translateY(-4px); }
-  90% { transform: translateY(-2px); }
+  0%, 80%, 100% { transform: rotate(0); }
+  83%, 91% { transform: rotate(-4deg); }
+  87%, 95% { transform: rotate(4deg); }
 }
 
 @media (prefers-reduced-motion: no-preference) {

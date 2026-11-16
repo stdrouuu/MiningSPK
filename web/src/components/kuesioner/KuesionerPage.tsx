@@ -1,10 +1,12 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { RiArrowLeftLine, RiArrowRightLine, RiQuestionLine } from 'react-icons/ri'
 import { BrandLogo } from '../BrandLogo'
 import { Button } from '../ui/Button'
 import { CompanyLogo } from '../CompanyLogo'
+import { TopRankMedalBadge } from '../TopRankMedalBadge'
+import { useWalkthrough } from '../WalkthroughTour'
 import { ConfirmRankModal } from './ConfirmRankModal'
 import { JobRadarSearchModal } from './JobRadarSearchModal'
 import { PairwiseQuiz } from './PairwiseQuiz'
@@ -194,6 +196,10 @@ export function KuesionerPage({
   const navigate = useNavigate()
   const [step, setStep] = useState(0)
   const [showIntro, setShowIntro] = useState(true)
+  const { isOpen: isTourOpen, activeSection: tourSection } = useWalkthrough()
+  useEffect(() => {
+    if (isTourOpen && tourSection === 'kuesioner') setShowIntro(false)
+  }, [isTourOpen, tourSection])
   // Sub-langkah profil: satu pertanyaan satu layar (0=Nama, 1=Q3 … 6=Q8)
   const [qIndex, setQIndex] = useState(0)
   // Jawaban GForm mentah (Q6a/Q6b/Q7) — null = belum dijawab (wajib diisi semua)
@@ -319,42 +325,39 @@ export function KuesionerPage({
     setStudentPrefs((p) => ({ ...p, [k]: v }))
 
   const previewAvatar = avatarForPrefs(studentPrefs)
-  const profileTopics = ['Nama Anda', 'Lokasi tempat tinggal', 'Bidang pekerjaan', 'Sistem kerja', 'Waktu kerja', 'Target penghasilan', 'Keahlian Anda']
-  const panelTitle = showIntro ? 'Kuesioner: Isi profil untuk dapatkan rekomendasi kerja' : step === 0 ? profileTopics[qIndex] : step === 1 ? 'Susun prioritas kerja' : 'Rekomendasi untuk Anda'
 
   return (
     <>
-      <main className={`flex-1 w-full min-h-screen grid ${showIntro ? '' : 'md:h-screen md:min-h-0 md:grid-cols-[35%_65%] md:overflow-hidden'} bg-white dark:bg-slate-950`}>
-        <aside className={`relative overflow-hidden px-6 py-7 sm:px-12 md:px-14 md:py-10 flex flex-col min-h-64 md:min-h-screen ${showIntro ? 'bg-white' : 'bg-[#0C52EE] md:fixed md:inset-y-0 md:left-0 md:w-[35%]'}`}>
-          <button onClick={() => navigate(ROUTES.LANDING)} className={`relative z-10 inline-flex items-center gap-2 self-start text-sm font-medium hover:underline ${showIntro ? 'text-[#0C52EE]' : 'text-white'}`}><RiArrowLeftLine /> Beranda</button>
-          <div className={`relative z-10 flex-1 flex flex-col justify-center py-12 md:py-16 ${showIntro ? 'w-full max-w-lg mx-auto items-start text-left' : ''}`}>
-            {showIntro ? (
+      <main className="flex-1 w-full min-h-screen flex flex-col bg-[#F8FAFC] dark:bg-slate-950">
+        {showIntro ? (
+        <aside className="relative overflow-hidden px-6 py-7 sm:px-12 md:px-14 md:py-10 flex flex-col min-h-screen">
+          <button onClick={() => navigate(ROUTES.LANDING)} className="relative z-10 inline-flex items-center gap-2 self-start text-sm font-medium hover:underline text-[#0C52EE]"><RiArrowLeftLine /> Beranda</button>
+          <div className="relative z-10 flex-1 flex flex-col justify-center py-12 md:py-16 w-full max-w-lg mx-auto items-start text-left">
               <BrandLogo textClassName="text-2xl font-medium tracking-tighter text-slate-900" />
-            ) : (
-              <p className="text-sm font-medium text-blue-100">{step === 0 ? `Pertanyaan ${qIndex + 1} dari ${TOTAL_PROFILE_QUESTIONS}` : step === 1 ? 'Prioritas' : 'Hasil'}</p>
-            )}
-            <h1 className={`mt-3 max-w-lg text-3xl sm:text-4xl font-semibold leading-tight tracking-tight ${showIntro ? 'text-slate-900' : 'text-white'}`}>{panelTitle}</h1>
-            <p className={`mt-3 max-w-md text-sm leading-relaxed ${showIntro ? 'text-slate-600' : 'text-blue-50'}`}>{showIntro ? 'Jawab pertanyaan dan urutkan prioritasmu untuk melihat rekomendasi lowongan part-time.' : step === 0 ? 'Jawab pertanyaan untuk melanjutkan.' : step === 1 ? 'Urutkan kriteria sesuai kebutuhan Anda.' : 'Lihat lowongan yang sesuai dengan prioritas Anda.'}</p>
-            {showIntro && (
+            <h1 className="mt-3 max-w-lg text-3xl sm:text-4xl font-semibold leading-tight tracking-tight text-slate-900">Kuesioner: Isi profil untuk dapatkan rekomendasi kerja</h1>
+            <p className="mt-3 max-w-md text-sm leading-relaxed text-slate-600">Jawab pertanyaan dan urutkan prioritasmu untuk melihat rekomendasi lowongan part-time.</p>
               <Button onClick={() => setShowIntro(false)} className="mt-7 h-11 gap-2">
                 Mulai kuesioner <RiArrowRightLine className="h-4 w-4" />
               </Button>
-            )}
           </div>
-          {!showIntro && <div className="relative z-10"><BrandLogo textClassName="text-2xl font-medium tracking-tighter text-white" /></div>}
         </aside>
-        {!showIntro && <div className="flex flex-col w-full min-w-0 px-6 py-10 sm:px-12 lg:px-16 md:col-start-2 md:min-h-0 md:overflow-y-auto">
+        ) : (
+        <>
+        <header className="px-6 pt-7 sm:px-12 md:px-14 md:pt-10">
+          <button onClick={() => navigate(ROUTES.LANDING)} className="inline-flex items-center gap-2 text-sm font-medium text-[#0C52EE] hover:underline dark:text-blue-400"><RiArrowLeftLine /> Beranda</button>
+        </header>
+        <div className="flex flex-1 flex-col w-full min-w-0 px-6 py-10 sm:px-12 lg:px-16">
         <div className="w-full max-w-xl mx-auto my-auto space-y-6">
         <>
         <StepperPreview step={step} onStep={setStep} />
 
         {loading ? (
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 animate-pulse">
+          <div data-tour="kuesioner-content" className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 animate-pulse">
             <div className="h-5 w-1/2 rounded bg-slate-200 dark:bg-slate-800" />
             <div className="mt-3 h-4 w-2/3 rounded bg-slate-100 dark:bg-slate-800/60" />
           </div>
         ) : (
-          <div data-tour="kuesioner-content">
+          <div data-tour="kuesioner-content" className="rounded-xl border border-slate-200 bg-white p-6 shadow-2xs dark:border-slate-800 dark:bg-slate-900">
             {/* STEP 0 — Profil ala Google Form (Nama + Q3–Q8) */}
             {step === 0 && (
               <section className="space-y-6">
@@ -630,7 +633,7 @@ export function KuesionerPage({
               <section className="space-y-3">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <h2 className="text-sm font-medium text-slate-900 dark:text-white">Urutkan dari yang paling penting buatmu</h2>
+                    <h2 className="text-sm font-medium text-slate-900 dark:text-white">Urutkan kriteria dari yang paling penting buatmu</h2>
                     <p className="text-xs text-slate-500 dark:text-slate-400 font-light mt-0.5">
                       Urutan di bawah hanya contoh — geser rank-nya sampai sesuai versimu.
                     </p>
@@ -692,9 +695,7 @@ export function KuesionerPage({
                   </div>
                   {ranked.slice(0, 3).map((job, i) => (
                     <article key={job.job_id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3.5 shadow-2xs flex items-center gap-3.5">
-                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#0C52EE] dark:bg-blue-600 text-white text-xs font-medium">
-                        {i + 1}
-                      </span>
+                      <TopRankMedalBadge rank={(i + 1) as 1 | 2 | 3} size={28} />
                       <CompanyLogo
                         companyName={job.company_name}
                         logoUrl={job.company_logo}
@@ -711,7 +712,7 @@ export function KuesionerPage({
                             <div className="emil-meter h-full bg-[#0C52EE] dark:bg-blue-500 rounded-full" style={{ width: `${Math.min(100, job.finalScore * 100)}%` }} />
                           </div>
                           <span className="text-[11px] font-mono font-medium text-slate-700 dark:text-slate-300 tabular-nums">
-                            {job.finalScore.toFixed(4)}
+                            {Math.round(Math.min(100, Math.max(0, job.finalScore * 100)))}%
                           </span>
                         </div>
                       </div>
@@ -740,7 +741,12 @@ export function KuesionerPage({
         )}
         </>
         </div>
-        </div>}
+        </div>
+        <footer className="px-6 pb-7 sm:px-12 md:px-14 md:pb-10">
+          <BrandLogo />
+        </footer>
+        </>
+        )}
       </main>
 
       <PairwiseQuiz open={quizOpen} onClose={() => setQuizOpen(false)} onFinish={finishQuiz} />

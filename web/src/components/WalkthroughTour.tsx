@@ -144,26 +144,28 @@ const SECTION_STEPS: Record<TourSectionKey, TourStep[]> = {
       section: 'kuesioner',
       sectionLabel: 'Kuesioner',
       selector: '[data-tour="kuesioner-content"]',
-      title: 'Form Pengisian Profil',
+      title: 'Isi Kuesioner',
       description:
-        'Jawab pertanyaan satu per satu. Nama yang kamu isi akan langsung tampil di profil website.',
+        'Isi profil dan atur prioritas di bagian ini untuk melihat hasil rekomendasimu.',
     },
   ],
 }
 
 interface WalkthroughContextValue {
   isOpen: boolean
+  activeSection: TourSectionKey
   startTour: () => void
   stopTour: () => void
 }
 
 const WalkthroughContext = createContext<WalkthroughContextValue>({
   isOpen: false,
+  activeSection: 'navigasi',
   startTour: () => {},
   stopTour: () => {},
 })
 
-function useWalkthrough() {
+export function useWalkthrough() {
   return useContext(WalkthroughContext)
 }
 
@@ -389,8 +391,9 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
       setShowContinuePrompt(true)
     } else {
       stopTour()
+      if (activeSection === 'kuesioner') navigate(ROUTES.LANDING)
     }
-  }, [nextSection, stopTour])
+  }, [nextSection, stopTour, activeSection, navigate])
 
   const handleContinueToNextSection = useCallback(() => {
     if (!nextSection) {
@@ -490,8 +493,8 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
   }, [spotlight, viewport])
 
   const ctxValue = useMemo(
-    () => ({ isOpen, startTour, stopTour }),
-    [isOpen, startTour, stopTour]
+    () => ({ isOpen, activeSection, startTour, stopTour }),
+    [isOpen, activeSection, startTour, stopTour]
   )
 
   const isLastStepInSection = stepIndex === steps.length - 1

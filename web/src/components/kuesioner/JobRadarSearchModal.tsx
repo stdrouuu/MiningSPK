@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { CompanyLogo } from '../CompanyLogo'
+import { TopRankMedalBadge } from '../TopRankMedalBadge'
 import type { RankedJobResult } from '../../types/data'
 
 interface JobRadarSearchModalProps {
@@ -270,35 +271,18 @@ export function JobRadarSearchModal({
         }
       `}</style>
 
-      <div className="relative w-full max-w-lg rounded-3xl overflow-hidden bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl">
-        {/* Header Bar Atas */}
-        <div className="px-5 py-3.5 bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5 min-w-0">
-            <span className="relative flex h-3 w-3 shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-[#0C52EE]" />
-            </span>
-            <div className="min-w-0">
-              <h3 className="text-sm font-semibold text-slate-900 dark:text-white truncate">
-                Mencari Lowongan di Sekitar {region.label}
-              </h3>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
-                {region.areaSubtitle}
-              </p>
-            </div>
-          </div>
-
-          <button
-            type="button"
-            onClick={onComplete}
-            className="text-xs font-medium text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors cursor-pointer shrink-0 px-2 py-1 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
-          >
-            Lewati
-          </button>
-        </div>
+      <div className="relative w-full max-w-lg max-h-[calc(100dvh-2rem)] overflow-y-auto rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl">
+        <header className="px-5 pt-5 pb-4 sm:px-6">
+          <h3 className="text-base sm:text-lg font-semibold tracking-tight text-slate-950 dark:text-white">
+            Mencari lowongan di sekitar {region.label}
+          </h3>
+          <p className="mt-1 text-xs leading-relaxed text-slate-500 dark:text-slate-400">
+            {region.areaSubtitle}
+          </p>
+        </header>
 
         {/* Kanvas Peta OpenStreetMap Asli (Gratis, Tanpa API Key) */}
-        <div className="relative w-full h-[360px] sm:h-[390px] bg-[#E8ECEF] overflow-hidden">
+        <div className="relative mx-2 h-[360px] sm:h-[390px] overflow-hidden rounded-2xl bg-[#E8ECEF] ring-1 ring-inset ring-slate-900/10">
           {/* Layer 1: Tile Peta OpenStreetMap Presisi Piksel (256x256 per tile) */}
           <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
             {osmTiles.map((tile) => (
@@ -350,7 +334,7 @@ export function JobRadarSearchModal({
             className="absolute left-1/2 top-1/2 w-56 h-56 rounded-full pointer-events-none z-10"
           />
 
-          {/* Layer 3: Pin Loker (Hanya Ikon & Nama Loker, Tanpa Persentase / Peringkat) */}
+          {/* Pin lowongan dan medali peringkat setelah pencarian selesai */}
           {jobsToPin.map((job, idx) => {
             if (idx >= visiblePins) return null
             const slot = JOB_PIN_SLOTS[idx % JOB_PIN_SLOTS.length]
@@ -376,12 +360,15 @@ export function JobRadarSearchModal({
                 <span className="text-xs font-semibold text-slate-800 truncate">
                   {job.job_title}
                 </span>
+                {phase === 2 && (idx === 1 || idx === 2) && (
+                  <TopRankMedalBadge rank={idx === 1 ? 2 : 3} size={18} />
+                )}
               </div>
             )
           })}
 
           {/* Pin Pusat Lokasi Pengguna (Warna Biru) + Pill "Pencarian diprioritaskan..." */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-30 flex flex-col items-center pointer-events-none">
+          <div className="absolute left-1/2 top-1/2 w-max max-w-[calc(100%-1rem)] -translate-x-1/2 -translate-y-1/2 z-30 flex flex-col items-center pointer-events-none">
             <div className="relative flex flex-col items-center">
               <div className="w-11 h-11 rounded-full bg-[#0C52EE] border-[3px] border-white shadow-lg flex items-center justify-center text-white">
                 <svg
@@ -401,11 +388,9 @@ export function JobRadarSearchModal({
               <div className="w-3 h-3 bg-white rotate-45 -mt-1.5 shadow-xs" />
             </div>
 
-            <div className="mt-2 px-3.5 py-1.5 rounded-full bg-white shadow-lg border border-slate-200/90 flex items-center gap-2 whitespace-nowrap">
-              <span className="w-4 h-4 rounded-full bg-[#0C52EE] text-white flex items-center justify-center text-[10px] font-bold shrink-0">
-                ★
-              </span>
-              <span className="text-xs font-semibold text-slate-800">
+            <div className={`mt-2 px-3.5 py-1.5 rounded-full border shadow-lg flex items-center gap-2 transition-colors ${phase === 2 ? 'border-transparent bg-[#0C52EE] text-white' : 'border-slate-200/90 bg-white text-slate-800'}`}>
+              {phase === 2 && jobsToPin.length > 0 && <TopRankMedalBadge rank={1} size={20} />}
+              <span className="text-xs font-semibold">
                 {statusText}
               </span>
             </div>
@@ -418,11 +403,10 @@ export function JobRadarSearchModal({
         </div>
 
         {/* Footer Progress Bar & Ringkasan */}
-        <div className="px-5 py-3.5 bg-white dark:bg-slate-900 border-t border-slate-100 dark:border-slate-800 space-y-2">
+        <div className="px-5 py-4 sm:px-6 space-y-2">
           <div className="flex items-center justify-between text-xs">
             <span className="text-slate-600 dark:text-slate-300 font-medium">
-              Memindai lowongan di sekitar{' '}
-              <strong className="text-slate-900 dark:text-white">{region.label}</strong>
+              {phase === 2 ? 'Pencarian selesai' : 'Memindai lowongan'}
             </span>
             <span className="font-mono text-[11px] font-semibold text-[#0C52EE] dark:text-blue-400 tabular-nums">
               {Math.min(100, Math.round(((visiblePins + 1) / 6) * 100))}%

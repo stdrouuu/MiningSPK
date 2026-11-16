@@ -17,7 +17,7 @@ export function StepperPreview({ step, onStep }: { step: number; onStep: (step: 
               aria-current={active ? 'step' : undefined}
               className={`flex w-full items-center gap-2 rounded-full px-3 py-2.5 text-sm font-medium transition-colors ${active ? 'bg-[#0C52EE] text-white' : 'bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-500'} ${done ? 'cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700' : 'cursor-default'}`}
             >
-              <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs ${active ? 'bg-white/20 text-white' : done ? 'bg-[#79B99B] text-white' : ''}`}>
+              <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs ${active ? 'bg-white/20 text-white' : done ? 'bg-slate-400/60 text-white' : ''}`}>
                 {done ? <RiCheckLine aria-hidden="true" className="h-4 w-4" /> : i + 1}
               </span>
               <span className="truncate">{label}</span>
