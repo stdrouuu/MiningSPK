@@ -73,8 +73,7 @@ export function PortalHeader({
   )
 
   return (
-    // Header TIDAK sticky (ala JobStreet): ikut menghilang saat feed di-scroll.
-    <header className="w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 transition-colors">
+    <header className={`w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 transition-colors ${activeView === 'matrix' ? 'sticky top-0 z-40' : ''}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <div className="flex items-center gap-8">
           <button

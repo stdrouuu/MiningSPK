@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { RiCheckLine } from 'react-icons/ri'
+import { RiArrowLeftLine, RiCheckLine } from 'react-icons/ri'
 import { Dialog } from '../ui/Dialog'
 import { Button } from '../ui/Button'
 import type { CriterionKey } from '../../types/priority'
@@ -61,7 +61,7 @@ export function PairwiseQuiz({ open, onClose, onFinish }: Props) {
   }
 
   return (
-    <Dialog open={open} onClose={handleClose} title="Kuis cepat: pilih yang lebih penting" className="max-w-lg" blurBackdrop={false}>
+    <Dialog open={open} onClose={handleClose} title="Kuis cepat: pilih yang lebih penting" className="max-w-lg">
       {!done && pair ? (
         <div className="space-y-4">
           <div>
@@ -92,16 +92,17 @@ export function PairwiseQuiz({ open, onClose, onFinish }: Props) {
             })}
           </div>
 
-          <div className="flex items-center justify-between">
+          <div className="flex">
             <button
+              type="button"
               onClick={undo}
               disabled={step === 0}
-              className="text-xs text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 disabled:opacity-40 underline"
+              aria-label="Kembali ke soal sebelumnya"
+              title="Kembali ke soal sebelumnya"
+              className="inline-flex items-center gap-1 text-xs font-medium text-slate-700 enabled:cursor-pointer enabled:hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-40 dark:text-slate-200"
             >
-              Kembali ke soal sebelumnya
-            </button>
-            <button onClick={handleClose} className="text-xs text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 underline">
-              Batalkan kuis
+              <RiArrowLeftLine aria-hidden="true" className="size-3.5" />
+              Sebelumnya
             </button>
           </div>
         </div>

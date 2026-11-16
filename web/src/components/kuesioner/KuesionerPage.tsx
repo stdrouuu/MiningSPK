@@ -1,13 +1,16 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { RiArrowLeftLine, RiArrowRightLine, RiQuestionLine } from 'react-icons/ri'
-import { PortalHeader } from '../PortalHeader'
+import { BrandLogo } from '../BrandLogo'
 import { Button } from '../ui/Button'
 import { CompanyLogo } from '../CompanyLogo'
+import { TopRankMedalBadge } from '../TopRankMedalBadge'
+import { useWalkthrough } from '../WalkthroughTour'
 import { ConfirmRankModal } from './ConfirmRankModal'
 import { JobRadarSearchModal } from './JobRadarSearchModal'
 import { PairwiseQuiz } from './PairwiseQuiz'
+import { StepperPreview } from './StepperPreview'
 import { PriorityEditor } from './PriorityEditor'
 import { SensitivityPanel } from './SensitivityPanel'
 import type { CleanJob, RankedJobResult, StudentProfile } from '../../types/data'
@@ -35,7 +38,6 @@ interface Props {
   onViewAllInPortal?: () => void
 }
 
-const STEPS = ['Profil', 'Prioritas', 'Hasil']
 const TOTAL_PROFILE_QUESTIONS = 7
 
 // ─── Opsi Google Form survei (Q3–Q7) ─────────────────────────────────────────
@@ -188,14 +190,16 @@ export function KuesionerPage({
   loading,
   studentPrefs,
   setStudentPrefs,
-  onOpenPreferences,
-  onOpenSavedJobs,
-  savedJobsCount,
   tfidf,
   onViewAllInPortal,
 }: Props) {
   const navigate = useNavigate()
   const [step, setStep] = useState(0)
+  const [showIntro, setShowIntro] = useState(true)
+  const { isOpen: isTourOpen, activeSection: tourSection } = useWalkthrough()
+  useEffect(() => {
+    if (isTourOpen && tourSection === 'kuesioner') setShowIntro(false)
+  }, [isTourOpen, tourSection])
   // Sub-langkah profil: satu pertanyaan satu layar (0=Nama, 1=Q3 … 6=Q8)
   const [qIndex, setQIndex] = useState(0)
   // Jawaban GForm mentah (Q6a/Q6b/Q7) — null = belum dijawab (wajib diisi semua)
@@ -324,67 +328,39 @@ export function KuesionerPage({
 
   return (
     <>
-      <PortalHeader
-        mode="user"
-        activeView="kuesioner"
-        studentPrefs={studentPrefs}
-        onOpenPreferences={onOpenPreferences}
-        savedJobsCount={savedJobsCount}
-        onOpenSavedJobs={onOpenSavedJobs}
-      />
-
-      <main className="flex-1 max-w-3xl w-full mx-auto px-4 sm:px-6 py-6 space-y-5">
-        <div>
-          <h1 className="text-xl sm:text-2xl font-medium text-slate-900 dark:text-white mt-0.5">
-            Isi profil, susun prioritas, lihat rekomendasi
-          </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400 font-light mt-1">
-            {step === 0
-              ? `Jawabanmu dipakai mempersonalisasi profil serta menghitung upah/jam & jam ideal rekomendasi. Jawab satu per satu — ${TOTAL_PROFILE_QUESTIONS} pertanyaan, semua wajib diisi.`
-              : step === 1
-                ? 'Susun ranking kriteria 1–5 versimu — ini murni pilihanmu, bukan tebakan sistem.'
-                : 'Rekomendasi dihitung dari ranking pilihanmu (SMARTER + ROC) yang sudah kamu konfirmasi.'}
-          </p>
-        </div>
-
-        {/* Stepper sederhana */}
-        <ol data-tour="kuesioner-stepper" className="flex items-center gap-1.5" aria-label="Langkah kuesioner">
-          {STEPS.map((label, i) => (
-            <li key={label} className="flex items-center gap-1.5 flex-1">
-              <button
-                onClick={() => i < step && setStep(i)}
-                className={`flex items-center gap-2 flex-1 rounded-lg border px-3 py-2 text-xs transition-colors ${
-                  i === step
-                    ? 'border-[#0C52EE] dark:border-blue-500 bg-[#0C52EE]/5 dark:bg-blue-500/10 font-medium text-[#0C52EE] dark:text-blue-400'
-                    : i < step
-                      ? 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 hover:border-slate-300 dark:hover:border-slate-700'
-                      : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-400 dark:text-slate-600'
-                }`}
-              >
-                <span
-                  className={`flex h-5 w-5 items-center justify-center rounded-full text-[11px] font-mono ${
-                    i === step ? 'bg-[#0C52EE] text-white' : i < step ? 'bg-slate-900 dark:bg-slate-700 text-white' : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500'
-                  }`}
-                >
-                  {i + 1}
-                </span>
-                {label}
-              </button>
-              {i < STEPS.length - 1 && <span className="text-slate-300 dark:text-slate-700">›</span>}
-            </li>
-          ))}
-        </ol>
+      <main className="flex-1 w-full min-h-screen flex flex-col bg-[#F8FAFC] dark:bg-slate-950">
+        {showIntro ? (
+        <aside className="relative overflow-hidden px-6 py-7 sm:px-12 md:px-14 md:py-10 flex flex-col min-h-screen">
+          <button onClick={() => navigate(ROUTES.LANDING)} className="relative z-10 inline-flex items-center gap-2 self-start text-sm font-medium hover:underline text-[#0C52EE]"><RiArrowLeftLine /> Beranda</button>
+          <div className="relative z-10 flex-1 flex flex-col justify-center py-12 md:py-16 w-full max-w-lg mx-auto items-start text-left">
+              <BrandLogo textClassName="text-2xl font-medium tracking-tighter text-slate-900" />
+            <h1 className="mt-3 max-w-lg text-3xl sm:text-4xl font-semibold leading-tight tracking-tight text-slate-900">Kuesioner: Isi profil untuk dapatkan rekomendasi kerja</h1>
+            <p className="mt-3 max-w-md text-sm leading-relaxed text-slate-600">Jawab pertanyaan dan urutkan prioritasmu untuk melihat rekomendasi lowongan part-time.</p>
+              <Button onClick={() => setShowIntro(false)} className="mt-7 h-11 gap-2">
+                Mulai kuesioner <RiArrowRightLine className="h-4 w-4" />
+              </Button>
+          </div>
+        </aside>
+        ) : (
+        <>
+        <header className="px-6 pt-7 sm:px-12 md:px-14 md:pt-10">
+          <button onClick={() => navigate(ROUTES.LANDING)} className="inline-flex items-center gap-2 text-sm font-medium text-[#0C52EE] hover:underline dark:text-blue-400"><RiArrowLeftLine /> Beranda</button>
+        </header>
+        <div className="flex flex-1 flex-col w-full min-w-0 px-6 py-10 sm:px-12 lg:px-16">
+        <div className="w-full max-w-xl mx-auto my-auto space-y-6">
+        <>
+        <StepperPreview step={step} onStep={setStep} />
 
         {loading ? (
-          <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 animate-pulse">
+          <div data-tour="kuesioner-content" className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 animate-pulse">
             <div className="h-5 w-1/2 rounded bg-slate-200 dark:bg-slate-800" />
             <div className="mt-3 h-4 w-2/3 rounded bg-slate-100 dark:bg-slate-800/60" />
           </div>
         ) : (
-          <div data-tour="kuesioner-content">
+          <div data-tour="kuesioner-content" className="rounded-xl border border-slate-200 bg-white p-6 shadow-2xs dark:border-slate-800 dark:bg-slate-900">
             {/* STEP 0 — Profil ala Google Form (Nama + Q3–Q8) */}
             {step === 0 && (
-              <section className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-2xs space-y-5">
+              <section className="space-y-6">
                 <div>
                   <div className="flex justify-between text-[11px] text-slate-500 dark:text-slate-400 mb-1.5">
                     <span>Pertanyaan {qIndex + 1} dari {TOTAL_PROFILE_QUESTIONS}</span>
@@ -614,7 +590,9 @@ export function KuesionerPage({
                       <RiArrowLeftLine className="h-3.5 w-3.5" /> Kembali
                     </button>
                   ) : (
-                    <span />
+                    <button onClick={() => setShowIntro(true)} className="emil-press inline-flex items-center gap-1.5 h-8 px-3 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-800 text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white">
+                      <RiArrowLeftLine className="h-3.5 w-3.5" /> Kembali
+                    </button>
                   )}
                   <div className="text-right space-y-1.5">
                     {!screenValid && (
@@ -655,7 +633,7 @@ export function KuesionerPage({
               <section className="space-y-3">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <h2 className="text-sm font-medium text-slate-900 dark:text-white">Urutkan dari yang paling penting buatmu</h2>
+                    <h2 className="text-sm font-medium text-slate-900 dark:text-white">Urutkan kriteria dari yang paling penting buatmu</h2>
                     <p className="text-xs text-slate-500 dark:text-slate-400 font-light mt-0.5">
                       Urutan di bawah hanya contoh — geser rank-nya sampai sesuai versimu.
                     </p>
@@ -717,9 +695,7 @@ export function KuesionerPage({
                   </div>
                   {ranked.slice(0, 3).map((job, i) => (
                     <article key={job.job_id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3.5 shadow-2xs flex items-center gap-3.5">
-                      <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#0C52EE] dark:bg-blue-600 text-white text-xs font-medium">
-                        {i + 1}
-                      </span>
+                      <TopRankMedalBadge rank={(i + 1) as 1 | 2 | 3} size={28} />
                       <CompanyLogo
                         companyName={job.company_name}
                         logoUrl={job.company_logo}
@@ -736,7 +712,7 @@ export function KuesionerPage({
                             <div className="emil-meter h-full bg-[#0C52EE] dark:bg-blue-500 rounded-full" style={{ width: `${Math.min(100, job.finalScore * 100)}%` }} />
                           </div>
                           <span className="text-[11px] font-mono font-medium text-slate-700 dark:text-slate-300 tabular-nums">
-                            {job.finalScore.toFixed(4)}
+                            {Math.round(Math.min(100, Math.max(0, job.finalScore * 100)))}%
                           </span>
                         </div>
                       </div>
@@ -762,6 +738,14 @@ export function KuesionerPage({
               </section>
             )}
           </div>
+        )}
+        </>
+        </div>
+        </div>
+        <footer className="px-6 pb-7 sm:px-12 md:px-14 md:pb-10">
+          <BrandLogo />
+        </footer>
+        </>
         )}
       </main>
 

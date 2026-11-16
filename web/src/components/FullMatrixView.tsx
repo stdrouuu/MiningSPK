@@ -2,6 +2,7 @@ import { useState, useMemo, type MouseEvent, type FocusEvent } from 'react'
 import { RiDownloadLine, RiEqualizerLine } from 'react-icons/ri'
 import { Button } from './ui/Button'
 import { CompanyLogo } from './CompanyLogo'
+import { TopRankMedalBadge } from './TopRankMedalBadge'
 import type { RankedJobResult } from '../types/data'
 import type { StudentPreferences } from '../types/portal'
 import { formatRupiah } from '../lib/utils'
@@ -72,7 +73,7 @@ export function FullMatrixView({
         }
       case 'C1':
         return {
-          title: 'Skor Kategori (C1)',
+          title: 'Skor Kategori',
           value: String(job.C1_kategori),
           meaning:
             job.C1_kategori >= 1
@@ -81,13 +82,13 @@ export function FullMatrixView({
         }
       case 'C2':
         return {
-          title: 'Rasio Gaji (C2)',
+          title: 'Rasio Gaji',
           value: String(job.C2_rasio_gaji),
           meaning: `Perbandingan upah ${formatRupiah(job.work_salaryperhour)}/jam terhadap targetmu ${formatRupiah(studentPrefs.minSalary)}/jam (maks 2.0). Nilai ≥ 1 berarti upah memenuhi atau melampaui target.`,
         }
       case 'C3':
         return {
-          title: 'Skor Lokasi & Sistem Kerja (C3)',
+          title: 'Skor Lokasi & Sistem Kerja',
           value: String(job.C3_lokasi),
           meaning:
             job.C3_lokasi >= 1
@@ -98,13 +99,13 @@ export function FullMatrixView({
         }
       case 'C4':
         return {
-          title: 'Skor Kecocokan Jam Kuliah (C4)',
+          title: 'Skor Kecocokan Jam Kuliah',
           value: String(job.C4_jam_kerja),
           meaning: `Mengukur kecocokan ${job.work_hours} jam/minggu dengan batas idealmu (${studentPrefs.maxHours} jam/minggu). Nilai mendekati 1 berarti beban jam aman untuk kuliah.`,
         }
       case 'C5':
         return {
-          title: 'Skor Kemiripan Skill (C5)',
+          title: 'Skor Kemiripan Skill',
           value: String(job.C5_kemiripan_skill),
           meaning:
             job.C5_kemiripan_skill === 0
@@ -117,11 +118,11 @@ export function FullMatrixView({
       case 'u4':
       case 'u5': {
         const labelMap = {
-          u1: 'Utilitas Kategori (u₁)',
-          u2: 'Utilitas Gaji (u₂)',
-          u3: 'Utilitas Lokasi & Sistem (u₃)',
-          u4: 'Utilitas Jam Kuliah (u₄)',
-          u5: 'Utilitas Skill (u₅)',
+          u1: 'Utilitas Kategori',
+          u2: 'Utilitas Gaji',
+          u3: 'Utilitas Lokasi & Sistem',
+          u4: 'Utilitas Jam Kuliah',
+          u5: 'Utilitas Skill',
         }
         const val = job[criterion]
         return {
@@ -297,10 +298,10 @@ export function FullMatrixView({
                 Mode 1: Peringkat &amp; Skor
               </button>
               <button role="tab" aria-selected={matrixDisplayMode === 'utility'} onClick={() => handleMode('utility')} className={`px-3 py-1.5 rounded-md transition-all ${matrixDisplayMode === 'utility' ? 'font-medium bg-white dark:bg-slate-900 text-[#0C52EE] dark:text-blue-400 shadow-2xs' : 'font-normal text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}>
-                Mode 2: Utilitas (uⱼ)
+                Mode 2: Utilitas
               </button>
               <button role="tab" aria-selected={matrixDisplayMode === 'raw'} onClick={() => handleMode('raw')} className={`px-3 py-1.5 rounded-md transition-all ${matrixDisplayMode === 'raw' ? 'font-medium bg-white dark:bg-slate-900 text-[#0C52EE] dark:text-blue-400 shadow-2xs' : 'font-normal text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'}`}>
-                Mode 3: Matriks awal (Xᵢⱼ)
+                Mode 3: Matriks awal
               </button>
             </div>
 
@@ -322,7 +323,7 @@ export function FullMatrixView({
               <thead className="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-[11px] font-medium text-slate-600 dark:text-slate-300 uppercase tracking-wider">
                 <tr>
                   <th className="py-3 px-4 w-14 text-center">Rank</th>
-                  <th className="py-3 px-4 w-28">ID Loker</th>
+                  <th className={`py-3 px-4 w-28 ${matrixDisplayMode !== 'raw' ? 'min-w-[140px]' : ''}`}>ID Loker</th>
                   <th className="py-3 px-4 min-w-[200px]">Posisi &amp; Perusahaan</th>
                   <th className="py-3 px-4">Upah / Jam</th>
                   <th className="py-3 px-4">Jam</th>
@@ -372,10 +373,14 @@ export function FullMatrixView({
                     onClick={() => onSelectJobForDetail(job)}
                   >
                     <td className="py-3 px-4 text-center font-medium text-[#0C52EE] dark:text-blue-400">
-                      #{job.rank}
+                      {job.rank >= 1 && job.rank <= 3 ? (
+                        <TopRankMedalBadge rank={job.rank as 1 | 2 | 3} size={24} className="mx-auto" />
+                      ) : (
+                        <>#{job.rank}</>
+                      )}
                     </td>
 
-                    <td className="py-3 px-4 font-medium">
+                    <td className="py-3 px-4 font-medium whitespace-nowrap">
                       {job.job_id}
                     </td>
 

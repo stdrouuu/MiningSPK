@@ -76,24 +76,6 @@ export function PriorityEditor({ ranks, onChange, onReset, showReset = true }: P
 
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-2xs space-y-3">
-      <div className="flex items-center justify-between gap-2">
-        <div>
-          <h3 className="text-sm font-medium text-slate-900 dark:text-white">Susunan kriteria versimu</h3>
-          <p className="text-sm text-slate-500 dark:text-slate-400 font-light">
-            Seret untuk menyusun — atas = paling penting • bobot otomatis
-          </p>
-        </div>
-        {showReset && (
-          <button
-            onClick={onReset}
-            className="emil-press shrink-0 inline-flex items-center gap-1 text-[11px] font-medium text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700 rounded-lg px-2.5 h-7 bg-white dark:bg-slate-800"
-          >
-            <RiRefreshLine className="h-3 w-3" />
-            Reset
-          </button>
-        )}
-      </div>
-
       <div className="space-y-1.5">
         {orderedKeys.map((key, index) => {
           const m = metaOf(key)
@@ -248,9 +230,18 @@ export function PriorityEditor({ ranks, onChange, onReset, showReset = true }: P
           )
         })}
       </div>
-      <p className="text-xs text-slate-500 dark:text-slate-400">
-        Posisi paling atas = Rank 1 (bobot 45.7%). Rank selalu unik 1–5.
-      </p>
+      {showReset && (
+        <div className="flex justify-end">
+          <button
+            type="button"
+            onClick={onReset}
+            className="emil-press shrink-0 inline-flex items-center gap-1.5 text-xs font-medium text-slate-700 dark:text-slate-200 hover:text-[#0C52EE] dark:hover:text-white border border-slate-300 dark:border-slate-600 rounded-lg px-3 h-9 bg-white hover:bg-slate-50 dark:bg-slate-800 dark:hover:bg-slate-700 cursor-pointer"
+          >
+            <RiRefreshLine className="h-4 w-4" />
+            Reset
+          </button>
+        </div>
+      )}
     </div>
   )
 }
