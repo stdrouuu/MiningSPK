@@ -78,9 +78,9 @@ const Q4_OPTIONS = [
 ]
 
 const Q5_OPTIONS = [
+  { value: 'Remote', hint: 'Bekerja online dari rumah / tempat lainnya' },
   { value: 'Hybrid', hint: 'Sebagian online, sebagian hadir ke lokasi' },
   { value: 'Onsite', hint: 'Hadir fisik di tempat kerja / outlet / kantor' },
-  { value: 'Remote', hint: 'Bekerja online dari rumah / tempat lainnya' },
 ]
 
 const Q6A_OPTIONS = [

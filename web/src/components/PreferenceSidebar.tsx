@@ -330,10 +330,10 @@ export function PreferenceSidebar({
               disabled={isLocked}
               className="w-full h-9 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 text-xs text-slate-900 dark:text-slate-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-slate-900 dark:focus-visible:ring-slate-100 cursor-pointer disabled:cursor-not-allowed disabled:bg-slate-100/80 dark:disabled:bg-slate-900 disabled:text-slate-500 dark:disabled:text-slate-400"
             >
-              <option value="ALL">Semua sistem (Hybrid, Onsite, Remote)</option>
+              <option value="ALL">Semua sistem (Remote, Hybrid, Onsite)</option>
+              <option value="Remote">Remote</option>
               <option value="Hybrid">Hybrid</option>
               <option value="Onsite">Onsite</option>
-              <option value="Remote">Remote</option>
             </select>
           </div>
         </div>
