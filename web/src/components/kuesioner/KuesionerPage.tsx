@@ -20,6 +20,7 @@ import { PairwiseQuiz } from './PairwiseQuiz'
 import { StepperPreview } from './StepperPreview'
 import { PriorityEditor } from './PriorityEditor'
 import { SensitivityPanel } from './SensitivityPanel'
+import { CategoryDropdownVariants } from './CategoryDropdownVariants'
 import type { CleanJob, RankedJobResult, StudentProfile } from '../../types/data'
 import type { StudentPreferences } from '../../types/portal'
 import type { CriterionKey, Ranks } from '../../types/priority'
@@ -429,7 +430,7 @@ export function KuesionerPage({
                             </div>
                           </div>
 
-                          <div key={qIndex} className="emil-detail-swap">
+                          <div key={qIndex} className="emil-detail-swap relative z-20">
                             {qIndex === 0 && (
                               <QBlock
                                 title="Siapa nama lengkap atau nama panggilan Anda?"
@@ -494,24 +495,14 @@ export function KuesionerPage({
 
                             {qIndex === 2 && (
                               <QBlock title="Bidang pekerjaan part-time apa yang paling Anda minati?">
-                                <select
-                                  aria-label="Bidang pekerjaan yang diminati"
+                                <CategoryDropdownVariants
+                                  options={Q4_OPTIONS}
                                   value={picked.q4 ? studentPrefs.preferredCategory : ''}
-                                  onChange={(e) => {
-                                    set('preferredCategory', e.target.value)
+                                  onChange={(val) => {
+                                    set('preferredCategory', val)
                                     mark('q4')
                                   }}
-                                  className="w-full h-9 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 text-xs text-slate-800 dark:text-slate-100 focus:outline-none focus:border-[#0C52EE] dark:focus:border-blue-400"
-                                >
-                                  <option value="" disabled>
-                                    Pilih satu bidang…
-                                  </option>
-                                  {Q4_OPTIONS.map((o) => (
-                                    <option key={o.value} value={o.value}>
-                                      {o.label} — {o.hint}
-                                    </option>
-                                  ))}
-                                </select>
+                                />
                                 {picked.q4 && categorySalaryStats && (
                                   <div
                                     className="mt-2 flex items-center gap-2 rounded-lg border border-blue-200/80 dark:border-blue-800/70 bg-blue-50/70 dark:bg-blue-950/30 px-3 py-2 text-xs text-slate-700 dark:text-slate-200"
@@ -683,7 +674,7 @@ export function KuesionerPage({
                             )}
                           </div>
 
-                          <div className="flex items-center justify-between gap-2 pt-1">
+                          <div className="relative z-10 flex items-center justify-between gap-2 pt-1">
                             {qIndex > 0 ? (
                               <button
                                 onClick={() => setQIndex((i) => i - 1)}
