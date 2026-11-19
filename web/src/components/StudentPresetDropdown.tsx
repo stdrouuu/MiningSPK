@@ -26,9 +26,12 @@ export function StudentPresetDropdown({
   const selected = students.find((s) => s.student_id === selectedId) || null
 
   const filtered = useMemo(() => {
+    const sorted = [...students].sort((a, b) =>
+      a.student_name.localeCompare(b.student_name, 'id')
+    )
     const q = query.trim().toLowerCase()
-    if (!q) return students
-    return students.filter(
+    if (!q) return sorted
+    return sorted.filter(
       (s) =>
         s.student_name.toLowerCase().includes(q) ||
         s.student_id.toLowerCase().includes(q) ||

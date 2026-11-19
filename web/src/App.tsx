@@ -687,9 +687,11 @@ function PortalRoute({
                     className="w-full py-2.5 px-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm font-light text-slate-700 dark:text-slate-200 focus:bg-white dark:focus:bg-slate-950 focus:outline-none focus:border-[#0C52EE] dark:focus:border-blue-400"
                   >
                     <option value="ALL">Semua Kategori</option>
-                    {state.categories.map((c) => (
-                      <option key={c} value={c}>{c}</option>
-                    ))}
+                    {[...state.categories]
+                      .sort((a, b) => a.localeCompare(b, 'id'))
+                      .map((c) => (
+                        <option key={c} value={c}>{c}</option>
+                      ))}
                   </select>
                 </div>
 
@@ -701,10 +703,10 @@ function PortalRoute({
                     onChange={(e) => state.setFilterWorkSystem(e.target.value)}
                     className="w-full py-2.5 px-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm font-light text-slate-700 dark:text-slate-200 focus:bg-white dark:focus:bg-slate-950 focus:outline-none focus:border-[#0C52EE] dark:focus:border-blue-400"
                   >
-                    <option value="ALL">Semua sistem (Remote, Hybrid, Onsite)</option>
-                    <option value="Remote">Remote</option>
+                    <option value="ALL">Semua sistem (Hybrid, Onsite, Remote)</option>
                     <option value="Hybrid">Hybrid</option>
                     <option value="Onsite">Onsite</option>
+                    <option value="Remote">Remote</option>
                   </select>
                 </div>
 
@@ -717,9 +719,9 @@ function PortalRoute({
                     className="w-full py-2.5 px-3 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg text-sm font-light text-slate-700 dark:text-slate-200 focus:bg-white dark:focus:bg-slate-950 focus:outline-none focus:border-[#0C52EE] dark:focus:border-blue-400"
                   >
                     <option value="match">Berdasarkan preferensi</option>
-                    <option value="salary-high">Upah Tertinggi</option>
-                    <option value="salary-low">Upah Terendah</option>
                     <option value="hours-low">Jam Tersedikit</option>
+                    <option value="salary-low">Upah Terendah</option>
+                    <option value="salary-high">Upah Tertinggi</option>
                   </select>
                 </div>
               </div>

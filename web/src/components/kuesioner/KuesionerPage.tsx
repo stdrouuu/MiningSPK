@@ -1,7 +1,14 @@
 import { useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { RiArrowLeftLine, RiArrowRightLine, RiQuestionLine } from 'react-icons/ri'
+import {
+  RiArrowLeftLine,
+  RiArrowRightLine,
+  RiQuestionLine,
+  RiMapPinLine,
+  RiInformationLine,
+  RiAlertLine,
+} from 'react-icons/ri'
 import { BrandLogo } from '../BrandLogo'
 import { Button } from '../ui/Button'
 import { CompanyLogo } from '../CompanyLogo'
@@ -23,6 +30,7 @@ import { computeSPKForCustomStudent } from '../../lib/spk'
 import type { TfidfArtifact } from '../../lib/spk'
 import { avatarForPrefs } from '../../lib/avatar'
 import { formatRupiah } from '../../lib/utils'
+import { jobProximity } from '../../lib/geo'
 import { ROUTES } from '../../lib/routes'
 
 interface Props {
@@ -39,38 +47,39 @@ interface Props {
 }
 
 const TOTAL_PROFILE_QUESTIONS = 7
+const MAX_SKILL_LENGTH = 300
 
-// ─── Opsi Google Form survei (Q3–Q7) ─────────────────────────────────────────
+// ─── Opsi Google Form survei (Q3–Q7) — diurutkan alfabet A–Z ──────────────────
 
 const Q3_OPTIONS = [
+  { value: 'Bekasi', label: 'Bekasi', hint: 'Kota Bekasi, Cikarang, Tambun, dsb.' },
+  { value: 'Bogor', label: 'Bogor', hint: 'Kota Bogor, Cibinong, Cibubur, dsb.' },
+  { value: 'Depok', label: 'Depok', hint: 'Margonda, Cinere, Cimanggis, Pancoran Mas, dsb.' },
   { value: 'Jakarta Barat', label: 'Jakarta Barat', hint: 'Grogol, Kebon Jeruk, Tanjung Duren, Palmerah, Kembangan, dsb.' },
   { value: 'Jakarta Pusat', label: 'Jakarta Pusat', hint: 'Gambir, Menteng, Tanah Abang, Senen, dsb.' },
   { value: 'Jakarta Selatan', label: 'Jakarta Selatan', hint: 'Kebayoran, Mampang, Setiabudi, Pasar Minggu, dsb.' },
   { value: 'Jakarta Timur', label: 'Jakarta Timur', hint: 'Jatinegara, Matraman, Duren Sawit, Cakung, dsb.' },
   { value: 'Jakarta Utara', label: 'Jakarta Utara', hint: 'Penjaringan, Kelapa Gading, Pluit, Pademangan, dsb.' },
   { value: 'Tangerang Selatan', label: 'Tangerang / Tangerang Selatan / BSD / Serpong' },
-  { value: 'Depok', label: 'Depok', hint: 'Margonda, Cinere, Cimanggis, Pancoran Mas, dsb.' },
-  { value: 'Bogor', label: 'Bogor', hint: 'Kota Bogor, Cibinong, Cibubur, dsb.' },
-  { value: 'Bekasi', label: 'Bekasi', hint: 'Kota Bekasi, Cikarang, Tambun, dsb.' },
 ]
 
 const Q4_OPTIONS = [
-  { value: 'Education & Tutoring', label: 'Education & Tutoring', hint: 'Guru les privat, asisten bimbel, tutor belajar' },
-  { value: 'Food & Beverage (F&B)', label: 'Food & Beverage / F&B', hint: 'Barista, crew kafe/restoran, helper dapur' },
-  { value: 'Retail & Store Operations', label: 'Retail & Store Operations', hint: 'Kasir toko, pramuniaga/store crew, staf operasional toko' },
-  { value: 'Marketing & Sales', label: 'Marketing & Sales', hint: 'Promotor produk, sales lapangan/event, direct sales' },
-  { value: 'Content & Media', label: 'Content & Media', hint: 'Host live streaming TikTok/Shopee, content writer, penerjemah' },
-  { value: 'Design & Creative', label: 'Design & Creative', hint: 'Desain grafis, editor video, konten visual' },
   { value: 'Admin & Office Support', label: 'Admin & Office Support', hint: 'Input data, rekap berkas, admin chat/dokumen' },
+  { value: 'Content & Media', label: 'Content & Media', hint: 'Host live streaming TikTok/Shopee, content writer, penerjemah' },
   { value: 'Customer Service & Support', label: 'Customer Service & Support', hint: 'Layanan chat pelanggan, front desk, helpdesk' },
-  { value: 'Logistics & Delivery', label: 'Logistics & Delivery', hint: 'Sortir/packing gudang, kurir pengiriman' },
+  { value: 'Design & Creative', label: 'Design & Creative', hint: 'Desain grafis, editor video, konten visual' },
+  { value: 'Education & Tutoring', label: 'Education & Tutoring', hint: 'Guru les privat, asisten bimbel, tutor belajar' },
+  { value: 'Food & Beverage (F&B)', label: 'Food & Beverage (F&B)', hint: 'Barista, crew kafe/restoran, helper dapur' },
   { value: 'IT & Software', label: 'IT & Software', hint: 'Junior web/mobile developer, IT support, technical assistant' },
+  { value: 'Logistics & Delivery', label: 'Logistics & Delivery', hint: 'Sortir/packing gudang, kurir pengiriman' },
+  { value: 'Marketing & Sales', label: 'Marketing & Sales', hint: 'Promotor produk, sales lapangan/event, direct sales' },
+  { value: 'Retail & Store Operations', label: 'Retail & Store Operations', hint: 'Kasir toko, pramuniaga/store crew, staf operasional toko' },
 ]
 
 const Q5_OPTIONS = [
-  { value: 'Remote', hint: 'Bekerja online dari rumah / tempat lainnya' },
   { value: 'Hybrid', hint: 'Sebagian online, sebagian hadir ke lokasi' },
   { value: 'Onsite', hint: 'Hadir fisik di tempat kerja / outlet / kantor' },
+  { value: 'Remote', hint: 'Bekerja online dari rumah / tempat lainnya' },
 ]
 
 const Q6A_OPTIONS = [
@@ -217,6 +226,39 @@ export function KuesionerPage({
     monthly !== null && jamIdeal !== null
       ? `(Rp ${monthly.toLocaleString('id-ID')}/bulan ÷ ${jamIdeal * 4} jam/bulan)`
       : ''
+
+  // Kisaran upah per jam dari dataset untuk bidang yang dipilih user
+  const categorySalaryStats = useMemo(() => {
+    if (!picked.q4 || !studentPrefs.preferredCategory || !jobs.length) return null
+    const target = studentPrefs.preferredCategory.trim().toLowerCase()
+    const matching = jobs
+      .filter((j) => (j.job_category || '').trim().toLowerCase() === target && j.work_salaryperhour > 0)
+      .map((j) => j.work_salaryperhour)
+    if (!matching.length) return null
+    const minHourly = Math.min(...matching)
+    const maxHourly = Math.max(...matching)
+    const avgHourly = Math.round(matching.reduce((a, b) => a + b, 0) / matching.length / 1000) * 1000
+    const selectedOpt = Q4_OPTIONS.find((o) => o.value.toLowerCase() === target)
+    return {
+      category: selectedOpt?.label || studentPrefs.preferredCategory,
+      hint: selectedOpt?.hint || '',
+      count: matching.length,
+      minHourly,
+      maxHourly,
+      avgHourly,
+    }
+  }, [jobs, picked.q4, studentPrefs.preferredCategory])
+
+  // Deteksi ketidaksesuaian antara jam kerja ringan dan target gaji tinggi
+  const isLightWorkHighPay =
+    jamIdeal !== null &&
+    monthly !== null &&
+    hourly !== null &&
+    ((jamIdeal <= 12 && (monthly >= 2250000 || hourly >= 40000)) ||
+      (jamIdeal <= 16 && hourly >= 45000))
+
+  const isAboveCategoryRange =
+    hourly !== null && categorySalaryStats !== null && hourly > categorySalaryStats.maxHourly
   /** Tiap layar profil wajib dijawab sebelum bisa Lanjut. */
   const screenValid =
     qIndex === 0 ? studentPrefs.name.trim().length > 0
@@ -457,6 +499,26 @@ export function KuesionerPage({
                           </option>
                         ))}
                       </select>
+                      {categorySalaryStats && (
+                        <div
+                          className="mt-2.5 flex items-start gap-2.5 rounded-lg border border-blue-200/80 dark:border-blue-800/70 bg-blue-50/70 dark:bg-blue-950/30 px-3 py-2.5 text-xs text-slate-700 dark:text-slate-200"
+                          aria-live="polite"
+                        >
+                          <RiInformationLine className="h-4 w-4 text-[#0C52EE] dark:text-blue-400 shrink-0 mt-0.5" aria-hidden="true" />
+                          <div className="space-y-0.5 leading-relaxed">
+                            <p className="font-medium text-slate-900 dark:text-white">
+                              Kisaran upah umum bidang {categorySalaryStats.category}
+                            </p>
+                            <p className="text-[11px] text-slate-600 dark:text-slate-300 font-light">
+                              Berdasarkan {categorySalaryStats.count} lowongan di dataset ({categorySalaryStats.hint}), upah umumnya berkisar{' '}
+                              <span className="font-medium text-slate-900 dark:text-white">
+                                {formatRupiah(categorySalaryStats.minHourly)} – {formatRupiah(categorySalaryStats.maxHourly)}/jam
+                              </span>{' '}
+                              (rata-rata ±{formatRupiah(categorySalaryStats.avgHourly)}/jam).
+                            </p>
+                          </div>
+                        </div>
+                      )}
                     </QBlock>
                   )}
 
@@ -533,6 +595,35 @@ export function KuesionerPage({
 
                   {qIndex === 5 && (
                     <QBlock title="Berapa banyak upah / gaji yang Anda harapkan per bulan?">
+                      {/* Notifikasi penyesuaian gaji vs beban kerja */}
+                      <div className="flex items-start gap-2.5 rounded-lg border border-blue-200/80 dark:border-blue-800/70 bg-blue-50/70 dark:bg-blue-950/30 px-3 py-2.5 text-xs text-slate-700 dark:text-slate-200">
+                        <RiInformationLine className="h-4 w-4 text-[#0C52EE] dark:text-blue-400 shrink-0 mt-0.5" aria-hidden="true" />
+                        <div className="space-y-1 leading-relaxed">
+                          <p className="font-medium text-slate-900 dark:text-white">
+                            Tips menyesuaikan ekspektasi gaji &amp; beban kerja
+                          </p>
+                          <p className="text-[11px] text-slate-600 dark:text-slate-300 font-light">
+                            Kalau ingin gaji lebih besar, umumnya dibutuhkan effort &amp; jam kerja lebih tinggi atau keahlian khusus. Sebaliknya, kalau ingin kerja yang lebih ringan agar fokus kuliah, ekspektasi gaji juga perlu disesuaikan.
+                          </p>
+                          {categorySalaryStats && (
+                            <p className="text-[11px] text-slate-700 dark:text-slate-200 pt-0.5">
+                              Kisaran umum untuk <span className="font-medium">{categorySalaryStats.category}</span>:{' '}
+                              <span className="font-medium text-[#0C52EE] dark:text-blue-400">
+                                {formatRupiah(categorySalaryStats.minHourly)} – {formatRupiah(categorySalaryStats.maxHourly)}/jam
+                              </span>
+                              {jamIdeal !== null && (
+                                <span className="text-slate-500 dark:text-slate-400">
+                                  {' '}
+                                  (≈ {formatRupiah(categorySalaryStats.minHourly * jamIdeal * 4)} –{' '}
+                                  {formatRupiah(categorySalaryStats.maxHourly * jamIdeal * 4)}/bulan untuk {jamIdeal} jam/mgg)
+                                </span>
+                              )}
+                              .
+                            </p>
+                          )}
+                        </div>
+                      </div>
+
                       <div className="grid grid-cols-1 gap-1.5">
                         {Q7_OPTIONS.map((o) => (
                           <RadioOption
@@ -546,16 +637,25 @@ export function KuesionerPage({
                         ))}
                       </div>
                       {hourly !== null ? (
-                        <p
-                          className="text-xs text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 font-light"
-                          aria-live="polite"
-                        >
-                          ≈{' '}
-                          <span className="font-medium text-slate-900 dark:text-white">
-                            Rp {hourly.toLocaleString('id-ID')}/jam
-                          </span>
-                          <span className="text-slate-400 dark:text-slate-500"> {paySummary}</span>.
-                        </p>
+                        <div className="space-y-2" aria-live="polite">
+                          <p className="text-xs text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 font-light">
+                            ≈{' '}
+                            <span className="font-medium text-slate-900 dark:text-white">
+                              Rp {hourly.toLocaleString('id-ID')}/jam
+                            </span>
+                            <span className="text-slate-400 dark:text-slate-500"> {paySummary}</span>.
+                          </p>
+                          {(isLightWorkHighPay || isAboveCategoryRange) && (
+                            <div className="flex items-start gap-2 rounded-lg border border-amber-200 dark:border-amber-800/70 bg-amber-50/80 dark:bg-amber-950/30 px-3 py-2 text-[11px] leading-relaxed text-amber-900 dark:text-amber-200">
+                              <RiAlertLine className="h-4 w-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" aria-hidden="true" />
+                              <span>
+                                {isLightWorkHighPay
+                                  ? `Jam kerjamu tergolong ringan (${jamIdeal} jam/mgg) sedangkan target upah cukup tinggi (≈${formatRupiah(hourly)}/jam). Pertimbangkan menambah jam kerja atau menurunkan ekspektasi gaji agar pilihan lowongan lebih realistis.`
+                                  : `Target upahmu (≈${formatRupiah(hourly)}/jam) di atas kisaran tertinggi bidang ${categorySalaryStats?.category} (${formatRupiah(categorySalaryStats?.maxHourly || 0)}/jam). Kamu tetap bisa lanjut, namun hasil rekomendasi bisa memprioritaskan bidang lain yang upahnya lebih tinggi.`}
+                              </span>
+                            </div>
+                          )}
+                        </div>
                       ) : (
                         <p className="text-[11px] text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-800/80 border border-dashed border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 font-light">
                           Pilih rentang upah di atas — hasil per jamnya muncul di sini.
@@ -569,14 +669,28 @@ export function KuesionerPage({
                       <textarea
                         aria-label="Keahlian yang dimiliki"
                         rows={3}
+                        maxLength={MAX_SKILL_LENGTH}
                         value={studentPrefs.skills}
-                        onChange={(e) => set('skills', e.target.value)}
+                        onChange={(e) => set('skills', e.target.value.slice(0, MAX_SKILL_LENGTH))}
                         placeholder="Contoh: Canva, komunikasi ramah, kemampuan bekerja sama"
                         className="w-full rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 p-2.5 text-xs focus:outline-none focus:border-[#0C52EE] dark:focus:border-blue-400"
                       />
-                      <p className="text-[11px] text-slate-400 dark:text-slate-500 font-light">
-                        Contoh: "Microsoft Excel, pengetikan cepat, rekap data teliti" atau "Espresso machine, manual brewing, hospitality".
-                      </p>
+                      <div className="flex items-start justify-between gap-3">
+                        <p className="text-[11px] text-slate-400 dark:text-slate-500 font-light">
+                          Contoh: "Microsoft Excel, pengetikan cepat, rekap data teliti" atau "Espresso machine, manual brewing, hospitality".
+                        </p>
+                        <span
+                          className={`shrink-0 text-[11px] font-mono tabular-nums ${
+                            studentPrefs.skills.length >= MAX_SKILL_LENGTH
+                              ? 'text-[#ED1E79] dark:text-pink-400 font-medium'
+                              : studentPrefs.skills.length >= MAX_SKILL_LENGTH - 40
+                                ? 'text-amber-600 dark:text-amber-400'
+                                : 'text-slate-400 dark:text-slate-500'
+                          }`}
+                        >
+                          {studentPrefs.skills.length}/{MAX_SKILL_LENGTH}
+                        </span>
+                      </div>
                     </QBlock>
                   )}
                 </div>
@@ -692,32 +806,59 @@ export function KuesionerPage({
                     <p className="text-xs text-slate-500 dark:text-slate-400 font-light mt-0.5">
                       Diurutkan dari yang paling cocok, berdasarkan jawaban profil dan ranking prioritas yang sudah kamu isi.
                     </p>
+                    <div className="mt-2 inline-flex items-center gap-1.5 rounded-lg border border-blue-200/80 dark:border-blue-800/70 bg-blue-50/70 dark:bg-blue-950/30 px-2.5 py-1 text-[11px] text-slate-700 dark:text-slate-200">
+                      <RiMapPinLine className="h-3.5 w-3.5 text-[#0C52EE] dark:text-blue-400 shrink-0" aria-hidden="true" />
+                      <span>
+                        Area pencarianmu:{' '}
+                        <span className="font-semibold text-slate-900 dark:text-white">
+                          {studentPrefs.location || 'Jabodetabek'}
+                        </span>
+                      </span>
+                    </div>
                   </div>
-                  {ranked.slice(0, 3).map((job, i) => (
-                    <article key={job.job_id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3.5 shadow-2xs flex items-center gap-3.5">
-                      <TopRankMedalBadge rank={(i + 1) as 1 | 2 | 3} size={28} />
-                      <CompanyLogo
-                        companyName={job.company_name}
-                        logoUrl={job.company_logo}
-                        size="lg"
-                        className="h-12 w-16 object-contain shrink-0"
-                      />
-                      <div className="min-w-0 flex-1">
-                        <div className="text-sm font-medium text-slate-900 dark:text-white truncate">{job.job_title}</div>
-                        <div className="text-[11px] text-slate-500 dark:text-slate-400 font-light truncate">
-                          {job.company_name} • {job.work_job_location} • {formatRupiah(job.work_salaryperhour)}/jam
-                        </div>
-                        <div className="flex items-center gap-2 mt-1.5">
-                          <div className="flex-1 h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
-                            <div className="emil-meter h-full bg-[#0C52EE] dark:bg-blue-500 rounded-full" style={{ width: `${Math.min(100, job.finalScore * 100)}%` }} />
+                  {ranked.slice(0, 3).map((job, i) => {
+                    const prox = jobProximity(job, studentPrefs.location).label
+                    const locLabel = (job.work_job_location || '').trim() || job.work_system || 'Lokasi fleksibel'
+                    return (
+                      <article key={job.job_id} className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3.5 shadow-2xs flex items-center gap-3.5">
+                        <TopRankMedalBadge rank={(i + 1) as 1 | 2 | 3} size={28} />
+                        <CompanyLogo
+                          companyName={job.company_name}
+                          logoUrl={job.company_logo}
+                          size="lg"
+                          className="h-12 w-16 object-contain shrink-0"
+                        />
+                        <div className="min-w-0 flex-1">
+                          <div className="text-sm font-medium text-slate-900 dark:text-white truncate">{job.job_title}</div>
+                          <div className="text-[11px] text-slate-500 dark:text-slate-400 font-light truncate">
+                            {job.company_name} • {formatRupiah(job.work_salaryperhour)}/jam
                           </div>
-                          <span className="text-[11px] font-mono font-medium text-slate-700 dark:text-slate-300 tabular-nums">
-                            {Math.round(Math.min(100, Math.max(0, job.finalScore * 100)))}%
-                          </span>
+                          <div className="mt-1 flex flex-wrap items-center gap-1.5 text-[11px] text-slate-600 dark:text-slate-300">
+                            <span className="inline-flex items-center gap-1 font-medium text-slate-700 dark:text-slate-200">
+                              <RiMapPinLine className="h-3.5 w-3.5 text-[#0C52EE] dark:text-blue-400 shrink-0" aria-hidden="true" />
+                              {locLabel}
+                            </span>
+                            {job.work_system && locLabel.toLowerCase() !== job.work_system.toLowerCase() && (
+                              <span className="text-slate-400 dark:text-slate-500">• {job.work_system}</span>
+                            )}
+                            {prox && locLabel.toLowerCase() !== 'remote' && (
+                              <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[10px] font-medium text-slate-600 dark:text-slate-300">
+                                {prox}
+                              </span>
+                            )}
+                          </div>
+                          <div className="flex items-center gap-2 mt-1.5">
+                            <div className="flex-1 h-1.5 rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+                              <div className="emil-meter h-full bg-[#0C52EE] dark:bg-blue-500 rounded-full" style={{ width: `${Math.min(100, job.finalScore * 100)}%` }} />
+                            </div>
+                            <span className="text-[11px] font-mono font-medium text-slate-700 dark:text-slate-300 tabular-nums">
+                              {Math.round(Math.min(100, Math.max(0, job.finalScore * 100)))}%
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                    </article>
-                  ))}
+                      </article>
+                    )
+                  })}
                   {ranked.length === 0 && (
                     <p className="text-xs text-slate-500 dark:text-slate-400">Belum ada lowongan yang bisa dihitung.</p>
                   )}

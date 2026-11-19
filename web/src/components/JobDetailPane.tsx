@@ -2,6 +2,7 @@ import { CompanyLogo } from './CompanyLogo'
 import { relativePosting } from './JobCardItem'
 import type { RankedJobResult } from '../types/data'
 import type { StudentPreferences } from '../types/portal'
+import { jobProximity } from '../lib/geo'
 
 interface JobDetailPaneProps {
   job: RankedJobResult | null
@@ -61,10 +62,9 @@ export function JobDetailPane({
     .filter(Boolean)
   const allSkills = rawSkills.slice(0, 12)
 
-  // Lokasi & work system bisa berisi teks sama (mis. "Remote") — jangan tampil dobel.
-  const locationText = (job.work_job_location || '').trim()
-  const systemText = (job.work_system || '').trim()
-  const showLocation = locationText.length > 0 && locationText.toLowerCase() !== systemText.toLowerCase()
+  // Selalu tampilkan lokasi pekerjaan agar alamat/area kerja tidak pernah hilang (termasuk untuk Remote).
+  const locationText = (job.work_job_location || '').trim() || (job.work_system || '').trim() || 'Lokasi fleksibel'
+  const proxLabel = jobProximity(job, studentPrefs.location).label
 
   return (
     <section
@@ -124,15 +124,20 @@ export function JobDetailPane({
 
       {/* Section 2: lokasi, work system, upah per jam */}
       <ul className="space-y-1 text-[15px] text-slate-600 dark:text-slate-300 font-light">
-        {showLocation && (
-          <li className="flex items-center gap-2.5">
-            <svg className="w-4 h-4 shrink-0 text-slate-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" />
-              <circle cx="12" cy="10" r="3" />
-            </svg>
-            {locationText}
-          </li>
-        )}
+        <li className="flex items-center gap-2.5 flex-wrap">
+          <svg className="w-4 h-4 shrink-0 text-[#0C52EE] dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          <span className="font-normal text-slate-800 dark:text-slate-100">
+            {locationText.toLowerCase() === 'remote' ? 'Remote (Fleksibel dari mana saja)' : locationText}
+          </span>
+          {!hideAnalysis && proxLabel && locationText.toLowerCase() !== 'remote' && (
+            <span className="inline-flex items-center px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-xs font-normal text-slate-600 dark:text-slate-300">
+              {proxLabel}
+            </span>
+          )}
+        </li>
         <li className="flex items-center gap-2.5">
           <svg className="w-4 h-4 shrink-0 text-slate-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="12" cy="12" r="9" strokeWidth="2" />
