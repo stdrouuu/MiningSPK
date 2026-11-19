@@ -100,7 +100,7 @@ export function JobCardItem({
             </span>
           </div>
           <p className="text-sm text-slate-600 dark:text-slate-300 font-normal mt-1.5 flex items-center gap-1.5 min-w-0">
-            <RiMapPinLine className="h-3.5 w-3.5 text-[#0C52EE] dark:text-blue-400 shrink-0" aria-hidden="true" />
+            <RiMapPinLine className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500 shrink-0" aria-hidden="true" />
             <span className="truncate">
               {(job.work_job_location || "").trim() || job.work_system || "Lokasi fleksibel"}
             </span>

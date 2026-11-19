@@ -125,7 +125,7 @@ export function JobDetailPane({
       {/* Section 2: lokasi, work system, upah per jam */}
       <ul className="space-y-1 text-[15px] text-slate-600 dark:text-slate-300 font-light">
         <li className="flex items-center gap-2.5 flex-wrap">
-          <svg className="w-4 h-4 shrink-0 text-[#0C52EE] dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <svg className="w-4 h-4 shrink-0 text-slate-400 dark:text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z" />
             <circle cx="12" cy="10" r="3" />
           </svg>
