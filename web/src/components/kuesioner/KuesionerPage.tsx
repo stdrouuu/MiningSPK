@@ -387,12 +387,12 @@ export function KuesionerPage({
       <main className="flex-1 w-full min-h-screen flex flex-col bg-[#F8FAFC] dark:bg-slate-950">
         {showIntro ? (
           <aside className="relative overflow-hidden px-6 py-7 sm:px-12 md:px-14 md:py-10 flex flex-col min-h-screen">
-            <button onClick={() => navigate(ROUTES.LANDING)} className="relative z-10 inline-flex items-center gap-2 self-start text-sm font-medium hover:underline text-[#0C52EE]"><RiArrowLeftLine /> Beranda</button>
+            <button onClick={() => navigate(ROUTES.LANDING)} className="relative z-10 inline-flex items-center gap-2 self-start text-sm font-medium hover:underline text-[#0C52EE] dark:text-blue-400"><RiArrowLeftLine /> Beranda</button>
             <div className="relative z-10 flex-1 flex flex-col justify-center py-12 md:py-16 w-full max-w-lg mx-auto items-start text-left">
-              <BrandLogo textClassName="text-2xl font-medium tracking-tighter text-slate-900" />
-              <h1 className="mt-3 max-w-lg text-3xl sm:text-4xl font-semibold leading-tight tracking-tight text-slate-900">Kuesioner: Isi profil untuk dapatkan rekomendasi kerja</h1>
-              <p className="mt-3 max-w-md text-sm leading-relaxed text-slate-600">Jawab pertanyaan dan urutkan prioritasmu untuk melihat rekomendasi lowongan part-time.</p>
-              <Button onClick={() => setShowIntro(false)} className="mt-7 h-11 gap-2">
+              <BrandLogo textClassName="text-2xl font-medium tracking-tighter text-slate-900 dark:text-white" />
+              <h1 className="mt-3 max-w-lg text-3xl sm:text-4xl font-semibold leading-tight tracking-tight text-slate-900 dark:text-white">Kuesioner: Isi profil untuk dapatkan rekomendasi kerja</h1>
+              <p className="mt-3 max-w-md text-sm leading-relaxed text-slate-600 dark:text-slate-300">Jawab pertanyaan dan urutkan prioritasmu untuk melihat rekomendasi lowongan part-time.</p>
+              <Button onClick={() => setShowIntro(false)} className="mt-7 h-11 gap-2 bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500 text-white">
                 Mulai kuesioner <RiArrowRightLine className="h-4 w-4" />
               </Button>
             </div>
