@@ -71,39 +71,45 @@ def clean_title_for_parttime(title):
     t = re.sub(r'\s+', ' ', t)
     return t
 
-def map_10_categories(title, portal_cat="", url=""):
-    comb = f"{title} {portal_cat} {url}".lower()
-    
-    # 1. IT & Software (Prioritaskan jika mengandung kata coding, programmer, web, software, tech, data entry)
-    if any(k in comb for k in ['coding', 'programmer', 'developer', 'software', 'frontend', 'backend', 'robotik', 'tech support', 'it support', 'data entry', 'qa engineer', 'web designer', 'web dev', 'teknisi komputer', 'teknologi informasi', 'it staff']):
-        return "IT & Software"
-    # 2. Food & Beverage (F&B)
-    elif any(k in comb for k in ['barista', 'kitchen', 'cafe', 'restaurant', 'f&b', 'cook', 'waiter', 'waitress', 'crew f&b', 'kopi', 'minuman', 'makanan', 'baker', 'roaster', 'bartender']):
-        return "Food & Beverage (F&B)"
-    # 3. Education & Tutoring
-    elif any(k in comb for k in ['guru', 'tutor', 'pengajar', 'bimbel', 'les', 'calistung', 'teacher', 'instructor', 'edukasi', 'education', 'sekolah', 'bahasa inggris', 'matematika', 'mandarin', 'kimia', 'fisika', 'biologi', 'privat']):
-        return "Education & Tutoring"
-    # 4. Content & Media
-    elif any(k in comb for k in ['host live', 'live streaming', 'talent', 'streamer', 'tiktok', 'shopee live', 'creator', 'writer', 'copywriter', 'broadcaster', 'video talent', 'voice over', 'penerjemah', 'translator']):
-        return "Content & Media"
-    # 5. Design & Creative
-    elif any(k in comb for k in ['desain', 'design', 'graphic', 'grafis', 'video editor', 'canva', 'photoshop', 'figma', 'creative', 'animasi', 'illustrator', 'ui/ux', 'motion']):
-        return "Design & Creative"
-    # 6. Logistics & Delivery
-    elif any(k in comb for k in ['kurir', 'driver', 'delivery', 'logistik', 'gudang', 'warehouse', 'packer', 'packing', 'pengemudi', 'supir', 'armada', 'rider']):
-        return "Logistics & Delivery"
-    # 7. Retail & Store Operations
-    elif any(k in comb for k in ['kasir', 'cashier', 'store crew', 'crew store', 'pramuniaga', 'ritel', 'retail', 'penjaga toko', 'shop assistant', 'outlet crew', 'crew outlet', 'spg toko']):
-        return "Retail & Store Operations"
-    # 8. Customer Service & Support
-    elif any(k in comb for k in ['customer service', 'cs ', 'chat support', 'helpdesk', 'call center', 'front desk', 'resepsionis', 'front office', 'guest support']):
-        return "Customer Service & Support"
-    # 9. Marketing & Sales
-    elif any(k in comb for k in ['sales', 'marketing', 'spg', 'spb', 'promotor', 'telemarketing', 'affiliate', 'direct sales', 'konsultan asuransi', 'financial planner', 'account executive']):
-        return "Marketing & Sales"
-    # 10. Admin & Office Support
-    else:
-        return "Admin & Office Support"
+# Match roles before subject matter or employer names. Each rule matches
+# whole words, including in titles that use hyphens or slashes.
+ROLE_KEYWORDS = (
+    ("Education & Tutoring", "guru|tutors?|tutoring|pengajar|teachers?|instructors?|instruktur|dosen|mentor|pelatih"),
+    ("Content & Media", "penerjemah|translator|interpreter|host live|live host|content creator|copywriter|writer|konten kreator|social media|videographer|hostlive|broadcaster|streamer|voice over|video talent|live streaming"),
+    ("Customer Service & Support", "customer service|customer support|chat support|helpdesk|help desk|call center|resepsionis|receptionist|front office|front desk"),
+    ("Logistics & Delivery", "kurir|courier|driver|pengemudi|sopir|supir|rider|warehouse|gudang|packer|packing|logistik|logistics|delivery"),
+    ("Marketing & Sales", "sales|marketing|spg|spb|promotor|telemarketing|affiliate|financial planner|account executive|business development|operasi penjualan|promotion partner|financial advisor|bancassurance"),
+    ("Design & Creative", "desainer|designer|desain grafis|graphic design|video editor|illustrator|animator|ui ux"),
+    ("IT & Software", "programmer|developer|software engineer|frontend|backend|tech support|it support|qa engineer|web dev|teknisi komputer|it staff|it admin|embedded systems engineer|teknisi it"),
+    ("Food & Beverage (F&B)", "barista|cook|chef|waiter|waitress|bartender|baker|roaster|kitchen|staf dapur|crew f b|café crew|cafe crew|coffee shop|crew store bagi kopi|fried chicken"),
+    ("Retail & Store Operations", "kasir|cashier|store crew|crew store|pramuniaga|ritel|retail|penjaga toko|shop assistant|shopkeeper|kepala toko|store laundry|penjaga stand|penjaga booth|outlet crew|crew outlet"),
+    ("Admin & Office Support", "admin|administrasi|administrative assistant|office support|office assistant|data entry|sekretaris|secretary|clerk|staff kantor|staff operasional|personal assistant|office boy"),
+)
+CATEGORY_KEYWORDS = (
+    ("Education & Tutoring", "education|edukasi|pendidikan|bimbel|bimbingan belajar|les|calistung"),
+    ("Food & Beverage (F&B)", "food beverage|food and beverage|f b|kuliner|makanan minuman"),
+    ("Content & Media", "content|media|publishing|translation"),
+    ("Design & Creative", "design|desain|creative|kreatif"),
+    ("IT & Software", "software|teknologi informasi|information technology"),
+)
+
+
+def match_category(value, rules):
+    normalized = re.sub(r"[^\w]+|_", " ", str(value).casefold())
+    for category, keywords in rules:
+        if re.search(rf"\b(?:{keywords})\b", normalized):
+            return category
+    return None
+
+
+def map_10_categories(title, portal_cat=""):
+    return (
+        match_category(title, ROLE_KEYWORDS)
+        or match_category(title, CATEGORY_KEYWORDS)
+        or match_category(portal_cat, ROLE_KEYWORDS + CATEGORY_KEYWORDS)
+        or "Uncategorized"
+    )
+
 
 def extract_parttime_skills(category, title):
     skills_map = {
@@ -213,7 +219,7 @@ def classify_location(loc_str):
     else:
         return "Jakarta Barat"
 
-def scrape_glints():
+def scrape_glints(queries=None, pages=2):
     """
     Scraper Glints dengan filter langsung PART_TIME (tanpa Freelance / Project-based).
     """
@@ -223,15 +229,16 @@ def scrape_glints():
     session.headers.update(HEADERS)
     seen_urls = set()
     
-    queries = [
-        '', 'jakarta', 'tangerang', 'bekasi', 'depok', 'bogor', 'remote',
-        'barista', 'tutor', 'kasir', 'admin', 'sales', 'kurir', 'kitchen',
-        'desain', 'content', 'store', 'customer service', 'f&b', 'operator',
-        'coding', 'web', 'programmer', 'it support', 'data'
-    ]
-    
+    if queries is None:
+        queries = [
+            '', 'jakarta', 'tangerang', 'bekasi', 'depok', 'bogor', 'remote',
+            'barista', 'tutor', 'kasir', 'admin', 'sales', 'kurir', 'kitchen',
+            'desain', 'content', 'store', 'customer service', 'f&b', 'operator',
+            'coding', 'web', 'programmer', 'it support', 'data'
+        ]
+
     for q in queries:
-        for page in range(1, 3):
+        for page in range(1, pages + 1):
             kw_param = f"&keyword={urllib.parse.quote(q)}" if q else ""
             url = f"https://glints.com/id/opportunities/jobs/explore?jobTypes=PART_TIME{kw_param}&country=ID&page={page}"
             try:
@@ -275,7 +282,7 @@ def scrape_glints():
                             # Kategori 10 ragam
                             cat_obj = j.get('hierarchicalJobCategory') or {}
                             cat_name = (cat_obj.get('subCategory') or {}).get('name', '') + ' ' + (cat_obj.get('parentCategory') or {}).get('name', '')
-                            cat = map_10_categories(title, cat_name, job_url)
+                            cat = map_10_categories(title, cat_name)
                             skills = extract_parttime_skills(cat, title)
                             
                             # Cek sistem kerja
@@ -305,7 +312,7 @@ def scrape_glints():
                             })
             except Exception:
                 pass
-    print(f"-> Berhasil mengumpulkan {len(jobs)} lowongan Part-Time murni terverifikasi dari Glints")
+    print(f"-> Berhasil mengumpulkan {len(jobs)} kandidat Part-Time dari Glints")
     return jobs
 
 def scrape_loker_id():
@@ -339,7 +346,7 @@ def scrape_loker_id():
                         if full_url not in seen_urls:
                             seen_urls.add(full_url)
                             clean_loc = classify_location(href)
-                            cat = map_10_categories(title, "", href)
+                            cat = map_10_categories(title)
                             skills = extract_parttime_skills(cat, title)
                             salary = random.choice([25000, 27000, 30000, 35000, 38000, 42000])
                             hours = random.choice([12, 14, 16, 18, 20])
@@ -359,7 +366,7 @@ def scrape_loker_id():
                             })
         except Exception:
             pass
-    print(f"-> Berhasil mengumpulkan {len(jobs)} lowongan Part-Time murni terverifikasi dari Loker.id")
+    print(f"-> Berhasil mengumpulkan {len(jobs)} kandidat Part-Time dari Loker.id")
     return jobs
 
 def scrape_kitalulus():
@@ -392,7 +399,7 @@ def scrape_kitalulus():
                             seen_urls.add(full_url)
                             title = text.split("\n")[0] if "\n" in text else text[:50]
                             clean_loc = classify_location(comb)
-                            cat = map_10_categories(title, "", href)
+                            cat = map_10_categories(title)
                             skills = extract_parttime_skills(cat, title)
                             salary = random.choice([25000, 30000, 35000, 40000])
                             hours = random.choice([12, 14, 16, 18, 20])
@@ -412,7 +419,7 @@ def scrape_kitalulus():
                             })
             except Exception:
                 pass
-    print(f"-> Berhasil mengumpulkan {len(jobs)} lowongan Part-Time murni terverifikasi dari KitaLulus")
+    print(f"-> Berhasil mengumpulkan {len(jobs)} kandidat Part-Time dari KitaLulus")
     return jobs
 
 def scrape_kalibrr():
@@ -450,7 +457,7 @@ def scrape_kalibrr():
                 
                 city_raw = (j.get('google_location') or {}).get('address_components', {}).get('city', 'Jakarta Barat')
                 clean_loc = classify_location(city_raw)
-                cat = map_10_categories(title, "", job_url)
+                cat = map_10_categories(title)
                 skills = extract_parttime_skills(cat, title)
                 salary = random.choice([25000, 28000, 30000, 35000, 40000, 45000, 50000])
                 hours = random.choice([12, 14, 16, 18, 20, 22])
@@ -472,7 +479,7 @@ def scrape_kalibrr():
                 })
     except Exception:
         pass
-    print(f"-> Berhasil mengumpulkan {len(jobs)} lowongan Part-Time murni terverifikasi dari Kalibrr")
+    print(f"-> Berhasil mengumpulkan {len(jobs)} kandidat Part-Time dari Kalibrr")
     return jobs
 
 def build_student_dataset():
