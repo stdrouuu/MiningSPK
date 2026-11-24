@@ -78,7 +78,7 @@ export function JobDetailPane({
     >
       {/* Logo besar di kiri + aksi (bookmark & buka portal) di kanan, gaya JobStreet */}
       <div className="flex items-start justify-between gap-3">
-        <CompanyLogo companyName={job.company_name} logoUrl={job.company_logo} size="xl" />
+        <CompanyLogo companyName={job.company_name} logoUrl={job.company_logo} size="xl" loading="eager" />
         <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={onToggleSave}

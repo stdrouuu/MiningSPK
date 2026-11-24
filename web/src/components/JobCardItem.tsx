@@ -117,6 +117,7 @@ export function JobCardItem({
           companyName={job.company_name}
           logoUrl={job.company_logo}
           size="xl"
+          loading={index < 3 ? "eager" : "lazy"}
         />
       </div>
 
