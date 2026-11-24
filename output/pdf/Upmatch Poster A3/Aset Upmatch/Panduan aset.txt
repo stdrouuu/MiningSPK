@@ -1,0 +1,16 @@
+ASET UPMATCH
+
+Logo dan ikon
+Pilih logo-upmatch-terang untuk latar terang atau logo-upmatch-gelap untuk latar gelap. Gunakan ikon-upmatch jika ruangnya kecil.
+
+Contoh rekomendasi dan motif
+Seret contoh-rekomendasi.svg atau motif-diagonal.svg ke editor desain. Versi PNG berlatar transparan bisa langsung disalin ke slide, dokumen, atau desain lain.
+
+Kode QR
+qr-upmatch.png adalah gambar asli yang dikirim untuk poster. Versi SVG menggunakan pola yang sama dalam format vektor. Pertahankan area putih di sekeliling QR saat mengubah ukurannya.
+
+Poster
+poster-a3-vektor.svg mempertahankan bentuk huruf saat diimpor tanpa font. Gunakan file Upmatch - Poster A3 Editable.svg dari folder utama jika ingin mengubah teks. Font yang dipakai adalah Be Vietnam Pro Regular (400), Medium (500), dan SemiBold (600).
+
+Palet web Upmatch
+Biru #0C52EE  |  Pink #ED1E79  |  Teks #0F172A  |  Latar #F8FAFC  |  Garis #E2E8F0
