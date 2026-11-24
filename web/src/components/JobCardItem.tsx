@@ -1,4 +1,5 @@
 import React from "react";
+import { RiMapPinLine } from "react-icons/ri";
 import { CompanyLogo } from "./CompanyLogo";
 import { TopRankMedalBadge } from "./TopRankMedalBadge";
 export { TopRankMedalBadge };
@@ -98,11 +99,14 @@ export function JobCardItem({
               {job.job_category}
             </span>
           </div>
-          <p className="text-sm text-slate-500 dark:text-slate-400 font-light mt-1.5 truncate">
-            {job.work_job_location}
+          <p className="text-sm text-slate-600 dark:text-slate-300 font-normal mt-1.5 flex items-center gap-1.5 min-w-0">
+            <RiMapPinLine className="h-3.5 w-3.5 text-slate-400 dark:text-slate-500 shrink-0" aria-hidden="true" />
+            <span className="truncate">
+              {(job.work_job_location || "").trim() || job.work_system || "Lokasi fleksibel"}
+            </span>
             {proximityLabel(job, studentPrefs.location) &&
               (job.work_job_location || "").toLowerCase() !== "remote" && (
-                <span className="ml-1.5 inline-flex items-center px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[11px] font-normal text-slate-500 dark:text-slate-400 align-middle">
+                <span className="inline-flex items-center px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[11px] font-normal text-slate-500 dark:text-slate-400 shrink-0">
                   {proximityLabel(job, studentPrefs.location)}
                 </span>
               )}
