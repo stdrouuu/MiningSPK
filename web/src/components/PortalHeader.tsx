@@ -74,16 +74,16 @@ export function PortalHeader({
 
   return (
     <header className={`w-full bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800 transition-colors ${activeView === 'matrix' ? 'sticky top-0 z-40' : ''}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-3 sm:gap-8 shrink-0">
           <button
             data-tour="header-brand"
             onClick={() => navigate(landingPath)}
-            className="flex items-center gap-2 text-left group focus:outline-none cursor-pointer"
+            className="flex items-center gap-2 text-left group focus:outline-none cursor-pointer shrink-0"
           >
-            <BrandLogo />
+            <BrandLogo textClassName="text-xl sm:text-2xl font-medium tracking-tighter text-slate-900 dark:text-white" />
             {mode === 'data' && (
-              <span className="px-1.5 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 text-[10px] font-medium text-amber-800 dark:text-amber-300">
+              <span className="px-1.5 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 text-[10px] font-medium text-amber-800 dark:text-amber-300 whitespace-nowrap">
                 demo data
               </span>
             )}
@@ -97,7 +97,7 @@ export function PortalHeader({
           </nav>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
           <button
             data-tour="header-saved"
             onClick={onOpenSavedJobs}
@@ -113,8 +113,8 @@ export function PortalHeader({
             </span>
           </button>
 
-          {/* Theme Toggle (Light & Dark) + Panduan ("?") di samping kanannya */}
-          <div data-tour="header-tools" className="flex items-center gap-2">
+          {/* Theme Toggle (Light & Dark) + Panduan ("?") di samping kanannya (di mobile pindah ke drawer agar navbar tidak kepotong) */}
+          <div data-tour="header-tools" className="hidden sm:flex items-center gap-2">
             <ThemeToggle />
             <GuideTriggerButton />
           </div>
@@ -140,7 +140,7 @@ export function PortalHeader({
             </button>
 
             {showProfileMenu && (
-              <div role="menu" aria-label="Profil mahasiswa" className="absolute right-0 mt-2 w-72 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-lg z-50 p-4">
+              <div role="menu" aria-label="Profil mahasiswa" className="absolute right-0 mt-2 w-[min(18rem,calc(100vw-2rem))] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-lg z-50 p-4">
                 <div className="flex items-start gap-3 pb-3 border-b border-slate-100 dark:border-slate-800">
                   <img
                     src={headerAvatar}
@@ -208,13 +208,20 @@ export function PortalHeader({
       </div>
 
       {showMobileNav && (
-        <nav className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-4 py-3 space-y-1 text-sm" aria-label="Navigasi seluler">
+        <nav className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-4 py-3 space-y-1 text-sm emil-nav-in" aria-label="Navigasi seluler">
           <button onClick={() => { navigate(landingPath); setShowMobileNav(false) }} className="w-full text-left px-3 py-2 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Beranda</button>
           <button onClick={() => { navigate(portalPath); setShowMobileNav(false) }} className="w-full text-left px-3 py-2 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Lowongan</button>
           <button onClick={() => { navigate(matrixPath); setShowMobileNav(false) }} className="w-full text-left px-3 py-2 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Perhitungan</button>
           {mode === 'user' && (
             <button onClick={() => { navigate(ROUTES.KUESIONER); setShowMobileNav(false) }} className="w-full text-left px-3 py-2 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800">Kuesioner</button>
           )}
+          <div className="sm:hidden pt-2 mt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between px-3 py-1">
+            <span className="text-xs text-slate-500 dark:text-slate-400">Tema &amp; Panduan</span>
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              <GuideTriggerButton />
+            </div>
+          </div>
         </nav>
       )}
     </header>

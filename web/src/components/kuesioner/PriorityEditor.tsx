@@ -27,6 +27,8 @@ export function PriorityEditor({ ranks, onChange, onReset, showReset = true }: P
   const dragFromRef = useRef<number | null>(null)
   const droppedRef = useRef(false)
   const preDragRef = useRef<Ranks | null>(null)
+  const latestRanksRef = useRef<Ranks>(ranks)
+  const rowRefs = useRef<(HTMLDivElement | null)[]>([])
   const [dragFromIndex, setDragFromIndex] = useState<number | null>(null)
   const [isDragging, setIsDragging] = useState(false)
   const [openFaqKey, setOpenFaqKey] = useState<CriterionKey | null>(null)
@@ -56,9 +58,11 @@ export function PriorityEditor({ ranks, onChange, onReset, showReset = true }: P
   /** Preview live saat drag (tidak tercatat sebagai edit). */
   const previewReorder = (fromIndex: number, toIndex: number) => {
     if (fromIndex === toIndex || fromIndex < 0 || toIndex < 0) return
+    const nextRanks = ranksOf(movedOrder(fromIndex, toIndex))
     dragFromRef.current = toIndex
+    latestRanksRef.current = nextRanks
     setDragFromIndex(toIndex)
-    onChange(ranksOf(movedOrder(fromIndex, toIndex)), false)
+    onChange(nextRanks, false)
   }
 
   const moveRank = (key: CriterionKey, direction: -1 | 1) => {
@@ -85,6 +89,9 @@ export function PriorityEditor({ ranks, onChange, onReset, showReset = true }: P
           return (
             <div
               key={key}
+              ref={(el) => {
+                rowRefs.current[index] = el
+              }}
               draggable
               onDragStart={(e) => {
                 dragFromRef.current = index
@@ -128,10 +135,45 @@ export function PriorityEditor({ ranks, onChange, onReset, showReset = true }: P
                   : 'border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50'
               }`}
             >
-              <div className="flex items-center gap-2">
-                {/* Drag handle */}
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                {/* Drag handle (desktop HTML5 + mobile touch drag) */}
                 <span
                   title="Seret untuk memindahkan"
+                  onTouchStart={(e) => {
+                    e.stopPropagation()
+                    dragFromRef.current = index
+                    preDragRef.current = { ...ranks }
+                    latestRanksRef.current = { ...ranks }
+                    setDragFromIndex(index)
+                    setIsDragging(true)
+                  }}
+                  onTouchMove={(e) => {
+                    if (dragFromRef.current === null) return
+                    e.preventDefault()
+                    const y = e.touches[0].clientY
+                    const targetIdx = rowRefs.current.findIndex((el) => {
+                      if (!el) return false
+                      const rect = el.getBoundingClientRect()
+                      return y >= rect.top && y <= rect.bottom
+                    })
+                    if (targetIdx !== -1 && targetIdx !== dragFromRef.current) {
+                      previewReorder(dragFromRef.current, targetIdx)
+                    }
+                  }}
+                  onTouchEnd={() => {
+                    if (dragFromRef.current !== null) {
+                      onChange(latestRanksRef.current, true)
+                    }
+                    preDragRef.current = null
+                    clearDrag()
+                  }}
+                  onTouchCancel={() => {
+                    if (preDragRef.current) {
+                      onChange(preDragRef.current, false)
+                    }
+                    preDragRef.current = null
+                    clearDrag()
+                  }}
                   className="flex h-8 w-6 shrink-0 items-center justify-center rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/70 dark:hover:bg-slate-700 cursor-grab active:cursor-grabbing touch-none"
                 >
                   <RiDraggable className="h-4 w-4" />
@@ -143,13 +185,13 @@ export function PriorityEditor({ ranks, onChange, onReset, showReset = true }: P
                 </span>
 
                 <div className="flex min-w-0 flex-1 items-center gap-2">
-                  <span className="truncate font-medium text-slate-900 dark:text-white">
+                  <span className="font-medium text-slate-900 dark:text-white leading-snug sm:truncate">
                     {m.title}
                   </span>
                 </div>
 
-                <div className="flex shrink-0 items-center gap-2">
-                  <span className="font-medium text-white bg-[#0C52EE] dark:bg-blue-600 px-2.5 py-1 rounded-md text-xs shadow-2xs tabular-nums">
+                <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+                  <span className="font-medium text-white bg-[#0C52EE] dark:bg-blue-600 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md text-[11px] sm:text-xs shadow-2xs tabular-nums">
                     {weightPct(weights[key])}
                   </span>
                 {/* Fallback tombol untuk mobile / keyboard */}
