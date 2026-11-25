@@ -126,7 +126,7 @@ const SECTION_STEPS: Record<TourSectionKey, TourStep[]> = {
       selector: '[data-tour="matrix-content"]',
       title: 'Tabel Matriks SPK',
       description:
-        'Lihat detail peringkat, skor utilitas, dan matriks awal dari 221 lowongan kerja.',
+        'Lihat detail peringkat, skor utilitas, dan matriks awal dari seluruh lowongan kerja.',
     },
   ],
   kuesioner: [

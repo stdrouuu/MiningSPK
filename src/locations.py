@@ -14,17 +14,17 @@ def standardize_location(loc_str, work_system=""):
     if "remote" in loc_clean:
         return "Remote"
 
-    if any(k in loc_clean for k in ["jakbar", "jkt barat", "tanjung duren", "grogol", "kebon jeruk", "jakarta barat"]):
+    if any(k in loc_clean for k in ["jakbar", "jkt barat", "tanjung duren", "grogol", "kebon jeruk", "jakarta barat", "west jakarta"]):
         return "Jakarta Barat"
-    elif any(k in loc_clean for k in ["jaksel", "jkt selatan", "jakarta selatan"]):
+    elif any(k in loc_clean for k in ["jaksel", "jkt selatan", "jakarta selatan", "south jakarta"]):
         return "Jakarta Selatan"
-    elif any(k in loc_clean for k in ["jakpus", "jkt pusat", "jakarta pusat"]):
+    elif any(k in loc_clean for k in ["jakpus", "jkt pusat", "jakarta pusat", "central jakarta"]):
         return "Jakarta Pusat"
-    elif any(k in loc_clean for k in ["jaktim", "jkt timur", "jakarta timur"]):
+    elif any(k in loc_clean for k in ["jaktim", "jkt timur", "jakarta timur", "east jakarta"]):
         return "Jakarta Timur"
-    elif any(k in loc_clean for k in ["jakut", "jkt utara", "jakarta utara"]):
+    elif any(k in loc_clean for k in ["jakut", "jkt utara", "jakarta utara", "north jakarta"]):
         return "Jakarta Utara"
-    elif any(k in loc_clean for k in ["tangsel", "tangerang selatan"]):
+    elif any(k in loc_clean for k in ["tangsel", "tangerang selatan", "south tangerang"]):
         return "Tangerang Selatan"
     elif "tangerang" in loc_clean:
         return "Tangerang"

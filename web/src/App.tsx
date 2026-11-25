@@ -1,16 +1,12 @@
-import { useState, useEffect, useMemo, useRef } from 'react'
+import { useState, useEffect, useMemo, useRef, lazy, Suspense } from 'react'
 import { Routes, Route, Navigate, useNavigate, useLocation, useSearchParams } from 'react-router-dom'
 import { RiErrorWarningLine } from 'react-icons/ri'
 import { PortalHeader } from './components/PortalHeader'
 import { PortalHero } from './components/PortalHero'
 import { PortalStickyNav } from './components/PortalStickyNav'
-import { LandingPage } from './components/landing/LandingPage'
+import { SiteFooter } from './components/SiteFooter'
 import { JobCardItem } from './components/JobCardItem'
 import { JobDetailPane } from './components/JobDetailPane'
-import { PreferenceSidebar } from './components/PreferenceSidebar'
-import { SavedJobsModal } from './components/SavedJobsModal'
-import { FullMatrixView } from './components/FullMatrixView'
-import { KuesionerPage } from './components/kuesioner/KuesionerPage'
 import { WalkthroughProvider } from './components/WalkthroughTour'
 import { Button } from './components/ui/Button'
 import type { CleanJob, StudentProfile } from './types/data'
@@ -20,6 +16,22 @@ import { fetchCsvData, computeSPKForCustomStudent } from './lib/spk'
 import type { TfidfArtifact } from './lib/spk'
 import { ROUTES } from './lib/routes'
 
+const LandingPage = lazy(() =>
+  import('./components/landing/LandingPage').then((m) => ({ default: m.LandingPage }))
+)
+const FullMatrixView = lazy(() =>
+  import('./components/FullMatrixView').then((m) => ({ default: m.FullMatrixView }))
+)
+const KuesionerPage = lazy(() =>
+  import('./components/kuesioner/KuesionerPage').then((m) => ({ default: m.KuesionerPage }))
+)
+const PreferenceSidebar = lazy(() =>
+  import('./components/PreferenceSidebar').then((m) => ({ default: m.PreferenceSidebar }))
+)
+const SavedJobsModal = lazy(() =>
+  import('./components/SavedJobsModal').then((m) => ({ default: m.SavedJobsModal }))
+)
+
 function ScrollToTop() {
   const { pathname } = useLocation()
   useEffect(() => {
@@ -28,25 +40,22 @@ function ScrollToTop() {
   return null
 }
 
-export function PortalFooter({ onOpenPreferences }: { onOpenPreferences: () => void }) {
+export function PortalFooter({ onOpenPreferences, totalJobs }: { onOpenPreferences: () => void; totalJobs: number }) {
+  const navigate = useNavigate()
+  const { pathname } = useLocation()
+  const isDataMode = pathname === ROUTES.DATA || pathname.startsWith('/data/')
+
   return (
-    <footer className="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 mt-16 py-6 text-xs text-slate-500 dark:text-slate-400 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <p className="tracking-tighter">© 2026 upmatch • Sistem Rekomendasi Part-Time Mahasiswa (SMARTER &amp; ROC)</p>
-        <div className="flex items-center gap-4 text-slate-600 dark:text-slate-400">
-          <span>221 Lowongan Terverifikasi</span>
-          <span>•</span>
-          <span>Untuk Mahasiswa</span>
-          <span>•</span>
-          <button
-            onClick={onOpenPreferences}
-            className="hover:text-slate-900 dark:hover:text-slate-100 underline cursor-pointer"
-          >
-            Atur Kriteria SPK
-          </button>
-        </div>
-      </div>
-    </footer>
+    <SiteFooter
+      totalJobs={totalJobs}
+      onOpenPreferences={onOpenPreferences}
+      onNavigate={(view) => {
+        if (view === 'landing') navigate(isDataMode ? ROUTES.DATA : ROUTES.LANDING)
+        else if (view === 'portal') navigate(isDataMode ? ROUTES.DATA_PORTAL : ROUTES.PORTAL)
+        else if (view === 'matrix') navigate(isDataMode ? ROUTES.DATA_MATRIX : ROUTES.MATRIX)
+        else navigate(ROUTES.KUESIONER)
+      }}
+    />
   )
 }
 
@@ -95,9 +104,9 @@ export function App() {
       try {
         setLoading(true)
         const [jobsData, studentsData, tfidfData] = await Promise.all([
-          fetchCsvData<CleanJob>('/data/clean_jobs_dataset.csv'),
+          fetchCsvData<CleanJob>('/data/1000_clean_jobs_dataset.csv'),
           fetchCsvData<StudentProfile>('/data/clean_students_dataset.csv'),
-          fetch('/data/tfidf_skills.json').then((r) => (r.ok ? r.json() : null)).catch(() => null),
+          fetch('/data/1000_tfidf_skills.json').then((r) => (r.ok ? r.json() : null)).catch(() => null),
         ])
 
         const normalizedJobs = jobsData.map((j) => ({
@@ -269,7 +278,14 @@ export function App() {
     <WalkthroughProvider>
       <div className="min-h-screen bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
         <ScrollToTop />
-        <Routes>
+        <Suspense
+          fallback={
+            <div className="flex-1 flex items-center justify-center p-12 text-sm text-slate-500 dark:text-slate-400">
+              Memuat halaman…
+            </div>
+          }
+        >
+          <Routes>
           <Route
             path={ROUTES.LANDING}
             element={
@@ -377,33 +393,36 @@ export function App() {
           />
           {/* URL lama / tidak dikenal -> kembali ke beranda modenya masing-masing */}
           <Route path="*" element={<Navigate to={isDataMode ? ROUTES.DATA : ROUTES.LANDING} replace />} />
-        </Routes>
+          </Routes>
+        </Suspense>
 
         {/* Preference Drawer / Modal (global, bisa dibuka dari semua URL) */}
-        <PreferenceSidebar
-          open={isPreferenceOpen}
-          onClose={() => setIsPreferenceOpen(false)}
-          preferences={activePrefs}
-          onUpdatePreferences={updateActivePrefs}
-          studentPresets={students}
-          categories={categories}
-          mode={isDataMode ? 'data' : 'user'}
-          onFillQuestionnaire={goFillQuestionnaire}
-        />
+        <Suspense fallback={null}>
+          <PreferenceSidebar
+            open={isPreferenceOpen}
+            onClose={() => setIsPreferenceOpen(false)}
+            preferences={activePrefs}
+            onUpdatePreferences={updateActivePrefs}
+            studentPresets={students}
+            categories={categories}
+            mode={isDataMode ? 'data' : 'user'}
+            onFillQuestionnaire={goFillQuestionnaire}
+          />
 
-        {/* Saved Jobs Modal (global) */}
-        <SavedJobsModal
-          open={isSavedJobsOpen}
-          onClose={() => setIsSavedJobsOpen(false)}
-          savedJobs={savedJobsList}
-          onRemoveSaved={handleToggleSave}
-          onSelectJob={(job) => {
-            setSelectedJobId(job.job_id)
-            setIsSavedJobsOpen(false)
-            const portalPath = isDataMode ? ROUTES.DATA_PORTAL : ROUTES.PORTAL
-            navigate(`${portalPath}?job=${encodeURIComponent(job.job_id)}`)
-          }}
-        />
+          {/* Saved Jobs Modal (global) */}
+          <SavedJobsModal
+            open={isSavedJobsOpen}
+            onClose={() => setIsSavedJobsOpen(false)}
+            savedJobs={savedJobsList}
+            onRemoveSaved={handleToggleSave}
+            onSelectJob={(job) => {
+              setSelectedJobId(job.job_id)
+              setIsSavedJobsOpen(false)
+              const portalPath = isDataMode ? ROUTES.DATA_PORTAL : ROUTES.PORTAL
+              navigate(`${portalPath}?job=${encodeURIComponent(job.job_id)}`)
+            }}
+          />
+        </Suspense>
       </div>
     </WalkthroughProvider>
   )
@@ -559,22 +578,100 @@ function PortalRoute({
   }
 
   // Deep-link: /portal?job=JOB_ID -> pilih job tersebut saat halaman dibuka / dibagikan
+  const [isMobileDetailOpen, setIsMobileDetailOpen] = useState(false)
+  const [isMobileSheetClosing, setIsMobileSheetClosing] = useState(false)
+  const [sheetDragY, setSheetDragY] = useState(0)
+  const dragStartY = useRef<number | null>(null)
+  const dragStartTime = useRef<number>(0)
+
+  const openMobileDetail = () => {
+    setSheetDragY(0)
+    setIsMobileSheetClosing(false)
+    setIsMobileDetailOpen(true)
+  }
+
+  const closeMobileDetail = () => {
+    if (!isMobileDetailOpen || isMobileSheetClosing) return
+    setSheetDragY(0)
+    setIsMobileSheetClosing(true)
+    window.setTimeout(() => {
+      setIsMobileDetailOpen(false)
+      setIsMobileSheetClosing(false)
+    }, 250)
+  }
+
+  const handleSheetTouchStart = (e: React.TouchEvent) => {
+    dragStartY.current = e.touches[0].clientY
+    dragStartTime.current = Date.now()
+  }
+
+  const handleSheetTouchMove = (e: React.TouchEvent) => {
+    if (dragStartY.current === null) return
+    const delta = e.touches[0].clientY - dragStartY.current
+    if (delta > 0) {
+      setSheetDragY(delta)
+    }
+  }
+
+  const handleSheetTouchEnd = () => {
+    if (dragStartY.current === null) return
+    const elapsed = Math.max(1, Date.now() - dragStartTime.current)
+    const velocity = sheetDragY / elapsed
+    dragStartY.current = null
+    if (sheetDragY > 100 || velocity > 0.45) {
+      closeMobileDetail()
+    } else {
+      setSheetDragY(0)
+    }
+  }
+
   useEffect(() => {
     const jobParam = searchParams.get('job')
-    if (jobParam && jobParam !== state.selectedJobId) {
-      state.setSelectedJobId(jobParam)
+    if (jobParam) {
+      if (jobParam !== state.selectedJobId) {
+        state.setSelectedJobId(jobParam)
+      }
+      if (window.innerWidth < 1024) {
+        openMobileDetail()
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchParams])
 
+  // Lock body scroll & close mobile detail sheet on Escape
+  useEffect(() => {
+    if (!isMobileDetailOpen) return
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeMobileDetail()
+    }
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.body.style.overflow = prevOverflow
+      document.removeEventListener('keydown', onKey)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobileDetailOpen, isMobileSheetClosing])
+
   const handleSelectJob = (jobId: string) => {
     state.setSelectedJobId(jobId)
+    openMobileDetail()
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev)
       next.set('job', jobId)
       return next
     }, { replace: true })
   }
+
+  const currentJobIdx = state.selectedJob
+    ? state.displayJobs.findIndex((j) => j.job_id === state.selectedJob?.job_id)
+    : -1
+  const prevJob = currentJobIdx > 0 ? state.displayJobs[currentJobIdx - 1] : null
+  const nextJob =
+    currentJobIdx >= 0 && currentJobIdx < state.displayJobs.length - 1
+      ? state.displayJobs[currentJobIdx + 1]
+      : null
 
   return (
     <>
@@ -604,7 +701,7 @@ function PortalRoute({
               <h2 className="text-[15px] font-medium text-slate-900 dark:text-white">Dapatkan rekomendasi yang pas buat kamu</h2>
               <p className="text-sm text-slate-500 dark:text-slate-400 font-light mt-0.5">
                 Ceritakan upah, jam, lokasi &amp; skill-mu lewat kuesioner singkat (±3 menit) —
-                221 lowongan langsung diurutkan sesuai kebutuhanmu.
+                {state.jobs.length} lowongan langsung diurutkan sesuai kebutuhanmu.
               </p>
             </div>
             <Button size="sm" onClick={onFillQuestionnaire} className="text-sm shrink-0 bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500">
@@ -837,8 +934,8 @@ function PortalRoute({
                 )}
               </div>
 
-              {/* Right Column: detail panel — sticky mengikuti halaman utama tanpa nested scroll trap */}
-              <div data-tour="portal-job-detail" className="lg:col-span-7 lg:sticky lg:top-20 self-start">
+              {/* Right Column: detail panel (desktop) — sticky mengikuti halaman utama tanpa nested scroll trap */}
+              <div data-tour="portal-job-detail" className="hidden lg:block lg:col-span-7 lg:sticky lg:top-20 self-start">
                 <JobDetailPane
                   job={state.selectedJob}
                   studentPrefs={state.studentPrefs}
@@ -854,7 +951,114 @@ function PortalRoute({
         )}
       </main>
 
-      <PortalFooter onOpenPreferences={onOpenPreferences} />
+      {/* Mobile Job Detail Sheet (muncul dari bawah ke atas saat user tap kartu lowongan di < lg) */}
+      {isMobileDetailOpen && state.selectedJob && (
+        <div
+          className="lg:hidden fixed inset-0 z-50 flex flex-col justify-end"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Detail ${state.selectedJob.job_title}`}
+        >
+          <div
+            className={`fixed inset-0 bg-slate-950/60 backdrop-blur-[3px] ${
+              isMobileSheetClosing ? 'emil-backdrop-out' : 'emil-backdrop'
+            }`}
+            style={
+              sheetDragY > 0
+                ? { opacity: Math.max(0.15, 1 - sheetDragY / 420) }
+                : undefined
+            }
+            onClick={closeMobileDetail}
+            aria-hidden="true"
+          />
+          <div
+            style={
+              sheetDragY > 0
+                ? { transform: `translateY(${sheetDragY}px)`, transition: 'none' }
+                : undefined
+            }
+            className={`relative z-10 w-full h-[92dvh] bg-[#F8FAFC] dark:bg-slate-950 rounded-t-3xl shadow-2xl flex flex-col overflow-hidden border-t border-slate-200/80 dark:border-slate-800 ${
+              isMobileSheetClosing
+                ? 'emil-sheet-out'
+                : sheetDragY === 0
+                  ? 'emil-sheet-in'
+                  : ''
+            }`}
+          >
+            {/* Drag Handle + Sticky Sheet Header (bisa swipe down untuk tutup) */}
+            <div
+              onTouchStart={handleSheetTouchStart}
+              onTouchMove={handleSheetTouchMove}
+              onTouchEnd={handleSheetTouchEnd}
+              className="shrink-0 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 touch-none select-none"
+            >
+              <div className="flex justify-center pt-2.5 pb-1">
+                <span className="w-10 h-1 rounded-full bg-slate-300 dark:bg-slate-700" aria-hidden="true" />
+              </div>
+              <div className="flex items-center justify-between gap-2 px-4 pb-2.5 pt-1">
+                <button
+                  type="button"
+                  onClick={closeMobileDetail}
+                  className="inline-flex items-center gap-1.5 px-2.5 py-1.5 -ml-1.5 rounded-lg text-sm font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer emil-press"
+                >
+                  <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                  </svg>
+                  <span>Kembali ke daftar</span>
+                </button>
+
+                <div className="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    disabled={!prevJob}
+                    onClick={() => prevJob && handleSelectJob(prevJob.job_id)}
+                    aria-label="Lowongan sebelumnya"
+                    className="p-2 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-35 disabled:pointer-events-none transition-colors emil-press"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                    </svg>
+                  </button>
+                  <span className="text-xs font-medium text-slate-500 dark:text-slate-400 tabular-nums px-1">
+                    {currentJobIdx + 1}/{state.displayJobs.length}
+                  </span>
+                  <button
+                    type="button"
+                    disabled={!nextJob}
+                    onClick={() => nextJob && handleSelectJob(nextJob.job_id)}
+                    aria-label="Lowongan berikutnya"
+                    className="p-2 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-35 disabled:pointer-events-none transition-colors emil-press"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Scrollable Detail Content */}
+            <div className="flex-1 overflow-y-auto overscroll-contain p-4 pb-8">
+              <div key={state.selectedJob.job_id} className="emil-detail-swap">
+                <JobDetailPane
+                  job={state.selectedJob}
+                  studentPrefs={state.studentPrefs}
+                  hideAnalysis={isProfileEmpty}
+                  onFillQuestionnaire={onFillQuestionnaire}
+                  isSaved={state.savedJobIds.includes(state.selectedJob.job_id)}
+                  onToggleSave={() => state.selectedJob && onToggleSave(state.selectedJob.job_id)}
+                  onOpenPreferences={() => {
+                    closeMobileDetail()
+                    onOpenPreferences()
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <PortalFooter onOpenPreferences={onOpenPreferences} totalJobs={state.jobs.length} />
     </>
   )
 }
@@ -919,7 +1123,7 @@ function MatrixRoute({
         )}
       </main>
 
-      <PortalFooter onOpenPreferences={onOpenPreferences} />
+      <PortalFooter onOpenPreferences={onOpenPreferences} totalJobs={state.jobs.length} />
     </>
   )
 }

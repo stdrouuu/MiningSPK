@@ -144,6 +144,29 @@
   }
 }
 
+@keyframes emil-sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes emil-sheet-out {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes emil-backdrop-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
 @layer components {
   /* Pressable: instant feedback, snappy release */
   .emil-press {
@@ -189,6 +212,19 @@
   .emil-nav-in {
     transform-origin: top center;
     animation: emil-nav-in 180ms var(--ease-out) both;
+  }
+
+  /* Bottom sheet drawer (mobile job detail) */
+  .emil-sheet-in {
+    animation: emil-sheet-in 420ms var(--ease-expo) both;
+    will-change: transform;
+  }
+  .emil-sheet-out {
+    animation: emil-sheet-out 260ms var(--ease-drawer) both;
+    will-change: transform;
+  }
+  .emil-backdrop-out {
+    animation: emil-backdrop-out 240ms var(--ease-out) both;
   }
 
   /* Progress / meter fills — width-only transition, GPU-friendly */

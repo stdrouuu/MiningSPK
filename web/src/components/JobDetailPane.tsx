@@ -157,7 +157,7 @@ export function JobDetailPane({
             <circle cx="12" cy="12" r="2.5" strokeWidth="2" />
             <path strokeLinecap="round" strokeWidth="2" d="M6 6V4m12 2V4" />
           </svg>
-          <span className="font-normal text-slate-900 dark:text-white">Rp {job.work_salaryperhour.toLocaleString('id-ID')} per jam</span>
+          <span className="font-normal text-slate-900 dark:text-white">±Rp {job.work_salaryperhour.toLocaleString('id-ID')} per jam</span>
         </li>
       </ul>
 
@@ -196,7 +196,7 @@ export function JobDetailPane({
         </div>
       ) : (
       <div className="mt-2 border-t border-slate-200 dark:border-slate-800 pt-5 space-y-4">
-        <div className="flex items-baseline justify-between gap-3">
+        <div className="flex items-baseline justify-between gap-x-3 gap-y-1 flex-wrap">
           <h4 className="text-[15px] font-medium text-slate-900 dark:text-white shrink-0">Analisis kesesuaian SPK</h4>
           <p className="shrink-0 flex items-baseline gap-1.5 text-[13px] text-slate-500 dark:text-slate-400">
             Skor U(Ai) {job.finalScore.toFixed(4)}
@@ -208,16 +208,16 @@ export function JobDetailPane({
           <div className="h-full rounded-full bg-[#0C52EE] dark:bg-blue-500" style={{ width: `${matchPct}%` }} />
         </div>
 
-        <div className="space-y-2.5">
+        <div className="space-y-3 sm:space-y-2.5">
           {[
             { label: 'Kategori pekerjaan', body: isCategoryMatch ? `Sesuai minat Anda (${job.job_category}).` : `Berbeda dari minat Anda (${studentPrefs.preferredCategory}).`, warn: false },
-            { label: `Upah (${salaryRatio.toFixed(2)}× target)`, body: `Tawaran Rp ${job.work_salaryperhour.toLocaleString('id-ID')} vs target Rp ${studentPrefs.minSalary.toLocaleString('id-ID')}.`, warn: false },
+            { label: `Upah (${salaryRatio.toFixed(2)}× target)`, body: `Tawaran ±Rp ${job.work_salaryperhour.toLocaleString('id-ID')} vs target Rp ${studentPrefs.minSalary.toLocaleString('id-ID')}.`, warn: false },
             { label: 'Lokasi & sistem', body: c3Desc, warn: false },
             { label: `Beban jam (${job.work_hours} jam)`, body: c4Desc, warn: !isWithinHours },
             { label: 'Kecocokan keahlian', body: 'Irisan kata kunci skill Anda dengan deskripsi lowongan (TF-IDF cosine).', warn: false },
           ].map((row) => (
-            <div key={row.label} className="flex gap-4">
-              <span className="w-36 shrink-0 text-[13px] leading-normal text-slate-500 dark:text-slate-400">{row.label}</span>
+            <div key={row.label} className="flex flex-col sm:flex-row gap-0.5 sm:gap-4">
+              <span className="sm:w-36 shrink-0 text-[13px] leading-normal text-slate-500 dark:text-slate-400">{row.label}</span>
               <span className={`flex-1 text-sm leading-relaxed ${row.warn ? 'text-[#d12e32] dark:text-rose-400 font-medium' : 'text-slate-700 dark:text-slate-300 font-normal'}`}>{row.body}</span>
             </div>
           ))}

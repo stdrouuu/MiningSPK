@@ -14,23 +14,23 @@ export function SensitivityPanel({ scenarios }: { scenarios: LeaderScenario[] })
         </p>
       </div>
 
-      <div className="rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
-        <table className="w-full text-left text-xs">
+      <div className="rounded-lg border border-slate-200 dark:border-slate-800 overflow-x-auto overscroll-x-contain">
+        <table className="w-full min-w-[460px] text-left text-xs">
           <thead className="bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 text-[11px] font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">
             <tr>
-              <th className="py-2 px-3">Kalau yang nomor 1…</th>
-              <th className="py-2 px-3">Juara 1–3</th>
+              <th className="py-2 px-3 whitespace-nowrap">Kalau yang nomor 1…</th>
+              <th className="py-2 px-3 whitespace-nowrap">Juara 1–3</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
             {scenarios.map((s) => (
               <tr key={s.leader} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40">
-                <td className="py-2 px-3 font-medium text-slate-900 dark:text-white whitespace-nowrap">{s.leaderTitle}</td>
+                <td className="py-2 px-3 font-medium text-slate-900 dark:text-white whitespace-nowrap align-top">{s.leaderTitle}</td>
                 <td className="py-2 px-3 text-slate-600 dark:text-slate-300 font-light">
                   {s.top3.length ? (
                     <ol className="space-y-0.5">
                       {s.top3.map((j, i) => (
-                        <li key={j.job_id} className="truncate">
+                        <li key={j.job_id} className="whitespace-nowrap">
                           <span className="font-medium text-slate-800 dark:text-slate-200">{i + 1}. {j.job_title}</span>
                           <span className="text-slate-400 dark:text-slate-500"> — {j.company_name}</span>
                         </li>

@@ -122,27 +122,27 @@ export function JobCardItem({
       </div>
 
       {/* Baris bawah: Chip kecocokan SPK di kiri & badge medali kecil + persentase cocok di samping tombol simpan (save) */}
-      <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
+      <div className="mt-3 pt-2.5 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2.5 sm:gap-2">
         <div className="flex flex-wrap items-center gap-1.5 flex-1 min-w-0">
-          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs font-normal">
+          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs font-normal whitespace-nowrap">
             {job.work_hours} jam/mgg {"\u2022"} {job.work_system}
           </span>
           {!hideMatch && (
             <>
               {isSalaryGood && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs font-normal">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs font-normal whitespace-nowrap">
                   <span className="text-emerald-600 dark:text-emerald-400 font-medium">&#10003;</span>{" "}
                   Upah sesuai
                 </span>
               )}
               {isLocationGood && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs font-normal">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs font-normal whitespace-nowrap">
                   <span className="text-[#0C52EE] dark:text-blue-400 font-medium">&#10003;</span>{" "}
                   Lokasi cocok
                 </span>
               )}
               {isCategoryMatch && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs font-normal">
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 text-xs font-normal whitespace-nowrap">
                   <span className="text-[#ED1E79] dark:text-pink-400 font-medium">&#10003;</span> Minat
                   kategori
                 </span>
@@ -151,7 +151,7 @@ export function JobCardItem({
           )}
         </div>
 
-        <div className="flex items-center gap-2 shrink-0 self-end">
+        <div className="flex items-center justify-between sm:justify-end gap-2 shrink-0 pt-2 sm:pt-0 border-t border-slate-100/80 dark:border-slate-800/80 sm:border-t-0">
           {!hideMatch &&
             (isTop3 ? (
               <div
@@ -169,31 +169,40 @@ export function JobCardItem({
               </span>
             ))}
 
-          <button
-            data-save-btn
-            onClick={(e) => {
-              e.stopPropagation();
-              onToggleSave(e);
-            }}
-            aria-pressed={isSaved}
-            title={isSaved ? "Hapus simpanan" : "Simpan lowongan"}
-            className="p-1.5 text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-200 transition-colors rounded hover:bg-slate-50 dark:hover:bg-slate-800 shrink-0"
-          >
-            <svg
-              className={`w-4 h-4 ${isSaved ? "text-[#ED1E79] dark:text-pink-400 fill-current" : ""}`}
-              fill={isSaved ? "currentColor" : "none"}
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
+          <div className="flex items-center gap-1.5 ml-auto sm:ml-0">
+            <button
+              data-save-btn
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleSave(e);
+              }}
+              aria-pressed={isSaved}
+              title={isSaved ? "Hapus simpanan" : "Simpan lowongan"}
+              className="p-1.5 text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-200 transition-colors rounded hover:bg-slate-50 dark:hover:bg-slate-800 shrink-0"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-              />
-            </svg>
-          </button>
+              <svg
+                className={`w-4 h-4 ${isSaved ? "text-[#ED1E79] dark:text-pink-400 fill-current" : ""}`}
+                fill={isSaved ? "currentColor" : "none"}
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
+                />
+              </svg>
+            </button>
+
+            <span className="lg:hidden inline-flex items-center gap-0.5 text-xs font-medium text-[#0C52EE] dark:text-blue-400 shrink-0">
+              Detail
+              <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </span>
+          </div>
         </div>
       </div>
     </article>

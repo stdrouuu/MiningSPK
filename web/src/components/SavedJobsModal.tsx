@@ -70,7 +70,7 @@ export function SavedJobsModal({
                     </span>
                     <span>•</span>
                     <span className="font-mono text-slate-900 dark:text-slate-100 font-medium">
-                      {formatRupiah(job.work_salaryperhour)}
+                      ±{formatRupiah(job.work_salaryperhour)}
                     </span>
                     <span>•</span>
                     <span>{job.work_job_location}</span>

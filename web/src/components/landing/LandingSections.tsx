@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { LuLayoutGrid } from "react-icons/lu";
+import { SiteFooter } from "../SiteFooter";
 import type { RankedJobResult } from "../../types/data";
 import officesupport from "../../assets/officesupport.jpg";
 import hostlive from "../../assets/hostlive.webp";
@@ -510,7 +511,7 @@ export function FeaturedJobs({
 
                 <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center gap-4 text-[11px] text-slate-600 dark:text-slate-400 font-light">
                   <span className="font-medium text-slate-900 dark:text-white">
-                    Rp {job.work_salaryperhour.toLocaleString("id-ID")}/jam
+                    ±Rp {job.work_salaryperhour.toLocaleString("id-ID")}/jam
                   </span>
                   <span>{job.work_hours} jam/mgg</span>
                   <span className="px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] font-normal">
@@ -649,64 +650,5 @@ export function LandingFooter({
   totalJobs: number;
   onNavigate: (view: "landing" | "portal" | "matrix" | "kuesioner") => void;
 }) {
-  return (
-    <footer className="bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-10 px-4 sm:px-6 lg:px-8 text-xs text-slate-500 dark:text-slate-400 font-light transition-colors">
-      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-8 mb-8">
-        <div className="space-y-2 col-span-2 md:col-span-1">
-          <div className="font-medium text-slate-900 dark:text-white text-base tracking-tighter">
-            upmatch
-          </div>
-          <p className="text-[11px] text-slate-400 leading-relaxed font-light">
-            Sistem rekomendasi part-time untuk mahasiswa berbasis metode
-            Multi-Criteria Decision Making (MCDM) SMARTER &amp; ROC.
-          </p>
-        </div>
-        <div className="space-y-1.5">
-          <h4 className="font-medium text-slate-900 dark:text-white text-xs">
-            Navigasi
-          </h4>
-          <p>
-            <button
-              onClick={() => onNavigate("landing")}
-              className="hover:text-[#0C52EE] cursor-pointer"
-            >
-              Beranda
-            </button>
-          </p>
-          <p>
-            <button
-              onClick={() => onNavigate("portal")}
-              className="hover:text-[#0C52EE] cursor-pointer"
-            >
-              Lowongan
-            </button>
-          </p>
-          <p>
-            <button
-              onClick={() => onNavigate("matrix")}
-              className="hover:text-[#0C52EE] cursor-pointer"
-            >
-              Perhitungan SPK
-            </button>
-          </p>
-        </div>
-        <div className="space-y-1.5">
-          <h4 className="font-medium text-slate-900 dark:text-white text-xs">
-            Untuk Siapa
-          </h4>
-          <p className="text-slate-400">Mahasiswa Aktif</p>
-          <p className="text-slate-400">Semua Jurusan & Kampus</p>
-          <p className="text-slate-400">Indonesia</p>
-        </div>
-      </div>
-      <div className="max-w-7xl mx-auto pt-6 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between text-slate-400 text-[11px]">
-        <span className="tracking-tighter">
-          {"\u00A9"} 2026 upmatch. All rights reserved.
-        </span>
-        <span>
-          {totalJobs} Lowongan Terverifikasi {"\u2022"} Untuk Mahasiswa
-        </span>
-      </div>
-    </footer>
-  );
+  return <SiteFooter totalJobs={totalJobs} onNavigate={onNavigate} />;
 }

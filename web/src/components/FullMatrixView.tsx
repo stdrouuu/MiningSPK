@@ -84,7 +84,7 @@ export function FullMatrixView({
         return {
           title: 'Rasio Gaji',
           value: String(job.C2_rasio_gaji),
-          meaning: `Perbandingan upah ${formatRupiah(job.work_salaryperhour)}/jam terhadap targetmu ${formatRupiah(studentPrefs.minSalary)}/jam (maks 2.0). Nilai ≥ 1 berarti upah memenuhi atau melampaui target.`,
+          meaning: `Perbandingan upah ±${formatRupiah(job.work_salaryperhour)}/jam terhadap targetmu ${formatRupiah(studentPrefs.minSalary)}/jam (maks 2.0). Nilai ≥ 1 berarti upah memenuhi atau melampaui target.`,
         }
       case 'C3':
         return {
@@ -282,7 +282,7 @@ export function FullMatrixView({
           <h2 className="text-base font-medium text-slate-900 dark:text-white">Matriks ini menunggumu</h2>
           <p className="text-xs text-slate-500 dark:text-slate-400 font-light max-w-md mx-auto">
             Skor U(Ai), utilitas, dan peringkat dihitung dari upah, jam, lokasi &amp; skill-mu.
-            Isi kuesioner singkat (±3 menit) — tabel 221 lowongan langsung terisi sesuai kebutuhanmu.
+            Isi kuesioner singkat (±3 menit) — tabel {rankedJobs.length} lowongan langsung terisi sesuai kebutuhanmu.
           </p>
           <div>
             <Button size="sm" onClick={onFillQuestionnaire} className="text-xs bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500">
@@ -399,7 +399,7 @@ export function FullMatrixView({
                     </td>
 
                     <td className="py-3 px-4">
-                      {formatRupiah(job.work_salaryperhour)}
+                      ±{formatRupiah(job.work_salaryperhour)}
                     </td>
 
                     <td className="py-3 px-4">

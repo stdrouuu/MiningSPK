@@ -1,0 +1,710 @@
+job_id,job_title,company_name,job_category,work_job_location,work_system,work_salaryperhour,work_hours,C1_kategori,C2_rasio_gaji,C3_lokasi,C4_jam_kerja,C5_kemiripan_skill
+JOB-01076d938b8f96e99f9b,Waiter / Waitress,Kopi Maut Tanpa Sianida,Food & Beverage (F&B),Jakarta Pusat,Onsite,27500.0,25.0,0.3,0.7857,0.8,0.65,0.0
+JOB-bae1ac8b50fc1e56182e,SPG Event (Daily Worker),Purela Official,Marketing & Sales,Jakarta Pusat,Onsite,30000.0,30.0,0.3,0.8571,0.8,0.4,0.0
+JOB-483341d5238644bdb47f,Content Creator,CSM Media Application,Content & Media,Jakarta Barat,Onsite,31250.0,22.5,0.3,0.8929,1.0,0.775,0.0
+JOB-7796ad3db5a0774ebf49,Staff event,Pizza Napoletana,Food & Beverage (F&B),Jakarta Pusat,Onsite,18750.0,25.0,0.3,0.5357,0.8,0.65,0.0
+JOB-405945695ad5c54db2ab,Host Live (Part Time),Clouwny,Content & Media,Jakarta Barat,Onsite,28125.0,22.5,0.3,0.8036,1.0,0.775,0.0
+JOB-1af44422df916d5eadad,Barista Part Time,Hang Tuah,Food & Beverage (F&B),Jakarta Pusat,Onsite,28125.0,25.0,0.3,0.8036,0.8,0.65,0.0
+JOB-974c7db463157de0319f,Barista,Little Contrast,Food & Beverage (F&B),Jakarta Selatan,Onsite,25625.0,25.0,0.3,0.7321,0.8,0.65,0.0
+JOB-f3ab18e5cab693b50cfc,Tenaga Pengajar IT,DIGIKIDZ,Education & Tutoring,Jakarta Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.3695
+JOB-a53e2f9e4ee47c8a9947,Japanese Tutor / Pengajar Bahasa Jepang - Jakarta (Part Time),CV. Kukche Mitra Sukses,Education & Tutoring,Jakarta Utara,Onsite,37500.0,10.0,1.0,1.0714,0.8,0.6,0.0
+JOB-3718d79553aa367f8712,Daycare Teacher,Mainstory DayCare & HomeCare Pintar ( PT Generasi Bangsa Indonesia Maju ),Education & Tutoring,Jakarta Pusat,Onsite,26875.0,20.0,1.0,0.7679,0.8,0.9,0.0
+JOB-b8a772b53a6a8fbdd870,Part-time Pharmacist Lecturer (Apoteker),Indonesia International Institute For Life Sciences,Education & Tutoring,Jakarta Timur,Hybrid,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-d2a4cc90a9cb41ba8295,Tutor Kimia,Bimbingan Belajar GAMA UI,Education & Tutoring,Jakarta Pusat,Onsite,18750.0,10.0,1.0,0.5357,0.8,0.6,0.0
+JOB-fa4c4296d7c301077f7b,Operations Crew (Track Operations),PT Barcode Karting Indonesia,Customer Service & Support,Jakarta Utara,Onsite,28125.0,20.0,0.3,0.8036,0.8,0.9,0.0
+JOB-1c2df0fd74843dc0b054,Daily Worker Gudang GTL Sunter,PT. Indopsiko Indonesia,Logistics & Delivery,Jakarta Utara,Onsite,37500.0,20.0,0.3,1.0714,0.8,0.9,0.0
+JOB-e6b33173bf49456424dd,Barista,Little Contrast,Food & Beverage (F&B),Jakarta Utara,Onsite,25625.0,25.0,0.3,0.7321,0.8,0.65,0.0
+JOB-d9a3447afeaa530c25a9,DW Steward,The Publish Group,Food & Beverage (F&B),Jakarta Pusat,Onsite,40625.0,25.0,0.3,1.1607,0.8,0.65,0.0
+JOB-0be0a9e9c3a39a8df9aa,Tutor Math Science,Bimbel Mathhacks_5,Education & Tutoring,Jakarta Utara,Onsite,37500.0,10.0,1.0,1.0714,0.8,0.6,0.0
+JOB-49044abfa8350e761b7a,Parttime & Daily Worker,Warung Sambal Impian,Retail & Store Operations,Jakarta Barat,Onsite,18333.0,20.0,0.3,0.5238,1.0,0.9,0.0
+JOB-bd1cd8256b2398177f16,Pengajar Matematika/Fisika/Kimia SD SMP SMU,Bimbel Mathhacks_5,Education & Tutoring,Jakarta Utara,Hybrid,37500.0,10.0,1.0,1.0714,0.8,0.6,0.0
+JOB-7485a14802cccdd9a3c5,Part-Time Social Media Content Strategist / Video Editor,Evo Fit Plus,Content & Media,Jakarta Pusat,Hybrid,28125.0,22.5,0.3,0.8036,0.8,0.775,0.0
+JOB-d3a7d52672f2cad584e7,Professional Coach (Running & Strength),Evo Fit Plus,Education & Tutoring,Jakarta Pusat,Hybrid,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-c8719aee18729576a924,Host Live,IRNANDA,Content & Media,Jakarta Barat,Onsite,28125.0,25.0,0.3,0.8036,1.0,0.65,0.0
+JOB-9faff2841b8295aeff8b,Customer Service Admin,Aurum Entertainment,Customer Service & Support,Remote,Remote,31250.0,20.0,0.3,0.8929,1.0,0.9,0.0
+JOB-3560c9232f9cbee3bb0d,Guru Biologi,New Primagama Galur,Education & Tutoring,Jakarta Pusat,Onsite,15625.0,10.0,1.0,0.4464,0.8,0.6,0.0
+JOB-ae3e800c120448b1dfa6,Guru Fisika,New Primagama Galur,Education & Tutoring,Jakarta Pusat,Onsite,15625.0,10.0,1.0,0.4464,0.8,0.6,0.0
+JOB-dc3a2eaf68185b0d1a53,Tutor Semua Mapel SD - JAKARTA SELATAN,Bimbel Antusias,Education & Tutoring,Jakarta Selatan,Onsite,18750.0,10.0,1.0,0.5357,0.8,0.6,0.0
+JOB-202bb113a0cddabb76d2,Mandarin Translator (Part Time),PT. Qingsong Business Indonesia,Content & Media,Jakarta Utara,Hybrid,15625.0,22.5,0.3,0.4464,0.8,0.775,0.0
+JOB-fd91df0756c17e7a138e,Operator Forklift,PT. Kreasi Indonesia Tumbuh Anugrah,Logistics & Delivery,Jakarta Timur,Onsite,25625.0,20.0,0.3,0.7321,0.8,0.9,0.0
+JOB-9b4f4af0bd866f81af2f,HOST LIVE,Rayspeed Asia,Content & Media,Jakarta Pusat,Onsite,25000.0,22.5,0.3,0.7143,0.8,0.775,0.0
+JOB-e61fe8c0502015ee0fd2,Guru Tahsin Tahfidz,Qur'an for Kids,Education & Tutoring,Jakarta Utara,Onsite,31250.0,10.0,1.0,0.8929,0.8,0.6,0.0
+JOB-82c04a4e2af2814c1c3b,Teacher (Part Time) – Jakarta Area,Kiddo.id,Education & Tutoring,Jakarta Selatan,Onsite,14062.0,10.0,1.0,0.4018,0.8,0.6,0.0
+JOB-de938551f6b00f906d97,Daily Worker Kitchen,PT. Lezat Tiada Tara (Tara Group),Food & Beverage (F&B),Jakarta Selatan,Onsite,31250.0,25.0,0.3,0.8929,0.8,0.65,0.0
+JOB-353424bd730dc737b995,Host live,acroder.id,Content & Media,Jakarta Barat,Onsite,50000.0,22.5,0.3,1.4286,1.0,0.775,0.0
+JOB-a157dcce78c673294e17,Brand Advisor Event (Rahasia Fragrance),Bali United Football Club,Marketing & Sales,Jakarta Barat,Onsite,37500.0,30.0,0.3,1.0714,1.0,0.4,0.0
+JOB-5e2642a1bb5f218bc535,Guru kimia,Bimbel Insan Cendikia,Education & Tutoring,Jakarta Timur,Onsite,31250.0,10.0,1.0,0.8929,0.8,0.6,0.0
+JOB-760322a2c20028dc09d5,Guru Bahasa Inggris,Kumon teluk gong,Education & Tutoring,Jakarta Utara,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-15b597ab6c12b601f043,Live streamer,Stronghold Bakery,Content & Media,Jakarta Barat,Onsite,50000.0,22.5,0.3,1.4286,1.0,0.775,0.0
+JOB-2411360b76b2e69eef3b,Guru Bimbel TK SD - Bambu Apus,Bimbel Tiki Taka Pusat,Education & Tutoring,Jakarta Timur,Onsite,18750.0,10.0,1.0,0.5357,0.8,0.6,0.0
+JOB-60cbd59e7fdef0334e8a,Tutor Matematika,Bimbingan Belajar GAMA UI,Education & Tutoring,Jakarta Timur,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-83905983eec6839a8b4c,Rider Kopi Keliling,Mauthai Coffee keliling,Logistics & Delivery,Jakarta Selatan,Hybrid,37500.0,20.0,0.3,1.0714,0.8,0.9,0.0
+JOB-42c8607a4dd3a8eff961,Part Time Sales Promotion Girl (SPG),Mandreel,Marketing & Sales,Jakarta Barat,Hybrid,37500.0,30.0,0.3,1.0714,1.0,0.4,0.0
+JOB-8367999396d8955d8975,HIGH-END PART-TIME SALES,PT GREATFIELD TECHNOLOGY INDONESIA,Marketing & Sales,Jakarta Barat,Hybrid,37500.0,30.0,0.3,1.0714,1.0,0.4,0.0
+JOB-fb0b762a44f75fe923c0,Sales Perbankan,Pt Mandiri Andalan Utama,Marketing & Sales,Jakarta Selatan,Hybrid,37500.0,30.0,0.3,1.0714,0.8,0.4,0.0
+JOB-17b11e36a9fc78acfd3a,Trainer Caregiver,Dreamaxtion,Education & Tutoring,Jakarta Utara,Hybrid,40625.0,10.0,1.0,1.1607,0.8,0.6,0.0
+JOB-ea74f26f41088d58525e,Agen Asuransi Syariah,Pru Power Vision,Marketing & Sales,Jakarta Barat,Hybrid,37500.0,30.0,0.3,1.0714,1.0,0.4,0.0
+JOB-61badd4f0e139ab2f825,Business Development Executive,Vision Allianz,Marketing & Sales,Jakarta Barat,Hybrid,37500.0,30.0,0.3,1.0714,1.0,0.4,0.0
+JOB-ccebbcb8e85d71973df7,PruElevate Development Program,Virtue People,Marketing & Sales,Jakarta Selatan,Hybrid,37500.0,30.0,0.3,1.0714,0.8,0.4,0.0
+JOB-9b07354f148e0f62de34,Syariah Financial Planner,PT. Victory Mitra Sejati,Marketing & Sales,Jakarta Selatan,Hybrid,37500.0,30.0,0.3,1.0714,0.8,0.4,0.0
+JOB-3e27bb4959b79b84e4c4,Graphic Designer,MNO Fashion,Design & Creative,Remote,Remote,25000.0,20.0,0.3,0.7143,1.0,0.9,0.0
+JOB-c9cf1de32d25c10dc879,Chemistry Tutor for International Curriculum Student,Study to The Moon,Education & Tutoring,Remote,Remote,43750.0,10.0,1.0,1.25,1.0,0.6,0.0
+JOB-9a3789207d97acea18bb,Online Coding Tutor,Algonova,Education & Tutoring,Remote,Remote,23750.0,25.0,1.0,0.6786,1.0,0.65,0.0
+JOB-07a3e2da9bdaf31bff6f,Host Live Streaming WFH Entertainment,PT. LUNA NATURAL ADIKARYA,Content & Media,Remote,Remote,43750.0,22.5,0.3,1.25,1.0,0.775,0.0
+JOB-d34df9a32de1ee102af9,Host Live,STELLARHIVE AGENCY INDONESIA,Content & Media,Remote,Remote,18750.0,22.5,0.3,0.5357,1.0,0.775,0.0
+JOB-0a561c2c64a640c24d7e,ahli tiktok,venice jewellery,Marketing & Sales,Remote,Remote,56250.0,30.0,0.3,1.6071,1.0,0.4,0.0
+JOB-d5f7a940a677cbb445ff,Ahli E-commerce,venice jewellery,Marketing & Sales,Remote,Remote,56250.0,30.0,0.3,1.6071,1.0,0.4,0.0
+JOB-55790ceeacc2f2d2c26a,Host Live Streaming,Masytour Talent Hub,Content & Media,Remote,Remote,50000.0,22.5,0.3,1.4286,1.0,0.775,0.0
+JOB-d3d82ee49c9862f6d014,Marketing Asuransi (Remote),PT Imecon Teknindo,Marketing & Sales,Remote,Remote,50000.0,30.0,0.3,1.4286,1.0,0.4,0.0
+JOB-009a91c8a08531db51ab,Business Development Specialist,Yumas Nida Corp (YNC),Marketing & Sales,Remote,Remote,15625.0,30.0,0.3,0.4464,1.0,0.4,0.0
+JOB-a7f8cc530fc90167195b,Digital Marketing Specialist,Yumas Nida Corp (YNC),Marketing & Sales,Remote,Remote,15625.0,30.0,0.3,0.4464,1.0,0.4,0.0
+JOB-3d9cb17fa6a4a003919e,digital marketing,PT. GINTARO,Marketing & Sales,Remote,Remote,15625.0,30.0,0.3,0.4464,1.0,0.4,0.0
+JOB-d9c8ec378a4cc294f2d5,Video Content Creator,aimasukptn,Content & Media,Remote,Remote,25000.0,22.5,0.3,0.7143,1.0,0.775,0.0
+JOB-b2d191f782da8b399425,Content Creator & Social Media Marketing Specialist,GUEANAKAMPUS,Content & Media,Remote,Remote,18750.0,22.5,0.3,0.5357,1.0,0.775,0.0
+JOB-5379e6a937676af99169,Content Creator,MisiPNS,Content & Media,Remote,Remote,28125.0,7.5,0.3,0.8036,1.0,0.475,0.0
+JOB-8b02279eaa810b3763ea,Sales & Business Development,Andara Sembilan Sembilan,Marketing & Sales,Remote,Remote,25000.0,30.0,0.3,0.7143,1.0,0.4,0.0
+JOB-ce4f0d8b3bf0e2c81e55,IELTS Teacher (Part Time Online/Offline),Bimbel Genesis,Education & Tutoring,Remote,Remote,23750.0,10.0,1.0,0.6786,1.0,0.6,0.0
+JOB-7cd579ccb30af491f041,Teacher Assistant,My Art Studio Puri Kencana,Education & Tutoring,Jakarta Barat,Onsite,23750.0,10.0,1.0,0.6786,1.0,0.6,0.0
+JOB-50359d1d4ec223093cc2,Barista,Golden Black Coffee,Food & Beverage (F&B),Jakarta Selatan,Onsite,28750.0,25.0,0.3,0.8214,0.8,0.65,0.0
+JOB-a5dc112997eb5d63b8e4,Baker Daily Worker,Boo Yeah Jkt,Food & Beverage (F&B),Jakarta Utara,Onsite,26875.0,25.0,0.3,0.7679,0.8,0.65,0.0
+JOB-be9e786c1b71a207beb7,Barista,Golden Black Coffee,Food & Beverage (F&B),Jakarta Utara,Onsite,28750.0,25.0,0.3,0.8214,0.8,0.65,0.0
+JOB-d9282e95213c1afa6ef4,DW Waiter / Waitress,Daily Inn Hotel,Food & Beverage (F&B),Jakarta Pusat,Onsite,34375.0,25.0,0.3,0.9821,0.8,0.65,0.0
+JOB-ee25052e31519dd3699c,pengajar bahasa inggris,ksm,Education & Tutoring,Jakarta Timur,Onsite,31250.0,10.0,1.0,0.8929,0.8,0.6,0.0
+JOB-4db5b6f5c7d3628662d2,Guru Sekolah Dasar,THE GRAND PADEL PULOMAS,Education & Tutoring,Jakarta Timur,Onsite,50000.0,10.0,1.0,1.4286,0.8,0.6,0.0
+JOB-33bb634ad46093b7d986,Ahli Strategi Digital,Kataru,Marketing & Sales,Jakarta Barat,Onsite,31250.0,30.0,0.3,0.8929,1.0,0.4,0.0
+JOB-7adbfdc9a8144e1f4a6c,Japanese Tutor / Pengajar Bahasa Jepang - Jakarta (Part Time),CV. Kukche Mitra Sukses,Education & Tutoring,Jakarta Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-348fbbcca37d998b4471,Video Content Creator,LapakHandukPremium,Content & Media,Jakarta Utara,Onsite,31250.0,25.0,0.3,0.8929,0.8,0.65,0.0
+JOB-823ac2da9f4dabbf8283,English Tutor / Pengajar Bahasa Inggris - Jakarta (Part Time),CV. Kukche Mitra Sukses,Education & Tutoring,Jakarta Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-47edd60a1c9bd66b7945,Desainer Interior,Aesthetic Home Living,Design & Creative,Jakarta Pusat,Onsite,28125.0,20.0,0.3,0.8036,0.8,0.9,0.0
+JOB-fdffe3cf4189fb922c01,"Financial Advisor Part-Time (Learn to Earn), Mulai Tanpa Resign",PT Elev8 Sejahtera Bersama,Marketing & Sales,Jakarta Barat,Onsite,37500.0,30.0,0.3,1.0714,1.0,0.4,0.0
+JOB-ab16a9fe519729d10585,Barista Part Time,PT Brilliann Nuswantara Bhagawanta,Food & Beverage (F&B),Jakarta Selatan,Onsite,27500.0,25.0,0.3,0.7857,0.8,0.65,0.0
+JOB-f3711d335ea6159a3ebc,Daily worker Cook dan Cook Helper,Warung Bali Pak Gede,Food & Beverage (F&B),Jakarta Selatan,Onsite,31250.0,25.0,0.3,0.8929,0.8,0.65,0.0
+JOB-40881378c5d4419db5c1,Kitchen - Cook (Daily Worker),Kopi Lima Detik,Food & Beverage (F&B),Jakarta Selatan,Onsite,27500.0,25.0,0.3,0.7857,0.8,0.65,0.0
+JOB-ac7e5d332ae76775a2ef,Back End Developer Mentor (Onsite),IT STEP Academy,Education & Tutoring,Jakarta Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-aa0e5037e49405a86a5d,Koki (Harian),PT Surya Buana Lestarijaya,Food & Beverage (F&B),Jakarta Utara,Onsite,47500.0,25.0,0.3,1.3571,0.8,0.65,0.0
+JOB-b7eb89570f6d8e7e9ef3,Marketing Kordinator,PT Swanindo Sakti Motor,Marketing & Sales,Jakarta Selatan,Hybrid,40625.0,30.0,0.3,1.1607,0.8,0.4,0.0
+JOB-fde67257372622e94b19,Restaurant Daily Worker (Crew),TERASULTAN KULINER NUSANTARA,Retail & Store Operations,Jakarta Selatan,Onsite,31875.0,20.0,0.3,0.9107,0.8,0.9,0.0
+JOB-2e04a4b979c2ecdba0f0,Restaurant Daily Worker (Server),TERASULTAN KULINER NUSANTARA,Food & Beverage (F&B),Jakarta Pusat,Onsite,31875.0,25.0,0.3,0.9107,0.8,0.65,0.0
+JOB-7b4bd7c87a98984c5595,Trainer Part Time,PRIVAKOM,Education & Tutoring,Jakarta Timur,Onsite,43750.0,10.0,1.0,1.25,0.8,0.6,0.0
+JOB-df842c8feef8b1395588,[Remote/WFH] Part-Time HR & Administration Coordinator,MultitudeX Pte. Ltd.,Admin & Office Support,Remote,Remote,46875.0,10.0,0.3,1.3393,1.0,0.6,0.0
+JOB-8072897620a48fb0fc89,Host Live Fashion,Marves,Content & Media,Jakarta Barat,Onsite,28125.0,22.5,0.3,0.8036,1.0,0.775,0.0
+JOB-7844677502923177893d,Tutoring Teacher,Kidtozz,Education & Tutoring,Jakarta Barat,Onsite,31250.0,10.0,1.0,0.8929,1.0,0.6,0.0
+JOB-6d490002d6f85f439a0d,Barista,Podjok Kopi,Food & Beverage (F&B),Jakarta Barat,Onsite,31250.0,25.0,0.3,0.8929,1.0,0.65,0.0
+JOB-e937ed723c16f8dd3484,Sales Development Program,VISION - BLUE PROTECTION,Marketing & Sales,Jakarta Barat,Hybrid,37500.0,30.0,0.3,1.0714,1.0,0.4,0.0
+JOB-626e5ca677c8fd3f58d6,AI Video Editor,Pempek Lindra,Design & Creative,Jakarta Barat,Onsite,18750.0,20.0,0.3,0.5357,1.0,0.9,0.0
+JOB-75e10a452cc201d30a45,Business Partner,VISION - BLUE PROTECTION,Marketing & Sales,Jakarta Barat,Hybrid,37500.0,30.0,0.3,1.0714,1.0,0.4,0.0
+JOB-9a3d1b3eef8276c5f6c1,Customer Support Part Time,Mamafirst.co,Customer Service & Support,Jakarta Barat,Hybrid,12500.0,20.0,0.3,0.3571,1.0,0.9,0.0
+JOB-e62325a65cadab6b678e,Board Game Tutor,Helovesus Board Game Class,Education & Tutoring,Jakarta Barat,Onsite,18750.0,10.0,1.0,0.5357,1.0,0.6,0.0
+JOB-e1f12be362e577b7fe69,Part Time Kitchen - Non Halal - Central Kitchen Joglo,PT Santap Gembira Bersama,Food & Beverage (F&B),Jakarta Barat,Onsite,15625.0,25.0,0.3,0.4464,1.0,0.65,0.0
+JOB-beaf0aba0604da6c12ba,Game Master ( Board Games ),Grouplay Board Game,Food & Beverage (F&B),Jakarta Barat,Onsite,18750.0,25.0,0.3,0.5357,1.0,0.65,0.0
+JOB-08c32a3b29cbe3548cf6,Live Host Shopee & TikTok (PART TIME) - Weekend,Whizzy Growth,Content & Media,Jakarta Barat,Onsite,28125.0,30.0,0.3,0.8036,1.0,0.4,0.0
+JOB-7c33b8b022631ae1126b,Affiliate,Showty Global International,Marketing & Sales,Jakarta Barat,Onsite,43750.0,30.0,0.3,1.25,1.0,0.4,0.0
+JOB-7a824c4ae3f34164f5ef,English Part-Time Teacher - Kids and Teens,Golden English Course,Education & Tutoring,Jakarta Barat,Onsite,23750.0,10.0,1.0,0.6786,1.0,0.6,0.0
+JOB-c6ac62a9ab39d7b4a550,Live Host Shopee & TikTok (PART TIME),Whizzy Growth,Content & Media,Jakarta Barat,Onsite,28125.0,30.0,0.3,0.8036,1.0,0.4,0.0
+JOB-691dfa7f9a46b88c678a,Part Time Host Live Streaming (PENEMPATAN JAKARTA),Mecoo.id,Content & Media,Jakarta Barat,Onsite,36875.0,22.5,0.3,1.0536,1.0,0.775,0.0
+JOB-d2fa96ae9f8b5dfcb03c,Guru Les Privat Bahasa Inggris,Rora Kids Premium,Education & Tutoring,Jakarta Barat,Onsite,23750.0,25.0,1.0,0.6786,1.0,0.65,0.0
+JOB-82d70fa5e2a3c0f30b17,Crew Kitchen – Part Time,Steak 68,Food & Beverage (F&B),Jakarta Barat,Onsite,18750.0,25.0,0.3,0.5357,1.0,0.65,0.0
+JOB-cfbd78637abb42e489e2,Asisten Eksekutif,PT. Kestone Intertech International,Admin & Office Support,Jakarta Barat,Onsite,18750.0,20.0,0.3,0.5357,1.0,0.9,0.0
+JOB-d7aa6e74f399ed831a32,Associates Business Executive Okt 2026,Lifewell.id,Marketing & Sales,Jakarta Barat,Hybrid,50000.0,30.0,0.3,1.4286,1.0,0.4,0.0
+JOB-c6bb3e7480a71b4bbfc5,Insurance Bussiness development,Power One,Marketing & Sales,Jakarta Barat,Hybrid,37500.0,30.0,0.3,1.0714,1.0,0.4,0.0
+JOB-8bb4e506849ef61e4315,Business Development Executive,VISION - HYPEBIZCOM,Marketing & Sales,Jakarta Barat,Hybrid,43750.0,30.0,0.3,1.25,1.0,0.4,0.0
+JOB-fb69ec844b2d5f676a74,Social Media Strategist,Arsland Bali Property,Content & Media,Jakarta Barat,Hybrid,31250.0,22.5,0.3,0.8929,1.0,0.775,0.0
+JOB-3100e9fd35bd120f15f9,Pattern Illustrator & Textile Print Designer,Pt. Sinar Pratama Agung,Design & Creative,Jakarta Barat,Hybrid,25000.0,20.0,0.3,0.7143,1.0,0.9,0.0
+JOB-da31032917d3f694b201,CODING & AI INSTRUCTOR - Indonesia,SCHOLA LIMITED COMPANY,Education & Tutoring,Remote,Remote,50000.0,10.0,1.0,1.4286,1.0,0.6,0.0
+JOB-7d54d04a2a3791eb9857,Guru Les Piano (Online),Blanc Music Studio,Education & Tutoring,Remote,Remote,28125.0,10.0,1.0,0.8036,1.0,0.6,0.0
+JOB-c12d455818bacb825f27,Video Content Creator,Pentacle Creative,Content & Media,Remote,Remote,59375.0,22.5,0.3,1.6964,1.0,0.775,0.0
+JOB-3b17d2150bf193eb6967,Music Admin,Blanc Music Studio,Admin & Office Support,Remote,Remote,16250.0,20.0,0.3,0.4643,1.0,0.9,0.0
+JOB-6cab29e06c46eea9f309,guru Taman Kanak kanak,Alphazee Id,Education & Tutoring,Jakarta Barat,Onsite,19062.0,10.0,1.0,0.5446,1.0,0.6,0.0
+JOB-0992e48dced7cdc5f268,Waiter / Waitress,THE VAULT Boardgame Cafe,Food & Beverage (F&B),Jakarta Barat,Onsite,15625.0,25.0,0.3,0.4464,1.0,0.65,0.0
+JOB-e6fc372a8401f8b484bc,Guru Mandarin part time taman Surya kalideres,yanghuamandarin,Education & Tutoring,Jakarta Barat,Onsite,18750.0,10.0,1.0,0.5357,1.0,0.6,0.0
+JOB-b70def25a30e31649dcb,Paruh waktu,Naomi Kembang Tahu & Jahe Merah,Marketing & Sales,Jakarta Barat,Onsite,18750.0,30.0,0.3,0.5357,1.0,0.4,0.0
+JOB-5cf552699540ecfe58f1,Game Master Board Game & Mahjong,Golden Meeple Board Game Cafe,Customer Service & Support,Jakarta Barat,Onsite,31250.0,20.0,0.3,0.8929,1.0,0.9,0.0
+JOB-8c13535aed2785f40df5,Sales Promotor,Nss cengkareng,Marketing & Sales,Jakarta Barat,Onsite,43750.0,30.0,0.3,1.25,1.0,0.4,0.0
+JOB-f55ca5ce16a645bead83,Guru Les Privat Matematika,Curious Math,Education & Tutoring,Jakarta Barat,Onsite,31250.0,10.0,1.0,0.8929,1.0,0.6,0.0
+JOB-b02a23cd1fd15bd808c4,Helper Sorter Warehouse,PT Jasa Integritas Mandiri,Logistics & Delivery,Jakarta Barat,Onsite,43750.0,20.0,0.3,1.25,1.0,0.9,0.0
+JOB-382dd58f2f035019a953,Picker Produk ecommerce - Jaspart,Jaspart,Logistics & Delivery,Jakarta Barat,Onsite,29375.0,20.0,0.3,0.8393,1.0,0.9,0.0
+JOB-751a4c0ac6ab2866c1c9,Driver Ritase,Datanet Indomedia,Logistics & Delivery,Jakarta Pusat,Onsite,28125.0,20.0,0.3,0.8036,0.8,0.9,0.0
+JOB-80f250f1641636cef861,Restaurant Service,Pizza 4P's Indonesia,Food & Beverage (F&B),Jakarta Pusat,Onsite,52375.0,25.0,0.3,1.4964,0.8,0.65,0.2191
+JOB-412d70d5dab2f901e77e,Host live skincare part time (hanya malam),PT LEGALITA RAYA ABADI,Content & Media,Jakarta Pusat,Onsite,31250.0,22.5,0.3,0.8929,0.8,0.775,0.0
+JOB-6b361f517cf0e51c295e,Co-Host Live Streaming,PT SANGO CERAMICS INDONESIA,Content & Media,Jakarta Pusat,Onsite,28125.0,22.5,0.3,0.8036,0.8,0.775,0.0
+JOB-cf570ab6cc0744b280a1,Cook (Daily Worker),Sofyan Hospitality & Tourism,Food & Beverage (F&B),Jakarta Pusat,Onsite,34375.0,25.0,0.3,0.9821,0.8,0.65,0.0
+JOB-84efbfa8ce45efa8ffef,Tenaga Retail Media Cetak,Sirkulasi & Distribusi KG Media,Retail & Store Operations,Jakarta Pusat,Onsite,15625.0,20.0,0.3,0.4464,0.8,0.9,0.0
+JOB-767aecffb314b8c92ad7,Baker (Daily Worker),Kkado Chikent,Food & Beverage (F&B),Jakarta Pusat,Onsite,43750.0,25.0,0.3,1.25,0.8,0.65,0.0
+JOB-2d8e0a43b2ee56f9198b,Creative & Optimation Ads,Laznas Dewan Dakwah,Design & Creative,Jakarta Pusat,Onsite,28125.0,20.0,0.3,0.8036,0.8,0.9,0.0
+JOB-25a30ca2b0142e4cf789,Part Time Kitchen,Filosofi Kopi,Food & Beverage (F&B),Jakarta Pusat,Onsite,21875.0,25.0,0.3,0.625,0.8,0.65,0.0
+JOB-7ab00db050c8cb6f4f6d,Petugas Agen Pegadaian Area Senen,PT Danakar,Content & Media,Jakarta Pusat,Hybrid,42500.0,22.5,0.3,1.2143,0.8,0.775,0.0
+JOB-df501b02200e31dfcb1c,Admin Marketplace,TRADEMARK MARKET,Admin & Office Support,Jakarta Pusat,Hybrid,31250.0,20.0,0.3,0.8929,0.8,0.9,0.0
+JOB-97ddfc29e73317becb69,Waiter / Waitress (Part time),Grand G7 Hotel Pasar Baru,Food & Beverage (F&B),Jakarta Pusat,Onsite,18750.0,25.0,0.3,0.5357,0.8,0.65,0.0
+JOB-d1f6e5fd605c4437fe06,Guru Piano,Sparkle Music Course,Education & Tutoring,Jakarta Pusat,Onsite,15625.0,10.0,1.0,0.4464,0.8,0.6,0.0
+JOB-397df23c30463b21f8ad,Retail Fundraiser,Laznas Dewan Dakwah,Retail & Store Operations,Jakarta Pusat,Onsite,28125.0,20.0,0.3,0.8036,0.8,0.9,0.0
+JOB-eca5915429adad0d07eb,Telemarketing,Laznas Dewan Dakwah,Marketing & Sales,Jakarta Pusat,Onsite,28125.0,30.0,0.3,0.8036,0.8,0.4,0.0
+JOB-9dd3e1e3cfa664ab973b,live streamer fashion parttime,Ratu Hijab,Content & Media,Jakarta Pusat,Onsite,31250.0,22.5,0.3,0.8929,0.8,0.775,0.0
+JOB-481260331ca5aa0a1b9c,Steward Kitchen (Daily Worker),The Pizza Company Indonesia,Food & Beverage (F&B),Jakarta Pusat,Onsite,27500.0,25.0,0.3,0.7857,0.8,0.65,0.0
+JOB-24d7b2add395976c1e00,Private English Tutor,English Language Center,Education & Tutoring,Jakarta Pusat,Onsite,18750.0,10.0,1.0,0.5357,0.8,0.6,0.0
+JOB-a38b367f51255181a3fd,Staf Dapur,Gomez Kitchen,Food & Beverage (F&B),Jakarta Pusat,Onsite,18750.0,25.0,0.3,0.5357,0.8,0.65,0.0
+JOB-3517fb1b84a3730225d1,Corporate Fundraiser,Laznas Dewan Dakwah,Marketing & Sales,Jakarta Pusat,Onsite,28125.0,30.0,0.3,0.8036,0.8,0.4,0.0
+JOB-89703f45d81d3b8e1740,Swimming Coach,ASD Group (wepool.id & esports academy),Education & Tutoring,Jakarta Selatan,Onsite,50000.0,10.0,1.0,1.4286,0.8,0.6,0.0
+JOB-77ad6b40d6ed0e2fe2b0,Outlet Crew,Levant Boulangerie,Retail & Store Operations,Jakarta Selatan,Onsite,21250.0,20.0,0.3,0.6071,0.8,0.9,0.0
+JOB-c39ffea7b5ad6e7b276d,Cookhelper,Levant Boulangerie,Food & Beverage (F&B),Jakarta Selatan,Onsite,27500.0,25.0,0.3,0.7857,0.8,0.65,0.0
+JOB-5c6ccca78685067d9ad9,Netherland Tutor / Pengajar Bahasa Belanda - Jakarta (Part Time),CV. Kukche Mitra Sukses,Education & Tutoring,Jakarta Selatan,Onsite,37500.0,10.0,1.0,1.0714,0.8,0.6,0.0
+JOB-8ea18228f92852e91674,Host Live Part Time,PT SINAR KEMENANGAN BERSAMA,Content & Media,Jakarta Selatan,Onsite,28125.0,22.5,0.3,0.8036,0.8,0.775,0.0
+JOB-82636337a72200c2d262,AME Instructor (Jabodetabek),AME Art & Education,Education & Tutoring,Jakarta Selatan,Onsite,15625.0,10.0,1.0,0.4464,0.8,0.6,0.0
+JOB-8ae75c7f8e52e1b4e8d3,part time Content Creator,Milano,Content & Media,Jakarta Selatan,Onsite,23125.0,22.5,0.3,0.6607,0.8,0.775,0.0
+JOB-fb71d31e0080c2ab2301,Crew F&B (Jakarta),Buttonscarves,Food & Beverage (F&B),Jakarta Selatan,Onsite,27500.0,25.0,0.3,0.7857,0.8,0.65,0.0
+JOB-2eabcab530aff108100c,English Trainer,Ku Creatives Unlimited,Education & Tutoring,Jakarta Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-9f64186dfd8631e5de27,Instruktur Pilates,Team Fusion Pilates,Education & Tutoring,Jakarta Selatan,Onsite,43750.0,10.0,1.0,1.25,0.8,0.6,0.0
+JOB-3ca3a2250e3e5435c774,Personal Trainer,PT. AROGYA KARYA NUSANTARA,Education & Tutoring,Jakarta Selatan,Onsite,43750.0,10.0,1.0,1.25,0.8,0.6,0.0
+JOB-fabfbbda7fa704ad72cd,Sales Promotion Girl,HARDWARE CLOTHING,Marketing & Sales,Jakarta Selatan,Hybrid,47875.0,30.0,0.3,1.3679,0.8,0.4,0.0
+JOB-08da531abdfe11d9ed61,Konten Kreator (Part Time),Circle Scent,Content & Media,Jakarta Selatan,Onsite,31250.0,22.5,0.3,0.8929,0.8,0.775,0.0
+JOB-c2d010e031eb341bba22,Staff Operasional Paruh Waktu (Part-Time),Lebry,Admin & Office Support,Jakarta Selatan,Onsite,18750.0,20.0,0.3,0.5357,0.8,0.9,0.0
+JOB-f35a0fdd83101e3281d3,Tentor Sosiologi,Bimbel SG,Education & Tutoring,Jakarta Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-1cb3226c0550e44c24ba,Agen Asuransi,Unity Corporation Jakarta,Marketing & Sales,Jakarta Selatan,Onsite,37500.0,30.0,0.3,1.0714,0.8,0.4,0.0
+JOB-716f6d1c42c5d9d1b2b9,Casual/Part Time crew Gerobakan Cimol Bojot AA (Area Jakarta),PT Citarasa Kuliner Indonesia,Retail & Store Operations,Jakarta Selatan,Onsite,21250.0,20.0,0.3,0.6071,0.8,0.9,0.0
+JOB-113cb2ee845f78d46006,Social Media Writer,Janin Sehat,Content & Media,Jakarta Selatan,Onsite,31250.0,22.5,0.3,0.8929,0.8,0.775,0.0
+JOB-514b1ad1460b7ac0937b,Asisten Kelas Kumon Jepang,KUMON INDONESIA,Education & Tutoring,Jakarta Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-909ee58f0855769c8e67,Graphic Design + AI (Mentor),IT STEP Academy,Education & Tutoring,Jakarta Selatan,Hybrid,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-eba135170e0097a12076,Marketing Associate,Semesta Kecil Daycare & Preschool,Marketing & Sales,Jakarta Selatan,Hybrid,31250.0,30.0,0.3,0.8929,0.8,0.4,0.0
+JOB-dae026dcb845f6cbce27,Creative Associate,Calma Stories,Design & Creative,Jakarta Selatan,Hybrid,16875.0,20.0,0.3,0.4821,0.8,0.9,0.0
+JOB-a1f1c10c0a6016ba97ab,Video Content Creator,Glab Creative,Content & Media,Jakarta Selatan,Hybrid,28125.0,22.5,0.3,0.8036,0.8,0.775,0.0
+JOB-8522a472c6754b807e13,Video Content Creator,PT Hartlogic Bangun Indonesia (Hartlogic),Content & Media,Jakarta Selatan,Hybrid,12500.0,22.5,0.3,0.3571,0.8,0.775,0.0
+JOB-14cf596e4bb031ec0368,Editor Video,Beans Living,Design & Creative,Jakarta Selatan,Hybrid,37500.0,20.0,0.3,1.0714,0.8,0.9,0.0
+JOB-d988f35b053f8cc08633,Content Creator,Astra AI UGC,Content & Media,Remote,Remote,21875.0,22.5,0.3,0.625,1.0,0.775,0.0
+JOB-2b13e772fd0bee2d3d8d,Tele Sales Agent,PT Kanaka Hita Solvera,Marketing & Sales,Remote,Remote,34375.0,30.0,0.3,0.9821,1.0,0.4,0.0
+JOB-9c3284a6643f161089c6,SEA_English Teacher Online (Indonesia),SCHOLA LIMITED COMPANY,Education & Tutoring,Remote,Remote,23750.0,20.0,1.0,0.6786,1.0,0.9,0.0
+JOB-40937437f511599de650,Part Time Teacher Coding,Engineering for Kids,Education & Tutoring,Jakarta Selatan,Onsite,15625.0,10.0,1.0,0.4464,0.8,0.6,0.0
+JOB-2aeab68425036175553a,shopkeeper,Swarna Bhumi Nusantara,Retail & Store Operations,Jakarta Selatan,Onsite,21250.0,20.0,0.3,0.6071,0.8,0.9,0.0
+JOB-a6e4d328e0eae0355d04,Part-Time Packing Gudang - Jagakarsa,Qisahku Bookstore,Logistics & Delivery,Jakarta Selatan,Onsite,15625.0,20.0,0.3,0.4464,0.8,0.9,0.0
+JOB-4d02cbc72eb64d80e7f0,Tutor Bahasa Inggris,Qalam World Academy,Education & Tutoring,Jakarta Selatan,Onsite,12500.0,10.0,1.0,0.3571,0.8,0.6,0.0
+JOB-fa6ae5bae11e135ff29f,Sales Agent Offline,Sparks Preschool,Marketing & Sales,Jakarta Selatan,Onsite,21875.0,30.0,0.3,0.625,0.8,0.4,0.0
+JOB-be37ee3c5510a348aca7,Video Content Creator,PuffPoff,Content & Media,Jakarta Selatan,Onsite,18750.0,22.5,0.3,0.5357,0.8,0.775,0.0
+JOB-aa795eb0b08e03a3cca9,Kordniator Bisnis Agen (LEASING MOTOR),NSC Finance Kebayoran Baru,Marketing & Sales,Jakarta Selatan,Onsite,50000.0,30.0,0.3,1.4286,0.8,0.4,0.0
+JOB-d53a8c60b1b68bd912bb,Part time driver valet,PT. PRESTISE ELITE VALET,Logistics & Delivery,Jakarta Selatan,Onsite,18750.0,20.0,0.3,0.5357,0.8,0.9,0.0
+JOB-b66faf706a6613fd9c0f,Crew Outlet,Sate Bang Alpen,Retail & Store Operations,Jakarta Selatan,Onsite,18750.0,20.0,0.3,0.5357,0.8,0.9,0.0
+JOB-a7396231afa26ec9f4aa,Guru Fisika SMA,Bimbel SUGOI,Education & Tutoring,Jakarta Timur,Onsite,56250.0,10.0,1.0,1.6071,0.8,0.6,0.0
+JOB-82f224bf199689ba4d80,Tentor Matematika,Bimbel SG,Education & Tutoring,Jakarta Timur,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-b1aa6701b7a859c8abe3,Tutor Tennis,CV. Sang Kreasi Nusantara,Education & Tutoring,Jakarta Timur,Onsite,22500.0,10.0,1.0,0.6429,0.8,0.6,0.0
+JOB-b72101fad8f1abd4423e,Tutor Triathlon,CV. Sang Kreasi Nusantara,Education & Tutoring,Jakarta Timur,Onsite,22500.0,10.0,1.0,0.6429,0.8,0.6,0.0
+JOB-eec1afb23cffb033c34d,Pastry Helper,PT Masterko Solusi Servicatama,Food & Beverage (F&B),Jakarta Timur,Onsite,43750.0,25.0,0.3,1.25,0.8,0.65,0.0
+JOB-a895f9355bcc09b6c887,GURU PPKN,SMK Corpatarin1 Jakarta,Education & Tutoring,Jakarta Timur,Onsite,21250.0,10.0,1.0,0.6071,0.8,0.6,0.0
+JOB-f20c4bce6021786396ab,Staf Dapur,Dots Dimsum,Food & Beverage (F&B),Jakarta Timur,Onsite,18750.0,25.0,0.3,0.5357,0.8,0.65,0.0
+JOB-bd83cab5c3ae147f53a1,Cook helper,Kopi Jink & Taichan 21,Food & Beverage (F&B),Jakarta Timur,Onsite,18750.0,25.0,0.3,0.5357,0.8,0.65,0.0
+JOB-c93ec8a3a151b4f68b58,Physic private tutor,Bimbel Gama UI Pondok Kelapa,Education & Tutoring,Jakarta Timur,Onsite,15625.0,10.0,1.0,0.4464,0.8,0.6,0.0
+JOB-ed78248998e873dd6017,Video Content Creator,Next On Gaming,Content & Media,Jakarta Timur,Onsite,37500.0,22.5,0.3,1.0714,0.8,0.775,0.0
+JOB-f580fd5f8ba0c80499c0,admin,PT ALMAWA MEDIKA INDONESIA,Admin & Office Support,Jakarta Timur,Onsite,15625.0,20.0,0.3,0.4464,0.8,0.9,0.0
+JOB-4c0b5d84a9803c52f5ba,Guru Matematika,Bimbel SUGOI,Education & Tutoring,Jakarta Timur,Onsite,56250.0,10.0,1.0,1.6071,0.8,0.6,0.0
+JOB-8f0abc999aaf18dfc983,Guru Les Privat SKD CPNS (Jakarta),Privat dan Bimbel ASK.Edu,Education & Tutoring,Jakarta Timur,Hybrid,13125.0,10.0,1.0,0.375,0.8,0.6,0.0
+JOB-ef3c730457974c80a537,COOK HARIAN,CV. SONOKEMBANG HARUM JAYA,Food & Beverage (F&B),Jakarta Timur,Onsite,34375.0,25.0,0.3,0.9821,0.8,0.65,0.0
+JOB-20708942bd302e0c2405,Kasir,The Tables Jakarta,Retail & Store Operations,Jakarta Timur,Onsite,18750.0,20.0,0.3,0.5357,0.8,0.9,0.0
+JOB-fbb52625900e41aa4181,Admin-Pramuniaga-Live Stream Host,Raja Alpukat,Retail & Store Operations,Jakarta Timur,Onsite,30000.0,20.0,0.3,0.8571,0.8,0.9,0.0
+JOB-4ddf2a2c2c614233586f,Barista,Mardomu Warkop Modern,Food & Beverage (F&B),Jakarta Timur,Onsite,11667.0,25.0,0.3,0.3333,0.8,0.65,0.0
+JOB-d276051b46095f0a2899,Host Live Streaming,Voguerina,Content & Media,Jakarta Timur,Onsite,25000.0,22.5,0.3,0.7143,0.8,0.775,0.0
+JOB-73f8e488b279c8e61df2,Host Livetstreaming,Toko Ruen Sepeda,Content & Media,Jakarta Timur,Onsite,18750.0,22.5,0.3,0.5357,0.8,0.775,0.0
+JOB-24233988aab4086b3542,Video Editor Affiliate,Brillkun,Marketing & Sales,Remote,Remote,21875.0,30.0,0.3,0.625,1.0,0.4,0.0
+JOB-7818246de773a506b990,Guru Les Privat Bahasa Inggris Area Cipayung Jakarta Timur,Guru Gue,Education & Tutoring,Jakarta Timur,Onsite,21250.0,10.0,1.0,0.6071,0.8,0.6,0.0
+JOB-00356cfbd144446e99dd,Guru Les Privat SD Kurikulum Cambridge area Cipinang Jatinegara,Guru Gue,Education & Tutoring,Jakarta Timur,Onsite,15625.0,10.0,1.0,0.4464,0.8,0.6,0.0
+JOB-e07ed0d63b1a9d66ac48,Barista Part Time,Totoro Malaka,Food & Beverage (F&B),Jakarta Timur,Onsite,15625.0,25.0,0.3,0.4464,0.8,0.65,0.0
+JOB-3b44ebb59f64ed8412ca,Helper,Warna Go,Logistics & Delivery,Jakarta Timur,Onsite,31250.0,20.0,0.3,0.8929,0.8,0.9,0.0
+JOB-9d81747fc2d2dbe40ac8,Parti Time Server & Kitchen,YAKINIKU TEN,Food & Beverage (F&B),Jakarta Timur,Onsite,21667.0,25.0,0.3,0.6191,0.8,0.65,0.0
+JOB-ababfe2926307d4962f7,Daily Worker FOH,Holycow! Bhadranaya Group,Food & Beverage (F&B),Jakarta Timur,Onsite,28125.0,25.0,0.3,0.8036,0.8,0.65,0.0
+JOB-640035b90f4fb6f893d0,Daily Worker Gudang (Toko Komputer),Ponders Indonesia,Logistics & Delivery,Jakarta Utara,Onsite,31250.0,20.0,0.3,0.8929,0.8,0.9,0.0
+JOB-a1ed4950532e6797e315,Tenaga Pengajar Bahasa Mandarin Offline dan Online,Hua Zhong Mandarin Center,Education & Tutoring,Jakarta Utara,Onsite,50000.0,10.0,1.0,1.4286,0.8,0.6,0.0
+JOB-a37bf2270dd4609cf14d,crew store,PT Exodrinks Indonesia Regional Jakarta Timur,Retail & Store Operations,Jakarta Utara,Onsite,26875.0,20.0,0.3,0.7679,0.8,0.9,0.0
+JOB-3b495c765eb887e0c6e1,Germany Tutor / Pengajar Bahasa Jerman Jakarta Utara (Part Time),CV. Kukche Mitra Sukses,Education & Tutoring,Jakarta Utara,Onsite,37500.0,10.0,1.0,1.0714,0.8,0.6,0.0
+JOB-5750b3a24bd410dcbd57,Part-Time Host Live Streaming,PT Vortex Creo Indonesia,Content & Media,Jakarta Utara,Onsite,40625.0,22.5,0.3,1.1607,0.8,0.775,0.0
+JOB-d4689e436be2feeef176,Pengajar Bahasa Mandarin,Cockatoo Course,Education & Tutoring,Jakarta Utara,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-ff7984a2ef52e55ffe0c,Part Time / Daily Worker Restoran,Panna Hospitality Group,Food & Beverage (F&B),Jakarta Utara,Onsite,25000.0,25.0,0.3,0.7143,0.8,0.65,0.0
+JOB-b8f599be38bc9eeda23c,Tenaga Pengajar Bahasa Mandarin,Hua Zhong Mandarin Center,Education & Tutoring,Jakarta Utara,Onsite,50000.0,10.0,1.0,1.4286,0.8,0.6,0.0
+JOB-f192ae7097c657e8c42d,Part Time Guru Ekskul Board Game di sekolah sekitar Jakarta,Board Game Class,Education & Tutoring,Jakarta Utara,Hybrid,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-b55238b2a3d654a0e4eb,host live streaming,shine land,Content & Media,Jakarta Utara,Onsite,28125.0,20.0,0.3,0.8036,0.8,0.9,0.0
+JOB-5d4bc0cca5ca0984e312,DRIVER ALPHARD,CV Enchante Flawless Indonesia,Logistics & Delivery,Jakarta Utara,Onsite,34375.0,20.0,0.3,0.9821,0.8,0.9,0.0
+JOB-207d56f4315c5d7ae699,Staf Dapur (Produksi),PT Satya Natura Persada,Food & Beverage (F&B),Jakarta Utara,Onsite,30000.0,25.0,0.3,0.8571,0.8,0.65,0.0
+JOB-10078b50fc831eb31a70,Admin & Host Live,Eclaire Authentic,Content & Media,Jakarta Utara,Onsite,36875.0,22.5,0.3,1.0536,0.8,0.775,0.0
+JOB-afd80c9cdd54a816c270,Barista Latte Art,Coffeegasm,Food & Beverage (F&B),Jakarta Utara,Onsite,12500.0,25.0,0.3,0.3571,0.8,0.65,0.0
+JOB-ea939efc395102447cb5,HOST LIVE STREAMING,flocktowstore,Content & Media,Jakarta Utara,Onsite,28125.0,22.5,0.3,0.8036,0.8,0.775,0.0
+JOB-1bfc6d3a5c408beffefb,Tutor,Mega Bimbel,Education & Tutoring,Jakarta Utara,Onsite,25000.0,10.0,1.0,0.7143,0.8,0.6,0.0
+JOB-7c9934523d7d63510632,Part-Time  Programming Teacher Kelapa Gading,Timedoor Academy,Education & Tutoring,Jakarta Utara,Onsite,21875.0,10.0,1.0,0.625,0.8,0.6,0.0
+JOB-bf3ed0793afadb5069c8,Guru Kursus dan Promotor Area Kelapa Gading,Rainbow Edukasi Indonesia,Education & Tutoring,Jakarta Utara,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-902f4cce735752eb6d65,Part-timeHost live,PT Teamtop Harvest Indonesia,Marketing & Sales,Jakarta Utara,Onsite,37500.0,30.0,0.3,1.0714,0.8,0.4,0.0
+JOB-19615a79d749df5cd9b1,Cook Helper,Restaurant Famili Ria,Food & Beverage (F&B),Jakarta Utara,Onsite,27500.0,25.0,0.3,0.7857,0.8,0.65,0.0
+JOB-335523710062f8e578f0,Tenaga Pengajar Bahasa Mandarin/Chinese Offline dan Online,Hua Zhong Mandarin Center,Education & Tutoring,Jakarta Utara,Onsite,50000.0,10.0,1.0,1.4286,0.8,0.6,0.0
+JOB-1b211700520b182dc20a,Bancassurance,PT. Berkat Berlimpah Sukses,Marketing & Sales,Jakarta Utara,Hybrid,43750.0,30.0,0.3,1.25,0.8,0.4,0.0
+JOB-5fe35d87b51e6ba94a21,IT Coding Teacher Part Time - Kemayoran,PT. Koding Next Indonesia,Education & Tutoring,Jakarta Utara,Hybrid,50000.0,10.0,1.0,1.4286,0.8,0.6,0.0
+JOB-9ee78bd494e661709b18,SALES EXECUTIVE,PT Wanfu Glow Indonesia,Marketing & Sales,Remote,Remote,53125.0,30.0,0.3,1.5179,1.0,0.4,0.0
+JOB-98ebb5ac8cc2edc65214,Guru Piano/Vocal,Music Learning Center,Education & Tutoring,Jakarta Utara,Onsite,37500.0,10.0,1.0,1.0714,0.8,0.6,0.0
+JOB-aaa6b0540f19d490da2e,Crew Playground,Kidsandland Indonesia,Retail & Store Operations,Jakarta Utara,Onsite,31250.0,20.0,0.3,0.8929,0.8,0.9,0.0
+JOB-d9211b9876cd75b886a0,Florist Assistant - Part Time,Reia Florist,Retail & Store Operations,Jakarta Utara,Onsite,18750.0,20.0,0.3,0.5357,0.8,0.9,0.0
+JOB-5a4ea1de33587c8df9d5,Part time hampers parcel,Celine Florist,Retail & Store Operations,Jakarta Utara,Onsite,25000.0,20.0,0.3,0.7143,0.8,0.9,0.0
+JOB-8e7cc7292f6422d48f3f,PART TIME BARISTA & GAME MASTER,Alisted Boardgame Cafe,Food & Beverage (F&B),Jakarta Utara,Onsite,18750.0,25.0,0.3,0.5357,0.8,0.65,0.0
+JOB-f4b98ad217fda9f80264,Part-time Livestream Host,Luxor Hijab,Marketing & Sales,Jakarta Utara,Onsite,56250.0,30.0,0.3,1.6071,0.8,0.4,0.0
+JOB-a7ccbb39dc16bf25a5ee,Operasional Gudang (Pangan),Abhati Group,Logistics & Delivery,Jakarta Utara,Onsite,50000.0,20.0,0.3,1.4286,0.8,0.9,0.0
+JOB-69225ff91612523c056a,Customer Service Attendence Playground Ananda Semper,PT. Mitra Anak Sejahtera,Customer Service & Support,Jakarta Utara,Onsite,28125.0,20.0,0.3,0.8036,0.8,0.9,0.0
+JOB-337ee52cf3f9b1d7f0a0,Math Teacher,PT Prima Dunia Indonesia,Education & Tutoring,Jakarta Utara,Onsite,46875.0,10.0,1.0,1.3393,0.8,0.6,0.0
+JOB-58278a80afe5d2143e2d,Driver Shuttle (min SIM BI umum),Pt. Day Trans,Logistics & Delivery,Tangerang,Hybrid,59375.0,20.0,0.3,1.6964,0.4,0.9,0.0
+JOB-1137a8cbdac8bff37331,SPG/B Bandara Soekarno Hatta,PT. Multi Bangun Abadi,Marketing & Sales,Tangerang,Onsite,50000.0,30.0,0.3,1.4286,0.4,0.4,0.0
+JOB-0f64d57b63c34df4a3f6,STAFF HR RECRUITMENT (PART TIME),Koba Agency,Admin & Office Support,Tangerang,Onsite,16875.0,20.0,0.3,0.4821,0.4,0.9,0.0
+JOB-8284e17611a93e2fb5f4,Host Live Stream Part Time WFH,Proline Innovation Indonesia,Content & Media,Remote,Remote,25000.0,22.5,0.3,0.7143,1.0,0.775,0.0
+JOB-1a352d02ed1a4b35127c,Helper Driver,Everest Electronic,Logistics & Delivery,Tangerang,Hybrid,37500.0,20.0,0.3,1.0714,0.4,0.9,0.0
+JOB-cf88ad1f016517bc3dd2,Guru bahasa Mandarin,iSpeak Language Center,Education & Tutoring,Tangerang,Onsite,37500.0,10.0,1.0,1.0714,0.4,0.6,0.0
+JOB-4e53301fa0a9a807162c,Profesional Business Marketing,PT Nextgen Ventures internasional,Marketing & Sales,Tangerang,Hybrid,37500.0,30.0,0.3,1.0714,0.4,0.4,0.0
+JOB-69b092986713976cca7e,Translator Profesional,PT Nextgen Ventures internasional,Content & Media,Tangerang,Hybrid,28125.0,22.5,0.3,0.8036,0.4,0.775,0.0
+JOB-e60bc10254be669299e8,"STEWARD, HELPER, SERVER, BUTCHER, GRILLER, COOK",YAKINIKU TEN,Food & Beverage (F&B),Tangerang,Hybrid,53125.0,25.0,0.3,1.5179,0.4,0.65,0.0
+JOB-7edabfad110a9d57689e,Daily Worker TWIG,Bangor Foods Corp,Retail & Store Operations,Tangerang,Onsite,21250.0,20.0,0.3,0.6071,0.4,0.9,0.0
+JOB-b937f8fc6a2dd493b3c6,Pengajar Bahasa Korea,Cockatoo Course,Education & Tutoring,Tangerang,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-a8fac21884a2d60eddfe,Model Wanita,PT ANGKASA MEDIA INDONESIA,Content & Media,Tangerang,Onsite,28125.0,22.5,0.3,0.8036,0.4,0.775,0.0
+JOB-a1f680ebf7915afe5087,Daily Worker Shopkeeper Tangerang,Insurgent Club,Retail & Store Operations,Tangerang,Onsite,21250.0,20.0,0.3,0.6071,0.4,0.9,0.0
+JOB-b0dd16cf4d18ab3941c4,Sales Promotion Girl,HARDWARE CLOTHING,Marketing & Sales,Tangerang,Hybrid,47875.0,30.0,0.3,1.3679,0.4,0.4,0.0
+JOB-cd405fe9a91d44aa3012,host live streaming,Ciji Official Shop,Content & Media,Tangerang,Onsite,21250.0,15.0,0.3,0.6071,0.4,0.85,0.0
+JOB-fbf29f1810b39907c185,Guru Privat,Guida education,Education & Tutoring,Tangerang,Hybrid,31250.0,10.0,1.0,0.8929,0.4,0.6,0.0
+JOB-d8dc9f43282de6d5d17e,Part Time Barista,PT. Kreasi Abadi Jayatama,Food & Beverage (F&B),Tangerang,Onsite,25875.0,25.0,0.3,0.7393,0.4,0.65,0.0
+JOB-1899a7da5defcfe7aef4,Guru Science,Kamar Belajar,Education & Tutoring,Tangerang,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-1347e92ba5ade96d2eb0,Daily Worker Pastry,ABLAND PROPERTY MANAGEMENT (ABPM),Food & Beverage (F&B),Tangerang,Onsite,41250.0,25.0,0.3,1.1786,0.4,0.65,0.0
+JOB-fa54aa7c7397f3729fd0,PELATIH EKSKUL DEBAT,SMA Yuppentek 1 Tangerang,Education & Tutoring,Tangerang,Hybrid,10312.0,10.0,1.0,0.2946,0.4,0.6,0.0
+JOB-d1f306f2892c4d583d75,(Parttime) English Teacher Biba Lumo Kids,Bimbel Biba Biruni,Education & Tutoring,Tangerang,Onsite,21875.0,10.0,1.0,0.625,0.4,0.6,0.0
+JOB-f6882039e9c2354cc88d,host live,Kissa Studio,Content & Media,Tangerang,Onsite,12500.0,22.5,0.3,0.3571,0.4,0.775,0.0
+JOB-0dd283acd177b639bfb6,Cafe Kitchen Helper (Daily Worker),Tozca Cafe,Food & Beverage (F&B),Tangerang,Onsite,19375.0,25.0,0.3,0.5536,0.4,0.65,0.0
+JOB-ab4c376b4fc7cd9ad1c4,Part-Time Design Teacher / Guru Design Part-Time,Timedoor Academy Greenlake City,Education & Tutoring,Tangerang,Onsite,15625.0,10.0,1.0,0.4464,0.4,0.6,0.0
+JOB-e3995fe224492e137ad2,Waiter / Waitress / Dishwasher,PT. Sinar Rasa Makmur (Arka Group Lifestyle),Food & Beverage (F&B),Tangerang,Onsite,34375.0,25.0,0.3,0.9821,0.4,0.65,0.0
+JOB-995cf418da99341c2060,Part Time SAT/GRE/GMAT Tutor,Global Score Academy,Education & Tutoring,Tangerang,Hybrid,37500.0,10.0,1.0,1.0714,0.4,0.6,0.0
+JOB-c28839de546619eb1bf1,Videographer & Editor Part Time,Layar Hijau,Content & Media,Tangerang,Hybrid,12500.0,22.5,0.3,0.3571,0.4,0.775,0.0
+JOB-7209eb9380975ed48f6a,Daily Worker- Staff Pengemasan,Just Miss Cosmetics,Logistics & Delivery,Tangerang,Onsite,28125.0,20.0,0.3,0.8036,0.4,0.9,0.0
+JOB-66904fbba7fd9bc0514f,Packer,Terry Palmer,Logistics & Delivery,Tangerang,Onsite,28125.0,20.0,0.3,0.8036,0.4,0.9,0.0
+JOB-80a7e1046c5d4fc1f52f,Restaurant Daily Worker (Kitchen),TERASULTAN KULINER NUSANTARA,Food & Beverage (F&B),Tangerang,Onsite,25000.0,25.0,0.3,0.7143,0.4,0.65,0.0
+JOB-5f81d6578023b7ca74da,Baker assistant,Batter & Dough,Food & Beverage (F&B),Tangerang,Onsite,31250.0,25.0,0.3,0.8929,0.4,0.65,0.0
+JOB-9bc261a8746c476b8bc7,Baker,Batter & Dough,Food & Beverage (F&B),Tangerang,Onsite,31250.0,25.0,0.3,0.8929,0.4,0.65,0.0
+JOB-d0c658a5c1b7d8feb687,GURU BAHASA MANDARIN,Yufu Montessori School,Education & Tutoring,Tangerang,Onsite,37500.0,10.0,1.0,1.0714,0.4,0.6,0.0
+JOB-48eb573c72753a99dda7,Admin Inventory Control [Penempatan Batuceper],Segari,Admin & Office Support,Tangerang,Onsite,12500.0,20.0,0.3,0.3571,0.4,0.9,0.0
+JOB-11f058bc9a4eb6706c26,Admin & Sales Executive (Khusus Perawat / Ners) WFH Part Time,META WELLNESS,Marketing & Sales,Remote,Remote,21250.0,30.0,0.3,0.6071,1.0,0.4,0.0
+JOB-3fe5441379b6c857273c,Barista Part Time Area Tangerang (Flavor Bliss),PT Mitra Mulia Manunggal,Food & Beverage (F&B),Tangerang Selatan,Onsite,29375.0,25.0,0.3,0.8393,0.4,0.65,0.0
+JOB-3efa1c9bfd75c3f43af7,Host Live Streaming,Star Sport,Content & Media,Tangerang Selatan,Onsite,28125.0,22.5,0.3,0.8036,0.4,0.775,0.0
+JOB-342d29c3d89247c5f4ae,Sales (Wifi Internet Rakyat),CV Surya Abadi,Marketing & Sales,Tangerang Selatan,Hybrid,37500.0,30.0,0.3,1.0714,0.4,0.4,0.0
+JOB-658c464b42c75c325a49,Crew Store Bagi Kopi Pamulang,PT Bagi Kopi Indonesia,Food & Beverage (F&B),Tangerang Selatan,Onsite,15625.0,25.0,0.3,0.4464,0.4,0.65,0.0
+JOB-9800e4849100c761b433,Barista,Golden Black Coffee,Food & Beverage (F&B),Tangerang Selatan,Onsite,28750.0,25.0,0.3,0.8214,0.4,0.65,0.0
+JOB-e726f9055d0c703065b9,Frontliner / Cashier Baker (Part Time),PT Mitra Mulia Manunggal,Food & Beverage (F&B),Tangerang Selatan,Onsite,29500.0,25.0,0.3,0.8429,0.4,0.65,0.0
+JOB-934240ef8bb279ed587c,Helper Logistik (Dapur Catering) Daily Worker,"PT Organik Adil Sejahtera, (Green Rebel Foods Indonesia)",Logistics & Delivery,Tangerang Selatan,Onsite,31250.0,20.0,0.3,0.8929,0.4,0.9,0.0
+JOB-569616a689da367e7f38,Tutor Antropologi SMA,Homeschooling Kak Seto,Education & Tutoring,Tangerang Selatan,Onsite,21875.0,10.0,1.0,0.625,0.4,0.6,0.0
+JOB-4232bd1a3b8375f3f155,Tutor MIPA SMP (Part Time),Homeschooling Kak Seto,Education & Tutoring,Tangerang Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-e4eb7b9e858f15987c20,Crew Event Taman Bermain (Event Akhir Tahun),PT BSR INDONESIA,Retail & Store Operations,Tangerang Selatan,Onsite,24583.0,20.0,0.3,0.7024,0.4,0.9,0.0
+JOB-4405bdcdc37875a51ec7,Social Media Strategist,PT Kofie Franchiz International (Jongcrue Cafe),Content & Media,Tangerang Selatan,Onsite,13750.0,22.5,0.3,0.3929,0.4,0.775,0.0
+JOB-d022ba53e8525ddbfef7,Sopir Taxi Bandara dan Rental Bluebird Bintaro,Bluebird Pool Bintaro,Logistics & Delivery,Tangerang Selatan,Onsite,55750.0,20.0,0.3,1.5929,0.4,0.9,0.0
+JOB-7d7c4bdc028d47717e11,Tutor Seni & Project Class,Homeschooling Kak Seto,Education & Tutoring,Tangerang Selatan,Onsite,58333.0,10.0,1.0,1.6667,0.4,0.6,0.0
+JOB-83f09622d312faffbb7f,Kurir Last-Mile,SPX EXPRESS JAKARTA SELATAN,Logistics & Delivery,Tangerang Selatan,Onsite,31250.0,20.0,0.3,0.8929,0.4,0.9,0.0
+JOB-3b9d332bb46adfc4ca5c,Part Time English Teacher Tangerang,Golden English Course,Education & Tutoring,Tangerang Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-ce73d47d187ad2a9ea54,Parttime Barista,Faye Coffee and Eatery,Food & Beverage (F&B),Tangerang Selatan,Onsite,27500.0,25.0,0.3,0.7857,0.4,0.65,0.0
+JOB-b939523ddef1430999ff,Part Time (khusus mhs UIN Jakarta),Oke Foods,Retail & Store Operations,Tangerang Selatan,Onsite,10625.0,20.0,0.3,0.3036,0.4,0.9,0.0
+JOB-de8c5c9908a59b19e590,Creative Digital Content Specialist,Kyoreen Dental Aesthetic,Content & Media,Tangerang Selatan,Hybrid,37500.0,22.5,0.3,1.0714,0.4,0.775,0.0
+JOB-a85db26fccb5c915d87f,Host Live Streaming,PT Akademi Wangi Nusantara,Content & Media,Tangerang Selatan,Onsite,18750.0,22.5,0.3,0.5357,0.4,0.775,0.0
+JOB-1a40a0c3e9c80ad6ce51,Asisten Pribadi,Dwe Organizer,Admin & Office Support,Remote,Remote,18750.0,20.0,0.3,0.5357,1.0,0.9,0.0
+JOB-290161ed99d68d63d864,Content Creator,Visi Maha Karya (Foundation),Content & Media,Tangerang Selatan,Onsite,28125.0,22.5,0.3,0.8036,0.4,0.775,0.0
+JOB-e3e3fec93033da0d6678,Guru Les SD dan Bimbingan Konseling,Les Privat Gemilang,Education & Tutoring,Tangerang Selatan,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-173a603a7a7f4acf26f4,Online Sales Specialist,META WELLNESS,Marketing & Sales,Remote,Remote,23750.0,30.0,0.3,0.6786,1.0,0.4,0.0
+JOB-9741c255bf288988faae,English Teacher,Kepikuning Learning Center,Education & Tutoring,Tangerang Selatan,Onsite,13750.0,10.0,1.0,0.3929,0.4,0.6,0.0
+JOB-24fb8d0b367dcd1c9aad,Part Time Merchandiser (Bagian Input),Vintage Vibes,Retail & Store Operations,Tangerang Selatan,Onsite,46875.0,20.0,0.3,1.3393,0.4,0.9,0.0
+JOB-719a7626134a02275b9b,Kurir Last-Mile,SPX Express,Logistics & Delivery,Tangerang Selatan,Onsite,31250.0,20.0,0.3,0.8929,0.4,0.9,0.0
+JOB-b859ef2deb027a2a6f9d,Part Time Kitchen,PT Bantianyao Catering Management,Food & Beverage (F&B),Tangerang Selatan,Onsite,15625.0,25.0,0.3,0.4464,0.4,0.65,0.0
+JOB-c35b4fc190b52324f47a,Guru Bahasa Inggris,SDIT Bait Adzkia Islamic School,Education & Tutoring,Tangerang Selatan,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-1987dfe934b151a541d2,Guru Informatika atau Coding,SDIT Bait Adzkia Islamic School,Education & Tutoring,Tangerang Selatan,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-89d18782438eee9ef065,Guru Bahasa Arab,SDIT Bait Adzkia Islamic School,Education & Tutoring,Tangerang Selatan,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-a7347695d2de71bf190e,3D Event & Exhibition Designer,Pumpkin Apparel (Pumpkin Store),Design & Creative,Tangerang Selatan,Hybrid,53125.0,20.0,0.3,1.5179,0.4,0.9,0.0
+JOB-a6144d2e9e750b6e2944,Chef,AMO Tiam,Food & Beverage (F&B),Tangerang Selatan,Onsite,31250.0,25.0,0.3,0.8929,0.4,0.65,0.0
+JOB-213e9378cf366301e91c,Live Gaming Host (English-speaker) Experienced,PT Dummy Dreams Group,Content & Media,Tangerang Selatan,Onsite,56250.0,22.5,0.3,1.6071,0.4,0.775,0.0
+JOB-2c6a8cf18bb91e07e861,Event Operation,PT Phitagoras Global Duta,Marketing & Sales,Tangerang Selatan,Hybrid,25000.0,30.0,0.3,0.7143,0.4,0.4,0.0
+JOB-b89b6db1a9f9026aecb1,Social Media Marketing Consultant,Beet & Cone,Content & Media,Tangerang Selatan,Hybrid,15625.0,22.5,0.3,0.4464,0.4,0.775,0.0
+JOB-e90191215989ff6d7aec,Pengajar Bahasa Prancis,Bahasa Baguette,Education & Tutoring,Remote,Remote,31250.0,10.0,1.0,0.8929,1.0,0.6,0.0
+JOB-4e213a324f62f28f152a,Host live,Nezzayu,Content & Media,Tangerang Selatan,Onsite,43750.0,22.5,0.3,1.25,0.4,0.775,0.0
+JOB-70f0e4431099b10f8117,Waiter / Waitress,Lajolie Bites,Food & Beverage (F&B),Tangerang Selatan,Onsite,16875.0,25.0,0.3,0.4821,0.4,0.65,0.0
+JOB-99add5341990ade4203c,Mitra Collection Multiproduct,PT Sinar Mentari Makmur,Admin & Office Support,Tangerang,Onsite,18750.0,20.0,0.3,0.5357,0.4,0.9,0.0
+JOB-3a136978c302bf6140a7,Waiter / Waitress,The Bagel House,Food & Beverage (F&B),Tangerang,Onsite,25000.0,25.0,0.3,0.7143,0.4,0.65,0.0
+JOB-5929600c73d0f4f6ae28,Waiter / Waitress,Aromasop Seafood,Food & Beverage (F&B),Tangerang,Onsite,27500.0,25.0,0.3,0.7857,0.4,0.65,0.0
+JOB-b0a1ffa81e7236abb646,Host Live Streamer,PT JELLY TECH,Content & Media,Tangerang,Onsite,28125.0,22.5,0.3,0.8036,0.4,0.775,0.0
+JOB-39a1457eff335bab7b0c,guru mandarin learning center,chunqing learning center,Education & Tutoring,Tangerang,Onsite,37500.0,10.0,1.0,1.0714,0.4,0.6,0.0
+JOB-2cbb21c2e2e08fe2d256,Waiter / Waitress,Jinsei No Men,Food & Beverage (F&B),Tangerang,Onsite,18750.0,25.0,0.3,0.5357,0.4,0.65,0.0
+JOB-693d3cf7004b54dc495e,Asisten Pengajar Matematika & Bahasa Inggris,Kumon Park Serpong,Education & Tutoring,Tangerang,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-dbd3ead9c964ffe56119,Asisten Pengajar SMP SMA,Kumon Park Serpong,Education & Tutoring,Tangerang,Onsite,28125.0,10.0,1.0,0.8036,0.4,0.6,0.0
+JOB-b41c239ecc14416d46bf,Barista / Server Part time,Good Life Culinary,Food & Beverage (F&B),Tangerang,Onsite,18750.0,25.0,0.3,0.5357,0.4,0.65,0.0
+JOB-49697f675178a2b76d21,Livestreamer -HOST LIVE,PT GLOBAL JAYA ULTIMA,Content & Media,Tangerang,Onsite,59375.0,22.5,0.3,1.6964,0.4,0.775,0.0
+JOB-099a762ed030c7dc4276,Bimbel / After School Teacher Jenjang SD (Part-Time),Tutorin,Education & Tutoring,Tangerang,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-bc5956743f69f06e02be,Helper,Warna Go,Logistics & Delivery,Tangerang,Onsite,31250.0,20.0,0.3,0.8929,0.4,0.9,0.0
+JOB-3721e2795452420c970a,KENEK KAYU HARIAN (HPL an) KHUSUS DAERAH CISAUK,PT Labafurni Interior,Design & Creative,Tangerang,Onsite,43750.0,20.0,0.3,1.25,0.4,0.9,0.0
+JOB-83e8233eae8906425da1,SEMI TUKANG KAYU HARIAN KHUSUS DAERAH CISAUK,PT Labafurni Interior,Design & Creative,Tangerang,Onsite,43750.0,20.0,0.3,1.25,0.4,0.9,0.0
+JOB-4b2390ea8cb9cc87c18e,Asisten Guru KB/TK (Part Time),Salih Saliha Montessori,Education & Tutoring,Tangerang,Onsite,13750.0,10.0,1.0,0.3929,0.4,0.6,0.0
+JOB-465a29c18e452a165d1f,Driver (Daily Worker),Mitrabangun.id Semarang,Logistics & Delivery,Tangerang,Onsite,28125.0,20.0,0.3,0.8036,0.4,0.9,0.0
+JOB-abd9aaf958799e7102f3,Part-time Server,Hong Kong Bay,Food & Beverage (F&B),Tangerang,Onsite,27500.0,25.0,0.3,0.7857,0.4,0.65,0.0
+JOB-a44bc5a8a700f28e46be,Part Time Shadow Teacher,Cherish Academy,Education & Tutoring,Tangerang,Onsite,46875.0,10.0,1.0,1.3393,0.4,0.6,0.0
+JOB-56e410b2ff9741d04e37,Part Time FOH/Kasir - Mogul The Breeze,M-Burger,Retail & Store Operations,Tangerang,Onsite,30000.0,20.0,0.3,0.8571,0.4,0.9,0.4781
+JOB-83a8aa74518ca447e1aa,Crew Store,Teguk Indonesia,Retail & Store Operations,Tangerang,Onsite,20625.0,20.0,0.3,0.5893,0.4,0.9,0.0
+JOB-4d66b7a26e36a917b3f4,Kitchen Staff / Crew,Silver Plate,Food & Beverage (F&B),Tangerang,Onsite,29167.0,25.0,0.3,0.8333,0.4,0.65,0.0
+JOB-6f3fd76f4ef55a040f96,Pelayan Restoran,Warung Sambal Setan HR,Food & Beverage (F&B),Tangerang,Onsite,18750.0,25.0,0.3,0.5357,0.4,0.65,0.0
+JOB-2b10b1c71bf42bbc803e,Part Time Sabtu Minggu Tanggal Merah,Bakmi RY,Retail & Store Operations,Tangerang,Onsite,14167.0,20.0,0.3,0.4048,0.4,0.9,0.0
+JOB-9a8a82a29980ddff172c,Part Time Barista (University Student ONLY),Arthur Culinary Group,Food & Beverage (F&B),Tangerang,Onsite,15000.0,25.0,0.3,0.4286,0.4,0.65,0.0
+JOB-e94c9d6ff71bc4835080,Barista (Part-Time),PT Nusagiri Kopi Indonesia,Food & Beverage (F&B),Tangerang,Onsite,21875.0,25.0,0.3,0.625,0.4,0.65,0.0
+JOB-4a08c4ed95182168af49,Video Content Creator dan Editor Video,PT Tiga Emas Persada,Content & Media,Tangerang,Onsite,21875.0,22.5,0.3,0.625,0.4,0.775,0.0
+JOB-b3fc06df61e92654f039,Mandarin Part Time Job,Say Nihao Language Center,Education & Tutoring,Tangerang,Onsite,50000.0,10.0,1.0,1.4286,0.4,0.6,0.0
+JOB-acbcb49b77e43dfd1d96,Pengajar Bahasa jerman,iSpeak Language Center Gading Serpong,Education & Tutoring,Tangerang,Onsite,37500.0,10.0,1.0,1.0714,0.4,0.6,0.0
+JOB-bae3e99879500c898f43,Board game Tutor Tangerang BSD,Helovesus Board Game Class,Education & Tutoring,Tangerang,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-cd8e197b25209ea9fda6,Dishwasher Pencuci Piring,Cafe Depan Rumah,Food & Beverage (F&B),Tangerang,Onsite,18750.0,25.0,0.3,0.5357,0.4,0.65,0.0
+JOB-a5491aef6c9c40002686,Talent Content Creator,Arkline,Content & Media,Tangerang,Hybrid,31250.0,22.5,0.3,0.8929,0.4,0.775,0.0
+JOB-65334cba08f2b142d25d,Shopee Livestreamer,Joki Proyek,Marketing & Sales,Tangerang,Hybrid,28125.0,30.0,0.3,0.8036,0.4,0.4,0.0
+JOB-0b6e66ecb9fd3bf88408,Social Media Specialist (Part-Time),Two Fat Panda,Content & Media,Tangerang,Hybrid,28125.0,22.5,0.3,0.8036,0.4,0.775,0.0
+JOB-9d5056fa27121a6ce90b,Host Live Streamer,Nevalis Entertainment,Content & Media,Remote,Remote,31250.0,22.5,0.3,0.8929,1.0,0.775,0.0
+JOB-d3fb41c6a1b514b4353b,Operator Data Entry (PART TIME),datapinter.com,Admin & Office Support,Remote,Remote,25625.0,20.0,0.3,0.7321,1.0,0.9,0.0
+JOB-359ac41fc06ca483c0ed,Eksternal Promotion,PT. Eluckygame Technology Asia,Marketing & Sales,Remote,Remote,37500.0,30.0,0.3,1.0714,1.0,0.4,0.0
+JOB-48fae7d20497775d27e5,Crew outlet,BASGOR 89,Retail & Store Operations,Tangerang,Onsite,18750.0,20.0,0.3,0.5357,0.4,0.9,0.0
+JOB-c9c8969d37d1b09b591d,Japanese Teacher Part Time - NLEC Serpong,Northern Lights Education Center,Education & Tutoring,Tangerang,Onsite,50000.0,10.0,1.0,1.4286,0.4,0.6,0.0
+JOB-582c6d10a6fda524136f,Guru Robotik Anak,Muhamad Ade Kurniawan,Education & Tutoring,Tangerang,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-36b04eb040ce9f24d986,Calon Marketing (Part Time),Bintang Junior Cabang Aryana - Karawaci,Marketing & Sales,Tangerang,Onsite,37500.0,30.0,0.3,1.0714,0.4,0.4,0.0
+JOB-3565370c7e69e05617e1,Host live tiktok,Cakicake candy,Content & Media,Tangerang,Onsite,12500.0,22.5,0.3,0.3571,0.4,0.775,0.0
+JOB-50df04c8a3bcfa32dc7d,Daily Worker - Cook Helper / Helper Pastry (Gading Serpong),BIKO GROUP INDONESIA,Food & Beverage (F&B),Tangerang,Onsite,36875.0,25.0,0.3,1.0536,0.4,0.65,0.0
+JOB-150db48bb97244bb32a1,Mandarin Teacher,Little Alley Preschool,Education & Tutoring,Tangerang,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-3b67a0c68fd537a8ea0f,Staff Operasional & Game Master,Minkan Mahjong Space,Admin & Office Support,Tangerang,Onsite,37500.0,25.0,0.3,1.0714,0.4,0.65,0.0
+JOB-342c86853874baba89a9,TALENT TIKTOK LIVE,PT Netizen Harapan Lestari,Marketing & Sales,Tangerang,Onsite,37500.0,30.0,0.3,1.0714,0.4,0.4,0.0
+JOB-6e8a6e0d81198849fbbd,Guru Matematika,PT PHONIX EDU INDONESIA,Education & Tutoring,Tangerang,Onsite,25000.0,10.0,1.0,0.7143,0.4,0.6,0.0
+JOB-d08e8154b73e3d948c5e,Chinese teacher,chunqing learning center,Education & Tutoring,Tangerang,Onsite,43750.0,10.0,1.0,1.25,0.4,0.6,0.0
+JOB-f3eeafea133a5835e87e,Part-Time Barista,Olivia Rose Kebaya,Food & Beverage (F&B),Tangerang,Onsite,29062.0,25.0,0.3,0.8303,0.4,0.65,0.0
+JOB-7c0f4a5beca26ece47d7,Tutor Ekonomi dan Akuntansi untuk SMA,Prime Genius Academy,Education & Tutoring,Tangerang,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-64ced366baf2560811ba,Sales Executive,PT Lion Solusi Sejahtera,Marketing & Sales,Tangerang,Onsite,46875.0,30.0,0.3,1.3393,0.4,0.4,0.0
+JOB-9fd19b7dc9e9594d4557,English Teacher Part-time Weekend - BSD,Edukita,Education & Tutoring,Tangerang,Onsite,20312.0,10.0,1.0,0.5803,0.4,0.6,0.0
+JOB-49022de56caf5085b220,Guru privat English conversation dewasa,SFE Bimbingan Belajar,Education & Tutoring,Bekasi,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-7cb0255c166cc821b9e8,Tutor Math Cambridge kls 10,SFE Bimbingan Belajar,Education & Tutoring,Bekasi,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-b5d1fcd7f3945803d0db,Guru Les Privat Fisika,RBAS Les (Rumah Belajar Anak Sholeh),Education & Tutoring,Bekasi,Onsite,50000.0,10.0,1.0,1.4286,0.4,0.6,0.0
+JOB-a4b38cdee88efb8efb9e,Guru les ips,RBAS Les (Rumah Belajar Anak Sholeh),Education & Tutoring,Bekasi,Onsite,10156.0,10.0,1.0,0.2902,0.4,0.6,0.0
+JOB-8c7487470c5b79bcad9e,Accounts Receivable (Finance),PT Sanwamas Metal Industry,Admin & Office Support,Bekasi,Onsite,35000.0,20.0,0.3,1.0,0.4,0.9,0.0
+JOB-e0fc071e058899ae932d,Bazaar Runner,Kalacha Matcha,Food & Beverage (F&B),Bekasi,Onsite,27500.0,25.0,0.3,0.7857,0.4,0.65,0.0
+JOB-4f965ead1b821df54bbc,Host Live Online Shop,Zehuja Collection,Content & Media,Bekasi,Onsite,28125.0,22.5,0.3,0.8036,0.4,0.775,0.0
+JOB-f0894cce6d26f0784b2c,Pengajar Bahasa Inggris English Junior,Bintang Junior Pusat,Education & Tutoring,Bekasi,Onsite,37500.0,10.0,1.0,1.0714,0.4,0.6,0.0
+JOB-6a05119c3d69b992af30,Admin,Kido Fight Academy,Admin & Office Support,Bekasi,Hybrid,18750.0,20.0,0.3,0.5357,0.4,0.9,0.0
+JOB-1a1cd07e8fd49ec24487,Guru bimbel,Bimbel Privat Juara Yogyakarta,Education & Tutoring,Bekasi,Onsite,12500.0,10.0,1.0,0.3571,0.4,0.6,0.0
+JOB-d2744070ffc9ce6ae34b,English Part-Time Teacher - Jabodetabek Area,Golden English Course,Education & Tutoring,Bekasi,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-f447c19120ecb2ea9094,Driver (Part Time),Transpet Jakarta,Logistics & Delivery,Bekasi,Onsite,31250.0,20.0,0.3,0.8929,0.4,0.9,0.0
+JOB-859215f58645a3f66335,Guru Paud,Alphagen Academy,Education & Tutoring,Bekasi,Onsite,15625.0,10.0,1.0,0.4464,0.4,0.6,0.0
+JOB-9c2a3a60492b4aca38b1,Content Creator,Alphagen Academy,Content & Media,Bekasi,Onsite,15625.0,22.5,0.3,0.4464,0.4,0.775,0.0
+JOB-014af5795b107e85c2c8,Guru Paud,Alphagen Academy,Education & Tutoring,Bekasi,Onsite,15625.0,10.0,1.0,0.4464,0.4,0.6,0.0
+JOB-768926a106878f2e3ce6,Guru Mandarin - Part Time,BIMBEL XINGYUN,Education & Tutoring,Bekasi,Onsite,20312.0,10.0,1.0,0.5803,0.4,0.6,0.0
+JOB-11fcd1568474616b0b9d,Guru Bahasa Indonesia,Bimbel Bina Prestasi Cemerlang,Education & Tutoring,Bekasi,Onsite,25000.0,10.0,1.0,0.7143,0.4,0.6,0.0
+JOB-677b92aafb99ea8e1fe4,Master Teacher Fisika Jenjang SMA,Brain Academy by Ruangguru,Education & Tutoring,Bekasi,Onsite,18906.0,10.0,1.0,0.5402,0.4,0.6,0.0
+JOB-5c38db75d6877ac4410b,Guru Les Privat Matematika,Gama ui plasa cibubur,Education & Tutoring,Bekasi,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-4b328791b44ff6b216c2,Guru Les Privat Bahasa Inggris,Gama ui plasa cibubur,Education & Tutoring,Bekasi,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-0e43e4b246e4ac358771,Guru IPA,Gama ui plasa cibubur,Education & Tutoring,Bekasi,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-80b513e6cd3d35464acc,Social Media Specialist,Kala Sejenak Reflexology,Content & Media,Bekasi,Hybrid,18750.0,22.5,0.3,0.5357,0.4,0.775,0.0
+JOB-b0864eaa69910c7abbba,Petugas Agen Pegadaian Area Jatiwaringin,PT Danakar,Content & Media,Bekasi,Hybrid,42500.0,22.5,0.3,1.2143,0.4,0.775,0.0
+JOB-b78fe3836a946cc26727,Guru Les Privat Biologi,Gama ui plasa cibubur,Education & Tutoring,Bekasi,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-af1e26a42e1655960aec,Master Teacher Bahasa Indonesia & UTBK,Brain Academy by Ruangguru Bekasi - Bintara,Education & Tutoring,Bekasi,Onsite,31250.0,10.0,1.0,0.8929,0.4,0.6,0.0
+JOB-f4e8d5595d4df23fca51,Master Teacher Fisika,Brain Academy by Ruangguru Bekasi - Bintara,Education & Tutoring,Bekasi,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-e4d8470227fee9715e46,crew outlet grobak standby,Roti Bakar Plat AE 21,Retail & Store Operations,Bekasi,Onsite,18750.0,20.0,0.3,0.5357,0.4,0.9,0.0
+JOB-40852e703b6c8abac331,Master Teacher Bahas Inggris + UTBK (LBE),Brain Academy by Ruangguru,Education & Tutoring,Bekasi,Onsite,18906.0,10.0,1.0,0.5402,0.4,0.6,0.0
+JOB-2c2046f816fc63951901,Operator Packaging,Kid's corner,Logistics & Delivery,Bekasi,Onsite,31250.0,20.0,0.3,0.8929,0.4,0.9,0.0
+JOB-62039843aa4b2685fe6c,Part Time Outlet,Momia Dessert,Retail & Store Operations,Bekasi,Onsite,16250.0,20.0,0.3,0.4643,0.4,0.9,0.0
+JOB-db0162a3347ca75dc5bc,Customer Service Attendence Playground anak Bekasi,PT. Mitra Anak Sejahtera,Customer Service & Support,Bekasi,Onsite,28125.0,20.0,0.3,0.8036,0.4,0.9,0.0
+JOB-5fc0432d28cb6b1c8c55,Host Live Streaming,ZRYN,Content & Media,Bekasi,Onsite,31250.0,22.5,0.3,0.8929,0.4,0.775,0.0
+JOB-8cbee7efa5c1bdb785ca,Kitchen Crew (Kopitagram - Vida Bekasi),Kopitagram,Food & Beverage (F&B),Bekasi,Onsite,30625.0,25.0,0.3,0.875,0.4,0.65,0.0
+JOB-6e6b640413fa81596b39,Admin (Part Time),Transpet Jakarta,Admin & Office Support,Bekasi,Onsite,18750.0,20.0,0.3,0.5357,0.4,0.9,0.0
+JOB-84d94121cf62eb631dbf,Barista (Daily Worker),Damar Langit,Food & Beverage (F&B),Bekasi,Onsite,28125.0,25.0,0.3,0.8036,0.4,0.65,0.0
+JOB-e7b38e53cb9233e21018,"Admin Konten YouTube & Voice Over (Part-time, Hybrid WFO-WFA)",Hariyo Ardhito Enterprises,Content & Media,Bekasi,Hybrid,34375.0,22.5,0.3,0.9821,0.4,0.775,0.0
+JOB-3830650db9338590479e,DRIVER LOGISTIK (SIM B1 Umum/SIM B2 Umum/A Umum),PT Permata Solusindo,Logistics & Delivery,Bekasi,Onsite,31250.0,20.0,0.3,0.8929,0.4,0.9,0.0
+JOB-90f52c8560fbfcde4ac2,Driver,PT Solusi Cuci Nusantara,Logistics & Delivery,Bekasi,Onsite,56250.0,20.0,0.3,1.6071,0.4,0.9,0.0
+JOB-599d142ec787fcb09231,Live streaming,honeybaby,Content & Media,Bekasi,Onsite,53125.0,22.5,0.3,1.5179,0.4,0.775,0.0
+JOB-7a05391f6f4ff0f8a4b7,Host Live,LY Management,Content & Media,Remote,Remote,37500.0,22.5,0.3,1.0714,1.0,0.775,0.0
+JOB-8df7f44deab7519edf0c,Guru Bahasa Inggris,Rumah Belajar Anak Hebat 2,Education & Tutoring,Bekasi,Onsite,31250.0,10.0,1.0,0.8929,0.4,0.6,0.0
+JOB-e22d0f31d7596f9c4547,PART-TIME TEACHER,I Can Read Grand Wisata,Education & Tutoring,Bekasi,Onsite,25000.0,10.0,1.0,0.7143,0.4,0.6,0.0
+JOB-0f58c07fbd0dadda6fe1,Video Content Creator,Qirei Studio,Content & Media,Bekasi,Onsite,28125.0,22.5,0.3,0.8036,0.4,0.775,0.0
+JOB-a8f63dc60c9045c8ba82,Daily Worker Cook,PT Samala Pariboga Cemerlang (Simetri Coffee),Food & Beverage (F&B),Bekasi,Onsite,21250.0,25.0,0.3,0.6071,0.4,0.65,0.0
+JOB-4c5e66f2972addc18aff,Staf Dapur,IKIRAMEN INDONESIA,Food & Beverage (F&B),Bekasi,Onsite,10833.0,25.0,0.3,0.3095,0.4,0.65,0.0
+JOB-0adcfe139ace4c4b98a9,sales,PT Takumi Gemilang Seisakusho,Marketing & Sales,Bekasi,Hybrid,53125.0,30.0,0.3,1.5179,0.4,0.4,0.0
+JOB-1f040c1bf7bf1c6a5e38,Sales Closer,Star konsultan,Marketing & Sales,Remote,Remote,25000.0,30.0,0.3,0.7143,1.0,0.4,0.0
+JOB-b84c4125d3bd82307bf1,Tutor Pendamping PR SD (Part Time),Bimbeenesia,Education & Tutoring,Bekasi,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-a820f983d16018f61c8c,Kids Math Tutor (Part Time),Bimbeenesia,Education & Tutoring,Bekasi,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-734413b70009d6f8e1a5,Kids English Tutor (Part Time),Bimbeenesia,Education & Tutoring,Bekasi,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-05121ada4cb196033a0d,LOWONGAN KERJA – DRIVER HARIAN,PT Buwon Vina Indonesia,Logistics & Delivery,Bekasi,Onsite,15625.0,20.0,0.3,0.4464,0.4,0.9,0.0
+JOB-0bc37c85c863b4ea77fa,Customer Service Attendence Playground anak Cikarang,PT. Mitra Anak Sejahtera,Customer Service & Support,Bekasi,Onsite,28125.0,20.0,0.3,0.8036,0.4,0.9,0.0
+JOB-8a5b1af0601e302a2b26,Guru Math,Rumah Belajar Anak Hebat 2,Education & Tutoring,Bekasi,Onsite,25000.0,10.0,1.0,0.7143,0.4,0.6,0.0
+JOB-8b73a2000c7de73b83d4,Guru Tahfidz,Rumah Belajar Anak Hebat 2,Education & Tutoring,Bekasi,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-76d992652ca799fcd635,Pegawai Toko - Part Time,Jeji Chewy Puff Cikarang,Retail & Store Operations,Bekasi,Onsite,12500.0,20.0,0.3,0.3571,0.4,0.9,0.0
+JOB-7104d2b0071a667c6cc8,Host Live (Daily Worker),Purela Official,Content & Media,Depok,Onsite,28125.0,22.5,0.3,0.8036,0.4,0.775,0.0
+JOB-3ab50218d4a4f6c552d7,Admin Online Shop,Nunna,Admin & Office Support,Depok,Onsite,25000.0,20.0,0.3,0.7143,0.4,0.9,0.0
+JOB-5ae0ee0ad016d675a5bf,Part Time Host Live Streaming,PT KIOS FARIZ BERSAUDARA,Content & Media,Depok,Onsite,28125.0,22.5,0.3,0.8036,0.4,0.775,0.0
+JOB-d7d7749283b0c752543b,Tutor Mandarin (Depok),Lingua Course,Education & Tutoring,Depok,Onsite,43750.0,10.0,1.0,1.25,0.4,0.6,0.0
+JOB-955a229c2df40c6d9d1f,Tentor Fisika,Bimbel SG,Education & Tutoring,Depok,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-46dd3990e52df8f73cad,Daily Worker,Ayam Tenjo Cabe Ijo,Food & Beverage (F&B),Depok,Onsite,15000.0,25.0,0.3,0.4286,0.4,0.65,0.0
+JOB-833a02ead8e98ac4ecbf,⁠⁠Tutor Bahasa Mandarin (Kota Depok),Lingua Course,Education & Tutoring,Depok,Onsite,25000.0,10.0,1.0,0.7143,0.4,0.6,0.0
+JOB-6f697751f0004900c267,Crew,Ayam Geprek 55,Retail & Store Operations,Depok,Onsite,14167.0,20.0,0.3,0.4048,0.4,0.9,0.0
+JOB-68677915e598f53308f6,Part time driver valet,PT. PRESTISE ELITE VALET,Logistics & Delivery,Depok,Onsite,11250.0,20.0,0.3,0.3214,0.4,0.9,0.0
+JOB-8194734a586be32571b7,Driver Skidtank,Gas One,Logistics & Delivery,Depok,Onsite,50000.0,20.0,0.3,1.4286,0.4,0.9,0.0
+JOB-fed4e50a477ba641195f,Host Live,Mima Fashion,Content & Media,Depok,Onsite,28125.0,22.5,0.3,0.8036,0.4,0.775,0.0
+JOB-eda7e015330c05a62af6,Math Teacher,Sekolah Prestasi Global,Education & Tutoring,Depok,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-6b11935b14ec15770313,English Teacher,Sekolah Prestasi Global,Education & Tutoring,Depok,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-3ac0969e3c88c99a75c9,driver,Titan Baking,Logistics & Delivery,Depok,Onsite,49375.0,20.0,0.3,1.4107,0.4,0.9,0.0
+JOB-b42307128b80f7dc532c,Cooks Daily,GAMA. Coffee House,Food & Beverage (F&B),Depok,Onsite,21875.0,25.0,0.3,0.625,0.4,0.65,0.0
+JOB-8d3cae6821dd973ec627,Casual Sawangan Depok,Bandung Cheesecuit Official,Retail & Store Operations,Depok,Onsite,40625.0,20.0,0.3,1.1607,0.4,0.9,0.0
+JOB-f7de171abe6142c9794f,Daily Worker Store,Petshop Indonesia (PT. Petsindo Makmur Abadi),Retail & Store Operations,Depok,Onsite,21250.0,20.0,0.3,0.6071,0.4,0.9,0.0
+JOB-00539493b1a27d412e1c,Daily Worker FOH,Holycow! Bhadranaya Group,Food & Beverage (F&B),Depok,Onsite,28125.0,25.0,0.3,0.8036,0.4,0.65,0.0
+JOB-0c6f6723608052f3b9f1,Japanese Tutor / Tutor Bahasa Jepang - Bogor (Part Time),CV. Kukche Mitra Sukses,Education & Tutoring,Bogor,Onsite,37500.0,10.0,1.0,1.0714,0.4,0.6,0.0
+JOB-6bc24b14455dd5f2fa31,Korean Tutor / Pengajar Bahasa Korea - Bogor  (Part Time),CV. Kukche Mitra Sukses,Education & Tutoring,Bogor,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-93213645cf3b003e09b7,Barista,Golden Black Coffee,Food & Beverage (F&B),Bogor,Onsite,28750.0,25.0,0.3,0.8214,0.4,0.65,0.0
+JOB-07bdf075d9da74140611,Part Time Packing,PT AKSARA KOSMETIK INDONESIA,Logistics & Delivery,Bogor,Onsite,31250.0,20.0,0.3,0.8929,0.4,0.9,0.0
+JOB-5734f65bff68af1d3a5d,Tentor Geografi,Bimbel SG,Education & Tutoring,Bogor,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-9312781206e91b25af81,Netherland Tutor / Pengajar Bahasa Belanda - Bogor (Part Time),CV. Kukche Mitra Sukses,Education & Tutoring,Bogor,Onsite,37500.0,10.0,1.0,1.0714,0.4,0.6,0.0
+JOB-de0fed84f4e5fe4f0ed7,Part Time Gudang,PT AKSARA KOSMETIK INDONESIA,Logistics & Delivery,Bogor,Onsite,31250.0,20.0,0.3,0.8929,0.4,0.9,0.0
+JOB-31c9486dd7b945b80e3f,Tutor Privat Offline Matematika SD - KOTA BOGOR,All Education,Education & Tutoring,Bogor,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-d18f7d4c476e377f8108,GURU KIMIA,Daar En Nisa Islamic School,Education & Tutoring,Bogor,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-d25687be7a187fedce08,Front Desk Receptionist,Urban Wellness Woman SPA,Customer Service & Support,Bogor,Onsite,13750.0,20.0,0.3,0.3929,0.4,0.9,0.0
+JOB-6edf70abbc7e28980ec9,In-House Make Up Artist & Beauty Trainer,CV Cherry Beauty Center,Education & Tutoring,Bogor,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-d91f9e02d396223538c4,Marketing Specialist (digital marketing),D'Danze Academy,Marketing & Sales,Bogor,Hybrid,31250.0,30.0,0.3,0.8929,0.4,0.4,0.0
+JOB-62897a06e19aaa733c28,Tutor Fisika,Anakode Cerdas Teknologi,Education & Tutoring,Remote,Remote,28125.0,10.0,1.0,0.8036,1.0,0.6,0.0
+JOB-042bf0a9fba48856484a,"Tutor Matematika, Fisika, Kimia",Anakode Cerdas Teknologi,Education & Tutoring,Remote,Remote,34375.0,10.0,1.0,0.9821,1.0,0.6,0.0
+JOB-2ca7575d43d886eb6880,Barista,EIGER COFFEE,Food & Beverage (F&B),Bogor,Onsite,21875.0,25.0,0.3,0.625,0.4,0.65,0.0
+JOB-2b32e9a6f539e44c55d8,Runner (Part Time),Kampung Iga,Food & Beverage (F&B),Bogor,Onsite,31250.0,25.0,0.3,0.8929,0.4,0.65,0.0
+JOB-f0d1808e5da03c2f4dcb,Host Live Shopee & TikTok,Akik Alyaman,Content & Media,Bogor,Onsite,39062.0,22.5,0.3,1.1161,0.4,0.775,0.0
+JOB-0b9739b427f2d635c781,Sales Chat & Live Sales Support,Akik Alyaman,Marketing & Sales,Bogor,Onsite,37500.0,30.0,0.3,1.0714,0.4,0.4,0.0
+JOB-ab4cbdbf36f0bb43cef0,Marketing & Partnership Associate,Apotek Yemenia,Marketing & Sales,Bogor,Hybrid,18750.0,30.0,0.3,0.5357,0.4,0.4,0.0
+JOB-e748346900951b6ea872,host live,Hijab Almuizz,Content & Media,Bogor,Onsite,21875.0,22.5,0.3,0.625,0.4,0.775,0.0
+JOB-3401588456521807e3f8,Part Time Coding Teacher,Timedoor Academy Transyogi,Education & Tutoring,Bogor,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-e4e87fa8fce53eb6c048,Guru Bimbel TK SD - Bojong Gede,Bimbel Tiki Taka Pusat,Education & Tutoring,Bogor,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-80e6bbe0078b5c9da178,Guru Les Privat Matematika,Bimbingan Belajar Kak Jon,Education & Tutoring,Bogor,Onsite,12500.0,10.0,1.0,0.3571,0.4,0.6,0.0
+JOB-a7908520babc10c57f8e,Guru Bimbel Kimia,Bimbingan Belajar Kak Jon,Education & Tutoring,Bogor,Onsite,12500.0,10.0,1.0,0.3571,0.4,0.6,0.0
+JOB-cc0e5ba8fca435edc8d9,Part Time Coding Teacher,Timedoor Academy Transyogi,Education & Tutoring,Bogor,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-508b63f8c94b1a3a667f,Operator Photobooth,Studio C81,Customer Service & Support,Bogor,Onsite,17500.0,20.0,0.3,0.5,0.4,0.9,0.0
+JOB-acc721ce4094abe155e6,Guru Sekolah Dasar,Bimbel Tiki Taka Bojong Gede,Education & Tutoring,Bogor,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-697e4a1422c906bb2c7d,Admin E-commerce,PT. Pestigo Biochem Indonesia (Seroxil),Admin & Office Support,Bogor,Onsite,30000.0,20.0,0.3,0.8571,0.4,0.9,0.0
+JOB-97fc1821eca94178288f,Part Time Kitchen,PT Aroma Harum Kelapa,Food & Beverage (F&B),Bogor,Onsite,20625.0,25.0,0.3,0.5893,0.4,0.65,0.0
+JOB-4f0c2a3fbec3553de815,Guru Mandarin,Cahaya Pengetahuan Indonesia,Education & Tutoring,Bogor,Onsite,59375.0,10.0,1.0,1.6964,0.4,0.6,0.0
+JOB-b26683506c346d1c4f0a,Asisten/Pengajar Kumon,Kumon Citraland Cibubur,Education & Tutoring,Bogor,Onsite,10938.0,10.0,1.0,0.3125,0.4,0.6,0.0
+JOB-9107dc37765d57e319c7,Tentor Bimbel Matematika,RSBI (Ruang Siswa Belajar Intensif),Education & Tutoring,Bogor,Onsite,25000.0,10.0,1.0,0.7143,0.4,0.6,0.0
+JOB-f8b3f598c04455e985d6,Guru Preschool/BIMBA,Kiddy Space,Education & Tutoring,Bogor,Onsite,10625.0,10.0,1.0,0.3036,0.4,0.6,0.0
+JOB-8bc3b2cd255e2a171e0e,Guru IPA,Gandhi Magani,Education & Tutoring,Bogor,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-b1d74200c56d7fa30d66,Tutor Matematika,Kembar Cendekia Bogor,Education & Tutoring,Bogor,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-b419028a940ab8d50a09,Kurir Motor,Spx cilandak,Logistics & Delivery,Bogor,Onsite,43750.0,20.0,0.3,1.25,0.4,0.9,0.0
+JOB-3b9d6684910813a2d7de,English Trainer / English Teacher,LPIA & GAMA-UI KARADENAN,Education & Tutoring,Bogor,Onsite,10000.0,10.0,1.0,0.2857,0.4,0.6,0.0
+JOB-dd51b468298fef5ae620,Sales Promoter (Daily Worker) (3-month),PT Mitra Prosperindo Abadi,Marketing & Sales,Bogor,Onsite,31250.0,30.0,0.3,0.8929,0.4,0.4,0.0
+JOB-60ed456d8016037cda5f,Tutor IPS,Kembar Cendekia Bogor,Education & Tutoring,Bogor,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-26cda0de8bc06d9d3afe,barista part-time,Rawdee Corporation,Food & Beverage (F&B),Bogor,Onsite,31250.0,25.0,0.3,0.8929,0.4,0.65,0.0
+JOB-fae147be3abec8f99306,Guru Matematika,Bimbel An-Najm Prestasi,Education & Tutoring,Jakarta Barat,Onsite,18750.0,10.0,1.0,0.5357,1.0,0.6,0.0
+JOB-304269051a215771723c,Calistung Teacher,Bloominghaus,Education & Tutoring,Jakarta Utara,Onsite,34375.0,10.0,1.0,0.9821,0.8,0.6,0.0
+JOB-d24f8a0e31f300e8b3fb,Guru Akuntansi SMA,Fanny's Production,Education & Tutoring,Jakarta Barat,Onsite,18750.0,10.0,1.0,0.5357,1.0,0.6,0.0
+JOB-b612267ea87e1afe555b,English Trainer / English Teacher,LINGGO Language Center,Education & Tutoring,Tangerang,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-f231275787441262c408,TUTOR Bahasa Inggris,Bimbel Club Belajar,Education & Tutoring,Jakarta Utara,Onsite,15625.0,10.0,1.0,0.4464,0.8,0.6,0.0
+JOB-02dda9ffa213843884bd,English Trainer / English Teacher,ILP Veteran,Education & Tutoring,Jakarta Selatan,Onsite,53125.0,10.0,1.0,1.5179,0.8,0.6,0.0
+JOB-efaafcdd6dc9bad8ebf6,PRIVATE ENGLISH TUTOR – BUSINESS & EXIM COMMUNICATION,PT. DIVA MITRA SINERGI,Education & Tutoring,Jakarta Utara,Onsite,31250.0,10.0,1.0,0.8929,0.8,0.6,0.0
+JOB-7f321f66c793c5a714a1,Guru Privat Persiapan TKA SMP (OFFLINE),bimbel SMART,Education & Tutoring,Jakarta Selatan,Onsite,18750.0,10.0,1.0,0.5357,0.8,0.6,0.0
+JOB-c1c3394e2a8458372a80,Guru les Mandarin,New Trimusica Music School,Education & Tutoring,Jakarta Utara,Onsite,35938.0,10.0,1.0,1.0268,0.8,0.6,0.0
+JOB-a2082cc282aa13687872,Guru Privat Bahasa Inggris (Home Visit),bimbel SMART,Education & Tutoring,Jakarta Selatan,Onsite,18750.0,10.0,1.0,0.5357,0.8,0.6,0.0
+JOB-ec9ecebbaafc3c98b93c,Tutor Bimbel,EduSAY Cendekia,Education & Tutoring,Tangerang,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-5388642efa225f68809d,Tutor IPA SMP & SMA,Queens Bimbel Academy,Education & Tutoring,Jakarta Utara,Onsite,25000.0,10.0,1.0,0.7143,0.8,0.6,0.0
+JOB-9fc17890ec708f2902ab,Teacher Part Time PIK & Tangerang,Coding Bee Academy,Education & Tutoring,Jakarta Utara,Onsite,25000.0,10.0,1.0,0.7143,0.8,0.6,0.0
+JOB-cbe7a9331e0f38e88059,Part Time Guru Mandarin/ Mandarin Teacher (Online),Beijing Standard - Kursus Mandarin,Education & Tutoring,Jakarta Barat,Onsite,40625.0,10.0,1.0,1.1607,1.0,0.6,0.0
+JOB-ec10cf4d7435d4719084,Part Time Barista,"KULA Cafe, Eatery & Books",Food & Beverage (F&B),Jakarta Barat,Onsite,27500.0,25.0,0.3,0.7857,1.0,0.65,0.0
+JOB-939369ede86b38fcbf0d,Barista Part Time ( Pitutur ),PT Andaf Mulia Korpora (Andaf Corp),Food & Beverage (F&B),Jakarta Selatan,Onsite,16250.0,25.0,0.3,0.4643,0.8,0.65,0.0
+JOB-baa4fa9da34c430cf44b,Part time Barista,Filosofi Kopi,Food & Beverage (F&B),Jakarta Pusat,Onsite,43750.0,25.0,0.3,1.25,0.8,0.65,0.0
+JOB-a3213221bda40908fbf4,Barista,Kozi Coffee Company,Food & Beverage (F&B),Jakarta Selatan,Onsite,31250.0,25.0,0.3,0.8929,0.8,0.65,0.0
+JOB-4f21345bb3e17930cdcc,"Daily Worker (Barista, Service & Kitchen)",PT Bumi Aki Boga,Food & Beverage (F&B),Jakarta Selatan,Onsite,22500.0,25.0,0.3,0.6429,0.8,0.65,0.0
+JOB-aaf52d1a960139f291b0,Part Time Cook Helper Event,Alcor Prime,Food & Beverage (F&B),Jakarta Selatan,Onsite,13125.0,25.0,0.3,0.375,0.8,0.65,0.0
+JOB-4c960a66b7b4a393b7ff,pastry,Sofyan Hospitality & Tourism,Food & Beverage (F&B),Jakarta Selatan,Onsite,39375.0,25.0,0.3,1.125,0.8,0.65,0.0
+JOB-183c8892a2deddb432c9,Kitchen Crew (Kopitagram - Tomang),Kopitagram,Food & Beverage (F&B),Jakarta Barat,Onsite,30625.0,25.0,0.3,0.875,1.0,0.65,0.0
+JOB-4ea0ae0c1cc2bd1ee958,Daily Worker Outlet Crew,Bruule,Retail & Store Operations,Jakarta Selatan,Onsite,32812.0,20.0,0.3,0.9375,0.8,0.9,0.0
+JOB-0ac4ed34b4f6243ee099,Steward,PT. Shisha Jaya Abadi,Food & Beverage (F&B),Jakarta Selatan,Onsite,25000.0,25.0,0.3,0.7143,0.8,0.65,0.0
+JOB-e2dc83537cdb789869ea,Kitchen helper,Es campur asvini tanjaya,Food & Beverage (F&B),Jakarta Barat,Onsite,31250.0,25.0,0.3,0.8929,1.0,0.65,0.0
+JOB-e62b6c173290056d98b3,Steward,PT NIAGA MITRA MAJU,Food & Beverage (F&B),Jakarta Selatan,Onsite,43750.0,25.0,0.3,1.25,0.8,0.65,0.0
+JOB-869ce00fd911ed75e2d8,Waiter / Waitress,PT NIAGA MITRA MAJU,Food & Beverage (F&B),Jakarta Utara,Onsite,43750.0,25.0,0.3,1.25,0.8,0.65,0.0
+JOB-89d1fa4a4f6d964f3bb0,Hostess,Pizza Studio Tamaki,Food & Beverage (F&B),Jakarta Selatan,Onsite,33125.0,25.0,0.3,0.9464,0.8,0.65,0.0
+JOB-7d696a12407f6a5f643a,Waiter / Waitress / Dishwasher,PT. Sinar Rasa Makmur (Arka Group Lifestyle),Food & Beverage (F&B),Jakarta Selatan,Onsite,34375.0,25.0,0.3,0.9821,0.8,0.65,0.0
+JOB-3ed66a2784feb7895ef6,Daily Worker Waiter,BAKED,Food & Beverage (F&B),Jakarta Selatan,Onsite,32812.0,25.0,0.3,0.9375,0.8,0.65,0.0
+JOB-6104f131bb8fbacf51ad,Server & Floor (Daily Worker),The Golden Tooth,Food & Beverage (F&B),Jakarta Selatan,Onsite,21875.0,25.0,0.3,0.625,0.8,0.65,0.0
+JOB-b47ef5dcd09bfe20537c,Waiter / Waitress,Fukumaru Japanese Restaurant,Food & Beverage (F&B),Jakarta Utara,Onsite,31250.0,25.0,0.3,0.8929,0.8,0.65,0.0
+JOB-b15c8860e9d97d94a8a8,Waitress/ Pramusaji - Rumah Sakit,Gobel Dharma Sarana Karya (GDSK),Food & Beverage (F&B),Jakarta Utara,Onsite,39375.0,25.0,0.3,1.125,0.8,0.65,0.0
+JOB-d232fde7c69393e2c0dd,FB Service (Daily Worker),Goodrich SUITES Hotel Jakarta,Food & Beverage (F&B),Jakarta Selatan,Onsite,53125.0,25.0,0.3,1.5179,0.8,0.65,0.0
+JOB-617fcd94e489db9651cb,SERVER / RACKER PART-TIME BILLIARD,Street Billard,Food & Beverage (F&B),Jakarta Barat,Onsite,25000.0,25.0,0.3,0.7143,1.0,0.65,0.0
+JOB-6f2125429f310a91566f,Daily Worker Runner,PT. Babylon Group Internasional,Food & Beverage (F&B),Jakarta Selatan,Onsite,28125.0,25.0,0.3,0.8036,0.8,0.65,0.0
+JOB-88164584672e7321f8f7,Daily Worker - Runner / Server,BIKO GROUP INDONESIA,Food & Beverage (F&B),Jakarta Selatan,Onsite,37500.0,25.0,0.3,1.0714,0.8,0.65,0.0
+JOB-3df8f6d7f44e8233d4f7,Daily Worker Kasir Restoran,Warung Bali Pak Gede,Retail & Store Operations,Jakarta Selatan,Onsite,43750.0,20.0,0.3,1.25,0.8,0.9,0.0
+JOB-e7aaa9034ec06f0f64ec,Parttime,Orchard & Oat,Retail & Store Operations,Jakarta Selatan,Onsite,18750.0,20.0,0.3,0.5357,0.8,0.9,0.0
+JOB-9739b24b112434947067,Kasir Toko,Marem,Retail & Store Operations,Jakarta Selatan,Onsite,18750.0,20.0,0.3,0.5357,0.8,0.9,0.0
+JOB-19f842a6bf06f70eb970,Crew Store Reddog Tangerang,PT Aurora Boga Investama,Retail & Store Operations,Tangerang,Onsite,21250.0,20.0,0.3,0.6071,0.4,0.9,0.0
+JOB-0b07590b624eb170c6c5,Part Timer Promotor,Mix Store Indonesia,Marketing & Sales,Jakarta Selatan,Onsite,15625.0,30.0,0.3,0.4464,0.8,0.4,0.0
+JOB-58fd4fc90b9435f24dd2,CADDY BILLIARD (TONGKI COFFEE & BALL),PT Senopati Transportindo,Retail & Store Operations,Jakarta Utara,Onsite,26875.0,20.0,0.3,0.7679,0.8,0.9,0.0
+JOB-7c49cf5719f7ec9499aa,crew store part time,Balvein,Retail & Store Operations,Jakarta Pusat,Onsite,43125.0,20.0,0.3,1.2321,0.8,0.9,0.0
+JOB-a0f6a3fea97c2c59c212,Daily Worker (Petugas Catering),Mienian,Retail & Store Operations,Jakarta Selatan,Onsite,18750.0,20.0,0.3,0.5357,0.8,0.9,0.0
+JOB-6b176c44dd9570172451,Part Timer Crew Store (Jakarta Selatan),Vilo,Retail & Store Operations,Jakarta Selatan,Onsite,21875.0,20.0,0.3,0.625,0.8,0.9,0.0
+JOB-916ac36b8b64448c764e,Playground Crew,BUUMI Playscape,Retail & Store Operations,Jakarta Selatan,Onsite,49375.0,20.0,0.3,1.4107,0.8,0.9,0.0
+JOB-f4aff17937700871bd77,sales,Titan Baking,Marketing & Sales,Jakarta Selatan,Onsite,43125.0,30.0,0.3,1.2321,0.8,0.4,0.0
+JOB-3bd25621350f92734706,Marketing Analyst,Patra Anugerah Sukses,Marketing & Sales,Tangerang Selatan,Onsite,37500.0,30.0,0.3,1.0714,0.4,0.4,0.0
+JOB-1878a653f807446f8dad,Part-Time Admin Marketing Cengkareng,Timedoor Academy,Marketing & Sales,Jakarta Barat,Onsite,33750.0,30.0,0.3,0.9643,1.0,0.4,0.0
+JOB-5fd4a84011159538658d,Sales Promotion Girl (Event Based),Evolene Indonesia,Marketing & Sales,Tangerang,Onsite,37500.0,30.0,0.3,1.0714,0.4,0.4,0.0
+JOB-e78117e621bd30fb9b0a,SPG / SPB for Bazaar,Nomadstudio Indonesia,Marketing & Sales,Jakarta Pusat,Onsite,13750.0,30.0,0.3,0.3929,0.8,0.4,0.0
+JOB-e8cd12d827210b41cabb,Host Live Streamer,KINS,Content & Media,Jakarta Barat,Onsite,21875.0,22.5,0.3,0.625,1.0,0.775,0.0
+JOB-933f52c56cd68fe8265b,Host Live Streaming,Lawrensia Shoes,Content & Media,Jakarta Utara,Onsite,43750.0,22.5,0.3,1.25,0.8,0.775,0.0
+JOB-37ea4751f6eea0e2acc5,HOST LIVE TIKTOK - FASHION WANITA,Lommarine,Content & Media,Jakarta Barat,Onsite,15625.0,22.5,0.3,0.4464,1.0,0.775,0.0
+JOB-0bca206cde45f1df04de,Host Live Streaming (Part-Time),Pt. Premiere Beaute Kosmetik,Content & Media,Jakarta Barat,Onsite,36875.0,15.0,0.3,1.0536,1.0,0.85,0.0
+JOB-67fc7408d3615346f06f,Part Time Teacher,Bloominghaus,Education & Tutoring,Jakarta Utara,Onsite,34375.0,10.0,1.0,0.9821,0.8,0.6,0.0
+JOB-0c60c14608797c6f7db1,LOWONGAN ADMIN PART-TIME — STEAK 68,Steak 68,Admin & Office Support,Jakarta Barat,Onsite,18750.0,20.0,0.3,0.5357,1.0,0.9,0.0
+JOB-5cecc0b23cb8b6a9fd9c,Daily Worker Guest Relation Officer,PT. Babylon Group Internasional,Customer Service & Support,Jakarta Selatan,Onsite,28125.0,20.0,0.3,0.8036,0.8,0.9,0.0
+JOB-41fed687350676ffb0eb,Guest Relations (Daily Worker),Izzy Group,Customer Service & Support,Jakarta Selatan,Onsite,15625.0,20.0,0.3,0.4464,0.8,0.9,0.0
+JOB-8d35f87542c3ca135e1c,Front Desk Receptionist,PADEL YARD,Customer Service & Support,Tangerang,Onsite,31250.0,20.0,0.3,0.8929,0.4,0.9,0.0
+JOB-cf359b771c7d80c821fc,Admin Operational & Sales Support,PT ALIANSI ABADI SOLUSINDO,Marketing & Sales,Jakarta Selatan,Onsite,43750.0,30.0,0.3,1.25,0.8,0.4,0.0
+JOB-568ff1a2c8603e1d9db4,Driver Sipil (Harian),PT. Aplikasinusa Lintasarta (Kopkarla),Logistics & Delivery,Jakarta Selatan,Onsite,37500.0,20.0,0.3,1.0714,0.8,0.9,0.0
+JOB-623d3f917894b8c201c0,Warehouseman (Daily Worker),Bening's Indonesia,Logistics & Delivery,Jakarta Selatan,Onsite,14375.0,20.0,0.3,0.4107,0.8,0.9,0.0
+JOB-d182197286ea2edb0b42,Helper Gudang,Pt Citra Agung Busana,Logistics & Delivery,Jakarta Utara,Onsite,28125.0,20.0,0.3,0.8036,0.8,0.9,0.0
+JOB-75830a75d6c4326bc71e,Packing Paket Ecommerce,Jaspart,Logistics & Delivery,Jakarta Barat,Onsite,31250.0,20.0,0.3,0.8929,1.0,0.9,0.0
+JOB-84d098f73a004d5b36b9,SALES CANVASSING  PART TIME,PT Nosa Jaya Karya,Marketing & Sales,Jakarta Pusat,Onsite,46875.0,30.0,0.3,1.3393,0.8,0.4,0.0
+JOB-b69bddb77a8a975ffc06,Guru Les Matematika (SMA),Rumah Belajar Al Fath,Education & Tutoring,Jakarta Barat,Onsite,37500.0,10.0,1.0,1.0714,1.0,0.6,0.0
+JOB-8936f6858700b1a97508,Guru Part Time  Bahasa Inggris,Sekolah Tri Ratna,Education & Tutoring,Jakarta Barat,Onsite,29688.0,10.0,1.0,0.8482,1.0,0.6,0.0
+JOB-7182db6a89ce0c7e8f55,Part time Studio Admin,PT Ruang Bugar Sehela,Admin & Office Support,Jakarta Selatan,Onsite,15000.0,20.0,0.3,0.4286,0.8,0.9,0.0
+JOB-3b2ebe686c54fc96b359,Barista,AMO Tiam,Food & Beverage (F&B),Tangerang Selatan,Onsite,25000.0,25.0,0.3,0.7143,0.4,0.65,0.0
+JOB-f61b544899140ccb3fde,TUTOR MANGA (PART TIME),Clara Manga School,Education & Tutoring,Tangerang Selatan,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-3a838658fc80faad145c,Daily Worker - Commis (Cold / GDM),Mitte,Food & Beverage (F&B),Tangerang Selatan,Onsite,37375.0,25.0,0.3,1.0679,0.4,0.65,0.0
+JOB-6484f8b4632698d40a6c,Daily Worker - Barista,Mitte,Food & Beverage (F&B),Tangerang Selatan,Onsite,16250.0,25.0,0.3,0.4643,0.4,0.65,0.0
+JOB-deeea1d56718751de273,Parttime Server,Faye Coffee and Eatery,Food & Beverage (F&B),Tangerang Selatan,Onsite,27500.0,25.0,0.3,0.7857,0.4,0.65,0.0
+JOB-49c65f07a5faae72dbb9,Asisten Content Marketing,Danytafashion,Marketing & Sales,Tangerang Selatan,Onsite,37500.0,30.0,0.3,1.0714,0.4,0.4,0.0
+JOB-0b4ab9a1d444e3a262d4,Guru Renang,LITTLE SOL INDONESIA,Education & Tutoring,Tangerang Selatan,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-391e4e148bba8119e7c6,GURU KIMIA SMA (PART-TIME),Star Kids,Education & Tutoring,Tangerang,Onsite,50000.0,10.0,1.0,1.4286,0.4,0.6,0.0
+JOB-a1ba903cb3d76c992565,Guru Bahasa Jepang,iSpeak Language Center Gading Serpong,Education & Tutoring,Tangerang,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-0f11e230db0787458075,STAFF PRAMUNIAGA/FLOOR,Toserba Gading Serpong,Retail & Store Operations,Tangerang,Onsite,35625.0,20.0,0.3,1.0179,0.4,0.9,0.0
+JOB-907f9416c7b67f29f42f,Packing Daily Worker,PT Gemuk Sehat Bahagia,Logistics & Delivery,Tangerang,Onsite,12500.0,20.0,0.3,0.3571,0.4,0.9,0.0
+JOB-dbad0d5929add8f1250d,Outlet & Bar Crew (Part Time),Susu Mooerni,Retail & Store Operations,Tangerang,Onsite,13750.0,20.0,0.3,0.3929,0.4,0.9,0.0
+JOB-038822b90c1b3c912319,Tutor Privat Bahasa Inggris (Kelas 4 SD),Ruang Belajar Privat,Education & Tutoring,Tangerang,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-2bd5c4db7bfb532a2b93,Guru Menggambar dan Mewarnai,Cicilo Art School,Education & Tutoring,Tangerang,Onsite,13750.0,22.5,1.0,0.3929,0.4,0.775,0.0
+JOB-811dde33b8c3208e5c7a,Sales promotion,PT KHATULISTIWA BEAUTY INDONESIA,Marketing & Sales,Tangerang,Onsite,43750.0,30.0,0.3,1.25,0.4,0.4,0.0
+JOB-61ddb365c1402235a16c,Face Deduplication Collection,TELUS Digital,Admin & Office Support,Jakarta Pusat,Onsite,18750.0,20.0,0.3,0.5357,0.8,0.9,0.0
+JOB-e24e64dd61293790307e,Staff Admin,MFP (Made For Pilates),Admin & Office Support,Jakarta Barat,Onsite,18750.0,20.0,0.3,0.5357,1.0,0.9,0.0
+JOB-973fe79866bef8296c47,IT Engineer,PT Infra Dimensi Persada,IT & Software,Tangerang Selatan,Onsite,31250.0,20.0,0.3,0.8929,0.4,0.9,0.0
+JOB-f53254e0af5703605a55,Estimator Proyek Developer,PT.BLESSINDO TERANG JAYA,IT & Software,Bogor,Onsite,50000.0,20.0,0.3,1.4286,0.4,0.9,0.0
+JOB-2772d8de3dac04558921,Content Creator Marketing,Vecalss Academy,Content & Media,Jakarta Selatan,Onsite,12500.0,22.5,0.3,0.3571,0.8,0.775,0.0
+JOB-eef57ad99c1d262b8917,Social Media Community,Vecalss Academy,Content & Media,Jakarta Selatan,Onsite,13750.0,22.5,0.3,0.3929,0.8,0.775,0.0
+JOB-742d8ad2fb8990e6de59,Social Media Specialist,SU textile Jakarta,Content & Media,Jakarta Barat,Onsite,37500.0,22.5,0.3,1.0714,1.0,0.775,0.0
+JOB-1894a2777a6f206a8adc,Staff Admin & Social Media,Kumon Sunter,Content & Media,Jakarta Utara,Onsite,28125.0,22.5,0.3,0.8036,0.8,0.775,0.0
+JOB-f5c2d91773b6a29d694e,Marketing Staff,Virtue Academy,Marketing & Sales,Tangerang,Onsite,37500.0,30.0,0.3,1.0714,0.4,0.4,0.0
+JOB-2c19a5ef8b1d722ddfeb,Guru Mandarin,Rhema Indonesia School,Education & Tutoring,Bekasi,Onsite,15625.0,10.0,1.0,0.4464,0.4,0.6,0.0
+JOB-ab42613ad43911ad0fa9,English Teacher,International Language Programs,Education & Tutoring,Jakarta Selatan,Onsite,58125.0,10.0,1.0,1.6607,0.8,0.6,0.0
+JOB-a1dbabba45dc0e899208,Guru Bahasa Inggris,Sekolah Umum Surya Bangsa,Education & Tutoring,Tangerang,Onsite,43750.0,10.0,1.0,1.25,0.4,0.6,0.0
+JOB-f2854d2a361a9d904dd2,Dosen Prodi Desain Komunikasi Visual,Pertiwi Group,Education & Tutoring,Bekasi,Onsite,28125.0,10.0,1.0,0.8036,0.4,0.6,0.0
+JOB-4b8201bfaf14bcbecf7d,Academic Tutor,Smart Bimbel,Education & Tutoring,Jakarta Barat,Onsite,50000.0,10.0,1.0,1.4286,1.0,0.6,0.0
+JOB-601416e63b5e7ed5f2ee,Asisten Pembimbing Guru Bimbel,Kumon Green Lake City,Education & Tutoring,Tangerang,Onsite,21875.0,10.0,1.0,0.625,0.4,0.6,0.0
+JOB-96333f53cf85c010a642,Coding Mentor,Virtue Academy,Education & Tutoring,Tangerang,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-01534b7d82230d65de95,Guru Bahasa Indonesia,Genza Banjaran,Education & Tutoring,Depok,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-fdb0d110b39da9e7d651,Guru Bahasa Inggris,Bimba Bright Kids,Education & Tutoring,Tangerang,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-ec65826da809cbfe57d4,Guru Bahasa Mandarin,Harapan Mulia Preschool,Education & Tutoring,Bekasi,Onsite,31250.0,10.0,1.0,0.8929,0.4,0.6,0.0
+JOB-131665ba64dbf498f344,Guru Bahasa Mandarin,International Language Programs,Education & Tutoring,Jakarta Selatan,Onsite,59375.0,10.0,1.0,1.6964,0.8,0.6,0.0
+JOB-1f0220b736bd4eddc823,Guru Balet,Harapan Mulia Preschool,Education & Tutoring,Bekasi,Onsite,31250.0,10.0,1.0,0.8929,0.4,0.6,0.0
+JOB-34e3d42f633d687769e9,Guru Bimbel,BIMBEL YOUNG STAR,Education & Tutoring,Bekasi,Onsite,26250.0,10.0,1.0,0.75,0.4,0.6,0.0
+JOB-154f171a8e5d59e76477,Guru Bimbel,Tara Vidya Edu,Education & Tutoring,Tangerang,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-afbcac8250c995e8d5b2,Guru Biologi SMP - SMA,Genza Banjaran,Education & Tutoring,Depok,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-4a5d55e529a62c712348,Guru Calistung,Rumah Les,Education & Tutoring,Tangerang,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-f7d43d2e73e3b27852ad,Guru Coding & Robotik,Alpha Zee,Education & Tutoring,Jakarta Timur,Onsite,10627.0,10.0,1.0,0.3036,0.8,0.6,0.0
+JOB-b1cc5231f82070a3f642,Guru IPS SMP/SMA,Bimbingan Belajar Epistime Tutoring (Bimbel ET),Education & Tutoring,Tangerang Selatan,Onsite,21875.0,10.0,1.0,0.625,0.4,0.6,0.0
+JOB-8d93f9f0c4e348ba37c6,Guru Les,Rumah Les,Education & Tutoring,Jakarta Barat,Onsite,25000.0,10.0,1.0,0.7143,1.0,0.6,0.0
+JOB-80a167f0590699f1b71f,Guru Mandarin HSK 5,Lian Guo LEC,Education & Tutoring,Jakarta Barat,Onsite,23750.0,10.0,1.0,0.6786,1.0,0.6,0.0
+JOB-ad83199084e2b825d47f,Guru Matematika SD,Springdale Course,Education & Tutoring,Jakarta Barat,Onsite,23750.0,10.0,1.0,0.6786,1.0,0.6,0.0
+JOB-168d0b0b5dc29af4b18f,Guru MIPA (Matematika & IPA),SMART CENTER,Education & Tutoring,Jakarta Timur,Onsite,37500.0,10.0,1.0,1.0714,0.8,0.6,0.0
+JOB-a079e9b8d02b21431fb0,Guru Privat Bahasa Inggris,Rumah Les,Education & Tutoring,Jakarta Barat,Onsite,25000.0,10.0,1.0,0.7143,1.0,0.6,0.0
+JOB-9336c2e284dab651c2f1,Guru Sempoa,Springdale Course,Education & Tutoring,Jakarta Barat,Onsite,23750.0,10.0,1.0,0.6786,1.0,0.6,0.0
+JOB-238de2c7a7ad3b2b0b35,Mandarin Teacher (Laoshi),Happy Jia Jia,Education & Tutoring,Jakarta Utara,Onsite,31250.0,10.0,1.0,0.8929,0.8,0.6,0.0
+JOB-4c44ab662e7f633f8152,Mandarin Teacher,PT. EMLIKU SMART TECHNOLOGY,Education & Tutoring,Jakarta Barat,Onsite,23750.0,10.0,1.0,0.6786,1.0,0.6,0.0
+JOB-862cbafe3d0e2cf07d17,Mathematics Mentor,Virtue Academy,Education & Tutoring,Tangerang,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-ed6f0b6b6b540f7ae0ce,Part Time Teacher,PT. STEM PLAY Indonesia,Education & Tutoring,Jakarta Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-da913e99dec4c1d48e77,Pelatih Tari Tradisional,Sanggar Tari Retno Puspita,Education & Tutoring,Depok,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-097afd3cda291fe2716c,Pengajar Fisika,Genza Banjaran,Education & Tutoring,Depok,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-ef5ce1b8a3216e5c8cc7,Robotics Mentor,Virtue Academy,Education & Tutoring,Tangerang,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-a8522c5ff0bdcd58fa5c,Tenaga Pengajar,Kumon Jatijajar,Education & Tutoring,Depok,Onsite,31250.0,10.0,1.0,0.8929,0.4,0.6,0.0
+JOB-8168432ef9a6c3389869,Tutor Bimbel,BTS Academy,Education & Tutoring,Depok,Onsite,18750.0,10.0,1.0,0.5357,0.4,0.6,0.0
+JOB-7935446cc884c30ef6be,Host Live Streaming,PT Bizmo Enviro Klin,Content & Media,Tangerang,Onsite,28125.0,22.5,0.3,0.8036,0.4,0.775,0.0
+JOB-1d22eb8c2a25ef10811b,Host Live Streaming,Rora_Collection,Content & Media,Tangerang,Onsite,19375.0,22.5,0.3,0.5536,0.4,0.775,0.0
+JOB-06dc77ca1516659498a2,Marketing Executive,PT. Officebox Indonesia,Marketing & Sales,Jakarta Selatan,Onsite,59375.0,30.0,0.3,1.6964,0.8,0.4,0.0
+JOB-741ab23568e28829451a,Sales Canvasing,PT CYBERSMART NETWORK ASIA,Marketing & Sales,Jakarta Timur,Onsite,37500.0,30.0,0.3,1.0714,0.8,0.4,0.0
+JOB-46b2b88cc24f0e01bb16,Sales Lapangan,PT Ekamas Mora Republic Cabang Tangerang,Marketing & Sales,Tangerang Selatan,Onsite,46250.0,30.0,0.3,1.3214,0.4,0.4,0.0
+JOB-c0885b3b9d7d93dcba40,Business Development,Fa. Rahman Muhaimin dan Rekan,Marketing & Sales,Bekasi,Onsite,37500.0,30.0,0.3,1.0714,0.4,0.4,0.0
+JOB-76d1eb9c26b27569e6ba,External Promotion Partner (Part-Time),PT ELUCKYGAME TECHNOLOGY ASIA,Marketing & Sales,Tangerang,Onsite,37500.0,30.0,0.3,1.0714,0.4,0.4,0.0
+JOB-7bf9c5c9fb522017287a,Barista,DMDT Brunch,Food & Beverage (F&B),Jakarta Selatan,Onsite,21875.0,25.0,0.3,0.625,0.8,0.65,0.0
+JOB-8b9f051f458702494079,Barista,Giorgi Caffee House,Food & Beverage (F&B),Jakarta Selatan,Onsite,27500.0,25.0,0.3,0.7857,0.8,0.65,0.0
+JOB-e0f0bf020e645989dbbe,Barista,Golden Black,Food & Beverage (F&B),Bekasi,Onsite,25000.0,25.0,0.3,0.7143,0.4,0.65,0.0
+JOB-9b9841e7bf43f872d383,Barista,Golden Black,Food & Beverage (F&B),Jakarta Barat,Onsite,25000.0,25.0,0.3,0.7143,1.0,0.65,0.0
+JOB-b0833447da36dd205238,Barista,Golden Black,Food & Beverage (F&B),Jakarta Pusat,Onsite,25000.0,25.0,0.3,0.7143,0.8,0.65,0.0
+JOB-af4a784a5814b555ed43,Barista,Golden Black,Food & Beverage (F&B),Jakarta Selatan,Onsite,25000.0,25.0,0.3,0.7143,0.8,0.65,0.0
+JOB-5cd1ba9e0b6d0b0eb555,Barista,Golden Black,Food & Beverage (F&B),Tangerang Selatan,Onsite,25000.0,25.0,0.3,0.7143,0.4,0.65,0.0
+JOB-0a2db9f8ec9746e6ed20,Barista,PT Mitra Oddity Indonesia,Food & Beverage (F&B),Jakarta Utara,Onsite,34375.0,25.0,0.3,0.9821,0.8,0.65,0.0
+JOB-f759938334eba3550eba,Daily Worker,PT Delapan Abadi Rasa,Food & Beverage (F&B),Jakarta Selatan,Onsite,34375.0,25.0,0.3,0.9821,0.8,0.65,0.0
+JOB-8e9a50310a83fba98000,Staff Kafe,Four Cafe & Boutique,Food & Beverage (F&B),Depok,Onsite,15625.0,25.0,0.3,0.4464,0.4,0.65,0.0
+JOB-7ac39484e6bf88cbc076,Waiter/Waiters,Delima Lumpang Kencana,Food & Beverage (F&B),Jakarta Pusat,Onsite,31250.0,25.0,0.3,0.8929,0.8,0.65,0.0
+JOB-aec718d646da53b08c9f,Driver,PT. Anugerah Pratama Inti Kreasindo (APIK),Logistics & Delivery,Bekasi,Onsite,56250.0,20.0,0.3,1.6071,0.4,0.9,0.0
+JOB-897d3170807dfc94380b,Driver Taxi,PT. Anugerah Pratama Inti Kreasindo (APIK),Logistics & Delivery,Jakarta Utara,Onsite,56250.0,20.0,0.3,1.6071,0.8,0.9,0.0
+JOB-622bae67e81097684b71,Administrasi Staff,Ocean Flo,Admin & Office Support,Tangerang,Onsite,18750.0,20.0,0.3,0.5357,0.4,0.9,0.0
+JOB-369480d9c827e3efdd5b,Staff Gudang,Segari,Logistics & Delivery,Tangerang,Onsite,16875.0,20.0,0.3,0.4821,0.4,0.9,0.0
+JOB-d1c223221d8044905cb9,Barista Part Time,Warkop Sky,Food & Beverage (F&B),Bekasi,Onsite,27500.0,25.0,0.3,0.7857,0.4,0.65,0.0
+JOB-30d4c268708fb9b0b8d1,Cashier Part Time,Warkop Sky,Retail & Store Operations,Bekasi,Onsite,21250.0,20.0,0.3,0.6071,0.4,0.9,0.0
+JOB-ec5ed50ff76a42f3f71f,Crew Kitchen (Daily Worker),PT Asharia Karya Indonesia,Food & Beverage (F&B),Jakarta Selatan,Onsite,27500.0,25.0,0.3,0.7857,0.8,0.65,0.0
+JOB-0f194698e965ff0fac9c,Part Time Barista,Saturday Coffee,Food & Beverage (F&B),Jakarta Timur,Onsite,27500.0,25.0,0.3,0.7857,0.8,0.65,0.0
+JOB-e97f90e2153faf6ddc76,Part Time Barista,Saturday Coffee,Food & Beverage (F&B),Tangerang,Onsite,27500.0,25.0,0.3,0.7857,0.4,0.65,0.0
+JOB-c6a8de3bcd7cc629a287,Part Time Barista,Warisan Coffee Roasters,Food & Beverage (F&B),Bekasi,Onsite,27500.0,25.0,0.3,0.7857,0.4,0.65,0.0
+JOB-8e958c2387a6353ec2de,Part Time Barista,Sakara Kopi Bali Sarinah,Food & Beverage (F&B),Jakarta Selatan,Onsite,27500.0,25.0,0.3,0.7857,0.8,0.65,0.0
+JOB-25f07b75f2e4a302a8ca,Part Time Cook Helper,Alcor Prime,Food & Beverage (F&B),Jakarta Selatan,Onsite,13125.0,25.0,0.3,0.375,0.8,0.65,0.0
+JOB-c651211773f6b55c3c52,Part Time Driver,PT. Cita Cendera Mata,Logistics & Delivery,Jakarta Selatan,Onsite,39375.0,20.0,0.3,1.125,0.8,0.9,0.0
+JOB-355853ce63bc847dc58b,Part Time Kitchen,Saturday Coffee,Food & Beverage (F&B),Jakarta Timur,Onsite,27500.0,25.0,0.3,0.7857,0.8,0.65,0.0
+JOB-d97b058071069d1506a6,Part-time Barista,Mobilatte Coffee Truck,Food & Beverage (F&B),Jakarta Selatan,Onsite,27500.0,25.0,0.3,0.7857,0.8,0.65,0.0
+JOB-2364fb73c434d95c0580,Part-time Barista,Coffeeterio & Toast,Food & Beverage (F&B),Tangerang,Onsite,27500.0,25.0,0.3,0.7857,0.4,0.65,0.0
+JOB-0c3aee22b4ee667f89bb,(PartTime) English Teacher Biba Lumo Kids,Bimbel Biruni,Education & Tutoring,Tangerang,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-8d753f39af05d56530cd,Server Barista Part Time,Good life culinary,Food & Beverage (F&B),Tangerang,Onsite,27500.0,25.0,0.3,0.7857,0.4,0.65,0.0
+JOB-8ee489e5fe820d1a1077,Waiter/Waitress - Daily Worker,The Orient Hotel Jakarta,Food & Beverage (F&B),Jakarta Pusat,Onsite,27500.0,25.0,0.3,0.7857,0.8,0.65,0.0
+JOB-e7b155301d301cbb951f,Part time Pengajar CASN Cibinong Mayor Oking,Ruangguru,Education & Tutoring,Bogor,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-9adfa36e68b73180c8e9,Part Time Pengajar Bahasa Inggris Bekasi,Ruangguru,Education & Tutoring,Bekasi,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-5e7f3166545456d95d6c,Part Time Pengajar Bahasa Inggris Bekasi,Ruangguru,Education & Tutoring,Bekasi,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-17eaf6bbe1348bf8c2c2,Part Time Pengajar Ekonomi Tangerang,Ruangguru,Education & Tutoring,Tangerang,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-414b48c7099a5a92762e,Guru Les Privat Kota Bogor,Ruangguru,Education & Tutoring,Bogor,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-cd47a483ddf9e40d077f,Guru Les Privat Kota Tangerang,Ruangguru,Education & Tutoring,Tangerang,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-4a121e8ad8c7d5dd6dcf,Part time Pengajar CASN Depok Pancoran Mas,Ruangguru,Education & Tutoring,Depok,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-0ea00407d2aade289b24,Part Time Pengajar Matematika Tangerang Selatan,Ruangguru,Education & Tutoring,Tangerang Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-e60fe059fa89df0170b9,Part Time Pengajar Matematika Depok,Ruangguru,Education & Tutoring,Depok,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-69141985d2504339630b,Part Time Pengajar Kimia Depok,Ruangguru,Education & Tutoring,Depok,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-6e9a0a155e2e56fd9266,Part Time Pengajar Matematika Bekasi,Ruangguru,Education & Tutoring,Bekasi,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-40e2d0e54f5aef639932,Part Time Pengajar Pengetahuan dan Pemahaman Umum Jakarta Timur,Ruangguru,Education & Tutoring,Jakarta Timur,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-5e2eafc74264714c905c,Part Time Pengajar Penalaran Umum Jakarta Timur,Ruangguru,Education & Tutoring,Jakarta Timur,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-de16b632a24aaea94e8c,Part Time Pengajar Bahasa Inggris Cibubur,Ruangguru,Education & Tutoring,Bogor,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-51f663d0234f1f646d74,Part Time Pengajar Ekonomi Bekasi,Ruangguru,Education & Tutoring,Bekasi,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-8b2f925e8b603454b795,Part Time Pengajar Sejarah Bekasi,Ruangguru,Education & Tutoring,Bekasi,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-f76f772955f2eb4ea8c1,Part Time Pengajar Biologi Depok,Ruangguru,Education & Tutoring,Depok,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-d8b4f2dd8ffa7595d2d9,Part Time Pengajar Geografi Bekasi,Ruangguru,Education & Tutoring,Bekasi,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-69380c5f15cf16278a20,Copy of Part Time Pengajar PKN Jakarta Selatan,Ruangguru,Education & Tutoring,Jakarta Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-ba39cf6677692d1af909,Part Time Pengajar Matematika Jakarta Selatan,Ruangguru,Education & Tutoring,Jakarta Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-dc5cc00c6c8e5ef82620,Part Time Pengajar Sejarah Jakarta Timur,Ruangguru,Education & Tutoring,Jakarta Timur,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-2023e72def0bf2e8ae2d,Part Time Pengajar Matematika Jakarta Timur,Ruangguru,Education & Tutoring,Jakarta Timur,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-35b4d5648805bbbf0143,Part Time Pengajar Literasi Bahasa Indonesia Jakarta Timur,Ruangguru,Education & Tutoring,Jakarta Timur,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-76fc32e18b2b71596805,Part Time Pengajar Kimia Jakarta Timur,Ruangguru,Education & Tutoring,Jakarta Timur,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-9b16ae4005e31ca25968,Part Time Pengajar Sempoa Tangerang,Ruangguru,Education & Tutoring,Tangerang,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-f00d4ccc7eda7e171171,Part Time Pengajar Sempoa Bogor,Ruangguru,Education & Tutoring,Bogor,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-321a2da5a0b75e964732,Part Time Pengajar Geografi Kota Bekasi,Ruangguru,Education & Tutoring,Bekasi,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-b360a30249bfc44af73f,Part Time Pengajar Ekonomi Kota Bekasi,Ruangguru,Education & Tutoring,Bekasi,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-5c0025e8eca41955cfe3,Guru Les Privat Jakarta Barat,Ruangguru,Education & Tutoring,Jakarta Barat,Onsite,23750.0,10.0,1.0,0.6786,1.0,0.6,0.0
+JOB-dcbbbce26ebec305ed65,Guru Les Privat Jakarta Timur,Ruangguru,Education & Tutoring,Jakarta Timur,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-e0015eae461862bdec6a,Guru Les Privat Kota Depok,Ruangguru,Education & Tutoring,Depok,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-d72fb8a56cca9dcb20c1,Guru Les Privat Kabupaten Bogor,Ruangguru,Education & Tutoring,Bogor,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-c1cd179536afa57c7e2f,Part Time Pengajar Literasi Bahasa Indonesia Depok,Ruangguru,Education & Tutoring,Depok,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-9cb687f199b5894ae822,Part Time Pengajar Bahasa Inggris Depok,Ruangguru,Education & Tutoring,Depok,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-8d07873b05e0e907136a,Part Time Pengajar Geografi Jakarta Selatan,Ruangguru,Education & Tutoring,Jakarta Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-ac00aa3df949d225312c,Part Time Pengajar Penalaran Matematika Jakarta Timur,Ruangguru,Education & Tutoring,Jakarta Timur,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-ca1d6de1f83e2e51e4a7,Part Time Pengajar Sempoa Jakarta Selatan,Ruangguru,Education & Tutoring,Jakarta Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-34b7e9fa7641864e380f,Part Time Pengajar Sempoa Jakarta Pusat,Ruangguru,Education & Tutoring,Jakarta Pusat,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-0f384433656964d7bf8b,Part Time Pengajar Sempoa Depok,Ruangguru,Education & Tutoring,Depok,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-9234aa73e098cd314cd6,Part Time Pengajar Sempoa Jakarta Timur,Ruangguru,Education & Tutoring,Jakarta Timur,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-41523a57c9556bed022a,Parttime Associate Career Support_Universitas Multimedia Nusantara,Kompas Gramedia,Admin & Office Support,Tangerang,Onsite,18750.0,20.0,0.3,0.5357,0.4,0.9,0.0
+JOB-de40195015a022835212,Guru Les Privat Bekasi,Ruangguru,Education & Tutoring,Bekasi,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-f8c66fa82ded124a54fe,Part Time Pengajar Pengetahuan Kuantitatif Depok,Ruangguru,Education & Tutoring,Depok,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-dce4942bf54289af4a3e,Part Time Pengajar Fisika Jakarta Selatan,Ruangguru,Education & Tutoring,Jakarta Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-ef95aba40d77373766d0,Part Time Pengajar Pengetahuan Kuantitatif Jakarta Timur,Ruangguru,Education & Tutoring,Jakarta Timur,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-e96aa119b05d0c9dad1e,Part Time Pengajar Fisika Jakarta Timur,Ruangguru,Education & Tutoring,Jakarta Timur,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-b53a226f65acd7f95f8d,Part Time Pengajar Literasi Bahasa Inggris Jakarta Timur,Ruangguru,Education & Tutoring,Jakarta Timur,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-ec75ad0d332369c25aa9,Part Time Pengajar Bahasa Indonesia Jakarta Timur,Ruangguru,Education & Tutoring,Jakarta Timur,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-60475e8312a02c6237c4,Part Time Pengajar Bahasa Inggris Bogor,Ruangguru,Education & Tutoring,Bogor,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-f5edcb8caa5d83f9ddec,Part Time Pengajar Sempoa Tangerang Selatan,Ruangguru,Education & Tutoring,Tangerang Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-a334a3571faeb681ae8d,Part Time Pengajar Literasi Bahasa Indonesia Jakarta Selatan,Ruangguru,Education & Tutoring,Jakarta Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-09aa9d5e741d309f62d6,Part Time Pengajar Bahasa Indonesia Jakarta Selatan,Ruangguru,Education & Tutoring,Jakarta Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-6b55c27046e84754904f,Part Time Pengajar Kimia Jakarta Selatan,Ruangguru,Education & Tutoring,Jakarta Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-5a373fa07e4ff5562b66,Part Time Pengajar Pemahaman Bacaan dan Menulis Jakarta Timur,Ruangguru,Education & Tutoring,Jakarta Timur,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-6093472485ae466da5dc,Part Time Pengajar Ekonomi Jakarta Timur,Ruangguru,Education & Tutoring,Jakarta Timur,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-f02f20138275eacc435f,Part Time Pengajar Bahasa Inggris Tangerang Selatan,Ruangguru,Education & Tutoring,Tangerang Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-29247c008521b6061a4c,Part Time Pengajar Bahasa Inggris Jakarta Selatan,Ruangguru,Education & Tutoring,Jakarta Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0
+JOB-fbcf9fe3f3d6b7ffcf82,Part Time Pengajar Bahasa Inggris Bekasi,Ruangguru,Education & Tutoring,Bekasi,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-478deb584cc3a241a7f3,Part Time Pengajar Bahasa Inggris Tangerang,Ruangguru,Education & Tutoring,Tangerang,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-24813575d2e0371108b5,Guru Ekstrakurikuler Robotik Depok,Kompas Gramedia,Education & Tutoring,Depok,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-b590deee834a2be45df4,Part Time Pengajar Penalaran Matematika Depok,Ruangguru,Education & Tutoring,Depok,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-dc52b3f5d2aec67321ba,Guru Ekstrakurikuler Coding Tangerang Selatan,Kompas Gramedia,Education & Tutoring,Tangerang Selatan,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-9a71e3d9a06dd913b55b,Guru Ekstrakurikuler Robotik & Coding Jakarta,Kompas Gramedia,Education & Tutoring,Jakarta Barat,Onsite,23750.0,10.0,1.0,0.6786,1.0,0.6,0.0
+JOB-fba373c39b51b5528634,Part Time Pengajar Bahasa Indonesia Bekasi,Ruangguru,Education & Tutoring,Bekasi,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-8553bdb016191a8c22fb,Office Boy Jakarta Barat Mall Taman Anggrek,Ruangguru,Admin & Office Support,Jakarta Barat,Onsite,18750.0,20.0,0.3,0.5357,1.0,0.9,0.0
+JOB-5cbab06e7ed986ea4949,Part Time Pengajar Biologi Kota Bekasi,Ruangguru,Education & Tutoring,Bekasi,Onsite,23750.0,10.0,1.0,0.6786,0.4,0.6,0.0
+JOB-a434a529653c29ef41c8,Part Time Pengajar Bahasa Inggris Jakarta Barat,Ruangguru,Education & Tutoring,Jakarta Barat,Onsite,23750.0,10.0,1.0,0.6786,1.0,0.6,0.0
+JOB-903bb3e30c7536fff2ff,Part Time Pengajar Sosiologi Jakarta Timur,Ruangguru,Education & Tutoring,Jakarta Timur,Onsite,23750.0,10.0,1.0,0.6786,0.8,0.6,0.0

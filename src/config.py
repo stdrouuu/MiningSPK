@@ -44,6 +44,10 @@ VALID_JABO_KEYWORDS = [
 NON_JABO_CITIES = [
     "bandung", "surabaya", "semarang", "yogyakarta", "jogja", "bali", "denpasar",
     "medan", "malang", "solo", "surakarta", "kediri", "cirebon", "sukabumi", "sidoarjo",
+    "sukoharjo", "jawa tengah", "sleman", "bantul", "karawang", "purwakarta",
+    "indramayu", "subang", "banyumas", "makassar", "palembang", "pekanbaru",
+    "banda aceh", "lampung", "balikpapan", "banjarmasin", "manado", "padang",
+    "jambi", "batam", "lombok", "mataram",
 ]
 
 # job_id yang terbukti kedaluwarsa (redirect ke /id/404 saat validasi link)
@@ -51,9 +55,9 @@ EXPIRED_JOB_IDS = ["JOB-1006", "JOB-1220"]
 
 # --- Batas logis outlier ---
 SALARY_MIN_FILTER = 10000.0      # bawah untuk filter anomali (Lapisan 4)
-SALARY_MAX_FILTER = 200000.0     # atas untuk filter anomali (Lapisan 4)
+SALARY_MAX_FILTER = 60000.0      # atas untuk filter anomali & selaras batas SPK 60rb (Lapisan 4)
 SALARY_CLIP_LOWER = 10000.0      # capping akhir (Section 3.2)
-SALARY_CLIP_UPPER = 150000.0     # capping akhir (Section 3.2)
+SALARY_CLIP_UPPER = 60000.0      # capping akhir selaras MAX_SALARY_PER_HOUR (Section 3.2)
 MAX_STUDENT_HOURS = 30.0         # batas jam kerja mahasiswa/minggu
 
 # --- Imputasi ---

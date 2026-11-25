@@ -80,7 +80,7 @@ export function PortalHero({
         )}
       </div>
 
-      <div className="hidden md:block absolute right-0 top-0 bottom-0 w-80 lg:w-[380px] pointer-events-none overflow-hidden" aria-hidden="true">
+      <div className="absolute right-0 top-0 bottom-0 w-44 sm:w-64 md:w-80 lg:w-[380px] opacity-35 sm:opacity-60 md:opacity-100 pointer-events-none overflow-hidden" aria-hidden="true">
         <svg className="absolute right-0 top-0 h-full w-full" viewBox="0 0 380 180" preserveAspectRatio="none" fill="none">
           <polygon points="130,0 185,0 95,180 40,180" fill="#072e8a" />
           <polygon points="185,0 235,0 145,180 95,180" fill="#0942c4" />
