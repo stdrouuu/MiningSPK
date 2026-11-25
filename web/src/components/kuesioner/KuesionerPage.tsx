@@ -576,7 +576,7 @@ export function KuesionerPage({
                                         {jamIdeal} jam/minggu
                                       </span>
                                       {rawJamIdeal !== null && rawJamIdeal !== jamIdeal && (
-                                        <span className="text-slate-400 dark:text-slate-500">
+                                        <span className="text-slate-600 dark:text-slate-300 font-normal">
                                           {' '}
                                           ({rawJamIdeal < jamIdeal ? 'batas minimal part-time' : 'batas maksimal part-time'})
                                         </span>
@@ -616,7 +616,7 @@ export function KuesionerPage({
                                           Rp {hourly.toLocaleString('id-ID')}/jam
                                         </span>
                                         {rawHourly !== null && rawHourly !== hourly && (
-                                          <span className="text-slate-400 dark:text-slate-500">
+                                          <span className="text-slate-600 dark:text-slate-300 font-normal">
                                             {' '}
                                             ({rawHourly > hourly ? 'batas maksimal pencarian' : 'batas minimal pencarian'})
                                           </span>
