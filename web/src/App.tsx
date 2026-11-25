@@ -1,16 +1,11 @@
-import { useState, useEffect, useMemo, useRef } from 'react'
+import { useState, useEffect, useMemo, useRef, lazy, Suspense } from 'react'
 import { Routes, Route, Navigate, useNavigate, useLocation, useSearchParams } from 'react-router-dom'
 import { RiErrorWarningLine } from 'react-icons/ri'
 import { PortalHeader } from './components/PortalHeader'
 import { PortalHero } from './components/PortalHero'
 import { PortalStickyNav } from './components/PortalStickyNav'
-import { LandingPage } from './components/landing/LandingPage'
 import { JobCardItem } from './components/JobCardItem'
 import { JobDetailPane } from './components/JobDetailPane'
-import { PreferenceSidebar } from './components/PreferenceSidebar'
-import { SavedJobsModal } from './components/SavedJobsModal'
-import { FullMatrixView } from './components/FullMatrixView'
-import { KuesionerPage } from './components/kuesioner/KuesionerPage'
 import { WalkthroughProvider } from './components/WalkthroughTour'
 import { Button } from './components/ui/Button'
 import type { CleanJob, StudentProfile } from './types/data'
@@ -19,6 +14,22 @@ import { DEFAULT_STUDENT_PREFERENCES } from './types/portal'
 import { fetchCsvData, computeSPKForCustomStudent } from './lib/spk'
 import type { TfidfArtifact } from './lib/spk'
 import { ROUTES } from './lib/routes'
+
+const LandingPage = lazy(() =>
+  import('./components/landing/LandingPage').then((m) => ({ default: m.LandingPage }))
+)
+const FullMatrixView = lazy(() =>
+  import('./components/FullMatrixView').then((m) => ({ default: m.FullMatrixView }))
+)
+const KuesionerPage = lazy(() =>
+  import('./components/kuesioner/KuesionerPage').then((m) => ({ default: m.KuesionerPage }))
+)
+const PreferenceSidebar = lazy(() =>
+  import('./components/PreferenceSidebar').then((m) => ({ default: m.PreferenceSidebar }))
+)
+const SavedJobsModal = lazy(() =>
+  import('./components/SavedJobsModal').then((m) => ({ default: m.SavedJobsModal }))
+)
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -269,7 +280,14 @@ export function App() {
     <WalkthroughProvider>
       <div className="min-h-screen bg-[#F8FAFC] dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
         <ScrollToTop />
-        <Routes>
+        <Suspense
+          fallback={
+            <div className="flex-1 flex items-center justify-center p-12 text-sm text-slate-500 dark:text-slate-400">
+              Memuat halaman…
+            </div>
+          }
+        >
+          <Routes>
           <Route
             path={ROUTES.LANDING}
             element={
@@ -377,33 +395,36 @@ export function App() {
           />
           {/* URL lama / tidak dikenal -> kembali ke beranda modenya masing-masing */}
           <Route path="*" element={<Navigate to={isDataMode ? ROUTES.DATA : ROUTES.LANDING} replace />} />
-        </Routes>
+          </Routes>
+        </Suspense>
 
         {/* Preference Drawer / Modal (global, bisa dibuka dari semua URL) */}
-        <PreferenceSidebar
-          open={isPreferenceOpen}
-          onClose={() => setIsPreferenceOpen(false)}
-          preferences={activePrefs}
-          onUpdatePreferences={updateActivePrefs}
-          studentPresets={students}
-          categories={categories}
-          mode={isDataMode ? 'data' : 'user'}
-          onFillQuestionnaire={goFillQuestionnaire}
-        />
+        <Suspense fallback={null}>
+          <PreferenceSidebar
+            open={isPreferenceOpen}
+            onClose={() => setIsPreferenceOpen(false)}
+            preferences={activePrefs}
+            onUpdatePreferences={updateActivePrefs}
+            studentPresets={students}
+            categories={categories}
+            mode={isDataMode ? 'data' : 'user'}
+            onFillQuestionnaire={goFillQuestionnaire}
+          />
 
-        {/* Saved Jobs Modal (global) */}
-        <SavedJobsModal
-          open={isSavedJobsOpen}
-          onClose={() => setIsSavedJobsOpen(false)}
-          savedJobs={savedJobsList}
-          onRemoveSaved={handleToggleSave}
-          onSelectJob={(job) => {
-            setSelectedJobId(job.job_id)
-            setIsSavedJobsOpen(false)
-            const portalPath = isDataMode ? ROUTES.DATA_PORTAL : ROUTES.PORTAL
-            navigate(`${portalPath}?job=${encodeURIComponent(job.job_id)}`)
-          }}
-        />
+          {/* Saved Jobs Modal (global) */}
+          <SavedJobsModal
+            open={isSavedJobsOpen}
+            onClose={() => setIsSavedJobsOpen(false)}
+            savedJobs={savedJobsList}
+            onRemoveSaved={handleToggleSave}
+            onSelectJob={(job) => {
+              setSelectedJobId(job.job_id)
+              setIsSavedJobsOpen(false)
+              const portalPath = isDataMode ? ROUTES.DATA_PORTAL : ROUTES.PORTAL
+              navigate(`${portalPath}?job=${encodeURIComponent(job.job_id)}`)
+            }}
+          />
+        </Suspense>
       </div>
     </WalkthroughProvider>
   )
