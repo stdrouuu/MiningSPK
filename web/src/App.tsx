@@ -28,13 +28,13 @@ function ScrollToTop() {
   return null
 }
 
-export function PortalFooter({ onOpenPreferences }: { onOpenPreferences: () => void }) {
+export function PortalFooter({ onOpenPreferences, totalJobs }: { onOpenPreferences: () => void; totalJobs: number }) {
   return (
     <footer className="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 mt-16 py-6 text-xs text-slate-500 dark:text-slate-400 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3">
         <p className="tracking-tighter">© 2026 upmatch • Sistem Rekomendasi Part-Time Mahasiswa (SMARTER &amp; ROC)</p>
         <div className="flex items-center gap-4 text-slate-600 dark:text-slate-400">
-          <span>221 Lowongan Terverifikasi</span>
+          <span>{totalJobs} Lowongan Terverifikasi</span>
           <span>•</span>
           <span>Untuk Mahasiswa</span>
           <span>•</span>
@@ -95,9 +95,9 @@ export function App() {
       try {
         setLoading(true)
         const [jobsData, studentsData, tfidfData] = await Promise.all([
-          fetchCsvData<CleanJob>('/data/clean_jobs_dataset.csv'),
+          fetchCsvData<CleanJob>('/data/1000_clean_jobs_dataset.csv'),
           fetchCsvData<StudentProfile>('/data/clean_students_dataset.csv'),
-          fetch('/data/tfidf_skills.json').then((r) => (r.ok ? r.json() : null)).catch(() => null),
+          fetch('/data/1000_tfidf_skills.json').then((r) => (r.ok ? r.json() : null)).catch(() => null),
         ])
 
         const normalizedJobs = jobsData.map((j) => ({
@@ -604,7 +604,7 @@ function PortalRoute({
               <h2 className="text-[15px] font-medium text-slate-900 dark:text-white">Dapatkan rekomendasi yang pas buat kamu</h2>
               <p className="text-sm text-slate-500 dark:text-slate-400 font-light mt-0.5">
                 Ceritakan upah, jam, lokasi &amp; skill-mu lewat kuesioner singkat (±3 menit) —
-                221 lowongan langsung diurutkan sesuai kebutuhanmu.
+                {state.jobs.length} lowongan langsung diurutkan sesuai kebutuhanmu.
               </p>
             </div>
             <Button size="sm" onClick={onFillQuestionnaire} className="text-sm shrink-0 bg-[#0C52EE] hover:bg-[#0942c4] dark:bg-blue-600 dark:hover:bg-blue-500">
@@ -854,7 +854,7 @@ function PortalRoute({
         )}
       </main>
 
-      <PortalFooter onOpenPreferences={onOpenPreferences} />
+      <PortalFooter onOpenPreferences={onOpenPreferences} totalJobs={state.jobs.length} />
     </>
   )
 }
@@ -919,7 +919,7 @@ function MatrixRoute({
         )}
       </main>
 
-      <PortalFooter onOpenPreferences={onOpenPreferences} />
+      <PortalFooter onOpenPreferences={onOpenPreferences} totalJobs={state.jobs.length} />
     </>
   )
 }

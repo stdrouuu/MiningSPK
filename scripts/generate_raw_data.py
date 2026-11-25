@@ -74,22 +74,22 @@ def clean_title_for_parttime(title):
 # Match roles before subject matter or employer names. Each rule matches
 # whole words, including in titles that use hyphens or slashes.
 ROLE_KEYWORDS = (
-    ("Education & Tutoring", "guru|tutors?|tutoring|pengajar|teachers?|instructors?|instruktur|dosen|mentor|pelatih"),
+    ("Education & Tutoring", "guru|tutors?|tutoring|pengajar|teachers?|instructors?|instruktur|dosen|lecturer|mentor|pelatih"),
     ("Content & Media", "penerjemah|translator|interpreter|host live|live host|content creator|copywriter|writer|konten kreator|social media|videographer|hostlive|broadcaster|streamer|voice over|video talent|live streaming"),
-    ("Customer Service & Support", "customer service|customer support|chat support|helpdesk|help desk|call center|resepsionis|receptionist|front office|front desk"),
-    ("Logistics & Delivery", "kurir|courier|driver|pengemudi|sopir|supir|rider|warehouse|gudang|packer|packing|logistik|logistics|delivery"),
+    ("IT & Software", "programmer|developer|software engineer|it engineer|system engineer|software support|it specialist|frontend|backend|fullstack|tech support|it support|qa engineer|web dev|teknisi komputer|it staff|it admin|embedded systems engineer|teknisi it|devops|data analyst|data engineer"),
+    ("Customer Service & Support", "customer service|customer support|chat support|helpdesk|help desk|call center|resepsionis|receptionist|front office|front desk|guest relation"),
+    ("Logistics & Delivery", "kurir|courier|driver|pengemudi|sopir|supir|rider|warehouse|gudang|packer|packing|logistik|logistics|delivery|forklift|picker"),
     ("Marketing & Sales", "sales|marketing|spg|spb|promotor|telemarketing|affiliate|financial planner|account executive|business development|operasi penjualan|promotion partner|financial advisor|bancassurance"),
     ("Design & Creative", "desainer|designer|desain grafis|graphic design|video editor|illustrator|animator|ui ux"),
-    ("IT & Software", "programmer|developer|software engineer|frontend|backend|tech support|it support|qa engineer|web dev|teknisi komputer|it staff|it admin|embedded systems engineer|teknisi it"),
     ("Food & Beverage (F&B)", "barista|cook|chef|waiter|waitress|bartender|baker|roaster|kitchen|staf dapur|crew f b|café crew|cafe crew|coffee shop|crew store bagi kopi|fried chicken"),
-    ("Retail & Store Operations", "kasir|cashier|store crew|crew store|pramuniaga|ritel|retail|penjaga toko|shop assistant|shopkeeper|kepala toko|store laundry|penjaga stand|penjaga booth|outlet crew|crew outlet"),
-    ("Admin & Office Support", "admin|administrasi|administrative assistant|office support|office assistant|data entry|sekretaris|secretary|clerk|staff kantor|staff operasional|personal assistant|office boy"),
+    ("Retail & Store Operations", "kasir|cashier|store crew|crew store|pramuniaga|ritel|retail|penjaga toko|shop assistant|shopkeeper|kepala toko|store laundry|penjaga stand|penjaga booth|outlet crew|crew outlet|florist"),
+    ("Admin & Office Support", "admin|administrasi|administration|administrative|administrative assistant|office support|office assistant|data entry|sekretaris|secretary|clerk|staff kantor|staff operasional|personal assistant|office boy|asisten eksekutif|executive assistant|legal staff|hr|human resources|recruitment|akuntansi|accounting|finance"),
 )
 CATEGORY_KEYWORDS = (
     ("Education & Tutoring", "education|edukasi|pendidikan|bimbel|bimbingan belajar|les|calistung"),
     ("Food & Beverage (F&B)", "food beverage|food and beverage|f b|kuliner|makanan minuman"),
     ("Content & Media", "content|media|publishing|translation"),
-    ("Design & Creative", "design|desain|creative|kreatif"),
+    ("Design & Creative", "(?<!mechanical )design|desain|creative|kreatif"),
     ("IT & Software", "software|teknologi informasi|information technology"),
 )
 

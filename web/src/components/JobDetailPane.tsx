@@ -157,7 +157,7 @@ export function JobDetailPane({
             <circle cx="12" cy="12" r="2.5" strokeWidth="2" />
             <path strokeLinecap="round" strokeWidth="2" d="M6 6V4m12 2V4" />
           </svg>
-          <span className="font-normal text-slate-900 dark:text-white">Rp {job.work_salaryperhour.toLocaleString('id-ID')} per jam</span>
+          <span className="font-normal text-slate-900 dark:text-white">±Rp {job.work_salaryperhour.toLocaleString('id-ID')} per jam</span>
         </li>
       </ul>
 
@@ -211,7 +211,7 @@ export function JobDetailPane({
         <div className="space-y-2.5">
           {[
             { label: 'Kategori pekerjaan', body: isCategoryMatch ? `Sesuai minat Anda (${job.job_category}).` : `Berbeda dari minat Anda (${studentPrefs.preferredCategory}).`, warn: false },
-            { label: `Upah (${salaryRatio.toFixed(2)}× target)`, body: `Tawaran Rp ${job.work_salaryperhour.toLocaleString('id-ID')} vs target Rp ${studentPrefs.minSalary.toLocaleString('id-ID')}.`, warn: false },
+            { label: `Upah (${salaryRatio.toFixed(2)}× target)`, body: `Tawaran ±Rp ${job.work_salaryperhour.toLocaleString('id-ID')} vs target Rp ${studentPrefs.minSalary.toLocaleString('id-ID')}.`, warn: false },
             { label: 'Lokasi & sistem', body: c3Desc, warn: false },
             { label: `Beban jam (${job.work_hours} jam)`, body: c4Desc, warn: !isWithinHours },
             { label: 'Kecocokan keahlian', body: 'Irisan kata kunci skill Anda dengan deskripsi lowongan (TF-IDF cosine).', warn: false },

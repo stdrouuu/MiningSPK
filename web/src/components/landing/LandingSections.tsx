@@ -510,7 +510,7 @@ export function FeaturedJobs({
 
                 <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center gap-4 text-[11px] text-slate-600 dark:text-slate-400 font-light">
                   <span className="font-medium text-slate-900 dark:text-white">
-                    Rp {job.work_salaryperhour.toLocaleString("id-ID")}/jam
+                    ±Rp {job.work_salaryperhour.toLocaleString("id-ID")}/jam
                   </span>
                   <span>{job.work_hours} jam/mgg</span>
                   <span className="px-2 py-0.5 rounded border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[10px] font-normal">

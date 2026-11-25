@@ -219,13 +219,8 @@ export function KuesionerPage({
   const [picked, setPicked] = useState({ q3: false, q4: false, q5: false })
   const mark = (k: 'q3' | 'q4' | 'q5') => setPicked((p) => ({ ...p, [k]: true }))
   const jamIdeal = days !== null && hoursPerDay !== null ? jamIdealPerMinggu(days, hoursPerDay) : null
+  const rawJamIdeal = days !== null && hoursPerDay !== null ? Math.round(days * hoursPerDay) : null
   const hourly = monthly !== null && jamIdeal !== null ? perJam(monthly, jamIdeal) : null
-  const timeSummary =
-    days !== null && hoursPerDay !== null ? `${days} hari × ${hoursPerDay} jam` : ''
-  const paySummary =
-    monthly !== null && jamIdeal !== null
-      ? `(Rp ${monthly.toLocaleString('id-ID')}/bulan ÷ ${jamIdeal * 4} jam/bulan)`
-      : ''
 
   // Kisaran upah per jam dari dataset untuk bidang yang dipilih user
   const categorySalaryStats = useMemo(() => {
@@ -251,19 +246,19 @@ export function KuesionerPage({
     }
   }, [jobs, studentPrefs.preferredCategory])
 
-  // Upah per jam mentah (sebelum batas 60rb SPK) untuk mengecek kewajaran di Pertanyaan 6
+  // Upah per jam mentah (sebelum batas 15–60rb SPK) hanya untuk transparansi catatan perhitungan
   const rawHourly =
     monthly !== null && jamIdeal !== null
       ? Math.round(monthly / (jamIdeal * 4) / 1000) * 1000
       : null
 
-  // Warning di Pertanyaan 6: hanya muncul bila user sudah memilih gaji DAN melebihi standar umum bidang + jam kerjanya
+  // Warning di Pertanyaan 6 memakai target per jam final SPK (hourly) agar konsisten dengan kotak ringkasan & halaman Hasil
   const q6AboveMax =
-    rawHourly !== null && categorySalaryStats !== null && rawHourly > categorySalaryStats.maxHourly
+    hourly !== null && categorySalaryStats !== null && hourly > categorySalaryStats.maxHourly
   const q6AboveTypical =
-    rawHourly !== null &&
+    hourly !== null &&
     categorySalaryStats !== null &&
-    rawHourly > categorySalaryStats.p75Hourly &&
+    hourly > categorySalaryStats.p75Hourly &&
     !q6AboveMax
 
   // Peringatan pada halaman Hasil bila ekspektasi gaji terlalu tinggi dibanding bidang atau beban kerja
@@ -510,12 +505,9 @@ export function KuesionerPage({
                                   >
                                     <RiInformationLine className="h-4 w-4 text-[#0C52EE] dark:text-blue-400 shrink-0" aria-hidden="true" />
                                     <p className="leading-snug">
-                                      Kisaran gaji <span className="font-medium text-slate-900 dark:text-white">{categorySalaryStats.category}</span>:{' '}
+                                      Rata-rata gaji <span className="font-medium text-slate-900 dark:text-white">{categorySalaryStats.category}</span>:{' '}
                                       <span className="font-semibold text-slate-900 dark:text-white">
-                                        {formatRupiah(categorySalaryStats.minHourly)} – {formatRupiah(categorySalaryStats.maxHourly)}/jam
-                                      </span>{' '}
-                                      <span className="text-slate-500 dark:text-slate-400">
-                                        (rata-rata ±{formatRupiah(categorySalaryStats.avgHourly)}/jam)
+                                        sekitar {formatRupiah(categorySalaryStats.avgHourly)}/jam
                                       </span>
                                     </p>
                                   </div>
@@ -578,12 +570,18 @@ export function KuesionerPage({
                                       className="text-xs text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 font-light"
                                       aria-live="polite"
                                     >
-                                      Jam idealmu ≈{' '}
+                                      Target jam kerja:{' '}
                                       <span className="font-medium text-slate-900 dark:text-white">
+                                        {rawJamIdeal !== null && rawJamIdeal === jamIdeal ? 'sekitar ' : ''}
                                         {jamIdeal} jam/minggu
                                       </span>
-                                      <span className="text-slate-400 dark:text-slate-500"> ({timeSummary})</span>.
-                                      Makin dekat jam lowongan ke angka ini, makin cocok.
+                                      {rawJamIdeal !== null && rawJamIdeal !== jamIdeal && (
+                                        <span className="text-slate-400 dark:text-slate-500">
+                                          {' '}
+                                          ({rawJamIdeal < jamIdeal ? 'batas minimal part-time' : 'batas maksimal part-time'})
+                                        </span>
+                                      )}
+                                      .
                                     </p>
                                   ) : (
                                     <p className="text-[11px] text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-800/80 border border-dashed border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 font-light">
@@ -610,14 +608,22 @@ export function KuesionerPage({
                                 </div>
                                 {hourly !== null ? (
                                   <div className="space-y-2" aria-live="polite">
-                                    <p className="text-xs text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 font-light">
-                                      ≈{' '}
-                                      <span className="font-medium text-slate-900 dark:text-white">
-                                        Rp {hourly.toLocaleString('id-ID')}/jam
-                                      </span>
-                                      <span className="text-slate-400 dark:text-slate-500"> {paySummary}</span>.
-                                    </p>
-                                    {(q6AboveMax || q6AboveTypical) && categorySalaryStats && rawHourly !== null && (
+                                    {!((q6AboveMax || q6AboveTypical) && categorySalaryStats) ? (
+                                      <p className="text-xs text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg px-3 py-2 font-light">
+                                        Perkiraan upah:{' '}
+                                        <span className="font-medium text-slate-900 dark:text-white">
+                                          {rawHourly !== null && rawHourly === hourly ? 'sekitar ' : ''}
+                                          Rp {hourly.toLocaleString('id-ID')}/jam
+                                        </span>
+                                        {rawHourly !== null && rawHourly !== hourly && (
+                                          <span className="text-slate-400 dark:text-slate-500">
+                                            {' '}
+                                            ({rawHourly > hourly ? 'batas maksimal pencarian' : 'batas minimal pencarian'})
+                                          </span>
+                                        )}
+                                        .
+                                      </p>
+                                    ) : (
                                       <div
                                         role="alert"
                                         className="flex items-start gap-2.5 rounded-lg border border-pink-200 dark:border-pink-800/70 bg-pink-50/80 dark:bg-pink-950/35 px-3 py-2.5 text-xs text-[#9d174d] dark:text-pink-100"
@@ -627,11 +633,24 @@ export function KuesionerPage({
                                           <p className="font-semibold text-[#b8165f] dark:text-pink-200">
                                             Target gajimu ketinggian
                                           </p>
-                                          <p className="text-[11px] text-[#9d174d]/90 dark:text-pink-200/90 font-normal">
-                                            {q6AboveMax
-                                              ? `Targetmu ±${formatRupiah(rawHourly)}/jam, padahal kerjaan ${categorySalaryStats.category} biasanya cuma ${formatRupiah(categorySalaryStats.minHourly)}–${formatRupiah(categorySalaryStats.maxHourly)}/jam. Kamu bisa tambah jam kerja atau turunin dikit target gajinya.`
-                                              : `Targetmu ±${formatRupiah(rawHourly)}/jam, di atas rata-rata ${categorySalaryStats.category} (±${formatRupiah(categorySalaryStats.avgHourly)}/jam). Kalau ingin gaji lebih besar, kamu butuh kerja lebih ekstra.`}
-                                          </p>
+                                          <ul className="list-disc pl-4 space-y-0.5 text-[11px] text-[#9d174d]/90 dark:text-pink-200/90 font-normal">
+                                            {(() => {
+                                              const targetLabel =
+                                                rawHourly !== null && rawHourly > hourly
+                                                  ? `melebihi ${formatRupiah(hourly)}`
+                                                  : `sekitar ${formatRupiah(hourly)}`
+                                              return (
+                                                <>
+                                                  <li>
+                                                    Targetmu {targetLabel}/jam, di atas rata-rata{' '}
+                                                    {categorySalaryStats.category} (sekitar{' '}
+                                                    {formatRupiah(categorySalaryStats.avgHourly)}/jam).
+                                                  </li>
+                                                  <li>Kamu bisa tambah jam kerja atau turunin dikit target gajinya.</li>
+                                                </>
+                                              )
+                                            })()}
+                                          </ul>
                                         </div>
                                       </div>
                                     )}
@@ -829,7 +848,7 @@ export function KuesionerPage({
                                   <div className="min-w-0 flex-1">
                                     <div className="text-sm font-medium text-slate-900 dark:text-white truncate">{job.job_title}</div>
                                     <div className="text-[11px] text-slate-500 dark:text-slate-400 font-light truncate">
-                                      {job.company_name} • {formatRupiah(job.work_salaryperhour)}/jam
+                                      {job.company_name} • ±{formatRupiah(job.work_salaryperhour)}/jam
                                     </div>
                                     <div className="mt-1 flex flex-wrap items-center gap-1.5 text-[11px] text-slate-600 dark:text-slate-300">
                                       <span className="inline-flex items-center gap-1 font-medium text-slate-700 dark:text-slate-200">
