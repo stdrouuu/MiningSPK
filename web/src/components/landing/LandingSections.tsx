@@ -536,7 +536,7 @@ export function FeaturedJobs({
   );
 }
 
-export function StatsPartners({ jobs }: { jobs: RankedJobResult[] }) {
+export function StatsPartners({ jobs: _jobs }: { jobs: RankedJobResult[] }) {
   return (
     <section data-tour="landing-stats" className="py-14 bg-white dark:bg-slate-900/60 border-y border-slate-200 dark:border-slate-800 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
@@ -550,47 +550,47 @@ export function StatsPartners({ jobs }: { jobs: RankedJobResult[] }) {
           </p>
         </div>
 
-        <div className="grid grid-cols-3 gap-6 max-w-3xl mx-auto py-2">
+        <div className="grid grid-cols-3 gap-2 sm:gap-6 max-w-3xl mx-auto py-2">
           <div className="space-y-1">
-            <div className="text-3xl sm:text-4xl lg:text-5xl font-medium text-slate-900 dark:text-white tracking-tight">
-              {jobs.length - 21}
+            <div className="text-2xl sm:text-4xl lg:text-5xl font-medium text-slate-900 dark:text-white tracking-tight">
+              700
               <span className="text-[#0C52EE]">+</span>
             </div>
-            <p className="text-xs text-slate-400 font-light">
+            <p className="text-[11px] sm:text-xs text-slate-400 font-light leading-tight">
               Loker Terverifikasi
             </p>
           </div>
           <div className="space-y-1">
-            <div className="text-3xl sm:text-4xl lg:text-5xl font-medium text-slate-900 dark:text-white tracking-tight">
+            <div className="text-2xl sm:text-4xl lg:text-5xl font-medium text-slate-900 dark:text-white tracking-tight">
               5<span className="text-[#0C52EE]">+</span>
             </div>
-            <p className="text-xs text-slate-400 font-light">
+            <p className="text-[11px] sm:text-xs text-slate-400 font-light leading-tight">
               Kriteria Penilaian
             </p>
           </div>
           <div className="space-y-1">
-            <div className="text-3xl sm:text-4xl lg:text-5xl font-medium text-slate-900 dark:text-white tracking-tight">
+            <div className="text-2xl sm:text-4xl lg:text-5xl font-medium text-slate-900 dark:text-white tracking-tight">
               100<span className="text-[#ED1E79]">%</span>
             </div>
-            <p className="text-xs text-slate-400 font-light">
+            <p className="text-[11px] sm:text-xs text-slate-400 font-light leading-tight">
               Transparansi ROC
             </p>
           </div>
         </div>
 
-        <div className="pt-6 flex flex-wrap items-center justify-center gap-x-10 sm:gap-x-14 gap-y-5">
+        <div className="pt-6 grid grid-cols-2 sm:grid-cols-4 gap-y-5 gap-x-6 max-w-md sm:max-w-2xl mx-auto">
           {SOURCE_PORTALS.map((portal) => (
             <div
               key={portal.name}
-              className="flex items-center gap-2.5 opacity-80 hover:opacity-100 transition-opacity"
+              className="flex items-center justify-center gap-2.5 opacity-85 hover:opacity-100 transition-opacity"
             >
               <img
                 src={portal.logo}
                 alt={`${portal.name} logo`}
                 loading="lazy"
-                className="h-6 w-6 object-contain shrink-0"
+                className="h-7 w-7 rounded-md object-contain shrink-0"
               />
-              <span className="text-xs sm:text-sm font-medium text-slate-500 dark:text-slate-400">
+              <span className="text-xs sm:text-sm font-medium text-slate-600 dark:text-slate-400 whitespace-nowrap">
                 {portal.name}
               </span>
             </div>

@@ -42,7 +42,7 @@ export function SavedJobsModal({
             {savedJobs.map((job) => (
               <div
                 key={job.job_id}
-                className="py-3.5 flex items-center justify-between gap-4 group"
+                className="py-3.5 flex items-start sm:items-center justify-between gap-2.5 sm:gap-4 group"
               >
                 <div
                   className="flex-1 min-w-0 cursor-pointer"
@@ -51,35 +51,35 @@ export function SavedJobsModal({
                     onClose()
                   }}
                 >
-                  <div className="flex items-center gap-2.5">
+                  <div className="flex items-start sm:items-center gap-2.5 sm:gap-3">
                     <CompanyLogo companyName={job.company_name} logoUrl={job.company_logo} size="sm" />
-                    <div className="min-w-0">
-                      <div className="flex items-center gap-2">
-                    <h4 className="text-sm font-medium text-slate-900 dark:text-slate-100 group-hover:underline truncate">
-                      {job.job_title}
-                    </h4>
-                    <Badge variant="outline" className="text-[10px]">
-                      {job.job_category}
-                    </Badge>
-                  </div>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                        <h4 className="text-sm font-medium text-slate-900 dark:text-slate-100 group-hover:underline line-clamp-2 sm:truncate">
+                          {job.job_title}
+                        </h4>
+                        <Badge variant="outline" className="text-[10px] w-fit whitespace-nowrap shrink-0">
+                          {job.job_category}
+                        </Badge>
+                      </div>
 
-                  <div className="flex items-center gap-3 text-xs text-slate-500 mt-1">
-                    <span className="flex items-center gap-1">
-                      <RiBuilding2Line className="h-3 w-3" />
-                      {job.company_name}
-                    </span>
-                    <span>•</span>
-                    <span className="font-mono text-slate-900 dark:text-slate-100 font-medium">
-                      ±{formatRupiah(job.work_salaryperhour)}
-                    </span>
-                    <span>•</span>
-                    <span>{job.work_job_location}</span>
-                  </div>
+                      <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-slate-500 dark:text-slate-400 mt-1.5">
+                        <span className="inline-flex items-center gap-1 min-w-0">
+                          <RiBuilding2Line className="h-3 w-3 shrink-0" />
+                          <span className="truncate">{job.company_name}</span>
+                        </span>
+                        <span className="hidden sm:inline" aria-hidden="true">•</span>
+                        <span className="font-mono text-slate-900 dark:text-slate-100 font-medium whitespace-nowrap">
+                          ±{formatRupiah(job.work_salaryperhour)}
+                        </span>
+                        <span className="hidden sm:inline" aria-hidden="true">•</span>
+                        <span className="whitespace-nowrap">{job.work_job_location}</span>
+                      </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 shrink-0">
+                <div className="flex items-center gap-1 sm:gap-2 shrink-0">
                   {job.url && (
                     <a href={job.url} target="_blank" rel="noopener noreferrer">
                       <Button variant="ghost" size="sm" className="h-8 w-8 p-0" title="Buka URL">

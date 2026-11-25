@@ -197,7 +197,8 @@ export function PortalHeader({
           </div>
 
           <button
-            className="h-8 w-8 md:hidden p-1 text-slate-600 dark:text-slate-300"
+            data-tour="header-mobile-menu"
+            className="h-8 w-8 md:hidden p-1 flex items-center justify-center text-slate-600 dark:text-slate-300"
             onClick={() => setShowMobileNav((v) => !v)}
             aria-expanded={showMobileNav}
             aria-label={showMobileNav ? 'Tutup navigasi' : 'Buka navigasi'}

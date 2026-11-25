@@ -38,7 +38,7 @@ const SECTION_STEPS: Record<TourSectionKey, TourStep[]> = {
       section: 'navigasi',
       sectionLabel: 'Navigasi',
       selector: '[data-tour="header-nav"]',
-      fallbackSelector: '[data-tour="header-brand"]',
+      fallbackSelector: '[data-tour="header-mobile-menu"]',
       title: 'Menu Navigasi',
       description:
         'Pindah halaman ke Beranda, Lowongan, Perhitungan SPK, atau Kuesioner di sini.',
@@ -259,8 +259,16 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
     setIsOpen(false)
   }, [])
 
-  const steps = SECTION_STEPS[activeSection]
-  const step = steps[stepIndex] ?? steps[0]
+  const steps = useMemo(() => {
+    const raw = SECTION_STEPS[activeSection]
+    return raw.filter((s) => {
+      if (s.id === 'header-tools' && viewport.width < 640) return false
+      if (s.id === 'portal-job-detail' && viewport.width < 1024) return false
+      return true
+    })
+  }, [activeSection, viewport.width])
+  const safeStepIndex = Math.min(stepIndex, Math.max(0, steps.length - 1))
+  const step = steps[safeStepIndex] ?? steps[0]
   const nextSection = getNextSection(activeSection)
 
   // Pastikan tidak pernah ada inline overflow:hidden yang tertinggal di html/body.
@@ -355,10 +363,10 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
 
       const rect = el.getBoundingClientRect()
       const pad = 8
-      const maxSpotHeight = Math.max(140, window.innerHeight - 250)
+      const maxSpotHeight = Math.max(120, window.innerHeight - 280)
       const visibleHeight = Math.min(rect.height, maxSpotHeight)
 
-      const top = rect.top - pad
+      const top = Math.max(6, rect.top - pad)
       const left = Math.max(6, rect.left - pad)
       const width = Math.min(window.innerWidth - left - 6, rect.width + pad * 2)
       const height = visibleHeight + pad * 2
@@ -466,7 +474,7 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
 
     const spaceBelow = viewport.height - (spotlight.top + spotlight.height)
     const spaceAbove = spotlight.top
-    const estimatedCardHeight = 165
+    const estimatedCardHeight = 205
 
     if (spaceBelow >= estimatedCardHeight || spaceBelow >= spaceAbove) {
       const top = Math.min(
@@ -497,7 +505,7 @@ export function WalkthroughProvider({ children }: { children: ReactNode }) {
     [isOpen, activeSection, startTour, stopTour]
   )
 
-  const isLastStepInSection = stepIndex === steps.length - 1
+  const isLastStepInSection = safeStepIndex === steps.length - 1
 
   return (
     <WalkthroughContext.Provider value={ctxValue}>

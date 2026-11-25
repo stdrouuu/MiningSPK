@@ -109,8 +109,9 @@ export function App() {
           fetch('/data/1000_tfidf_skills.json').then((r) => (r.ok ? r.json() : null)).catch(() => null),
         ])
 
-        const normalizedJobs = jobsData.map((j) => ({
+        const normalizedJobs = jobsData.map((j, idx) => ({
           ...j,
+          job_id: `JOB-${String(idx + 1).padStart(4, '0')}`,
           job_category: (j.job_category || '').replace(/\s+/g, ' ').trim(),
         }))
 

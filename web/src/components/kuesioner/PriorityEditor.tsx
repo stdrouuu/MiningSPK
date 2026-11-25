@@ -174,9 +174,9 @@ export function PriorityEditor({ ranks, onChange, onReset, showReset = true }: P
                     preDragRef.current = null
                     clearDrag()
                   }}
-                  className="flex h-8 w-6 shrink-0 items-center justify-center rounded-md text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/70 dark:hover:bg-slate-700 cursor-grab active:cursor-grabbing touch-none"
+                  className="flex h-9 w-7 shrink-0 items-center justify-center rounded-md text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/70 dark:hover:bg-slate-700 cursor-grab active:cursor-grabbing touch-none transition-colors"
                 >
-                  <RiDraggable className="h-4 w-4" />
+                  <RiDraggable className="h-5 w-5" />
                 </span>
 
                 {/* Nomor prioritas */}
